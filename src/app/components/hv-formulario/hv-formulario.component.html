@@ -1,87 +1,111 @@
-<mat-stepper [linear]="isLinear" #stepper>
-    <mat-step [stepControl]="firstFormGroup">
-        <form [formGroup]="firstFormGroup">
-            <ng-template matStepLabel>Datos Básicos</ng-template>
-            <mat-form-field appearance="fill">
-                <mat-label>Nombre</mat-label>
-                <input matInput placeholder="Nombre" formControlName="datosBasicos" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperNext>Next</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="secondFormGroup" label="Datos Adicionales">
-        <form [formGroup]="secondFormGroup">
-            <mat-form-field appearance="fill">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Siguiente</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="thirdFormGroup" label="Datos Adicionales">
-        <form [formGroup]="thirdFormGroup">
-            <mat-form-field appearance="fill">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Siguiente</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="fourthFormGroup" label="Datos Adicionales">
-        <form [formGroup]="fourthFormGroup">
-            <mat-form-field appearance="fill">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Siguiente</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="fifthFormGroup" label="Datos Adicionales">
-        <form [formGroup]="fifthFormGroup">
-            <mat-form-field appearance="fill">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="sixthFormGroup" label="Datos Adicionales">
-        <form [formGroup]="sixthFormGroup">
-            <mat-form-field appearance="fill">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
-            </div>
-        </form>
-    </mat-step>
-    <mat-step [stepControl]="seventhFormGroup" label="Datos Adicionales">
-        <form [formGroup]="seventhFormGroup">
-            <mat-form-field appearance="fill">
-                <mat-label>Address</mat-label>
-                <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-            </mat-form-field>
-            <div>
-                <button mat-button matStepperPrevious>Back</button>
-                <button mat-button (click)="stepper.reset()">Reset</button>
-            </div>
-        </form>
-    </mat-step>
 
-</mat-stepper>
+
+  <mat-card class="wizard-card">
+    <mat-tab-group>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">badge</mat-icon>
+            Datos Candidato
+          </ng-template>
+          <mat-stepper [linear]="isLinear" #stepper class="wizard-datos-candidato">
+            <mat-step [stepControl]="firstFormGroup">
+                <form [formGroup]="firstFormGroup">
+                    <ng-template matStepLabel>Datos Básicos</ng-template>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Identificación</mat-label>
+                        <input matInput placeholder="Identificación" formControlName="datosBasicos" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="secondFormGroup" label="Datos Adicionales">
+                <form [formGroup]="secondFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+                        <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="thirdFormGroup" label="Archivos">
+                <form [formGroup]="thirdFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+                        <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="fourthFormGroup" label="Estudios">
+                <form [formGroup]="fourthFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+                        <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="fifthFormGroup" label="Referencias">
+                <form [formGroup]="fifthFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+                        <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="sixthFormGroup" label="Cargos">
+                <form [formGroup]="sixthFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+                        <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="seventhFormGroup" label="Información Familiar">
+                <form [formGroup]="seventhFormGroup">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                    </mat-form-field>
+                    <div class="step-btn-container">
+                        <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+                        <button class="stepper-main-btn" mat-button (click)="stepper.reset()">Reset</button>
+                    </div>
+                </form>
+            </mat-step>
+        
+        </mat-stepper>
+        </mat-tab>
+      
+        <mat-tab [disabled]='isActive'>
+          <ng-template mat-tab-label>
+            <mat-icon class="example-tab-icon">groups</mat-icon>
+            Datos Sociodemográficos
+          </ng-template>
+          Content 2
+        </mat-tab>
+      
+       
+      </mat-tab-group>
+</mat-card>
+  
+

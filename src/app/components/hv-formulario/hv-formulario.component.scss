@@ -1,7 +1,39 @@
 .mat-stepper-horizontal {
     margin-top: 8px;
+
+}
+.wizard-datos-candidato {
+    margin-top: 2.5em;
 }
 
 .mat-form-field {
     margin-top: 16px;
 }
+.wizard-card{
+    margin: 1.2em 2em;
+}
+
+.step-btn-container{
+    display: flex;
+    justify-content: flex-end;
+}
+button.stepper-main-btn {
+    background: #2675bb;
+    color: #fff;
+    margin-right: 0.5em;
+  }
+  .example-action-button {
+    margin-top: 8px;
+    margin-right: 8px;
+  }
+  .example-tab-icon {
+    margin-right: 8px;
+  }
+  .fields-form-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    mat-form-field{
+        margin-right: 0.5em;
+    }
+  }

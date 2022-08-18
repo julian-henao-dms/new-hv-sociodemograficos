@@ -35,6 +35,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatTableModule,
     MatPaginatorModule,
     MatButtonToggleModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
