@@ -12,9 +12,168 @@
                 <form [formGroup]="firstFormGroup">
                     <ng-template matStepLabel>Datos Básicos</ng-template>
                     <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Tipo Candidato</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let tipoCandidato of tiposCandidato" [value]="tipoCandidato.value">
+                            {{tipoCandidato.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
                         <mat-label>Identificación</mat-label>
                         <input matInput placeholder="Identificación" formControlName="datosBasicos" required>
                     </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Tipo Documento</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let tipoDoc of tiposDoc" [value]="tipoDoc.value">
+                            {{tipoDoc.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar País Exp</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Departamento Exp</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let depto of deptos" [value]="depto.value">
+                            {{depto.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Ciudad Exp</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.value">
+                            {{ciudad.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Fecha Expedición</mat-label>
+                        <input matInput [matDatepicker]="expedicion" >
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="expedicion"></mat-datepicker-toggle>
+                        <mat-datepicker #expedicion></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Nombre</mat-label>
+                        <input matInput placeholder="Nombre" name="" required>
+                    </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Apellidos</mat-label>
+                        <input matInput placeholder="Apellidos" name="" required>
+                    </mat-form-field>
+                    <mat-radio-group aria-label="Select an option">
+   
+                        <mat-radio-button value="0">Femenino</mat-radio-button>
+                        <mat-radio-button value="1">Masculino</mat-radio-button>
+                      </mat-radio-group>
+                      
+                      <mat-form-field appearance="fill">
+                        <mat-label>Fecha Nacimiento</mat-label>
+                        <input matInput [matDatepicker]="nacimiento" >
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="nacimiento"></mat-datepicker-toggle>
+                        <mat-datepicker #nacimiento></mat-datepicker>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Teléfono</mat-label>
+                        <input matInput placeholder="Teléfono" name="" required>
+                    </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Correo</mat-label>
+                        <input matInput type="email" placeholder="Correo" name="" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Nivel Académico</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let tipoDoc of tiposDoc" [value]="tipoDoc.value">
+                            {{tipoDoc.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Lengua Extranjera</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let tipoDoc of tiposDoc" [value]="tipoDoc.value">
+                            {{tipoDoc.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-divider></mat-divider>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar País</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Departamento</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let depto of deptos" [value]="depto.value">
+                            {{depto.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Ciudad</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.value">
+                            {{ciudad.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Barrio</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let barrio of barrios" [value]="barrio.value">
+                            {{barrio.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Estado Civil</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let estadoCivil of estados" [value]="estadoCivil.value">
+                            {{estadoCivil.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Dirección</mat-label>
+                        <input matInput  placeholder="Dirección" required>
+                    </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Celular</mat-label>
+                        <input matInput  placeholder="Celular" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Cargo</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let cargo of cargos" [value]="cargo.value">
+                            {{cargo.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Experiencia Especifica</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let anioExp of aniosExp" [value]="anioExp.value">
+                            {{anioExp.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
                     </div>
@@ -23,20 +182,169 @@
             <mat-step [stepControl]="secondFormGroup" label="Datos Adicionales">
                 <form [formGroup]="secondFormGroup">
                     <mat-form-field appearance="fill">
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                        <mat-label>Seleccionar Experiencia General</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Operaciones de Equipos </mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Aspiración </mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Cantidad?</mat-label>
+                        <input matInput type="number" placeholder="$ 0.00" name="" required>
                     </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Reclutamiento</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Nº Tarjeta Profesional</mat-label>
+                        <input matInput  placeholder="" name="" required>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Entidad de Expedición</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar EPS</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let pais of paises" [value]="pais.value">
+                            {{pais.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Fondo Pensión</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let depto of deptos" [value]="depto.value">
+                            {{depto.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Caja Compensación</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.value">
+                            {{ciudad.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Cesantías</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let ciudad of ciudades" [value]="ciudad.value">
+                            {{ciudad.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <section class="example-section">
+                        <mat-checkbox class="example-margin">Participacion Anterior
+                        </mat-checkbox>
+                        <mat-checkbox class="example-margin">Runt</mat-checkbox>
+                        <mat-checkbox class="example-margin">Disponibilidad para Viajar
+                        </mat-checkbox>
+                        <mat-checkbox class="example-margin" >Hoja de Vida
+                        </mat-checkbox>
+                      </section>
+                  <mat-divider></mat-divider>
+                      <h2>
+                        Licencia de Conducción
+                      </h2>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Nº Licencia</mat-label>
+                        <input matInput  placeholder="Nº" required>
+                    </mat-form-field>
+                    <mat-radio-group aria-label="Select an option">
+   
+                        <mat-radio-button value="0">Pública</mat-radio-button>
+                        <mat-radio-button value="1">Privada</mat-radio-button>
+                      </mat-radio-group>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Fecha Vencimiento</mat-label>
+                        <input matInput [matDatepicker]="vencimiento" >
+                        <mat-hint>MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="vencimiento"></mat-datepicker-toggle>
+                        <mat-datepicker #vencimiento></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Categoría</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-divider></mat-divider>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Color de Piel</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Grupo Sanguineo</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <mat-radio-group aria-label="Select an option">
+   
+                        <mat-radio-button value="0">Positivo +</mat-radio-button>
+                        <mat-radio-button value="1">Negativo -</mat-radio-button>
+                      </mat-radio-group>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Peso</mat-label>
+                        <input matInput type="number" placeholder="0" name="" required>
+                    </mat-form-field>
+                      <mat-form-field appearance="fill">
+                        <mat-label>Altura</mat-label>
+                        <input matInput type="number" placeholder="0" name="" required>
+                    </mat-form-field>
+                      
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
                         <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
                     </div>
                 </form>
             </mat-step>
+          <!-- Paso 3 -->
             <mat-step [stepControl]="thirdFormGroup" label="Archivos">
                 <form [formGroup]="thirdFormGroup">
                     <mat-form-field appearance="fill">
                         <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                        <input matInput required>
+                        <input class="ng-hide" id="input-file-id"  type="file">
+                        <label for="input-file-id" class="md-button md-raised md-primary">Choose Files</label>
                     </mat-form-field>
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
@@ -44,12 +352,69 @@
                     </div>
                 </form>
             </mat-step>
+                      <!-- Fin Paso 3 -->
             <mat-step [stepControl]="fourthFormGroup" label="Estudios">
                 <form [formGroup]="fourthFormGroup">
                     <mat-form-field appearance="fill">
-                        <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
-                    </mat-form-field>
+                        <mat-label>Seleccionar Institución</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+                      <mat-form-field appearance="fill">
+                        <mat-label>Periodo de Estudios</mat-label>
+                        <mat-date-range-input [rangePicker]="periodo">
+                          <input matStartDate placeholder="Inicio">
+                          <input matEndDate placeholder="Culminación">
+                        </mat-date-range-input>
+                        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+                        <mat-datepicker-toggle matSuffix [for]="periodo"></mat-datepicker-toggle>
+                        <mat-date-range-picker #periodo></mat-date-range-picker>
+                      </mat-form-field>
+
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Tipo de Estudios</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Nivel de Estudios</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Título</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Estado</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Seleccionar Tipo de Curso</mat-label>
+                        <mat-select>
+                          <mat-option *ngFor="let categoria of categorias" [value]="categoria.value">
+                            {{categoria.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
                         <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
@@ -60,7 +425,7 @@
                 <form [formGroup]="fifthFormGroup">
                     <mat-form-field appearance="fill">
                         <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                        <input matInput  placeholder="Ex. 1 Main St, New York, NY" required>
                     </mat-form-field>
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
@@ -72,7 +437,7 @@
                 <form [formGroup]="sixthFormGroup">
                     <mat-form-field appearance="fill">
                         <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                        <input matInput  placeholder="Ex. 1 Main St, New York, NY" required>
                     </mat-form-field>
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
@@ -84,7 +449,7 @@
                 <form [formGroup]="seventhFormGroup">
                     <mat-form-field appearance="fill">
                         <mat-label>Address</mat-label>
-                        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY" required>
+                        <input matInput  placeholder="Ex. 1 Main St, New York, NY" required>
                     </mat-form-field>
                     <div class="step-btn-container">
                         <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>

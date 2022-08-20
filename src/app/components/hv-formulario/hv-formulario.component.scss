@@ -37,3 +37,16 @@ button.stepper-main-btn {
         margin-right: 0.5em;
     }
   }
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+  .example-section {
+    display: flex;
+    align-content: center;
+    align-items: center;
+    height: 60px;
+  }
+  
+  .example-margin {
+    margin: 0 10px;
+  }
