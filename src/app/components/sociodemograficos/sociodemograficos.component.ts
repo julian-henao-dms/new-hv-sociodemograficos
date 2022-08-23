@@ -14,6 +14,7 @@ export class SociodemograficosComponent implements OnInit {
 
   cols : number | undefined;
 
+
   gridByBreakpoint = {
     xl: 4,
     lg: 4,
@@ -21,6 +22,7 @@ export class SociodemograficosComponent implements OnInit {
     sm: 2,
     xs: 1
   }
+
 
   constructor(private _formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
@@ -47,6 +49,7 @@ export class SociodemograficosComponent implements OnInit {
           this.cols = this.gridByBreakpoint.xl;
         }
       }
+
     });
    }
 

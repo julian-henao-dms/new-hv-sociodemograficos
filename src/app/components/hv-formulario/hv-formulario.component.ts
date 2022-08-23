@@ -151,18 +151,22 @@ export class HvFormularioComponent implements OnInit {
   ];
 
   cols : number | undefined;
-
+  colsAlt : number | undefined;
   gridByBreakpoint = {
     xl: 4,
     lg: 4,
     md: 3,
     sm: 2,
     xs: 1
-  }
-
-
-
-
+  };
+  gridByBreakpointAlt = {
+    xl: 3,
+    lg: 3,
+    md: 2,
+    sm: 2,
+    xs: 1
+  };
+  
   constructor(private _formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
@@ -186,6 +190,23 @@ export class HvFormularioComponent implements OnInit {
         }
         if (result.breakpoints[Breakpoints.XLarge]) {
           this.cols = this.gridByBreakpoint.xl;
+        }
+      }
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.colsAlt = this.gridByBreakpointAlt.xs;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.colsAlt = this.gridByBreakpointAlt.sm;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.colsAlt = this.gridByBreakpointAlt.md;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.colsAlt = this.gridByBreakpointAlt.lg;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.colsAlt = this.gridByBreakpointAlt.xl;
         }
       }
     });
