@@ -10,7 +10,7 @@
     margin-top: 16px;
 }
 .wizard-card{
-    margin: 1.2em 2em;
+    margin: 1.2em 3em;
 }
 
 .step-btn-container{
@@ -50,3 +50,46 @@ button.stepper-main-btn {
   .example-margin {
     margin: 0 10px;
   }
+  .mat-form-field {
+    margin-top: 1px; 
+    width: -webkit-fill-available;
+}
+.container-hv-radios{
+  display: flex;
+  flex-direction: column;
+  margin: -25px 0 0 0;
+  mat-label{
+    margin-bottom: 0.2em;
+    text-decoration: underline;
+  }
+}
+.container-hv-referencia{
+  display: flex;
+  flex-direction: column;
+  margin: 10px 0 0 20px;
+  mat-label{
+    margin-bottom: 1em;
+    text-decoration: underline;
+  }
+}
+mat-grid-list.mat-grid-list {
+  margin: 1em;
+}
+.subtitle-hv{
+  margin-top: 1em;
+}
+.mat-divider {
+  border-top-color: rgba(38, 117, 187, 0.555);
+}
+.subtitle-container {
+  display: flex;
+  align-items: center;
+  mat-icon{
+    margin-right: 0.5em;
+    color: #2675bb;
+  }
+  h2{
+    text-decoration: underline;
+    text-decoration-color: #2675bb;
+  }
+}
