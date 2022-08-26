@@ -5,3 +5,15 @@ mat-grid-list.mat-grid-list {
     margin-top: 1px; 
     width: -webkit-fill-available;
 }
+.container-hv-radios{
+  display: flex;
+  flex-direction: column;
+  margin: -25px 0 0 0;
+  mat-label{
+    margin-bottom: 0.2em;
+    text-decoration: underline;
+  }
+}
+.mat-radio-button ~ .mat-radio-button {
+  margin-left: 16px;
+}

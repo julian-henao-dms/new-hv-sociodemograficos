@@ -37,6 +37,9 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTabsModule} from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { DatosBasicosFormComponent } from './components/datos-basicos-form/datos-basicos-form.component';
+import { DatosAdicionalesFormComponent } from './components/datos-adicionales-form/datos-adicionales-form.component';
+
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { MatGridListModule } from '@angular/material/grid-list';
     SociodemograficosComponent,
     HeaderComponent,
     ContactoComponent,
-    HomeComponent
+    HomeComponent,
+    DatosBasicosFormComponent,
+    DatosAdicionalesFormComponent,
+
   ],
   imports: [
     BrowserModule,
