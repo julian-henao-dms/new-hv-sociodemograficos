@@ -1,9 +1,9 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 interface TipoCandidato{
   value: number;
@@ -93,20 +93,18 @@ interface ColorPiel{
   styleUrls: ['./hv-formulario.component.scss']
 })
 export class HvFormularioComponent implements OnInit {
-  
-  @ViewChild('fileInput')
-  fileInput!: ElementRef;
-  fileAttr = 'Choose File';
+
+
   public isVisible = -1;
   public tiposReferencia: string[] = ['Personal', 'Laboral'];
   public typeCandidato: number = 0;
-  public operacioneDisabled = true;
+  public operacionesDisabled = true;
   public isLinear = false;
   public isActive = true;
   public txtnombre:string="";
 
 
-  
+
   firstFormGroup = this._formBuilder.group({
     firstCtrl: ['', Validators.required],
   });
@@ -132,7 +130,7 @@ export class HvFormularioComponent implements OnInit {
   tiposCandidato: TipoCandidato[] = [
     {value: 0, viewValue: 'Personal Táctico y Soporte'},
     {value: 1, viewValue: 'Personal Operativo'},
-   
+
   ];
   tiposDoc: Doc[] = [
     {value: 0, viewValue: 'Cédula  (CC)'},
@@ -226,7 +224,7 @@ export class HvFormularioComponent implements OnInit {
 
   typeLicencia = 0;
   tiposLicencia = [
-    { value: 0, name: "Pública" }, 
+    { value: 0, name: "Pública" },
     { value: 1, name: "Privada" }
   ];
   coloresPiel: ColorPiel[] = [
@@ -235,7 +233,7 @@ export class HvFormularioComponent implements OnInit {
     {value: 2, viewValue: 'Blanco'}
   ];
   cols : number | undefined;
- 
+
   gridByBreakpoint = {
     xl: 4,
     lg: 3,
@@ -305,28 +303,12 @@ export class HvFormularioComponent implements OnInit {
   ngOnInit() {
   }
 
-  uploadFileEvt(imgFile: any) {
-    if (imgFile.target.files && imgFile.target.files[0]) {
-      this.fileAttr = '';
-      Array.from(imgFile.target.files).forEach((file: any) => {
-        this.fileAttr += file.name + ' - ';
-      });
-      // HTML5 FileReader API
-      let reader = new FileReader();
-      reader.onload = (e: any) => {
-        let image = new Image();
-        image.src = e.target.result;
-        image.onload = (rs) => {
-          let imgBase64Path = e.target.result;
-        };
-      };
-      reader.readAsDataURL(imgFile.target.files[0]);
-      // Reset if duplicate image uploaded again
-      this.fileInput.nativeElement.value = '';
-    } else {
-      this.fileAttr = 'Choose File';
-    }
+  changeDatosBasicos(evento:any){
+    console.log("Evento del hijo", evento);
+
   }
+
+
 }
 
 

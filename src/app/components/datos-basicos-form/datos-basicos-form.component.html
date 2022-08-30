@@ -1,30 +1,4 @@
 
-<form>
-    <ng-template matStepLabel>Datos Básicos</ng-template>
-    <app-datos-basicos-form></app-datos-basicos-form>
-<mat-grid-list
-#grid
-[cols]="colsAlt"
-rowHeight="85px"
-gutterSize="10px"
->
-<mat-grid-tile [colspan]="colsAlt">
-  <mat-form-field appearance="outline">
-    <mat-label>Seleccionar Tipo Candidato</mat-label>
-    <mat-select    require>
-      <mat-option
-        *ngFor="let tipoCandidato of tiposCandidato"
-        [value]="tipoCandidato.value"
-      >
-        {{ tipoCandidato.viewValue }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
-</mat-grid-tile>
-</mat-grid-list>
-
-<form>
-  <ng-template matStepLabel>Datos Básicos</ng-template>
   <mat-grid-list
     #grid
     [cols]="cols"
@@ -34,7 +8,9 @@ gutterSize="10px"
     <mat-grid-tile [colspan]="colsAlt">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Tipo Candidato</mat-label>
-        <mat-select    require>
+        <mat-select  (ngModelChange)="onChange($event)"
+        [(ngModel)]="typeCandidato"
+        name="typeCandidato" require>
           <mat-option
             *ngFor="let tipoCandidato of tiposCandidato"
             [value]="tipoCandidato.value"
@@ -57,7 +33,7 @@ gutterSize="10px"
     rowHeight="85px"
     gutterSize="10px"
   >
-    <!-- <mat-grid-tile> 
+    <!-- <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Seleccionar Tipo Candidato</mat-label>
                 <mat-select>
@@ -73,7 +49,7 @@ gutterSize="10px"
         <input
           matInput
           placeholder="Identificación"
-          formControlName="datosBasicos"
+
           required
         />
       </mat-form-field>
@@ -384,7 +360,7 @@ gutterSize="10px"
     rowHeight="85px"
     gutterSize="10px"
   >
-    <mat-grid-tile [colspan]="2">
+    <mat-grid-tile [colspan]="colsAlt">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Lengua Extranjera</mat-label>
         <mat-select>
@@ -404,4 +380,4 @@ gutterSize="10px"
       Siguiente
     </button>
   </div>
-</form>
+

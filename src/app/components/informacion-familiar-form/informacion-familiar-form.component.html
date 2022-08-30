@@ -1,0 +1,71 @@
+
+  <mat-grid-list
+    #grid
+    [cols]="cols"
+    rowHeight="85px"
+    gutterSize="10px"
+  >
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Identificación</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre </mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha Nacimiento</mat-label>
+        <mat-date-range-input [rangePicker]="nacPariente">
+          <input matStartDate placeholder="Inicio" />
+          <input matEndDate placeholder="Culminación" />
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="nacPariente"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #nacPariente></mat-date-range-picker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccionar Parentesco</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono / móvil</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <button mat-flat-button color="primary">Adicionar</button>
+  <div class="step-btn-container">
+    <button class="stepper-main-btn" mat-button matStepperPrevious>
+      Atrás
+    </button>
+    <button class="stepper-main-btn" mat-button matStepperNext>
+      Siguiente
+    </button>
+    <!-- <button
+      class="stepper-main-btn"
+      mat-button
+      (click)="stepper.reset()"
+    >
+      Reset
+    </button> -->
+  </div>

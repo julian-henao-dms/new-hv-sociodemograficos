@@ -1,0 +1,22 @@
+
+  <mat-form-field appearance="outline">
+    <mat-label>Seleccionar Cargos</mat-label>
+    <mat-select>
+      <mat-option
+        *ngFor="let categoria of categorias"
+        [value]="categoria.value"
+      >
+        {{ categoria.viewValue }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="step-btn-container">
+    <button class="stepper-main-btn" mat-button matStepperPrevious>
+      Atrás
+    </button>
+    <button class="stepper-main-btn" mat-button matStepperNext>
+      Siguiente
+    </button>
+  </div>
+

@@ -39,6 +39,11 @@ import { MatTabsModule} from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DatosBasicosFormComponent } from './components/datos-basicos-form/datos-basicos-form.component';
 import { DatosAdicionalesFormComponent } from './components/datos-adicionales-form/datos-adicionales-form.component';
+import { CargaArchivosFormComponent } from './components/carga-archivos-form/carga-archivos-form.component';
+import { EstudiosFormComponent } from './components/estudios-form/estudios-form.component';
+import { ReferenciasFormComponent } from './components/referencias-form/referencias-form.component';
+import { CargosFormComponent } from './components/cargos-form/cargos-form.component';
+import { InformacionFamiliarFormComponent } from './components/informacion-familiar-form/informacion-familiar-form.component';
 
 
 @NgModule({
@@ -51,6 +56,11 @@ import { DatosAdicionalesFormComponent } from './components/datos-adicionales-fo
     HomeComponent,
     DatosBasicosFormComponent,
     DatosAdicionalesFormComponent,
+    CargaArchivosFormComponent,
+    EstudiosFormComponent,
+    ReferenciasFormComponent,
+    CargosFormComponent,
+    InformacionFamiliarFormComponent,
 
   ],
   imports: [

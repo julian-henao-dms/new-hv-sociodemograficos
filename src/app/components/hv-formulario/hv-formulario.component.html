@@ -6,8 +6,10 @@
         Datos Candidato
       </ng-template>
       <mat-stepper [orientation]="(stepperOrientation | async)!" [linear]="isLinear" #stepper class="wizard-datos-candidato">
-        <mat-step [stepControl]="firstFormGroup">
-          <form>
+        <mat-step >
+          <ng-template matStepLabel>Datos Básicos</ng-template>
+          <app-datos-basicos-form (changeSelect)="changeDatosBasicos($event)"></app-datos-basicos-form>
+          <!-- <form>
             <ng-template matStepLabel>Datos Básicos</ng-template>
             <mat-grid-list
               #grid
@@ -41,7 +43,7 @@
               rowHeight="85px"
               gutterSize="10px"
             >
-           
+
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
                   <mat-label>Identificación</mat-label>
@@ -379,12 +381,13 @@
                 Siguiente
               </button>
             </div>
-          </form>
+          </form> -->
         </mat-step>
 
         <!-- Paso 2 -->
-        <mat-step [stepControl]="secondFormGroup" label="Datos Adicionales">
-          <form [formGroup]="secondFormGroup">
+        <mat-step  label="Datos Adicionales">
+        <app-datos-adicionales-form></app-datos-adicionales-form>
+          <!-- <form >
             <mat-grid-list
               #grid
               [cols]="cols"
@@ -407,7 +410,7 @@
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
                   <mat-label>Seleccionar Operaciones de Equipos </mat-label>
-                  <mat-select [disabled]="operacioneDisabled">
+                  <mat-select [disabled]="operacionesDisabled">
                     <mat-option
                       *ngFor="let pais of paises"
                       [value]="pais.value"
@@ -461,7 +464,7 @@
                   <input matInput placeholder="" name="" required />
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="3">
+              <mat-grid-tile [colspan]="cols">
                 <mat-form-field appearance="outline">
                   <mat-label>Seleccionar Entidad de Expedición</mat-label>
                   <mat-select>
@@ -474,20 +477,15 @@
                   </mat-select>
                 </mat-form-field>
               </mat-grid-tile>
-             
-            <mat-grid-tile [colspan]="3" class="tile-checks-hv">
+
+            <mat-grid-tile [colspan]="cols" class="tile-checks-hv">
               <div class="w-100">
               <section class="example-section">
                 <mat-checkbox class="example-margin"
                   >Participacion Anterior
                 </mat-checkbox>
                 <mat-checkbox class="example-margin">Runt</mat-checkbox>
-       
-              <!-- </section>
-            </mat-grid-tile>
-            <mat-grid-tile>
-              <section class="example-section"> -->
-              
+
                 <mat-checkbox class="example-margin"
                   >Disponibilidad para Viajar
                 </mat-checkbox>
@@ -509,7 +507,7 @@
               rowHeight="85px"
               gutterSize="10px"
             >
-             
+
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
                   <mat-label>Seleccionar EPS</mat-label>
@@ -523,7 +521,7 @@
                   </mat-select>
                 </mat-form-field>
               </mat-grid-tile>
-        
+
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Seleccionar Fondo Pensión</mat-label>
@@ -563,7 +561,7 @@
                 </mat-select>
               </mat-form-field>
             </mat-grid-tile>
-            
+
           </mat-grid-list>
             <mat-divider></mat-divider>
             <h2 class="subtitle-hv">Licencia de Conducción</h2>
@@ -582,13 +580,13 @@
               <mat-grid-tile>
                 <div class="container-hv-radios">
                   <mat-label>Tipo de Licencia:</mat-label>
-                  <mat-radio-group class="" [(ngModel)]="typeLicencia">
+                  <mat-radio-group class="" name="typeLicencia" [(ngModel)]="typeLicencia">
                     <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.value" color="primary">
                       {{ tipoLicencia.name }}
                     </mat-radio-button>
                   </mat-radio-group>
                   </div>
-            
+
               </mat-grid-tile>
               <mat-grid-tile>
                 <mat-form-field appearance="outline">
@@ -691,22 +689,23 @@
                 Siguiente
               </button>
             </div>
-          </form>
+          </form> -->
         </mat-step>
         <!-- Fin paso 2 -->
         <!-- Paso 3 -->
-        <mat-step [stepControl]="thirdFormGroup" label="Archivos">
-          <form [formGroup]="thirdFormGroup">
+        <mat-step  label="Archivos">
+          <app-carga-archivos-form></app-carga-archivos-form>
+          <!-- <form >
             <mat-form-field class="mat-form-field-upload ">
               <div>
-                <mat-toolbar>
+                <mat-toolbar> -->
                   <!-- Display files names -->
-                  <input matInput [(ngModel)]="fileAttr" readonly name="name" />
+                  <!-- <input matInput [(ngModel)]="fileAttr" readonly name="fileAttr" /> -->
                   <!-- Browse Button -->
-                  <button mat-flat-button color="primary">Subir archivos</button>
-                </mat-toolbar>
+                  <!-- <button mat-flat-button color="primary">Subir archivos</button>
+                </mat-toolbar> -->
                 <!-- Fetch selected filed on change -->
-                <input
+                <!-- <input
                   type="file"
                   #fileInput
                   id="uploadFile"
@@ -717,29 +716,15 @@
                 />
               </div>
             </mat-form-field>
-            <!-- <mat-form-field appearance="outline">
-              <mat-label>Address</mat-label>
-              <input matInput required />
-              <input class="ng-hide" id="input-file-id" type="file" />
-              <label for="input-file-id" class="md-button md-raised md-primary"
-                >Choose Files</label
-              >
-            </mat-form-field>
-            <div class="step-btn-container">
-              <button class="stepper-main-btn" mat-button matStepperPrevious>
-                Atrás
-              </button>
-              <button class="stepper-main-btn" mat-button matStepperNext>
-                Siguiente
-              </button>
-            </div> -->
-          </form>
+
+          </form> -->
         </mat-step>
         <!-- Fin Paso 3 -->
         <!-- Paso 4 -->
 
-        <mat-step [stepControl]="fourthFormGroup" label="Estudios">
-          <form [formGroup]="fourthFormGroup">
+        <mat-step  label="Estudios">
+          <app-estudios-form></app-estudios-form>
+          <!-- <form >
             <mat-grid-list
               #grid
               [cols]="cols"
@@ -849,16 +834,15 @@
                 Siguiente
               </button>
             </div>
-          </form>
+          </form> -->
         </mat-step>
-        <mat-step [stepControl]="fifthFormGroup" label="Referencias">
-          <form [formGroup]="fifthFormGroup">
+        <mat-step  label="Referencias">
+          <app-referencias-form></app-referencias-form>
+          <!-- <form >
             <div class="container-hv-referencia">
               <mat-label>Tipo Referencia:</mat-label>
               <mat-radio-group aria-label="Select an option">
                 <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia">{{ tipoReferencia}}</mat-radio-button>
-                <!-- <mat-radio-button value="0">Personal</mat-radio-button>
-                <mat-radio-button value="1">Laboral</mat-radio-button> -->
               </mat-radio-group>
             </div>
 
@@ -916,7 +900,7 @@
                   <input matInput placeholder="" name="" required />
                 </mat-form-field>
               </mat-grid-tile>
-              <mat-grid-tile [colspan]="3">
+              <mat-grid-tile [colspan]="cols">
                 <mat-form-field appearance="outline">
                   <mat-label>Notas</mat-label>
                   <textarea
@@ -938,10 +922,11 @@
                 Siguiente
               </button>
             </div>
-          </form>
+          </form> -->
         </mat-step>
-        <mat-step [stepControl]="sixthFormGroup" label="Cargos">
-          <form [formGroup]="sixthFormGroup">
+        <mat-step  label="Cargos">
+          <app-cargos-form></app-cargos-form>
+          <!-- <form >
             <mat-form-field appearance="outline">
               <mat-label>Seleccionar Cargos</mat-label>
               <mat-select>
@@ -962,10 +947,11 @@
                 Siguiente
               </button>
             </div>
-          </form>
+          </form> -->
         </mat-step>
-        <mat-step [stepControl]="seventhFormGroup" label="Información Familiar">
-          <form [formGroup]="seventhFormGroup">
+        <mat-step  label="Información Familiar">
+          <app-informacion-familiar-form></app-informacion-familiar-form>
+          <!-- <form >
             <mat-grid-list
               #grid
               [cols]="cols"
@@ -1033,8 +1019,16 @@
                 Reset
               </button>
             </div>
-          </form>
+          </form> -->
         </mat-step>
+        <mat-step>
+        <ng-template matStepLabel>Hecho</ng-template>
+        Se han llenado todos lo campos del formulario correctamente
+        <div>
+          <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+          <button class="stepper-main-btn" mat-button (click)="stepper.reset()">Reiniciar</button>
+        </div>
+      </mat-step>
       </mat-stepper>
     </mat-tab>
 
@@ -1043,7 +1037,7 @@
         <mat-icon class="example-tab-icon">groups</mat-icon>
         Datos Sociodemográficos
       </ng-template>
-      <app-sociodemograficos></app-sociodemograficos>
+      <!-- <app-sociodemograficos></app-sociodemograficos> -->
     </mat-tab>
   </mat-tab-group>
 </mat-card>

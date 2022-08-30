@@ -1,0 +1,109 @@
+  <mat-grid-list
+    #grid
+    [cols]="cols"
+    rowHeight="85px"
+    gutterSize="10px"
+  >
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>1.Seleccionar Institución</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>3. Periodo de Estudios</mat-label>
+        <mat-date-range-input [rangePicker]="periodo">
+          <input matStartDate placeholder="Inicio" />
+          <input matEndDate placeholder="Culminación" />
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="periodo"
+        ></mat-datepicker-toggle>
+        <mat-date-range-picker #periodo></mat-date-range-picker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>5. Seleccionar Tipo de Estudios</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccionar Nivel de Estudios</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>2.Seleccionar Título</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>4. Seleccionar Estado</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccionar Tipo de Curso</mat-label>
+        <mat-select>
+          <mat-option
+            *ngFor="let categoria of categorias"
+            [value]="categoria.value"
+          >
+            {{ categoria.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="step-btn-container">
+    <button class="stepper-main-btn" mat-button matStepperPrevious>
+      Atrás
+    </button>
+    <button class="stepper-main-btn" mat-button matStepperNext>
+      Siguiente
+    </button>
+  </div>

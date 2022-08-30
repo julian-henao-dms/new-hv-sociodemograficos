@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 
 
@@ -63,7 +63,7 @@ export class DatosBasicosFormComponent implements OnInit {
     xs: 1
   };
   cols : number | undefined;
- 
+
   gridByBreakpoint = {
     xl: 4,
     lg: 3,
@@ -71,11 +71,11 @@ export class DatosBasicosFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  
+
   tiposCandidato: TipoCandidato[] = [
     {value: '0', viewValue: 'Personal Táctico y Soporte'},
     {value: '1', viewValue: 'Personal Operativo'},
-   
+
   ];
 
 
@@ -188,4 +188,10 @@ export class DatosBasicosFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+@Output() changeSelect = new EventEmitter<any>();
+
+ public onChange(event:any){
+    console.log("Evento", event);
+    this.changeSelect.emit({'data':event});
+  }
 }

@@ -1,0 +1,84 @@
+
+  <div class="container-hv-referencia">
+    <mat-label>Tipo Referencia:</mat-label>
+    <mat-radio-group aria-label="Select an option">
+      <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia">{{ tipoReferencia}}</mat-radio-button>
+    </mat-radio-group>
+  </div>
+
+  <mat-grid-list
+    #grid
+    [cols]="cols"
+    rowHeight="85px"
+    gutterSize="10px"
+  >
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre Referencia</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Celular</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Teléfono</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Correo</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Empresa</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Cargo</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Tiempo Laborado</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Motivo de Retiro</mat-label>
+        <input matInput placeholder="" name="" required />
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="cols">
+      <mat-form-field appearance="outline">
+        <mat-label>Notas</mat-label>
+        <textarea
+          matInput
+          cdkTextareaAutosize
+          #autosize="cdkTextareaAutosize"
+          cdkAutosizeMinRows="1"
+          cdkAutosizeMaxRows="5"
+        ></textarea>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+
+  <div class="step-btn-container">
+    <button class="stepper-main-btn" mat-button matStepperPrevious>
+      Atrás
+    </button>
+    <button class="stepper-main-btn" mat-button matStepperNext>
+      Siguiente
+    </button>
+  </div>
