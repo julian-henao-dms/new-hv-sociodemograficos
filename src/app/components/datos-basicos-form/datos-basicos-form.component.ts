@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import { Candidato } from "./interfaces/candidato.interface"
 
 
 interface TipoCandidato{

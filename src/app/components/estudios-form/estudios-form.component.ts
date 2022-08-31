@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
+import { Estudios } from "./interfaces/estudios.interface"
 
 interface CategoriaLicencia{
   value: number;
@@ -14,13 +15,14 @@ interface CategoriaLicencia{
   styleUrls: ['./estudios-form.component.scss']
 })
 export class EstudiosFormComponent implements OnInit {
-  categorias: CategoriaLicencia[] = [
+  public selectedInstitucion ="";
+  public categorias: CategoriaLicencia[] = [
     {value: 0, viewValue: 'A1'},
     {value: 1, viewValue: 'B1'}
   ];
-  stepperOrientation: Observable<StepperOrientation>;
-  cols : number | undefined;
-  gridByBreakpoint = {
+  public stepperOrientation: Observable<StepperOrientation>;
+  public cols : number | undefined;
+  public gridByBreakpoint = {
     xl: 4,
     lg: 3,
     md: 2,

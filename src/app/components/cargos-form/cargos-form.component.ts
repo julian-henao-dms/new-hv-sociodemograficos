@@ -9,6 +9,7 @@ interface CategoriaLicencia{
   styleUrls: ['./cargos-form.component.scss']
 })
 export class CargosFormComponent implements OnInit {
+
   categorias: CategoriaLicencia[] = [
     {value: 0, viewValue: 'A1'},
     {value: 1, viewValue: 'B1'}

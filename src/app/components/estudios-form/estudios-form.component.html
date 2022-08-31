@@ -7,7 +7,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>1.Seleccionar Institución</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="selectedInstitucion" placeholder="Seleccionar Institución" required #institucion="ngModel" [value]="selectedInstitucion" [(ngModel)]="selectedInstitucion" name="selectedInstitucion">
           <mat-option
             *ngFor="let categoria of categorias"
             [value]="categoria.value"
@@ -15,6 +15,7 @@
             {{ categoria.viewValue }}
           </mat-option>
         </mat-select>
+        <span>{{institucion.valid}}</span>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>

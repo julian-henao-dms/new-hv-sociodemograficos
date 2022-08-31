@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -93,7 +94,8 @@ import { InformacionFamiliarFormComponent } from './components/informacion-famil
     MatButtonToggleModule,
     MatToolbarModule,
     MatTabsModule,
-    MatGridListModule
+    MatGridListModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
