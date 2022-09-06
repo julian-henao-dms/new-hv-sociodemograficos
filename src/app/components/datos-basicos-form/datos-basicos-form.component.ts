@@ -54,6 +54,67 @@ interface AniosExperiencia{
   styleUrls: ['./datos-basicos-form.component.scss']
 })
 export class DatosBasicosFormComponent implements OnInit {
+  public depto: string = '';
+  public ciudad: string = '';
+  public barrio: string = '';
+public datosBasicos: Candidato = {
+   emp:  0,
+   nit: '',
+   id_rh_tipo_documento:  0,
+   nombre: '',
+   apellido: '',
+   id_usuario:  0,
+   genero:  0,
+   fecha_nacimiento: new Date,
+   id_cot_cliente_pais:  0,
+   direccion: '',
+   telefono: '',
+   celular: '',
+   mail: '',
+   id_rh_perfil:  0,
+   id_cot_cliente:  0,
+   id_rh_requisicion_personal:  0,
+   id_rh_nivel_academico:  0,
+   id_rh_experiencia:  0,
+   observaciones: '',
+   id_tipo_candidato:  0,
+   id_rh_experiencia_sector:  0,
+   id_disponibilidad_viaje:  0,
+   id_participacion_anterior:  0,
+   id_salario:  0,
+   id_rh_fuente_reclutamiento:  0,
+   id_trajo_hoja_vida:  0,
+   estado:  0,
+   bloqueado:  0,
+   motivo: '',
+   licencia: '',
+   tarjeta: '',
+   tipo_licencia:  0,
+   fecha_vence_licencia: '',
+   runt:  0,
+   id_rh_categoria:  0,
+   id_rh_color_piel:  0,
+   id_rh_grupo_sanguineo:  0,
+   rh:  0,
+   id_rh_experiencia_equipo:  0,
+   peso:  0,
+   altura:  0,
+   salario:  0,
+   id:  0,
+   accion:  0,
+   id_Usuario_Asociado:  0,
+   id_con_cco:  0,
+   id_Entidad:  0,
+   fecExpedicion: new Date,
+   lugarExpedicion: '',
+   idRhEstadoCivil:  0,
+   idRhEps:  0,
+   idRhFondoPension:  0,
+   idRhFondoCaja:  0,
+   idRhFondoCesantias:  0,
+}
+
+
   colsAlt : number | undefined;
 
   gridByBreakpointAlt = {

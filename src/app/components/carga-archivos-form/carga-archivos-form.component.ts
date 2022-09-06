@@ -8,7 +8,7 @@ import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
 export class CargaArchivosFormComponent implements OnInit {
   @ViewChild('fileInput')
   fileInput!: ElementRef;
-  fileAttr = 'Choose File';
+  fileAttr = 'Cargar Archivos';
   constructor() { }
 
   ngOnInit(): void {
@@ -32,7 +32,7 @@ export class CargaArchivosFormComponent implements OnInit {
       // Reset if duplicate image uploaded again
       this.fileInput.nativeElement.value = '';
     } else {
-      this.fileAttr = 'Choose File';
+      this.fileAttr = 'Cargar Archivos';
     }
   }
 }

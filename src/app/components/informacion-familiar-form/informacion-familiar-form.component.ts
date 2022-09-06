@@ -3,6 +3,7 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
+import { Familiar } from './interfaces/familiar.interface';
 interface CategoriaLicencia{
   value: number;
   viewValue: string;
@@ -13,6 +14,25 @@ interface CategoriaLicencia{
   styleUrls: ['./informacion-familiar-form.component.scss']
 })
 export class InformacionFamiliarFormComponent implements OnInit {
+
+ public datosInfoFamilia: Familiar ={
+  id_candidato: 0,
+  nombre: '',
+  id_Parentesco: 0,
+  edad: 0,
+  ne: 0,
+  ec: 0,
+  ocupacion: '',
+  empresa: '',
+  telResidencia: '',
+  otroFamiliar: 0,
+  id: 0,
+  accion: 0,
+  nit: '',
+  fechaNace: new Date,
+ }
+
+
   categorias: CategoriaLicencia[] = [
     {value: 0, viewValue: 'A1'},
     {value: 1, viewValue: 'B1'}

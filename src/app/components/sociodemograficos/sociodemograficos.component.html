@@ -1,17 +1,43 @@
 <mat-card>
-    <form [formGroup]="sociodemograficos">
+    <form>
         <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
-          <mat-grid-tile>
-           <div class="container-hv-radios">
-            <mat-label>Consentimiento Informado:</mat-label>
-            <mat-radio-group class="" [formControl]="consentimiento">
-              <mat-radio-button *ngFor="let optionConsentimiento of optionsYesNo" [value]="optionConsentimiento.value" color="primary">
-                {{ optionConsentimiento.name }}
-              </mat-radio-button>
-            </mat-radio-group>
 
+          <!-- <mat-grid-tile colspan="2">
+
+<div class="consentimiento">
+  <p>Mensaje para mostrar en la opción: Consentimiento Informado</p>
+
+  <p>Voluntariamente acepto brindar mi información personal, clara y verídica a la empresa para mantener actualizado el perfil sociodemográfico, manifiesto haber recibido una explicación clara y completa sobre el carácter general y los propósitos del perfil sociodemográfico.</p>
+
+  <p>Igualmente, se me ha informado que es decisión mía, si brindo o no la información personal a la empresa y comprendo la información solo será conocida por el personal encargado del área de Seguridad y Salud en el trabajo o quien la requiera con mi autorización.</p>
+<p>
+  Ley protección de datos 1581 de 2012</p>
+</div>
+
+
+
+
+          </mat-grid-tile> -->
+
+          <mat-grid-tile >
+            <div class="container-hv-radios">
+             <mat-label>Consentimiento Informado:</mat-label>
+             <mat-radio-group class="" [formControl]="consentimiento">
+               <mat-radio-button *ngFor="let optionConsentimiento of optionsYesNo" [value]="optionConsentimiento.value" color="primary">
+                 {{ optionConsentimiento.name }}
+               </mat-radio-button>
+             </mat-radio-group>
+
+           </div>
+           </mat-grid-tile>
+          </mat-grid-list>
+          <mat-divider></mat-divider>
+          <div class="subtitle-container">
+            <mat-icon>badge</mat-icon>
+            <h2 class="subtitle-hv">Datos Empresariales</h2>
           </div>
-          </mat-grid-tile>
+          <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Empresa</mat-label>
@@ -36,11 +62,19 @@
               <input matInput disabled placeholder="Fecha Ingreso" required />
             </mat-form-field>
           </mat-grid-tile>
+
           <mat-grid-tile>
             <mat-form-field appearance="outline">
-              <mat-label>ARL</mat-label>
-              <input matInput disabled placeholder="ARL" required />
-            </mat-form-field>
+              <mat-label>Antigüedad en la Empresa</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let anioAntigEmpresa of aniosAntigEmpresa"
+                  [value]="anioAntigEmpresa.value"
+                >
+                  {{ anioAntigEmpresa.viewValue }}
+                </mat-option>
+              </mat-select>
+              </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
@@ -57,26 +91,195 @@
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
-              <mat-label>Antigüedad en la Empresa</mat-label>
+              <mat-label>Promedio Ingresos</mat-label>
               <mat-select>
                 <mat-option
-                  *ngFor="let anioAntigEmpresa of aniosAntigEmpresa"
-                  [value]="anioAntigEmpresa.value"
+                  *ngFor="let salario of rangosEdad"
+                  [value]="salario.value"
                 >
-                  {{ anioAntigEmpresa.viewValue }}
+                  {{ salario.viewValue }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>ARL</mat-label>
+              <input matInput disabled placeholder="ARL" required />
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
             <div class="container-hv-radios">
-            <mat-label>Tipo de Afiliado:</mat-label>
+            <mat-label>Tipo de Afiliación EPS:</mat-label>
             <mat-radio-group class="" [(ngModel)]="typeAfiliado">
               <mat-radio-button *ngFor="let tipoAfiliado of tiposAfiliado" [value]="tipoAfiliado.value" color="primary">
                 {{ tipoAfiliado.name }}
               </mat-radio-button>
             </mat-radio-group>
             </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <mat-divider></mat-divider>
+        <div class="subtitle-container">
+          <mat-icon>badge</mat-icon>
+          <h2 class="subtitle-hv">
+            Lugar de Nacimiento
+          </h2>
+        </div>
+        <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+
+            <mat-grid-tile>
+              <mat-form-field appearance="outline">
+                <mat-label>Seleccionar País</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let pais of paises"
+                    [value]="pais.value"
+                  >
+                    {{ pais.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field appearance="outline">
+                <mat-label>Seleccionar Departamento</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let depto of deptos"
+                    [value]="depto.value"
+                  >
+                    {{ depto.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field appearance="outline">
+                <mat-label>Seleccionar Ciudad</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let ciudad of ciudades"
+                    [value]="ciudad.value"
+                  >
+                    {{ ciudad.viewValue }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              </mat-grid-tile>
+        </mat-grid-list>
+        <mat-divider></mat-divider>
+        <div class="subtitle-container">
+          <mat-icon>badge</mat-icon>
+          <h2 class="subtitle-hv">
+            Información de la Vivienda
+          </h2>
+        </div>
+        <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+
+            <mat-grid-tile>
+              <mat-form-field appearance="outline">
+                <mat-label>Caracteristicas de la vivienda</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let caracteristica of caracteristicas"
+                    [value]="caracteristica.value"
+                  >
+                    {{ caracteristica.viewValue }}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <mat-form-field appearance="outline">
+                <mat-label>Zona  en la que se Ubica</mat-label>
+                <mat-select>
+                  <mat-option
+                    *ngFor="let ubicacion of ubicaciones"
+                    [value]="ubicacion.value"
+                  >
+                    {{ ubicacion.viewValue }}
+                  </mat-option>
+                </mat-select>
+                </mat-form-field>
+            </mat-grid-tile>
+            <mat-grid-tile>
+              <div class="container-hv-radios">
+               <mat-label>El lugar donde vivo, ¿Cuenta con los servicios públicos que mi familia necesita?</mat-label>
+               <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+                 <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
+                   {{ servicioNecesario.name }}
+                 </mat-radio-button>
+               </mat-radio-group>
+
+             </div>
+             </mat-grid-tile>
+
+
+           <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Servicios de la Vivienda</mat-label>
+              <mat-select [formControl]="serviciosVivienda" multiple>
+                <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.value">{{servicioPublico.viewValue}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+           </mat-grid-tile>
+           <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Estrato Servicios Públicos</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let estrato of estratos"
+                  [value]="estrato.value"
+                >
+                  {{ estrato.viewValue }}
+                </mat-option>
+              </mat-select>
+              </mat-form-field>
+          </mat-grid-tile>
+           <mat-grid-tile>
+            <div class="container-hv-radios">
+             <mat-label>¿ El tamaño de la vivienda es suficiente para las personas que conforman mi hogar ?</mat-label>
+             <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+               <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
+                 {{ servicioNecesario.name }}
+               </mat-radio-button>
+             </mat-radio-group>
+
+           </div>
+           </mat-grid-tile>
+           <mat-grid-tile>
+            <div class="container-hv-radios">
+             <mat-label>¿Las Condiciones en que está construida mi vivienda son seguras? </mat-label>
+             <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+               <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
+                 {{ servicioNecesario.name }}
+               </mat-radio-button>
+             </mat-radio-group>
+
+           </div>
+           </mat-grid-tile>
+          </mat-grid-list>
+          <mat-divider></mat-divider>
+          <div class="subtitle-container">
+            <mat-icon>badge</mat-icon>
+            <h2 class="subtitle-hv">
+              Información Familiar
+            </h2>
+          </div>
+          <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+           <mat-grid-tile>
+            <mat-form-field appearance="outline">
+              <mat-label>Nº de Personas con las que Vive</mat-label>
+              <mat-select>
+                <mat-option
+                  *ngFor="let persona of numPersonas"
+                  [value]="persona.value"
+                >
+                  {{ persona.viewValue }}
+                </mat-option>
+              </mat-select>
+              </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
@@ -103,113 +306,8 @@
               </mat-select>
               </mat-form-field>
           </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field appearance="outline">
-              <mat-label>Promedio Ingresos</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let salario of rangosEdad"
-                  [value]="salario.value"
-                >
-                  {{ salario.viewValue }}
-                </mat-option>
-              </mat-select>
-              </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field appearance="outline">
-              <mat-label>Caracteristicas de la vivienda</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let caracteristica of caracteristicas"
-                  [value]="caracteristica.value"
-                >
-                  {{ caracteristica.viewValue }}
-                </mat-option>
-              </mat-select>
-              </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field appearance="outline">
-              <mat-label>Zona  en la que se Ubica</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let ubicacion of ubicaciones"
-                  [value]="ubicacion.value"
-                >
-                  {{ ubicacion.viewValue }}
-                </mat-option>
-              </mat-select>
-              </mat-form-field>
-          </mat-grid-tile>
-          <mat-grid-tile>
-            <mat-form-field appearance="outline">
-              <mat-label>Estrato Servicios Públicos</mat-label>
-              <mat-select>
-                <mat-option
-                  *ngFor="let estrato of estratos"
-                  [value]="estrato.value"
-                >
-                  {{ estrato.viewValue }}
-                </mat-option>
-              </mat-select>
-              </mat-form-field>
-          </mat-grid-tile>
-         
-         <mat-grid-tile>
-          <mat-form-field appearance="outline">
-            <mat-label>Servicios de la Vivienda</mat-label>
-            <mat-select [formControl]="serviciosVivienda" multiple>
-              <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.value">{{servicioPublico.viewValue}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-         </mat-grid-tile>
-         <mat-grid-tile>
-          <div class="container-hv-radios">
-           <mat-label>El lugar donde vivo, ¿Cuenta con los servicios públicos que mi familia necesita?</mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
-             <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
-               {{ servicioNecesario.name }}
-             </mat-radio-button>
-           </mat-radio-group>
 
-         </div>
-         </mat-grid-tile>
-         <mat-grid-tile>
-          <mat-form-field appearance="outline">
-            <mat-label>Nº de Personas con las que Vive</mat-label>
-            <mat-select>
-              <mat-option
-                *ngFor="let persona of numPersonas"
-                [value]="persona.value"
-              >
-                {{ persona.viewValue }}
-              </mat-option>
-            </mat-select>
-            </mat-form-field>
-        </mat-grid-tile>
-         <mat-grid-tile>
-          <div class="container-hv-radios">
-           <mat-label>¿ El tamaño de la vivienda es suficiente para las personas que conforman mi hogar ?</mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
-             <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
-               {{ servicioNecesario.name }}
-             </mat-radio-button>
-           </mat-radio-group>
 
-         </div>
-         </mat-grid-tile>
-         <mat-grid-tile>
-          <div class="container-hv-radios">
-           <mat-label>¿Las Condiciones en que está construida mi vivienda son seguras? </mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
-             <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
-               {{ servicioNecesario.name }}
-             </mat-radio-button>
-           </mat-radio-group>
-
-         </div>
-         </mat-grid-tile>
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>¿Quién o quiénes dependen Económicamente de Usted?</mat-label>
@@ -218,7 +316,6 @@
             </mat-select>
           </mat-form-field>
          </mat-grid-tile>
-         
          <mat-grid-tile>
           <div class="container-hv-radios">
            <mat-label>¿En tu grupo familiar hay alguna persona tiene una condición de discapacidad? </mat-label>
@@ -230,17 +327,16 @@
 
          </div>
          </mat-grid-tile>
-         <mat-grid-tile>
-          <div class="container-hv-radios">
-           <mat-label>¿Puedo acceder fácilmente a los servicios de salud?</mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
-             <mat-radio-button *ngFor="let servicioSalud of optionsYesNo" [value]="servicioSalud.value" color="primary">
-               {{ servicioSalud.name }}
-             </mat-radio-button>
-           </mat-radio-group>
+        </mat-grid-list>
+        <mat-divider></mat-divider>
+          <div class="subtitle-container">
+            <mat-icon>badge</mat-icon>
+            <h2 class="subtitle-hv">
+              Información Complementaria
+            </h2>
+          </div>
+        <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
 
-         </div>
-         </mat-grid-tile>
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Tipo del Transporte para ir al Trabajo</mat-label>
@@ -307,6 +403,17 @@
          </mat-grid-tile>
          <mat-grid-tile>
           <div class="container-hv-radios">
+           <mat-label>¿Puedo acceder fácilmente a los servicios de salud?</mat-label>
+           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+             <mat-radio-button *ngFor="let servicioSalud of optionsYesNo" [value]="servicioSalud.value" color="primary">
+               {{ servicioSalud.name }}
+             </mat-radio-button>
+           </mat-radio-group>
+
+         </div>
+         </mat-grid-tile>
+         <mat-grid-tile>
+          <div class="container-hv-radios">
            <mat-label>¿Requiere el uso de lentes medicados? </mat-label>
            <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
              <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
@@ -316,9 +423,9 @@
 
          </div>
          </mat-grid-tile>
-         
+
         </mat-grid-list>
-        
-          
+
+
       </form>
 </mat-card>

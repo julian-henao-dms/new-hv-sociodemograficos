@@ -46,6 +46,18 @@ interface TipoTransporte{
   value: number;
   viewValue: string;
 }
+interface Pais{
+  value: string;
+  viewValue: string;
+}
+interface Depto{
+  value: string;
+  viewValue: string;
+}
+interface Ciudad{
+  value: string;
+  viewValue: string;
+}
 @Component({
   selector: 'app-sociodemograficos',
   templateUrl: './sociodemograficos.component.html',
@@ -54,19 +66,19 @@ interface TipoTransporte{
 export class SociodemograficosComponent implements OnInit {
   typeAfiliado = 0;
   tiposAfiliado = [
-    { value: 0, name: "Dependiente" }, 
+    { value: 0, name: "Dependiente" },
     { value: 1, name: "Independiente" }
   ];
   consentimiento = new FormControl('');
   optionsYesNo = [
-    { value: 0, name: "Si" }, 
+    { value: 0, name: "Si" },
     { value: 1, name: "No" }
   ];
 
   aniosAntiguedad: AnioAntiguedad[] = [
     {value: 0, viewValue: '0-1 años'},
     {value: 1, viewValue: '1 a 5 años'},
-   
+
   ];
   aniosAntigEmpresa: AnioAntigEmpresa[] = [
     {value: 0, viewValue: '0-1 años'},
@@ -79,7 +91,7 @@ export class SociodemograficosComponent implements OnInit {
   salarios: Salario[] = [
     {value: 0, viewValue: '0 a 2 años'},
     {value: 1, viewValue: '2 a 5 años'}
-   
+
   ];
   caracteristicas: CaracteristicaVivienda[] = [
     {value: 0, viewValue: 'Arrendada'},
@@ -104,7 +116,30 @@ export class SociodemograficosComponent implements OnInit {
     {value: 4, viewValue: '5'},
     {value: 5, viewValue: '6 o más'},
   ];
-
+  paises: Pais[] = [
+    {value: '0', viewValue: 'Argentina'},
+    {value: '1', viewValue: 'Bolivia'},
+    {value: '2', viewValue: 'Brasil'},
+    {value: '3', viewValue: 'Colombia'},
+    {value: '4', viewValue: 'Ecuador'},
+    {value: '5', viewValue: 'Perú'}
+  ];
+  deptos: Depto[] = [
+    {value: '0', viewValue: 'Antioquia'},
+    {value: '1', viewValue: 'Cundinamarca'},
+    {value: '2', viewValue: 'Nariño'},
+    {value: '3', viewValue: 'Valle del Cauca'},
+    {value: '4', viewValue: 'Quindío'},
+    {value: '5', viewValue: 'Risaralda'}
+  ];
+  ciudades: Ciudad[] = [
+    {value: '0', viewValue: 'Buenos Aires'},
+    {value: '1', viewValue: 'La Paz'},
+    {value: '2', viewValue: 'Brasil'},
+    {value: '3', viewValue: 'Bogotá'},
+    {value: '4', viewValue: 'Medellín'},
+    {value: '5', viewValue: 'Quito'}
+  ];
   serviciosVivienda = new FormControl('');
   dependenciaFamiliar = new FormControl('');
   serviciosPublicosFamilia = new FormControl('');
@@ -123,7 +158,7 @@ export class SociodemograficosComponent implements OnInit {
     {value: 3, viewValue: 'Pareja'},
     {value: 3, viewValue: 'Familiar'},
   ];
-  
+
   tiposTransporte: TipoTransporte[] = [
     {value: 0, viewValue: 'Caminando'},
     {value: 1, viewValue: 'Bicicleta'},
@@ -138,9 +173,9 @@ export class SociodemograficosComponent implements OnInit {
 
   cols : number | undefined;
   gridByBreakpoint = {
-    xl: 4,
-    lg: 4,
-    md: 3,
+    xl: 3,
+    lg: 3,
+    md: 2,
     sm: 2,
     xs: 1
   }
@@ -177,5 +212,5 @@ export class SociodemograficosComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  
+
 }

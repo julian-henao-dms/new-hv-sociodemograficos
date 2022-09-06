@@ -15,6 +15,23 @@ interface CategoriaLicencia{
   styleUrls: ['./estudios-form.component.scss']
 })
 export class EstudiosFormComponent implements OnInit {
+
+  public datosEstudios: Estudios ={
+    idEstudio: 0,
+    idCandidato: 0,
+    idUsuario: 0,
+    idInstitucion: 0,
+    fecha_Desde: new Date,
+    fecha_Hasta: new Date,
+    id_estado_estudio: 0,
+    id_tipo_estudio: 0,
+    id_nivel_estudio: 0,
+    id_tipo_curso: 0,
+    id: 0,
+    accion: 0,
+  }
+
+
   public selectedInstitucion ="";
   public categorias: CategoriaLicencia[] = [
     {value: 0, viewValue: 'A1'},
