@@ -8,13 +8,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Identificación" #nit="ngModel" required id="nit" name="nit"  [(ngModel)]="datosInfoFamilia.nit" (ngModelChange)="datosInfoFamilia.nit = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre </mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Nombre Familiar" #nombreFamiliar="ngModel" required id="nombreFamiliar" name="nombre"  [(ngModel)]="datosInfoFamilia.nombre" (ngModelChange)="datosInfoFamilia.nombre = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -57,6 +57,12 @@
   <div class="step-btn-container">
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
+    </button>
+    <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
+      Guardar Progreso
+    </button>
+    <button type="button" class="stepper-main-btn" mat-button (click)="enviarFormulario()">
+      Enviar
     </button>
     <button class="stepper-main-btn" mat-button matStepperNext>
       Siguiente

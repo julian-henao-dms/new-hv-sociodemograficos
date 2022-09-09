@@ -19,21 +19,24 @@
 
           </mat-grid-tile> -->
 
-          <mat-grid-tile >
+          <mat-grid-tile class="left-grid-position" >
             <div class="container-hv-radios">
              <mat-label>Consentimiento Informado:</mat-label>
-             <mat-radio-group class="" [formControl]="consentimiento">
+             <mat-radio-group class="" name="sociodemograficos.consentimiento"  [(ngModel)]="sociodemograficos.consentimiento">
                <mat-radio-button *ngFor="let optionConsentimiento of optionsYesNo" [value]="optionConsentimiento.value" color="primary">
                  {{ optionConsentimiento.name }}
                </mat-radio-button>
              </mat-radio-group>
 
            </div>
+
            </mat-grid-tile>
           </mat-grid-list>
+
+        <div class="campos-sociodemograficos" *ngIf="sociodemograficos.consentimiento == 1">
           <mat-divider></mat-divider>
           <div class="subtitle-container">
-            <mat-icon>badge</mat-icon>
+            <mat-icon>apartment</mat-icon>
             <h2 class="subtitle-hv">Datos Empresariales</h2>
           </div>
           <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
@@ -41,32 +44,32 @@
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Empresa</mat-label>
-              <input matInput disabled placeholder="Empresa" required />
+              <input matInput [disabled]="isDisable" placeholder="Empresa" #empresa="ngModel" required id="empresa" name="empresa"  [(ngModel)]="sociodemograficos.empresa" (ngModelChange)="sociodemograficos.empresa = $event.toUpperCase()"/>
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Sede</mat-label>
-              <input matInput disabled placeholder="Sede" required />
+              <input matInput [disabled]="isDisable" placeholder="Sede" #sede="ngModel" required id="sede" name="sede"  [(ngModel)]="sociodemograficos.sede" (ngModelChange)="sociodemograficos.sede = $event.toUpperCase()" />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Area</mat-label>
-              <input matInput disabled placeholder="Area" required />
+              <input matInput [disabled]="isDisable" placeholder="Area" #area="ngModel" required id="area" name="area"  [(ngModel)]="sociodemograficos.area" (ngModelChange)="sociodemograficos.area = $event.toUpperCase()" />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Fecha de Ingreso</mat-label>
-              <input matInput disabled placeholder="Fecha Ingreso" required />
+              <input matInput [disabled]="isDisable" placeholder="Fecha Ingreso" #fechaIngreso="ngModel" required id="fechaIngreso" name="fechaIngreso"  [(ngModel)]="sociodemograficos.fechaIngreso"  />
             </mat-form-field>
           </mat-grid-tile>
 
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Antigüedad en la Empresa</mat-label>
-              <mat-select>
+              <mat-select #antiguedadEmpresa="ngModel" required id="antiguedadEmpresa" name="antiguedadEmpresa"  [(ngModel)]="sociodemograficos.antiguedadEmpresa" >
                 <mat-option
                   *ngFor="let anioAntigEmpresa of aniosAntigEmpresa"
                   [value]="anioAntigEmpresa.value"
@@ -79,7 +82,7 @@
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Antigüedad en el cargo desempeñado</mat-label>
-              <mat-select>
+              <mat-select #antiguedadCargo="ngModel" required id="antiguedadCargo" name="antiguedadCargo"  [(ngModel)]="sociodemograficos.antiguedadCargo">
                 <mat-option
                   *ngFor="let anioAntiguedad of aniosAntiguedad"
                   [value]="anioAntiguedad.value"
@@ -92,7 +95,7 @@
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Promedio Ingresos</mat-label>
-              <mat-select>
+              <mat-select #promedioIngresos="ngModel" required id="promedioIngresos" name="promedioIngresos"  [(ngModel)]="sociodemograficos.promedioIngresos">
                 <mat-option
                   *ngFor="let salario of rangosEdad"
                   [value]="salario.value"
@@ -108,10 +111,10 @@
               <input matInput disabled placeholder="ARL" required />
             </mat-form-field>
           </mat-grid-tile>
-          <mat-grid-tile>
+          <mat-grid-tile class="left-grid-position">
             <div class="container-hv-radios">
             <mat-label>Tipo de Afiliación EPS:</mat-label>
-            <mat-radio-group class="" [(ngModel)]="typeAfiliado">
+            <mat-radio-group #tipoAfiliadoEps="ngModel" required id="tipoAfiliadoEps" name="tipoAfiliadoEps"  [(ngModel)]="sociodemograficos.tipoAfiliadoEps">
               <mat-radio-button *ngFor="let tipoAfiliado of tiposAfiliado" [value]="tipoAfiliado.value" color="primary">
                 {{ tipoAfiliado.name }}
               </mat-radio-button>
@@ -121,7 +124,7 @@
         </mat-grid-list>
         <mat-divider></mat-divider>
         <div class="subtitle-container">
-          <mat-icon>badge</mat-icon>
+          <mat-icon>south_america</mat-icon>
           <h2 class="subtitle-hv">
             Lugar de Nacimiento
           </h2>
@@ -131,7 +134,7 @@
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Seleccionar País</mat-label>
-                <mat-select>
+                <mat-select #paisNacimiento="ngModel" required id="paisNacimiento" name="paisNacimiento"  [(ngModel)]="sociodemograficos.paisNacimiento">
                   <mat-option
                     *ngFor="let pais of paises"
                     [value]="pais.value"
@@ -144,7 +147,7 @@
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Seleccionar Departamento</mat-label>
-                <mat-select>
+                <mat-select #deptoNacimiento="ngModel" required id="deptoNacimiento" name="deptoNacimiento"  [(ngModel)]="sociodemograficos.deptoNacimiento">
                   <mat-option
                     *ngFor="let depto of deptos"
                     [value]="depto.value"
@@ -157,7 +160,7 @@
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Seleccionar Ciudad</mat-label>
-                <mat-select>
+                <mat-select #ciudadNacimiento="ngModel" required id="ciudadNacimiento" name="ciudadNacimiento"  [(ngModel)]="sociodemograficos.ciudadNacimiento">
                   <mat-option
                     *ngFor="let ciudad of ciudades"
                     [value]="ciudad.value"
@@ -170,7 +173,7 @@
         </mat-grid-list>
         <mat-divider></mat-divider>
         <div class="subtitle-container">
-          <mat-icon>badge</mat-icon>
+          <mat-icon>house</mat-icon>
           <h2 class="subtitle-hv">
             Información de la Vivienda
           </h2>
@@ -180,7 +183,7 @@
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Caracteristicas de la vivienda</mat-label>
-                <mat-select>
+                <mat-select #caracteristicasVivienda="ngModel" required id="caracteristicasVivienda" name="caracteristicasVivienda"  [(ngModel)]="sociodemograficos.caracteristicasVivienda">
                   <mat-option
                     *ngFor="let caracteristica of caracteristicas"
                     [value]="caracteristica.value"
@@ -193,7 +196,7 @@
             <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Zona  en la que se Ubica</mat-label>
-                <mat-select>
+                <mat-select #zonaVivienda="ngModel" required id="zonaVivienda" name="zonaVivienda"  [(ngModel)]="sociodemograficos.zonaVivienda">
                   <mat-option
                     *ngFor="let ubicacion of ubicaciones"
                     [value]="ubicacion.value"
@@ -206,7 +209,7 @@
             <mat-grid-tile>
               <div class="container-hv-radios">
                <mat-label>El lugar donde vivo, ¿Cuenta con los servicios públicos que mi familia necesita?</mat-label>
-               <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+               <mat-radio-group #cuentaConServicios="ngModel" required id="cuentaConServicios" name="cuentaConServicios"  [(ngModel)]="sociodemograficos.cuentaConServicios">
                  <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
                    {{ servicioNecesario.name }}
                  </mat-radio-button>
@@ -219,7 +222,7 @@
            <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Servicios de la Vivienda</mat-label>
-              <mat-select [formControl]="serviciosVivienda" multiple>
+              <mat-select #serviciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="sociodemograficos.serviciosVivienda" multiple>
                 <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.value">{{servicioPublico.viewValue}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -227,7 +230,7 @@
            <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Estrato Servicios Públicos</mat-label>
-              <mat-select>
+              <mat-select #serviciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="sociodemograficos.serviciosVivienda">
                 <mat-option
                   *ngFor="let estrato of estratos"
                   [value]="estrato.value"
@@ -240,7 +243,7 @@
            <mat-grid-tile>
             <div class="container-hv-radios">
              <mat-label>¿ El tamaño de la vivienda es suficiente para las personas que conforman mi hogar ?</mat-label>
-             <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+             <mat-radio-group #tamanoVivienda="ngModel" required id="tamanoVivienda" name="tamanoVivienda"  [(ngModel)]="sociodemograficos.tamanoVivienda">
                <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
                  {{ servicioNecesario.name }}
                </mat-radio-button>
@@ -251,7 +254,7 @@
            <mat-grid-tile>
             <div class="container-hv-radios">
              <mat-label>¿Las Condiciones en que está construida mi vivienda son seguras? </mat-label>
-             <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+             <mat-radio-group #condicionesVivienda="ngModel" required id="condicionesVivienda" name="condicionesVivienda"  [(ngModel)]="sociodemograficos.condicionesVivienda">
                <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
                  {{ servicioNecesario.name }}
                </mat-radio-button>
@@ -262,7 +265,7 @@
           </mat-grid-list>
           <mat-divider></mat-divider>
           <div class="subtitle-container">
-            <mat-icon>badge</mat-icon>
+            <mat-icon>family_restroom</mat-icon>
             <h2 class="subtitle-hv">
               Información Familiar
             </h2>
@@ -271,7 +274,7 @@
            <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Nº de Personas con las que Vive</mat-label>
-              <mat-select>
+              <mat-select #condicionesVivienda="ngModel" required id="condicionesVivienda" name="condicionesVivienda"  [(ngModel)]="sociodemograficos.condicionesVivienda">
                 <mat-option
                   *ngFor="let persona of numPersonas"
                   [value]="persona.value"
@@ -287,16 +290,15 @@
               <input
                 matInput
                 type="number"
-                placeholder="0"
-                name=""
-                required
+                placeholder="Número de Hijos"
+                #numHijos="ngModel" required id="numHijos" name="numHijos"  [(ngModel)]="sociodemograficos.numHijos"
               />
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Rango Edad Hijos</mat-label>
-              <mat-select>
+              <mat-select #edadHijos="ngModel" required id="edadHijos" name="edadHijos"  [(ngModel)]="sociodemograficos.edadHijos">
                 <mat-option
                   *ngFor="let rangoEdad of rangosEdad"
                   [value]="rangoEdad.value"
@@ -311,7 +313,7 @@
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>¿Quién o quiénes dependen Económicamente de Usted?</mat-label>
-            <mat-select [formControl]="dependenciaFamiliar" multiple>
+            <mat-select #dependenciaEconomica="ngModel" required id="dependenciaEconomica" name="dependenciaEconomica"  [(ngModel)]="sociodemograficos.dependenciaEconomica" multiple>
               <mat-option *ngFor="let dependiente of dependencias" [value]="dependiente.value">{{dependiente.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -319,7 +321,7 @@
          <mat-grid-tile>
           <div class="container-hv-radios">
            <mat-label>¿En tu grupo familiar hay alguna persona tiene una condición de discapacidad? </mat-label>
-           <mat-radio-group class="" >
+           <mat-radio-group #familiarDiscapacitado="ngModel" required id="familiarDiscapacitado" name="familiarDiscapacitado"  [(ngModel)]="sociodemograficos.familiarDiscapacitado" >
              <mat-radio-button *ngFor="let personaDiscapacitada of optionsYesNo" [value]="personaDiscapacitada.value" color="primary">
                {{ personaDiscapacitada.name }}
              </mat-radio-button>
@@ -330,7 +332,7 @@
         </mat-grid-list>
         <mat-divider></mat-divider>
           <div class="subtitle-container">
-            <mat-icon>badge</mat-icon>
+            <mat-icon>folder_shared</mat-icon>
             <h2 class="subtitle-hv">
               Información Complementaria
             </h2>
@@ -340,7 +342,7 @@
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Tipo del Transporte para ir al Trabajo</mat-label>
-            <mat-select [formControl]="transporteTrabajo" multiple>
+            <mat-select #tipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte"  [(ngModel)]="sociodemograficos.tipoTransporte" multiple>
               <mat-option *ngFor="let transporte of tiposTransporte" [value]="transporte.value">{{transporte.viewValue}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -348,7 +350,7 @@
          <mat-grid-tile>
           <div class="container-hv-radios">
            <mat-label>¿La ruta que utilizo para desplazarme entre mi casa y el trabajo es segura</mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+           <mat-radio-group #rutaSegura="ngModel" required id="rutaSegura" name="rutaSegura"  [(ngModel)]="sociodemograficos.rutaSegura">
              <mat-radio-button *ngFor="let rutaSegura of optionsYesNo" [value]="rutaSegura.value" color="primary">
                {{ rutaSegura.name }}
              </mat-radio-button>
@@ -356,10 +358,10 @@
 
          </div>
          </mat-grid-tile>
-         <mat-grid-tile>
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿Fuera de mi trabajo tengo suficiente tiempo libre para descansar? </mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+           <mat-radio-group #tiempoLibre="ngModel" required id="tiempoLibre" name="tiempoLibre"  [(ngModel)]="sociodemograficos.tiempoLibre">
              <mat-radio-button *ngFor="let tiempoLibre of optionsYesNo" [value]="tiempoLibre.value" color="primary">
                {{ tiempoLibre.name }}
              </mat-radio-button>
@@ -376,13 +378,14 @@
               #autosize="cdkTextareaAutosize"
               cdkAutosizeMinRows="1"
               cdkAutosizeMaxRows="5"
+              placeholder="Nombre Familiar" #reduceDescanso="ngModel" required id="reduceDescanso" name="reduceDescanso"  [(ngModel)]="sociodemograficos.reduceDescanso" (ngModelChange)="sociodemograficos.reduceDescanso = $event.toUpperCase()"
             ></textarea>
           </mat-form-field>
         </mat-grid-tile>
          <mat-grid-tile>
           <div class="container-hv-radios">
            <mat-label>¿Practica actividad física por lo menos 3 veces a la semana por 30 minutos mínimo? </mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+           <mat-radio-group #actividadFisica="ngModel" required id="actividadFisica" name="actividadFisica"  [(ngModel)]="sociodemograficos.actividadFisica">
              <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
                {{ servicioNecesario.name }}
              </mat-radio-button>
@@ -390,10 +393,10 @@
 
          </div>
          </mat-grid-tile>
-         <mat-grid-tile>
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿Usted es fumador? </mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+           <mat-radio-group #fumador="ngModel" required id="fumador" name="fumador"  [(ngModel)]="sociodemograficos.fumador">
              <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
                {{ servicioNecesario.name }}
              </mat-radio-button>
@@ -401,10 +404,10 @@
 
          </div>
          </mat-grid-tile>
-         <mat-grid-tile>
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿Puedo acceder fácilmente a los servicios de salud?</mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+           <mat-radio-group #accesoSalud="ngModel" required id="accesoSalud" name="accesoSalud"  [(ngModel)]="sociodemograficos.accesoSalud">
              <mat-radio-button *ngFor="let servicioSalud of optionsYesNo" [value]="servicioSalud.value" color="primary">
                {{ servicioSalud.name }}
              </mat-radio-button>
@@ -412,10 +415,10 @@
 
          </div>
          </mat-grid-tile>
-         <mat-grid-tile>
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿Requiere el uso de lentes medicados? </mat-label>
-           <mat-radio-group class="" [formControl]="serviciosPublicosFamilia">
+           <mat-radio-group #lentesMedicados="ngModel" required id="lentesMedicados" name="lentesMedicados"  [(ngModel)]="sociodemograficos.lentesMedicados">
              <mat-radio-button *ngFor="let servicioNecesario of optionsYesNo" [value]="servicioNecesario.value" color="primary">
                {{ servicioNecesario.name }}
              </mat-radio-button>
@@ -426,6 +429,9 @@
 
         </mat-grid-list>
 
-
+        </div>
+<div class="btn-sociodemograficos">
+  <button class="stepper-main-btn" mat-button>Guardar</button>
+</div>
       </form>
 </mat-card>

@@ -83,4 +83,12 @@ export class InformacionFamiliarFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public guardarProgreso(){
+    console.log('Info Familiar Guardada')
+  }
+
+  public enviarFormulario(){
+    console.log('Formulario Guardado')
+  }
+
 }

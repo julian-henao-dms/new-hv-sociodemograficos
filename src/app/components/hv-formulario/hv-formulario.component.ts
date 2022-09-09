@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -95,6 +95,7 @@ interface ColorPiel{
 export class HvFormularioComponent implements OnInit {
 
 
+  public isDatosBasicos:number = 1;
   public isVisible = -1;
   public tiposReferencia: string[] = ['Personal', 'Laboral'];
   public typeCandidato: number = 0;
@@ -103,29 +104,6 @@ export class HvFormularioComponent implements OnInit {
   public isActive = true;
   public txtnombre:string="";
 
-
-
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  thirdFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  fourthFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  fifthFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  sixthFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  seventhFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
 
   tiposCandidato: TipoCandidato[] = [
     {value: 0, viewValue: 'Personal Táctico y Soporte'},
@@ -305,6 +283,7 @@ export class HvFormularioComponent implements OnInit {
 
   changeDatosBasicos(evento:any){
     console.log("Evento del hijo", evento);
+    this.isDatosBasicos = evento.data;
 
   }
 

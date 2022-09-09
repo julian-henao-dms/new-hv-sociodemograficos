@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import { Sociodemograficos } from './interfaces/sociodemograficos.interface';
 
 interface AnioAntiguedad{
   value: number;
@@ -64,15 +65,52 @@ interface Ciudad{
   styleUrls: ['./sociodemograficos.component.scss']
 })
 export class SociodemograficosComponent implements OnInit {
+  public isDisable: boolean = true;
+  public sociodemograficos: Sociodemograficos = {
+    consentimiento: 0,
+    empresa:'',
+    sede:'',
+    area:'',
+    fechaIngreso: new Date,
+    antiguedadEmpresa: 0,
+    antiguedadCargo: 0,
+    promedioIngresos: 0,
+    arl: 0,
+    tipoAfiliadoEps: 0,
+    paisNacimiento: 0,
+    deptoNacimiento: 0,
+    ciudadNacimiento: 0,
+    caracteristicasVivienda: 0,
+    zonaVivienda: 0,
+    cuentaConServicios: 0,
+    serviciosVivienda: 0,
+    tamanoVivienda: 0,
+    condicionesVivienda: 0,
+    numPesonasVive: 0,
+    numHijos: 0,
+    edadHijos: 0,
+    dependenciaEconomica: 0,
+    familiarDiscapacitado: 0,
+    tipoTransporte: 0,
+    rutaSegura: 0,
+    tiempoLibre: 0,
+    reduceDescanso: 0,
+    actividadFisica: 0,
+    fumador: 0,
+    accesoSalud: 0,
+    lentesMedicados: 0,
+  }
+
+  public showFields = false;
   typeAfiliado = 0;
   tiposAfiliado = [
     { value: 0, name: "Dependiente" },
     { value: 1, name: "Independiente" }
   ];
-  consentimiento = new FormControl('');
+
   optionsYesNo = [
-    { value: 0, name: "Si" },
-    { value: 1, name: "No" }
+    { value: 1, name: "Si" },
+    { value: 0, name: "No" }
   ];
 
   aniosAntiguedad: AnioAntiguedad[] = [
@@ -167,9 +205,7 @@ export class SociodemograficosComponent implements OnInit {
     {value: 3, viewValue: 'Transporte Público'},
   ];
 
-  sociodemograficos = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
+
 
   cols : number | undefined;
   gridByBreakpoint = {
@@ -180,7 +216,7 @@ export class SociodemograficosComponent implements OnInit {
     xs: 1
   }
 
-  constructor(private _formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,

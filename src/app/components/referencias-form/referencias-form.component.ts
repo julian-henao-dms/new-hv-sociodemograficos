@@ -28,7 +28,11 @@ export class ReferenciasFormComponent implements OnInit {
     motivoRetiro: '',
   }
 
-   public tiposReferencia: string[] = ['Personal', 'Laboral'];
+   public tiposReferencia = [
+      { value: 0, name: "Personal" },
+      { value: 1, name: "Laboral" }
+    ];
+
   stepperOrientation: Observable<StepperOrientation>;
   cols : number | undefined;
 
@@ -77,4 +81,7 @@ export class ReferenciasFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public guardarProgreso(){
+    console.log('Referencias Guardadas')
+  }
 }

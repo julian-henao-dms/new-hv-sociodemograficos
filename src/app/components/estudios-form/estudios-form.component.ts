@@ -82,4 +82,7 @@ export class EstudiosFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public guardarProgreso(){
+    console.log('Estudios Guardados')
+  }
 }

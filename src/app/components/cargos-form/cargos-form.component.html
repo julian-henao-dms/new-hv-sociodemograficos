@@ -1,4 +1,9 @@
 
+  <div class="cargos-paragraph">
+    <p>
+      Por favor seleccionar otros cargos a los que podría aplicar.
+    </p>
+  </div>
   <mat-form-field appearance="outline">
     <mat-label>Seleccionar Cargos</mat-label>
     <mat-select>
@@ -14,6 +19,9 @@
   <div class="step-btn-container">
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
+    </button>
+    <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
+      Guardar Progreso
     </button>
     <button class="stepper-main-btn" mat-button matStepperNext>
       Siguiente

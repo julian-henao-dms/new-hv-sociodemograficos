@@ -1,8 +1,8 @@
 
   <div class="container-hv-referencia">
     <mat-label>Tipo Referencia:</mat-label>
-    <mat-radio-group aria-label="Select an option">
-      <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia">{{ tipoReferencia}}</mat-radio-button>
+    <mat-radio-group #tipoReferencia="ngModel" required id="tipo" name="tipo"  [(ngModel)]="datosReferencias.tipo">
+      <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia.value">{{ tipoReferencia.name}}</mat-radio-button>
     </mat-radio-group>
   </div>
 
@@ -15,49 +15,49 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre Referencia</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Nombre Referencia" #nombreReferencia="ngModel" required id="nombre" name="nombre"  [(ngModel)]="datosReferencias.nombre" (ngModelChange)="datosReferencias.nombre = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Celular" #celular="ngModel" required id="celular" name="celular" [(ngModel)]="datosReferencias.celular" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Teléfono" #telefono="ngModel" required id="telefono" name="telefono" [(ngModel)]="datosReferencias.telefono" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Correo</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Correo" #mail="ngModel" required id="mail" name="mail" [(ngModel)]="datosReferencias.mail" />
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile  *ngIf="datosReferencias.tipo === 1">
       <mat-form-field appearance="outline">
         <mat-label>Empresa</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Empresa" #empresa="ngModel" required id="empresa" name="empresa"  [(ngModel)]="datosReferencias.empresa" />
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="outline">
+    <mat-grid-tile *ngIf="datosReferencias.tipo === 1">
+      <mat-form-field appearance="outline" >
         <mat-label>Cargo</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Cargo" #cargo="ngModel" required id="cargo" name="cargo"  [(ngModel)]="datosReferencias.cargo" />
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="outline">
+    <mat-grid-tile *ngIf="datosReferencias.tipo === 1">
+      <mat-form-field appearance="outline" >
         <mat-label>Tiempo Laborado</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Tiempo Laborado" #tiempoLaborado="ngModel" required id="tiempoLaborado" name="tiempoLaborado"  [(ngModel)]="datosReferencias.tiempoLaborado" />
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile  *ngIf="datosReferencias.tipo === 1">
       <mat-form-field appearance="outline">
         <mat-label>Motivo de Retiro</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Motivo de Retiro" #motivoRetiro="ngModel" required id="motivoRetiro" name="motivoRetiro"  [(ngModel)]="datosReferencias.motivoRetiro" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="cols">
@@ -77,6 +77,9 @@
   <div class="step-btn-container">
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
+    </button>
+    <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
+      Guardar Progreso
     </button>
     <button class="stepper-main-btn" mat-button matStepperNext>
       Siguiente

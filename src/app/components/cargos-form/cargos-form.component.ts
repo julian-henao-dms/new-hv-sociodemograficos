@@ -19,4 +19,7 @@ export class CargosFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public guardarProgreso(){
+    console.log('Cargos Guardados')
+  }
 }

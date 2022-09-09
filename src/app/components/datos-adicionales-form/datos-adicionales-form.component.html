@@ -21,7 +21,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Operaciones de Equipos </mat-label>
-        <mat-select [disabled]="operacionesDisabled">
+        <mat-select [disabled]="datosBasicos == 1 ? true : false ">
           <mat-option
             *ngFor="let pais of paises"
             [value]="pais.value"
@@ -72,13 +72,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Tarjeta Profesional</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" required id="tarjeta" name="tarjeta"  [(ngModel)]="tarjeta"   (ngModelChange)="tarjeta = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="cols">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Entidad de Expedición</mat-label>
-        <mat-select>
+        <mat-select >
           <mat-option
             *ngFor="let entidad of entidades"
             [value]="entidad.value"
@@ -195,13 +195,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Licencia</mat-label>
-        <input matInput placeholder="Nº" required />
+        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel" required id="licencia" name="licencia"  [(ngModel)]="licencia"   (ngModelChange)="licencia = $event.toUpperCase()"  />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <div class="container-hv-radios">
         <mat-label>Tipo de Licencia:</mat-label>
-        <mat-radio-group class="" name="typeLicencia" [(ngModel)]="typeLicencia">
+        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="tipo_licencia">
           <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.value" color="primary">
             {{ tipoLicencia.name }}
           </mat-radio-button>
@@ -308,6 +308,9 @@
   <div class="step-btn-container">
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
+    </button>
+    <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
+      Guardar Progreso
     </button>
     <button class="stepper-main-btn" mat-button matStepperNext>
       Siguiente

@@ -3,7 +3,7 @@
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">contact_page</mat-icon>
-        Datos Candidato
+       <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
       <mat-stepper [orientation]="(stepperOrientation | async)!" [linear]="isLinear" #stepper class="wizard-datos-candidato">
         <mat-step >
@@ -14,7 +14,7 @@
 
         <!-- Paso 2 -->
         <mat-step  label="Datos Adicionales">
-        <app-datos-adicionales-form></app-datos-adicionales-form>
+        <app-datos-adicionales-form [datosBasicos]="isDatosBasicos"></app-datos-adicionales-form>
 
         </mat-step>
         <!-- Fin paso 2 -->
@@ -54,7 +54,8 @@
     <mat-tab [disabled]="!isActive">
       <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">groups</mat-icon>
-        Datos Sociodemográficos
+        <label class="title-tabs-hv"> Datos Sociodemográficos</label>
+
       </ng-template>
       <app-sociodemograficos></app-sociodemograficos>
     </mat-tab>

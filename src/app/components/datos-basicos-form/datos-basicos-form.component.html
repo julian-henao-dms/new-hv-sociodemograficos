@@ -8,7 +8,7 @@
     <mat-grid-tile [colspan]="colsAlt">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Tipo Candidato</mat-label>
-        <mat-select  (ngModelChange)="onChange($event)"
+        <mat-select  name="nombre" (ngModelChange)="onChange($event)"
         [(ngModel)]="datosBasicos.id_tipo_candidato"
         name="id_tipo_candidato" require>
           <mat-option
@@ -173,7 +173,7 @@
         required />
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile>
+    <mat-grid-tile class="left-grid-position">
       <div class="container-hv-radios">
         <mat-label>Género:</mat-label>
         <mat-radio-group aria-label="Select an option"  name="genero"
@@ -394,8 +394,12 @@
   </mat-grid-list>
 
   <div class="step-btn-container">
+    <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()" >
+      Guardar Progreso
+    </button>
     <button class="stepper-main-btn" mat-button matStepperNext>
       Siguiente
     </button>
+
   </div>
 

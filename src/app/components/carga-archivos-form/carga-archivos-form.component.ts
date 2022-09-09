@@ -35,4 +35,8 @@ export class CargaArchivosFormComponent implements OnInit {
       this.fileAttr = 'Cargar Archivos';
     }
   }
+
+  public guardarProgreso(){
+    console.log('Datos Adicionales Guardados')
+  }
 }

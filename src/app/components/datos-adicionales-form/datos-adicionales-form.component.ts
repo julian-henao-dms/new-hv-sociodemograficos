@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -54,6 +54,13 @@ interface CategoriaLicencia{
   styleUrls: ['./datos-adicionales-form.component.scss']
 })
 export class DatosAdicionalesFormComponent implements OnInit {
+
+  public tipo_licencia = 0;
+  public licencia = '';
+  public tarjeta = '';
+
+  @Input() datosBasicos: number = 1;
+
   public operacionesDisabled = true;
   paises: Pais[] = [
     {value: 0, viewValue: 'Argentina'},
@@ -100,7 +107,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
     {value: 1, viewValue: 'AFP Porvenir'}
   ];
 
-  typeLicencia = 0;
+
   tiposLicencia = [
     { value: 0, name: "Pública" },
     { value: 1, name: "Privada" }
@@ -155,4 +162,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  public guardarProgreso(){
+    console.log('Datos Adicionales Guardados')
+  }
 }

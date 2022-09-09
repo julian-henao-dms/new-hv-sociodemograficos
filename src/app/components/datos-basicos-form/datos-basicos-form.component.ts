@@ -54,6 +54,9 @@ interface AniosExperiencia{
   styleUrls: ['./datos-basicos-form.component.scss']
 })
 export class DatosBasicosFormComponent implements OnInit {
+
+  @Output() changeSelect = new EventEmitter<any>();
+
   public depto: string = '';
   public ciudad: string = '';
   public barrio: string = '';
@@ -250,10 +253,14 @@ public datosBasicos: Candidato = {
   ngOnInit(): void {
   }
 
-@Output() changeSelect = new EventEmitter<any>();
+
 
  public onChange(event:any){
     console.log("Evento", event);
     this.changeSelect.emit({'data':event});
+  }
+
+  public guardarProgreso(){
+    console.log('Datos Básicos Guardados')
   }
 }
