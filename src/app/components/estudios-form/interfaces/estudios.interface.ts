@@ -11,4 +11,5 @@ id_nivel_estudio: number;
 id_tipo_curso: number;
 id: number;
 accion: number;
+titulo: number
 }

@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import { Candidato } from "./interfaces/candidato.interface"
+import { Candidato, Idioma } from "./interfaces/candidato.interface"
 
 
 interface TipoCandidato{
@@ -57,9 +57,9 @@ export class DatosBasicosFormComponent implements OnInit {
 
   @Output() changeSelect = new EventEmitter<any>();
 
-  public depto: string = '';
-  public ciudad: string = '';
-  public barrio: string = '';
+  // public depto: string = '';
+  // public ciudad: string = '';
+  // public barrio: string = '';
 public datosBasicos: Candidato = {
    emp:  0,
    nit: '',
@@ -115,8 +115,20 @@ public datosBasicos: Candidato = {
    idRhFondoPension:  0,
    idRhFondoCaja:  0,
    idRhFondoCesantias:  0,
+   pais: 0,
+   depto: 0,
+   ciudad: 0,
+   barrio: 0,
+   cargoAplica: 0,
 }
 
+public idiomasCandidato: Idioma = {
+  idIdi: 0,
+  idCandidato: 0,
+  idUsuario: 0,
+  id: 0,
+  accion: 0,
+}
 
   colsAlt : number | undefined;
 
@@ -142,8 +154,6 @@ public datosBasicos: Candidato = {
     {value: '1', viewValue: 'Personal Operativo'},
 
   ];
-
-
 
   tiposDoc: Doc[] = [
     {value: '0', viewValue: 'Cédula  (CC)'},
@@ -195,12 +205,12 @@ public datosBasicos: Candidato = {
     {value: '1', viewValue: 'Unión Libre'}
   ];
   cargos: Cargo[] = [
-    {value: '0', viewValue: 'Soltero'},
-    {value: '1', viewValue: 'Unión Libre'}
+    {value: '0', viewValue: 'Director Informática'},
+    {value: '1', viewValue: 'Consultor'}
   ];
   aniosExp: AniosExperiencia[] = [
-    {value: '0', viewValue: 'Inglés'},
-    {value: '1', viewValue: 'Frances'}
+    {value: '0', viewValue: '1 Año a 2 Años'},
+    {value: '1', viewValue: '3 Año a 5 Años'}
   ];
   public typeCandidato: number = 0;
   public txtnombre:string="";

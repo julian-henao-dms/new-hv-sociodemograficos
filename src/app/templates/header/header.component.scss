@@ -36,9 +36,8 @@ mat-toolbar {
 .content-title-logo {
   display: flex;
   align-items: center;
-  flex-wrap: nowrap;
+  // flex-wrap: nowrap;
   justify-content: center;
-  margin-top: 0.5em;
   img {
     width: 80px;
     margin: 0 1em 0 0;
@@ -47,3 +46,22 @@ mat-toolbar {
 .container-header-p{
   display: flex;
 }
+.parrafo{
+  display: flex;
+  justify-content: center;
+  margin: 0 1.6em;
+}
+
+ mat-toolbar p {
+  font-size: 16px;
+  text-align: center;
+  line-height: 1.5;
+}
+ .mat-toolbar-row, .mat-toolbar-single-row {
+  white-space: normal;
+}
+@media screen and (max-width: 480px) {
+  mat-toolbar{
+    display: contents;
+  }
+  }

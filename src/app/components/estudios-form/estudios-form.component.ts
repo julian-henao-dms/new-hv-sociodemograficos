@@ -5,7 +5,28 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Estudios } from "./interfaces/estudios.interface"
 
-interface CategoriaLicencia{
+
+interface Institucion{
+  value: number;
+  viewValue: string;
+}
+interface TipoEstudio{
+  value: number;
+  viewValue: string;
+}
+interface NivelEstudio{
+  value: number;
+  viewValue: string;
+}
+interface Titulo{
+  value: number;
+  viewValue: string;
+}
+interface EstadoEstudio{
+  value: number;
+  viewValue: string;
+}
+interface TipoCurso{
   value: number;
   viewValue: string;
 }
@@ -29,13 +50,50 @@ export class EstudiosFormComponent implements OnInit {
     id_tipo_curso: 0,
     id: 0,
     accion: 0,
+    titulo: 0 // subitem?
   }
 
+  // public selectedInstitucion ="";
+  public instituciones: Institucion[] = [
+    {value: 0, viewValue: 'SENA'},
+    {value: 1, viewValue: 'Universidad del Valle'},
+    {value: 2, viewValue: 'Universidad Nacional'},
+    {value: 3, viewValue: 'Universidad Haveriana'},
+  ];
+  public titulos: Titulo[] = [
+    {value: 0, viewValue: 'Abogado'},
+    {value: 1, viewValue: 'Ingeniero Civil'},
+    {value: 2, viewValue: 'Ingeniero de Sistemas'},
+    {value: 3, viewValue: 'Analista'},
+    {value: 3, viewValue: 'Economista'},
+  ];
+  public estadosEstudio: EstadoEstudio[] = [
+    {value: 0, viewValue: 'Culminado'},
+    {value: 1, viewValue: 'En Curso'},
+    {value: 2, viewValue: 'Abandonado'},
+    {value: 3, viewValue: 'Aplazado'},
+    {value: 3, viewValue: 'Economista'},
+  ];
 
-  public selectedInstitucion ="";
-  public categorias: CategoriaLicencia[] = [
-    {value: 0, viewValue: 'A1'},
-    {value: 1, viewValue: 'B1'}
+  public tiposEstudio: TipoEstudio[] = [
+    {value: 0, viewValue: 'Pregrado'},
+    {value: 1, viewValue: 'Especialización'},
+    {value: 2, viewValue: 'Estudio Complementario'},
+    {value: 3, viewValue: 'Maestría'},
+    {value: 3, viewValue: 'Doctorado'},
+  ];
+  public nivelesEstudio: NivelEstudio[] = [
+    {value: 0, viewValue: 'Técnica Laboral'},
+    {value: 1, viewValue: 'Formación Técnica Profesional'},
+    {value: 2, viewValue: 'Tecnológica'},
+    {value: 3, viewValue: 'Universidad'},
+  ];
+  public tiposCurso: TipoCurso[] = [
+    {value: 0, viewValue: 'Curso'},
+    {value: 1, viewValue: 'Taller'},
+    {value: 2, viewValue: 'Seminario'},
+    {value: 3, viewValue: 'Diplomado'},
+    {value: 3, viewValue: 'Otros'},
   ];
   public stepperOrientation: Observable<StepperOrientation>;
   public cols : number | undefined;

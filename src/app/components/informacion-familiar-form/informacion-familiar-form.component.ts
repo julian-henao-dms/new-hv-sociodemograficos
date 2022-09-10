@@ -4,7 +4,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Familiar } from './interfaces/familiar.interface';
-interface CategoriaLicencia{
+interface Parentesco{
   value: number;
   viewValue: string;
 }
@@ -33,9 +33,10 @@ export class InformacionFamiliarFormComponent implements OnInit {
  }
 
 
-  categorias: CategoriaLicencia[] = [
-    {value: 0, viewValue: 'A1'},
-    {value: 1, viewValue: 'B1'}
+  parentescos: Parentesco[] = [
+    {value: 0, viewValue: 'Abuela/Abuelo'},
+    {value: 1, viewValue: 'Esposa/Esposo'},
+    {value: 2, viewValue: 'Padre/Madre'},
   ];
   stepperOrientation: Observable<StepperOrientation>;
   cols : number | undefined;

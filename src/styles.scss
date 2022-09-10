@@ -94,7 +94,7 @@ button.stepper-main-btn {
 }
 mat-grid-tile.mat-grid-tile.left-grid-position {
   div.mat-grid-tile-content{
-    margin-left: 2px;
+    margin-left: 15px;
     display: flex;
     justify-content: flex-start;
     // overflow: auto;
@@ -113,6 +113,17 @@ mat-grid-tile.mat-grid-tile.left-grid-position {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+  }
+}
+
+  @media screen and (max-width: 700px) {
+  .step-btn-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+  }
+  .step-btn-container button {
+    width: 100%;
   }
 }
 

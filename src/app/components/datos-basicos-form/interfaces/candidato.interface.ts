@@ -53,6 +53,11 @@ idRhEps: number;
 idRhFondoPension: number;
 idRhFondoCaja: number;
 idRhFondoCesantias: number;
+pais:number; // Verificar como se consumiran
+depto:number;
+ciudad:number;
+barrio:number;
+cargoAplica: number;
 }
 
 export interface Idioma{

@@ -6,12 +6,12 @@
   </div>
   <mat-form-field appearance="outline">
     <mat-label>Seleccionar Cargos</mat-label>
-    <mat-select>
+    <mat-select #idPerfil="ngModel" required id="idPerfil" name="idPerfil"  [(ngModel)]="otrosCargos.idPerfil" >
       <mat-option
-        *ngFor="let categoria of categorias"
-        [value]="categoria.value"
+        *ngFor="let cargo of cargos"
+        [value]="cargo.value"
       >
-        {{ categoria.viewValue }}
+        {{ cargo.viewValue }}
       </mat-option>
     </mat-select>
   </mat-form-field>

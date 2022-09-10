@@ -9,15 +9,28 @@
         <mat-label>1.Seleccionar Institución</mat-label>
         <mat-select placeholder="Seleccionar Institución" #idInstitucion="ngModel" required id="idInstitucion" name="idInstitucion"  [(ngModel)]="datosEstudios.idInstitucion">
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let institucion of instituciones"
+            [value]="institucion.value"
           >
-            {{ categoria.viewValue }}
+            {{ institucion.viewValue }}
           </mat-option>
         </mat-select>
 
       </mat-form-field>
       <!-- <span>{{institucion.valid}}</span> -->
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>2.Seleccionar Título</mat-label>
+        <mat-select #titulo="ngModel" required id="titulo" name="titulo"  [(ngModel)]="datosEstudios.titulo">
+          <mat-option
+            *ngFor="let titulo of titulos"
+            [value]="titulo.value"
+          >
+            {{ titulo.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
@@ -36,65 +49,54 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>5. Seleccionar Tipo de Estudios</mat-label>
-        <mat-select #id_tipo_estudio="ngModel" required id="id_tipo_estudio" name="id_tipo_estudio"  [(ngModel)]="datosEstudios.id_tipo_estudio" >
+        <mat-label>4. Seleccionar Estado</mat-label>
+        <mat-select #id_estado_estudio="ngModel" required id="id_estado_estudio" name="id_estado_estudio"  [(ngModel)]="datosEstudios.id_estado_estudio">
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let estadoEstudio of estadosEstudio"
+            [value]="estadoEstudio.value"
           >
-            {{ categoria.viewValue }}
+            {{ estadoEstudio.viewValue }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>5. Seleccionar Tipo de Estudios</mat-label>
+        <mat-select #id_tipo_estudio="ngModel" required id="id_tipo_estudio" name="id_tipo_estudio"  [(ngModel)]="datosEstudios.id_tipo_estudio" >
+          <mat-option
+            *ngFor="let tipoEstudio of tiposEstudio"
+            [value]="tipoEstudio.value"
+          >
+            {{ tipoEstudio.viewValue }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+    <mat-grid-tile *ngIf="datosEstudios.id_tipo_estudio === 0">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Nivel de Estudios</mat-label>
         <mat-select #id_nivel_estudio="ngModel" required id="id_nivel_estudio" name="id_nivel_estudio"  [(ngModel)]="datosEstudios.id_nivel_estudio">
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let nivelEstudio of nivelesEstudio"
+            [value]="nivelEstudio.value"
           >
-            {{ categoria.viewValue }}
+            {{ nivelEstudio.viewValue }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="outline">
-        <mat-label>2.Seleccionar Título</mat-label>
-        <mat-select>
-          <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
-          >
-            {{ categoria.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
-      <mat-form-field appearance="outline">
-        <mat-label>4. Seleccionar Estado</mat-label>
-        <mat-select>
-          <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
-          >
-            {{ categoria.viewValue }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
-    <mat-grid-tile>
+
+
+    <mat-grid-tile *ngIf="datosEstudios.id_tipo_estudio === 2">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Tipo de Curso</mat-label>
-        <mat-select>
+        <mat-select #id_tipo_estudio="ngModel" required id="id_tipo_estudio" name="id_tipo_estudio"  [(ngModel)]="datosEstudios.id_tipo_estudio">
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let tipoCurso of tiposCurso"
+            [value]="tipoCurso.value"
           >
-            {{ categoria.viewValue }}
+            {{ tipoCurso.viewValue }}
           </mat-option>
         </mat-select>
       </mat-form-field>

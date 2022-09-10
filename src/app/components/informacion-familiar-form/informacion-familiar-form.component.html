@@ -20,6 +20,19 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha Nacimiento</mat-label>
+        <input matInput [matDatepicker]="nacimiento" name="fechaNace" [(ngModel)]="datosInfoFamilia.fechaNace"
+        #fechaNace="ngModel" required id="fechaNace"/>
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="nacimiento"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #nacimiento></mat-datepicker>
+      </mat-form-field>
+    </mat-grid-tile>
+    <!-- <mat-grid-tile>
+      <mat-form-field appearance="outline">
+        <mat-label>Fecha Nacimiento</mat-label>
         <mat-date-range-input [rangePicker]="nacPariente">
           <input matStartDate placeholder="Inicio" />
           <input matEndDate placeholder="Culminación" />
@@ -31,16 +44,16 @@
         ></mat-datepicker-toggle>
         <mat-date-range-picker #nacPariente></mat-date-range-picker>
       </mat-form-field>
-    </mat-grid-tile>
+    </mat-grid-tile> -->
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Parentesco</mat-label>
-        <mat-select>
+        <mat-select placeholder="Parentesco" #id_Parentesco="ngModel" required id="id_Parentesco" name="id_Parentesco"  [(ngModel)]="datosInfoFamilia.id_Parentesco">
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let parentesco of parentescos"
+            [value]="parentesco.value"
           >
-            {{ categoria.viewValue }}
+            {{ parentesco.viewValue }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -48,7 +61,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono / móvil</mat-label>
-        <input matInput placeholder="" name="" required />
+        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" required id="telResidencia" name="telResidencia"  [(ngModel)]="datosInfoFamilia.telResidencia" />
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
