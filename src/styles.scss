@@ -97,6 +97,9 @@ mat-grid-tile.mat-grid-tile.left-grid-position {
     margin-left: 15px;
     display: flex;
     justify-content: flex-start;
+    .example-section {
+        margin-top: -20px;
+  }
     // overflow: auto;
   }
 }
@@ -108,6 +111,15 @@ mat-grid-tile.mat-grid-tile.left-grid-position {
       margin-right: 0.5em;
   }
 }
+button.add-button{
+  margin-left: 1em;
+}
+
+
+mat-table.estudios-mat-table{
+  margin: 1.5em 1em;
+}
+
 @media screen and (min-width: 700px) {
   .step-btn-container{
     display: flex;

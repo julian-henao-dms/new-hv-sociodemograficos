@@ -163,6 +163,12 @@ export class DatosAdicionalesFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    console.log('Datos Adicionales Guardados')
+    // console.log('Datos Básicos Guardados', this.datosBasicos);
+    // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
+
+  }
+  public getLocalStorage(){
+    // console.log('Cargar Datos Básicos', this.datosBasicos);
+    // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
   }
 }

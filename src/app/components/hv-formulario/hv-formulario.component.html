@@ -6,37 +6,37 @@
        <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
       <mat-stepper [orientation]="(stepperOrientation | async)!" [linear]="isLinear" #stepper class="wizard-datos-candidato">
-        <mat-step >
+        <mat-step state="description">
           <ng-template matStepLabel>Datos Básicos</ng-template>
           <app-datos-basicos-form (changeSelect)="changeDatosBasicos($event)"></app-datos-basicos-form>
 
         </mat-step>
 
         <!-- Paso 2 -->
-        <mat-step  label="Datos Adicionales">
+        <mat-step state="note_add"  label="Datos Adicionales">
         <app-datos-adicionales-form [datosBasicos]="isDatosBasicos"></app-datos-adicionales-form>
 
         </mat-step>
         <!-- Fin paso 2 -->
         <!-- Paso 3 -->
-        <mat-step  label="Archivos">
+        <mat-step state="attach_file" label="Archivos">
           <app-carga-archivos-form></app-carga-archivos-form>
         </mat-step>
         <!-- Fin Paso 3 -->
         <!-- Paso 4 -->
 
-        <mat-step  label="Estudios">
+        <mat-step state="school" label="Estudios">
           <app-estudios-form></app-estudios-form>
         </mat-step>
-        <mat-step  label="Referencias">
+        <mat-step state="groups" label="Referencias">
           <app-referencias-form></app-referencias-form>
 
         </mat-step>
-        <mat-step  label="Cargos">
+        <mat-step state="engineering" label="Cargos">
           <app-cargos-form></app-cargos-form>
 
         </mat-step>
-        <mat-step  label="Información Familiar">
+        <mat-step state="family_restroom" label="Información Familiar">
           <app-informacion-familiar-form></app-informacion-familiar-form>
 
         </mat-step>

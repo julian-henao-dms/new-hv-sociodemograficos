@@ -4,6 +4,19 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Referencias } from './interfaces/referencias.interface';
+import { MatTableDataSource } from '@angular/material/table';
+
+export interface user {
+  userName: string;
+  age: number;
+}
+export interface Referencia {
+  institucion: string;
+  titulo: string;
+  estado: string;
+  tipo: string;
+  nivel: string;
+}
 
 @Component({
   selector: 'app-referencias-form',
@@ -44,7 +57,7 @@ export class ReferenciasFormComponent implements OnInit {
     xs: 1
   };
   constructor(private breakpointObserver: BreakpointObserver) {
-
+    // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -80,6 +93,37 @@ export class ReferenciasFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  // columnsToDisplay: string[] = ["userName", "age"];
+  // columnsReference: string[] = ["institucion", "titulo", "estado", "tipo", "nivel" ];
+  // public USER_DATA: user[] = [
+  //   { userName: "Wacco", age: 12 },
+  //   { userName: "Wacca", age: 13 },
+  //   { userName: "Waccu", age: 14 }
+  // ];
+  // public REFERENCE_DATA: Referencia[] = [];
+  // public newUser = {userName: "", age: 0};
+  // public newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: '' };
+  // public myDataArray: any;
+  // public myReferenceArray: any;
+
+  // addName() {
+  //   const newUsersArray = this.USER_DATA;
+  //   newUsersArray.push(this.newUser);
+  //   this.myDataArray = [...newUsersArray];
+  //   this.newUser = {userName:"", age: 0};
+  //   console.warn(this.myDataArray);
+  // }
+
+  // addReference() {
+  //   const newReferencesArray = this.REFERENCE_DATA;
+  //   newReferencesArray.push(this.newReference);
+  //   this.myReferenceArray = [...newReferencesArray];
+  //   this.newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: ''};
+  //   console.warn(this.myReferenceArray);
+  // }
+
+
 
   public guardarProgreso(){
     console.log('Referencias Guardadas')

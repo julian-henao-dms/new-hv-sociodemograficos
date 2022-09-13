@@ -4,6 +4,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Estudios } from "./interfaces/estudios.interface"
+import { MatTableDataSource } from '@angular/material/table';
 
 
 interface Institucion{
@@ -29,6 +30,18 @@ interface EstadoEstudio{
 interface TipoCurso{
   value: number;
   viewValue: string;
+}
+
+export interface user {
+  userName: string;
+  age: number;
+}
+export interface Referencia {
+  institucion: string;
+  titulo: string;
+  estado: string;
+  tipo: string;
+  nivel: string;
 }
 @Component({
   selector: 'app-estudios-form',
@@ -105,6 +118,9 @@ export class EstudiosFormComponent implements OnInit {
     xs: 1
   };
   constructor(private breakpointObserver: BreakpointObserver) {
+
+    this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
+    this.myReferenceArray = new MatTableDataSource<Referencia>([...this.REFERENCE_DATA]);
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -140,7 +156,48 @@ export class EstudiosFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+  columnsToDisplay: string[] = ["userName", "age"];
+  columnsReference: string[] = ["institucion", "titulo", "estado", "tipo", "nivel" ];
+  public USER_DATA: user[] = [
+    { userName: "Wacco", age: 12 },
+    { userName: "Wacca", age: 13 },
+    { userName: "Waccu", age: 14 }
+  ];
+  public REFERENCE_DATA: Referencia[] = [];
+  public newUser = {userName: "", age: 0};
+  public newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: '' };
+  public myDataArray: any;
+  public myReferenceArray: any;
+
+  addName() {
+    const newUsersArray = this.USER_DATA;
+    newUsersArray.push(this.newUser);
+    this.myDataArray = [...newUsersArray];
+    this.newUser = {userName:"", age: 0};
+    console.warn(this.myDataArray);
+  }
+
+  addReference() {
+    const newReferencesArray = this.REFERENCE_DATA;
+    newReferencesArray.push(this.newReference);
+    this.myReferenceArray = [...newReferencesArray];
+    this.newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: ''};
+    console.warn(this.myReferenceArray);
+  }
+
+
   public guardarProgreso(){
-    console.log('Estudios Guardados')
+    // console.log('Datos Estudios Guardados', this.datosEstudios);
+    // localStorage.setItem('datosEstudiosStorage', JSON.stringify(this.datosEstudios) );
+    console.log('Datos Estudios Guardados', this.myReferenceArray);
+    localStorage.setItem('datosEstudiosStorage', JSON.stringify(this.myReferenceArray) );
+
+  }
+  public getLocalStorage(){
+    // console.log('Cargar Datos Estudios', this.datosEstudios);
+    // this.datosEstudios = JSON.parse(localStorage.getItem('datosEstudiosStorage')! );
+    console.log('Cargar Datos Estudios', this.myReferenceArray);
+    this.myReferenceArray = JSON.parse(localStorage.getItem('datosEstudiosStorage')! );
   }
 }

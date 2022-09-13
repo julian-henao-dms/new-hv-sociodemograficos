@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
-import { StepperOrientation } from '@angular/cdk/stepper';
+import { StepperOrientation, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
@@ -90,7 +90,13 @@ interface ColorPiel{
 @Component({
   selector: 'app-hv-formulario',
   templateUrl: './hv-formulario.component.html',
-  styleUrls: ['./hv-formulario.component.scss']
+  styleUrls: ['./hv-formulario.component.scss'],
+  providers: [
+    {
+      provide: STEPPER_GLOBAL_OPTIONS,
+      useValue: {displayDefaultIndicatorType: false},
+    },
+  ],
 })
 export class HvFormularioComponent implements OnInit {
 

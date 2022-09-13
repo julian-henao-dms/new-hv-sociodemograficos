@@ -122,6 +122,7 @@ public datosBasicos: Candidato = {
    cargoAplica: 0,
 }
 
+public disabledButtonAdd: boolean = true;
 public idiomasCandidato: Idioma = {
   idIdi: 0,
   idCandidato: 0,
@@ -216,6 +217,9 @@ public idiomasCandidato: Idioma = {
   public txtnombre:string="";
 
   constructor(private _formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
+
+    this.getLocalStorage();
+
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -271,6 +275,13 @@ public idiomasCandidato: Idioma = {
   }
 
   public guardarProgreso(){
-    console.log('Datos Básicos Guardados')
+    console.log('Datos Básicos Guardados', this.datosBasicos);
+    localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
+    this.disabledButtonAdd = false;
   }
+  public getLocalStorage(){
+    console.log('Cargar Datos Básicos', this.datosBasicos);
+    this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
+  }
+
 }

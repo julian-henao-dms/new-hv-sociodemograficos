@@ -403,7 +403,7 @@
     <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()" >
       Guardar Progreso
     </button>
-    <button class="stepper-main-btn" mat-button matStepperNext>
+    <button [disabled]="disabledButtonAdd" class="stepper-main-btn" mat-button matStepperNext>
       Siguiente
     </button>
 

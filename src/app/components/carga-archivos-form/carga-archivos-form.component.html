@@ -3,9 +3,13 @@
     <div>
       <mat-toolbar>
         <!-- Display files names -->
+       <!-- <div class="upload-file-container"> -->
+        <mat-icon class="icon-file-input">attach_file_add </mat-icon>
         <input matInput [(ngModel)]="fileAttr" readonly name="fileAttr" />
+       <!-- </div> -->
         <!-- Browse Button -->
-        <button mat-flat-button color="primary">Subir archivos</button>
+
+        <button mat-flat-button color="primary"><mat-icon class="icon-file-button">upload_file</mat-icon> Subir archivos</button>
       </mat-toolbar>
       <!-- Fetch selected filed on change -->
       <input

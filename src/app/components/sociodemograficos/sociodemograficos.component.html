@@ -337,7 +337,7 @@
               Información Complementaria
             </h2>
           </div>
-        <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+        <mat-grid-list #grid [cols]="cols" rowHeight="90px" gutterSize="10px" >
 
          <mat-grid-tile>
           <mat-form-field appearance="outline">
@@ -370,7 +370,11 @@
          </div>
          </mat-grid-tile>
          <mat-grid-tile>
-          <mat-form-field appearance="outline">
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Otras actividades fuera del trabajo que reducen mi tiempo de descanso</mat-label>
+            <textarea matInput placeholder="Nombre Familiar" #reduceDescanso="ngModel" required id="reduceDescanso" name="reduceDescanso"  [(ngModel)]="sociodemograficos.reduceDescanso" (ngModelChange)="sociodemograficos.reduceDescanso = $event.toUpperCase()"></textarea>
+          </mat-form-field>
+          <!-- <mat-form-field appearance="outline">
             <mat-label>Otras actividades fuera del trabajo que reducen mi tiempo de descanso</mat-label>
             <textarea
               matInput
@@ -380,7 +384,7 @@
               cdkAutosizeMaxRows="5"
               placeholder="Nombre Familiar" #reduceDescanso="ngModel" required id="reduceDescanso" name="reduceDescanso"  [(ngModel)]="sociodemograficos.reduceDescanso" (ngModelChange)="sociodemograficos.reduceDescanso = $event.toUpperCase()"
             ></textarea>
-          </mat-form-field>
+          </mat-form-field> -->
         </mat-grid-tile>
          <mat-grid-tile>
           <div class="container-hv-radios">
