@@ -29,7 +29,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatNativeDateModule } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -47,6 +47,17 @@ import { CargosFormComponent } from './components/cargos-form/cargos-form.compon
 import { InformacionFamiliarFormComponent } from './components/informacion-familiar-form/informacion-familiar-form.component';
 
 
+const MY_DATE_FORMAT = {
+  parse: {
+    dateInput: 'DD-MM-YYYY', // this is how your date will be parsed from Input
+  },
+  display: {
+    dateInput: 'DD-MM-YYYY', // this is how your date will get displayed on the Input
+    monthYearLabel: 'MMMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 @NgModule({
   declarations: [
     AppComponent,

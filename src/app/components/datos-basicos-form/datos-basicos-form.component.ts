@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { Candidato, Idioma } from "./interfaces/candidato.interface"
 
 
@@ -122,7 +123,7 @@ public datosBasicos: Candidato = {
    cargoAplica: 0,
 }
 
-public disabledButtonAdd: boolean = true;
+public disabledButtonNext: boolean = true;
 public idiomasCandidato: Idioma = {
   idIdi: 0,
   idCandidato: 0,
@@ -216,7 +217,7 @@ public idiomasCandidato: Idioma = {
   public typeCandidato: number = 0;
   public txtnombre:string="";
 
-  constructor(private _formBuilder: FormBuilder, private breakpointObserver: BreakpointObserver) {
+  constructor(private _guardarProgreso: LocalStorageService, private breakpointObserver: BreakpointObserver) {
 
     this.getLocalStorage();
 
@@ -277,12 +278,14 @@ public idiomasCandidato: Idioma = {
 
   public guardarProgreso(){
     console.log('Datos Básicos Guardados', this.datosBasicos);
-    localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
-    this.disabledButtonAdd = false;
+    this._guardarProgreso.set('datosBasicosStorage', this.datosBasicos);
+    // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
+    this.disabledButtonNext = false;
   }
   public getLocalStorage(){
     console.log('Cargar Datos Básicos', this.datosBasicos);
-    this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
+    this._guardarProgreso.get('datosBasicosStorage');
+    // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
   }
 
 }

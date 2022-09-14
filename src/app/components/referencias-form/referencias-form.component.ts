@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Referencias } from './interfaces/referencias.interface';
 import { MatTableDataSource } from '@angular/material/table';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 export interface user {
   userName: string;
@@ -24,6 +25,7 @@ export interface Referencia {
   styleUrls: ['./referencias-form.component.scss']
 })
 export class ReferenciasFormComponent implements OnInit {
+  public disabledButtonNext: boolean = true;
   public datosReferencias: Referencias = {
     idCandidato: 0,
     nombre: '',
@@ -56,7 +58,7 @@ export class ReferenciasFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
     // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -126,6 +128,13 @@ export class ReferenciasFormComponent implements OnInit {
 
 
   public guardarProgreso(){
-    console.log('Referencias Guardadas')
+    console.log('Referencias', this.datosReferencias);
+    this._guardarProgreso.set('datosReferenciasStorage', this.datosReferencias);
+    this.disabledButtonNext = false;
+
+  }
+  public getLocalStorage(){
+    console.log('Cargar Datos Adicionales', this.datosReferencias);
+    this._guardarProgreso.get('datosReferenciasStorage');
   }
 }

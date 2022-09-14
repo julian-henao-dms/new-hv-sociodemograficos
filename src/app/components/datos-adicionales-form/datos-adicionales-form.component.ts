@@ -3,6 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 interface Pais{
   value: number;
@@ -48,18 +49,24 @@ interface CategoriaLicencia{
   value: number;
   viewValue: string;
 }
+interface DatosAdicionalesCandidato{
+
+}
 @Component({
   selector: 'app-datos-adicionales-form',
   templateUrl: './datos-adicionales-form.component.html',
   styleUrls: ['./datos-adicionales-form.component.scss']
 })
 export class DatosAdicionalesFormComponent implements OnInit {
+ public disabledButtonNext: boolean = true;
+ public datosAdicionales: DatosAdicionalesCandidato = {
 
+ }
   public tipo_licencia = 0;
   public licencia = '';
   public tarjeta = '';
 
-  @Input() datosBasicos: number = 1;
+  @Input() tipoCandidato: number = 1;
 
   public operacionesDisabled = true;
   paises: Pais[] = [
@@ -126,7 +133,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -163,12 +170,13 @@ export class DatosAdicionalesFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    // console.log('Datos Básicos Guardados', this.datosBasicos);
-    // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
+    console.log('Datos Adicionales', this.datosAdicionales);
+    this._guardarProgreso.set('datosAdicionalesStorage', this.datosAdicionales);
+    this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    // console.log('Cargar Datos Básicos', this.datosBasicos);
-    // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
+    console.log('Cargar Datos Adicionales', this.datosAdicionales);
+    this._guardarProgreso.get('datosAdicionalesStorage');
   }
 }

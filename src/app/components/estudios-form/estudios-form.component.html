@@ -110,23 +110,23 @@
   <mat-table #table [dataSource]="myReferenceArray" class="estudios-mat-table">
     <ng-container matColumnDef="institucion">
       <mat-header-cell *matHeaderCellDef>Institucion</mat-header-cell>
-      <mat-cell *matCellDef="let referencia"><div> {{referencia.institucion}} </div></mat-cell>
+      <mat-cell *matCellDef="let estudio"><div> {{estudio.institucion.description}} </div></mat-cell>
     </ng-container>
     <ng-container matColumnDef="titulo">
       <mat-header-cell *matHeaderCellDef>Título</mat-header-cell>
-      <mat-cell *matCellDef="let referencia"><div> {{referencia.titulo}} </div></mat-cell>
+      <mat-cell *matCellDef="let estudio"><div> {{estudio.titulo.description}} </div></mat-cell>
     </ng-container>
     <ng-container matColumnDef="estado">
       <mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
-      <mat-cell *matCellDef="let referencia"><div> {{referencia.estado}} </div></mat-cell>
+      <mat-cell *matCellDef="let estudio"><div> {{estudio.estado.description}} </div></mat-cell>
     </ng-container>
     <ng-container matColumnDef="tipo">
       <mat-header-cell *matHeaderCellDef>Tipo</mat-header-cell>
-      <mat-cell *matCellDef="let referencia"><div> {{referencia.tipo}} </div></mat-cell>
+      <mat-cell *matCellDef="let estudio"><div> {{estudio.tipo.description}} </div></mat-cell>
     </ng-container>
     <ng-container matColumnDef="nivel">
       <mat-header-cell *matHeaderCellDef>Nivel</mat-header-cell>
-      <mat-cell *matCellDef="let referencia"><div> {{referencia.nivel}} </div></mat-cell>
+      <mat-cell *matCellDef="let estudio"><div> {{estudio.nivel.description}} </div></mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="columnsReference"></mat-header-row>
     <mat-row *matRowDef="let dataSource; columns: columnsReference;"></mat-row>
@@ -164,7 +164,7 @@
     <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
       Guardar Progreso
     </button>
-    <button class="stepper-main-btn" mat-button matStepperNext>
+    <button [disabled]="disabledButtonNext" class="stepper-main-btn" mat-button matStepperNext>
       Siguiente
     </button>
   </div>

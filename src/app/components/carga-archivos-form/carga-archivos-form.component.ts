@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-carga-archivos-form',
@@ -6,10 +7,12 @@ import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
   styleUrls: ['./carga-archivos-form.component.scss']
 })
 export class CargaArchivosFormComponent implements OnInit {
+  public disabledButtonNext: boolean = true;
   @ViewChild('fileInput')
   fileInput!: ElementRef;
   fileAttr = 'Cargar Archivos';
-  constructor() { }
+
+  constructor(private _guardarProgreso: LocalStorageService) { }
 
   ngOnInit(): void {
   }
@@ -37,6 +40,13 @@ export class CargaArchivosFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    console.log('Datos Adicionales Guardados')
+    // console.log('Archivos', this.archivos);
+    // this._guardarProgreso.set('archivosStorage', this.archivos);
+    this.disabledButtonNext = false;
+
+  }
+  public getLocalStorage(){
+    // console.log('Cargar Archivos', this.archivos);
+    // this._guardarProgreso.get('archivosStorage');
   }
 }

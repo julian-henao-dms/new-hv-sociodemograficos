@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Estudios } from "./interfaces/estudios.interface"
 import { MatTableDataSource } from '@angular/material/table';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 
 interface Institucion{
@@ -43,13 +44,36 @@ export interface Referencia {
   tipo: string;
   nivel: string;
 }
+interface EstudiosList {
+  institucion: {
+    value: number;
+    description: string;
+  };
+  titulo: {
+    value: number;
+    description: string;
+  };
+  estado: {
+    value: number;
+    description: string;
+  };
+  tipo: {
+    value: number;
+    description: string;
+  };
+  nivel: {
+    value: number;
+    description: string;
+  };
+}
+
 @Component({
   selector: 'app-estudios-form',
   templateUrl: './estudios-form.component.html',
   styleUrls: ['./estudios-form.component.scss']
 })
 export class EstudiosFormComponent implements OnInit {
-
+  public disabledButtonNext: boolean = true;
   public datosEstudios: Estudios ={
     idEstudio: 0,
     idCandidato: 0,
@@ -65,6 +89,7 @@ export class EstudiosFormComponent implements OnInit {
     accion: 0,
     titulo: 0 // subitem?
   }
+
 
   // public selectedInstitucion ="";
   public instituciones: Institucion[] = [
@@ -117,10 +142,10 @@ export class EstudiosFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
 
     this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
-    this.myReferenceArray = new MatTableDataSource<Referencia>([...this.REFERENCE_DATA]);
+    this.myReferenceArray = new MatTableDataSource<EstudiosList>([...this.REFERENCE_DATA]);
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -164,9 +189,30 @@ export class EstudiosFormComponent implements OnInit {
     { userName: "Wacca", age: 13 },
     { userName: "Waccu", age: 14 }
   ];
-  public REFERENCE_DATA: Referencia[] = [];
+  public REFERENCE_DATA: EstudiosList[] = [];
   public newUser = {userName: "", age: 0};
-  public newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: '' };
+  public newReference = {
+    institucion: {
+      value: 0,
+      description: '',
+    },
+    titulo: {
+      value: 0,
+      description: '',
+    },
+    estado: {
+      value: 0,
+      description: '',
+    },
+    tipo: {
+      value: 0,
+      description: '',
+    },
+    nivel: {
+      value: 0,
+      description: '',
+    },
+   };
   public myDataArray: any;
   public myReferenceArray: any;
 
@@ -182,22 +228,40 @@ export class EstudiosFormComponent implements OnInit {
     const newReferencesArray = this.REFERENCE_DATA;
     newReferencesArray.push(this.newReference);
     this.myReferenceArray = [...newReferencesArray];
-    this.newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: ''};
+    this.newReference = {
+      institucion: {
+        value: 0,
+        description: '',
+      },
+      titulo: {
+        value: 0,
+        description: '',
+      },
+      estado: {
+        value: 0,
+        description: '',
+      },
+      tipo: {
+        value: 0,
+        description: '',
+      },
+      nivel: {
+        value: 0,
+        description: '',
+      },
+     };
     console.warn(this.myReferenceArray);
   }
 
 
   public guardarProgreso(){
-    // console.log('Datos Estudios Guardados', this.datosEstudios);
-    // localStorage.setItem('datosEstudiosStorage', JSON.stringify(this.datosEstudios) );
-    console.log('Datos Estudios Guardados', this.myReferenceArray);
-    localStorage.setItem('datosEstudiosStorage', JSON.stringify(this.myReferenceArray) );
+    console.log('Datos Estudios Guardados', this.datosEstudios);
+    this._guardarProgreso.set('datosEstudiosStorage', this.datosEstudios);
+    this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    // console.log('Cargar Datos Estudios', this.datosEstudios);
-    // this.datosEstudios = JSON.parse(localStorage.getItem('datosEstudiosStorage')! );
-    console.log('Cargar Datos Estudios', this.myReferenceArray);
-    this.myReferenceArray = JSON.parse(localStorage.getItem('datosEstudiosStorage')! );
+    console.log('Cargar Datos Estudios', this.datosEstudios);
+    this._guardarProgreso.get('datosEstudiosStorage');
   }
 }

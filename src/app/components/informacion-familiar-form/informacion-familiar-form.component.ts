@@ -4,6 +4,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Familiar } from './interfaces/familiar.interface';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 interface Parentesco{
   value: number;
   viewValue: string;
@@ -48,7 +49,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -85,11 +86,18 @@ export class InformacionFamiliarFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    console.log('Info Familiar Guardada')
+    console.log('Info Familiar Guardada', this.datosInfoFamilia);
+    this._guardarProgreso.set('datosInfoFamilia', this.datosInfoFamilia);
+  }
+
+  public getLocalStorage(){
+    console.log('Cargar Datos Info Familiar', this.datosInfoFamilia);
+    this._guardarProgreso.get('datosInfoFamilia');
   }
 
   public enviarFormulario(){
-    console.log('Formulario Guardado')
+    console.log('Formulario Guardado');
+    this._guardarProgreso.clear();
   }
 
 }
