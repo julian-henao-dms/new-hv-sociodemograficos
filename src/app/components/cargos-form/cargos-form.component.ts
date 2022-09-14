@@ -24,19 +24,19 @@ public cargos: Cargo[] = [
   {value: '0', viewValue: 'Director Informática'},
   {value: '1', viewValue: 'Consultor'}
 ];
-  constructor(private _guardarProgreso: LocalStorageService) { }
+  constructor(private _storaged: LocalStorageService) { }
 
   ngOnInit(): void {
   }
 
   public guardarProgreso(){
     console.log('Cargos Guardados', this.otrosCargos);
-    this._guardarProgreso.set('otrosCargosStorage', this.otrosCargos);
+    this._storaged.set('otrosCargosStorage', this.otrosCargos);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
     console.log('Cargar Cargos', this.otrosCargos);
-    this._guardarProgreso.get('otrosCargosStorage');
+    this._storaged.get('otrosCargosStorage');
   }
 }

@@ -142,7 +142,7 @@ export class EstudiosFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
+  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
 
     this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.myReferenceArray = new MatTableDataSource<EstudiosList>([...this.REFERENCE_DATA]);
@@ -256,12 +256,12 @@ export class EstudiosFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Datos Estudios Guardados', this.datosEstudios);
-    this._guardarProgreso.set('datosEstudiosStorage', this.datosEstudios);
+    this._storaged.set('datosEstudiosStorage', this.datosEstudios);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
     console.log('Cargar Datos Estudios', this.datosEstudios);
-    this._guardarProgreso.get('datosEstudiosStorage');
+    this._storaged.get('datosEstudiosStorage');
   }
 }

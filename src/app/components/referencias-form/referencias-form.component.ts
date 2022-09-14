@@ -58,7 +58,7 @@ export class ReferenciasFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
+  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
     // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -129,12 +129,12 @@ export class ReferenciasFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Referencias', this.datosReferencias);
-    this._guardarProgreso.set('datosReferenciasStorage', this.datosReferencias);
+    this._storaged.set('datosReferenciasStorage', this.datosReferencias);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
     console.log('Cargar Datos Adicionales', this.datosReferencias);
-    this._guardarProgreso.get('datosReferenciasStorage');
+    this._storaged.get('datosReferenciasStorage');
   }
 }

@@ -12,7 +12,7 @@ export class CargaArchivosFormComponent implements OnInit {
   fileInput!: ElementRef;
   fileAttr = 'Cargar Archivos';
 
-  constructor(private _guardarProgreso: LocalStorageService) { }
+  constructor(private _storaged: LocalStorageService) { }
 
   ngOnInit(): void {
   }
@@ -41,12 +41,12 @@ export class CargaArchivosFormComponent implements OnInit {
 
   public guardarProgreso(){
     // console.log('Archivos', this.archivos);
-    // this._guardarProgreso.set('archivosStorage', this.archivos);
+    // this._storaged.set('archivosStorage', this.archivos);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
     // console.log('Cargar Archivos', this.archivos);
-    // this._guardarProgreso.get('archivosStorage');
+    // this._storaged.get('archivosStorage');
   }
 }

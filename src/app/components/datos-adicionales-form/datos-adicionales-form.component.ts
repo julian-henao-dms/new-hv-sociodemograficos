@@ -133,7 +133,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
+  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -171,12 +171,12 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Datos Adicionales', this.datosAdicionales);
-    this._guardarProgreso.set('datosAdicionalesStorage', this.datosAdicionales);
+    this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
     console.log('Cargar Datos Adicionales', this.datosAdicionales);
-    this._guardarProgreso.get('datosAdicionalesStorage');
+    this._storaged.get('datosAdicionalesStorage');
   }
 }

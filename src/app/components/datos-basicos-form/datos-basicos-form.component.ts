@@ -217,7 +217,7 @@ public idiomasCandidato: Idioma = {
   public typeCandidato: number = 0;
   public txtnombre:string="";
 
-  constructor(private _guardarProgreso: LocalStorageService, private breakpointObserver: BreakpointObserver) {
+  constructor(private _storaged: LocalStorageService, private breakpointObserver: BreakpointObserver) {
 
     this.getLocalStorage();
 
@@ -278,13 +278,13 @@ public idiomasCandidato: Idioma = {
 
   public guardarProgreso(){
     console.log('Datos Básicos Guardados', this.datosBasicos);
-    this._guardarProgreso.set('datosBasicosStorage', this.datosBasicos);
+    this._storaged.set('datosBasicosStorage', this.datosBasicos);
     // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
     this.disabledButtonNext = false;
   }
   public getLocalStorage(){
     console.log('Cargar Datos Básicos', this.datosBasicos);
-    this._guardarProgreso.get('datosBasicosStorage');
+    this._storaged.get('datosBasicosStorage');
     // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
   }
 

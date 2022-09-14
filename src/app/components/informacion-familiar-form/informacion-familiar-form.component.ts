@@ -49,7 +49,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _guardarProgreso: LocalStorageService) {
+  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -87,17 +87,17 @@ export class InformacionFamiliarFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Info Familiar Guardada', this.datosInfoFamilia);
-    this._guardarProgreso.set('datosInfoFamilia', this.datosInfoFamilia);
+    this._storaged.set('datosInfoFamilia', this.datosInfoFamilia);
   }
 
   public getLocalStorage(){
     console.log('Cargar Datos Info Familiar', this.datosInfoFamilia);
-    this._guardarProgreso.get('datosInfoFamilia');
+    this._storaged.get('datosInfoFamilia');
   }
 
   public enviarFormulario(){
     console.log('Formulario Guardado');
-    this._guardarProgreso.clear();
+    this._storaged.clear();
   }
 
 }
