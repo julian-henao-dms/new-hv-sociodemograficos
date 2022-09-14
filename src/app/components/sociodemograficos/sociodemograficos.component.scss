@@ -8,7 +8,7 @@ mat-grid-list.mat-grid-list {
 .container-hv-radios{
   display: flex;
   flex-direction: column;
-  margin: -25px 0 0 0;
+  margin: 0.2em 0;
   mat-label{
     margin-bottom: 0.2em;
     text-decoration: underline;
@@ -18,3 +18,23 @@ mat-grid-list.mat-grid-list {
   margin-left: 16px;
 }
 
+.consentimiento-content {
+  display: flex;
+  flex-direction: column;
+  margin: 0 1em;
+  .titulo-consentimiento{
+    text-transform: uppercase;
+  }
+  .consentimiento-text {
+    margin: 1.2em 0;
+  }
+  .consentimiento-check {
+    margin-bottom: 1.2em;
+}
+}
+.btn-sociodemograficos {
+  margin-top: 0.5em;
+  .stepper-main-btn{
+    margin-left: 1em;
+  }
+}

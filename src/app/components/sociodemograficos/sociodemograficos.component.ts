@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
 import { Sociodemograficos } from './interfaces/sociodemograficos.interface';
 
@@ -66,8 +66,10 @@ interface Ciudad{
 })
 export class SociodemograficosComponent implements OnInit {
   public isDisable: boolean = true;
+  public buttonDisabled: boolean = true;
+
   public sociodemograficos: Sociodemograficos = {
-    consentimiento: 0,
+    consentimiento: -1,
     empresa:'',
     sede:'',
     area:'',
@@ -215,6 +217,15 @@ export class SociodemograficosComponent implements OnInit {
     sm: 2,
     xs: 1
   }
+  colsAlt : number | undefined;
+
+  gridByBreakpointAlt = {
+    xl: 2,
+    lg: 2,
+    md: 2,
+    sm: 1,
+    xs: 1
+  };
 
   constructor(private breakpointObserver: BreakpointObserver) {
     this.breakpointObserver.observe([
@@ -241,9 +252,33 @@ export class SociodemograficosComponent implements OnInit {
           this.cols = this.gridByBreakpoint.xl;
         }
       }
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.colsAlt = this.gridByBreakpointAlt.xs;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.colsAlt = this.gridByBreakpointAlt.sm;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.colsAlt = this.gridByBreakpointAlt.md;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.colsAlt = this.gridByBreakpointAlt.lg;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.colsAlt = this.gridByBreakpointAlt.xl;
+        }
+      }
 
     });
    }
+
+  public onChange(event: any){
+    console.log('OnChanges', event);
+    if( event.value != -1){
+      this.buttonDisabled = false;
+    }
+  }
 
   ngOnInit(): void {
   }

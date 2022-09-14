@@ -265,6 +265,7 @@ public idiomasCandidato: Idioma = {
   }
 
   ngOnInit(): void {
+    this.getLocalStorage();
   }
 
 

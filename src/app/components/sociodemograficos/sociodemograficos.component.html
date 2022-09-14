@@ -1,11 +1,11 @@
 <mat-card>
     <form>
-        <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+        <div class="consentimiento-content">
 
-          <!-- <mat-grid-tile colspan="2">
+          <div class="consentimiento-text">
 
 <div class="consentimiento">
-  <p>Mensaje para mostrar en la opción: Consentimiento Informado</p>
+  <h3 class="titulo-consentimiento"> Consentimiento Informado</h3>
 
   <p>Voluntariamente acepto brindar mi información personal, clara y verídica a la empresa para mantener actualizado el perfil sociodemográfico, manifiesto haber recibido una explicación clara y completa sobre el carácter general y los propósitos del perfil sociodemográfico.</p>
 
@@ -17,12 +17,12 @@
 
 
 
-          </mat-grid-tile> -->
+</div>
 
-          <mat-grid-tile class="left-grid-position" >
+          <div class="consentimiento-check left-grid-position" >
             <div class="container-hv-radios">
              <mat-label>Consentimiento Informado:</mat-label>
-             <mat-radio-group class="" name="sociodemograficos.consentimiento"  [(ngModel)]="sociodemograficos.consentimiento">
+             <mat-radio-group class="" name="sociodemograficos.consentimiento" (ngModelChange)="onChange($event)"  [(ngModel)]="sociodemograficos.consentimiento">
                <mat-radio-button *ngFor="let optionConsentimiento of optionsYesNo" [value]="optionConsentimiento.value" color="primary">
                  {{ optionConsentimiento.name }}
                </mat-radio-button>
@@ -30,8 +30,8 @@
 
            </div>
 
-           </mat-grid-tile>
-          </mat-grid-list>
+           </div>
+          </div>
 
         <div class="campos-sociodemograficos" *ngIf="sociodemograficos.consentimiento == 1">
           <mat-divider></mat-divider>
@@ -435,7 +435,7 @@
 
         </div>
 <div class="btn-sociodemograficos">
-  <button class="stepper-main-btn" mat-button>Guardar</button>
+  <button [disabled]="buttonDisabled" class="stepper-main-btn" mat-button>Enviar</button>
 </div>
       </form>
 </mat-card>
