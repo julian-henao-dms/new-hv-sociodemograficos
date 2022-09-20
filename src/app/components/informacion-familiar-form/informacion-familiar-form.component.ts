@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Familiar } from './interfaces/familiar.interface';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 interface Parentesco{
   value: number;
   viewValue: string;
@@ -15,6 +16,27 @@ interface Parentesco{
   styleUrls: ['./informacion-familiar-form.component.scss']
 })
 export class InformacionFamiliarFormComponent implements OnInit {
+
+  public columnsReference: any[] = ["identificacion", "nombre", "fecha_nace", "parentezco", "telefono", 'borrar' ];
+  public FAMILIAR_DATA: Familiar[] = [];
+
+  public myReferenceArray: any[] = [];
+  public setRelatives = {
+    id_candidato: 0,
+    nombre: '',
+    id_Parentesco: 0,
+    edad: 0,
+    ne: 0,
+    ec: 0,
+    ocupacion: '',
+    empresa: '',
+    telResidencia: '',
+    otroFamiliar: 0,
+    id: 0,
+    accion: 0,
+    nit: '',
+    fechaNace: new Date,
+  };
 
  public datosInfoFamilia: Familiar ={
   id_candidato: 0,
@@ -35,9 +57,9 @@ export class InformacionFamiliarFormComponent implements OnInit {
 
 
   parentescos: Parentesco[] = [
-    {value: 0, viewValue: 'Abuela/Abuelo'},
-    {value: 1, viewValue: 'Esposa/Esposo'},
-    {value: 2, viewValue: 'Padre/Madre'},
+    {value: 1, viewValue: 'Abuela/Abuelo'},
+    {value: 2, viewValue: 'Esposa/Esposo'},
+    {value: 3, viewValue: 'Padre/Madre'},
   ];
   stepperOrientation: Observable<StepperOrientation>;
   cols : number | undefined;
@@ -49,7 +71,11 @@ export class InformacionFamiliarFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private _storaged: LocalStorageService,
+    private _addItemTable: AddLabelToTableService
+    ) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -85,6 +111,38 @@ export class InformacionFamiliarFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addReference() {
+    this.FAMILIAR_DATA.push(this.setRelatives);
+    console.log('Data reference',this.FAMILIAR_DATA);
+    this.myReferenceArray.push(this.setRelatives);
+    this.setRelatives = {
+      id_candidato: 0,
+      nombre: '',
+      id_Parentesco: 0,
+      edad: 0,
+      ne: 0,
+      ec: 0,
+      ocupacion: '',
+      empresa: '',
+      telResidencia: '',
+      otroFamiliar: 0,
+      id: 0,
+      accion: 0,
+      nit: '',
+      fechaNace: new Date,
+    };
+    this.myReferenceArray = [...this.myReferenceArray];
+
+
+    console.warn(this.myReferenceArray);
+  }
+
+  public  borrarItem(element: any){
+    this.myReferenceArray.splice(element, 1);
+    this.myReferenceArray = [...this.myReferenceArray];
+    console.log(this.myReferenceArray);
+  }
+
   public guardarProgreso(){
     console.log('Info Familiar Guardada', this.datosInfoFamilia);
     this._storaged.set('datosInfoFamilia', this.datosInfoFamilia);
@@ -98,6 +156,10 @@ export class InformacionFamiliarFormComponent implements OnInit {
   public enviarFormulario(){
     console.log('Formulario Guardado');
     this._storaged.clear();
+  }
+
+  public labelTable(id: number, list: any[]){
+    return this._addItemTable.findLabel(id, list);
   }
 
 }

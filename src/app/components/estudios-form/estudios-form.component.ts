@@ -6,6 +6,8 @@ import {map} from 'rxjs/operators';
 import { Estudios } from "./interfaces/estudios.interface"
 import { MatTableDataSource } from '@angular/material/table';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
+
 
 
 interface Institucion{
@@ -44,27 +46,39 @@ export interface Referencia {
   tipo: string;
   nivel: string;
 }
+interface Item{
+  name: string;
+  content: string;
+  value: number;
+}
 interface EstudiosList {
-  institucion: {
-    value: number;
-    description: string;
-  };
-  titulo: {
-    value: number;
-    description: string;
-  };
-  estado: {
-    value: number;
-    description: string;
-  };
-  tipo: {
-    value: number;
-    description: string;
-  };
-  nivel: {
-    value: number;
-    description: string;
-  };
+  institucion: number;
+  titulo: number;
+  estado: number;
+  tipo_estudio: number;
+  tipo_curso: number;
+  nivel: number;
+
+  // institucion: {
+  //   value: number;
+  //   description: string;
+  // };
+  // titulo: {
+  //   value: number;
+  //   description: string;
+  // };
+  // estado: {
+  //   value: number;
+  //   description: string;
+  // };
+  // tipo: {
+  //   value: number;
+  //   description: string;
+  // };
+  // nivel: {
+  //   value: number;
+  //   description: string;
+  // };
 }
 
 @Component({
@@ -73,7 +87,10 @@ interface EstudiosList {
   styleUrls: ['./estudios-form.component.scss']
 })
 export class EstudiosFormComponent implements OnInit {
+
   public disabledButtonNext: boolean = true;
+
+
   public datosEstudios: Estudios ={
     idEstudio: 0,
     idCandidato: 0,
@@ -90,48 +107,59 @@ export class EstudiosFormComponent implements OnInit {
     titulo: 0 // subitem?
   }
 
+  public columnsReference: any[] = ["institucion", "titulo", "estado", "tipo_estudio", "tipo_curso", "nivel", 'borrar' ];
+  public STUDIES_DATA: EstudiosList[] = [];
+  public setStudies = {institucion: 0, titulo: 0, estado: 0, tipo_estudio: 0, tipo_curso: 0, nivel: 0, borrar: 0};
+  public myReferenceArray: any[] = [];
 
   // public selectedInstitucion ="";
   public instituciones: Institucion[] = [
-    {value: 0, viewValue: 'SENA'},
-    {value: 1, viewValue: 'Universidad del Valle'},
-    {value: 2, viewValue: 'Universidad Nacional'},
-    {value: 3, viewValue: 'Universidad Haveriana'},
+    {value: 0, viewValue: 'Seleccionar '},
+    {value: 1, viewValue: 'SENA'},
+    {value: 2, viewValue: 'Universidad del Valle'},
+    {value: 3, viewValue: 'Universidad Nacional'},
+    {value: 4, viewValue: 'Universidad Haveriana'},
   ];
+
   public titulos: Titulo[] = [
-    {value: 0, viewValue: 'Abogado'},
-    {value: 1, viewValue: 'Ingeniero Civil'},
-    {value: 2, viewValue: 'Ingeniero de Sistemas'},
-    {value: 3, viewValue: 'Analista'},
-    {value: 3, viewValue: 'Economista'},
+    {value: 0, viewValue: 'Seleccionar '},
+    {value: 1, viewValue: 'Abogado'},
+    {value: 2, viewValue: 'Ingeniero Civil'},
+    {value: 3, viewValue: 'Ingeniero de Sistemas'},
+    {value: 4, viewValue: 'Analista'},
+    {value: 5, viewValue: 'Economista'},
   ];
   public estadosEstudio: EstadoEstudio[] = [
-    {value: 0, viewValue: 'Culminado'},
-    {value: 1, viewValue: 'En Curso'},
-    {value: 2, viewValue: 'Abandonado'},
-    {value: 3, viewValue: 'Aplazado'},
-    {value: 3, viewValue: 'Economista'},
+    {value: 0, viewValue: 'Seleccionar '},
+    {value: 1, viewValue: 'Culminado'},
+    {value: 2, viewValue: 'En Curso'},
+    {value: 3, viewValue: 'Abandonado'},
+    {value: 4, viewValue: 'Aplazado'},
+    {value: 5, viewValue: 'Economista'},
   ];
 
   public tiposEstudio: TipoEstudio[] = [
-    {value: 0, viewValue: 'Pregrado'},
-    {value: 1, viewValue: 'Especialización'},
-    {value: 2, viewValue: 'Estudio Complementario'},
-    {value: 3, viewValue: 'Maestría'},
-    {value: 3, viewValue: 'Doctorado'},
+    {value: 0, viewValue: 'Seleccionar '},
+    {value: 1, viewValue: 'Pregrado'},
+    {value: 2, viewValue: 'Especialización'},
+    {value: 3, viewValue: 'Estudio Complementario'},
+    {value: 4, viewValue: 'Maestría'},
+    {value: 5, viewValue: 'Doctorado'},
   ];
   public nivelesEstudio: NivelEstudio[] = [
-    {value: 0, viewValue: 'Técnica Laboral'},
-    {value: 1, viewValue: 'Formación Técnica Profesional'},
-    {value: 2, viewValue: 'Tecnológica'},
-    {value: 3, viewValue: 'Universidad'},
+    {value: 0, viewValue: 'Seleccionar '},
+    {value: 1, viewValue: 'Técnica Laboral'},
+    {value: 2, viewValue: 'Formación Técnica Profesional'},
+    {value: 3, viewValue: 'Tecnológica'},
+    {value: 4, viewValue: 'Universidad'},
   ];
   public tiposCurso: TipoCurso[] = [
-    {value: 0, viewValue: 'Curso'},
-    {value: 1, viewValue: 'Taller'},
-    {value: 2, viewValue: 'Seminario'},
-    {value: 3, viewValue: 'Diplomado'},
-    {value: 3, viewValue: 'Otros'},
+    {value: 0, viewValue: 'Seleccionar '},
+    {value: 1, viewValue: 'Curso'},
+    {value: 2, viewValue: 'Taller'},
+    {value: 3, viewValue: 'Seminario'},
+    {value: 4, viewValue: 'Diplomado'},
+    {value: 5, viewValue: 'Otros'},
   ];
   public stepperOrientation: Observable<StepperOrientation>;
   public cols : number | undefined;
@@ -142,10 +170,15 @@ export class EstudiosFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private _storaged: LocalStorageService,
+    private _addItemTable: AddLabelToTableService
+    ) {
 
-    this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
-    this.myReferenceArray = new MatTableDataSource<EstudiosList>([...this.REFERENCE_DATA]);
+    // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
+    // this.myReferenceArray = new MatTableDataSource<EstudiosList>([...this.STUDIES_DATA]);
+
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -182,75 +215,23 @@ export class EstudiosFormComponent implements OnInit {
   }
 
 
-  columnsToDisplay: string[] = ["userName", "age"];
-  columnsReference: string[] = ["institucion", "titulo", "estado", "tipo", "nivel" ];
-  public USER_DATA: user[] = [
-    { userName: "Wacco", age: 12 },
-    { userName: "Wacca", age: 13 },
-    { userName: "Waccu", age: 14 }
-  ];
-  public REFERENCE_DATA: EstudiosList[] = [];
-  public newUser = {userName: "", age: 0};
-  public newReference = {
-    institucion: {
-      value: 0,
-      description: '',
-    },
-    titulo: {
-      value: 0,
-      description: '',
-    },
-    estado: {
-      value: 0,
-      description: '',
-    },
-    tipo: {
-      value: 0,
-      description: '',
-    },
-    nivel: {
-      value: 0,
-      description: '',
-    },
-   };
-  public myDataArray: any;
-  public myReferenceArray: any;
 
-  addName() {
-    const newUsersArray = this.USER_DATA;
-    newUsersArray.push(this.newUser);
-    this.myDataArray = [...newUsersArray];
-    this.newUser = {userName:"", age: 0};
-    console.warn(this.myDataArray);
-  }
+
+
 
   addReference() {
-    const newReferencesArray = this.REFERENCE_DATA;
-    newReferencesArray.push(this.newReference);
-    this.myReferenceArray = [...newReferencesArray];
-    this.newReference = {
-      institucion: {
-        value: 0,
-        description: '',
-      },
-      titulo: {
-        value: 0,
-        description: '',
-      },
-      estado: {
-        value: 0,
-        description: '',
-      },
-      tipo: {
-        value: 0,
-        description: '',
-      },
-      nivel: {
-        value: 0,
-        description: '',
-      },
-     };
+    this.STUDIES_DATA.push(this.setStudies);
+    console.log('Data reference',this.STUDIES_DATA);
+    this.myReferenceArray.push(this.setStudies);
+    this.setStudies = {institucion: 0, titulo: 0, estado: 0, tipo_estudio: 0, tipo_curso: 0, nivel: 0, borrar: 0};
+    this.myReferenceArray = [...this.myReferenceArray];
+
+
     console.warn(this.myReferenceArray);
+  }
+
+  onSelectionInstitucion(){
+    console.log('Hola');
   }
 
 
@@ -263,5 +244,23 @@ export class EstudiosFormComponent implements OnInit {
   public getLocalStorage(){
     console.log('Cargar Datos Estudios', this.datosEstudios);
     this._storaged.get('datosEstudiosStorage');
+  }
+
+  public  borrarItem(element: any){
+    this.myReferenceArray.splice(element, 1);
+    this.myReferenceArray = [...this.myReferenceArray];
+    console.log(this.myReferenceArray);
+  }
+
+
+  public labelTable(id: number, list: any[]){
+    return this._addItemTable.findLabel(id, list);
+    // console.log('id', id);
+    // if(id > 0){
+    //   const objectLabel = list.find((e) => e.value == id);
+    //   return objectLabel?.viewValue || '';
+    // }else{
+    //   return '--o--'
+    // }
   }
 }

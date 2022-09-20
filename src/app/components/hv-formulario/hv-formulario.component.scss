@@ -2,9 +2,7 @@
     margin-top: 8px;
 
 }
-.wizard-datos-candidato {
-    margin-top: 2.5em;
-}
+
 
 // .mat-form-field {
 //     margin-top: 16px;
@@ -16,118 +14,14 @@ label.title-tabs-hv {
   text-transform: uppercase;
 }
 
-// .step-btn-container{
-//     display: flex;
-//     justify-content: flex-end;
-// }
-// button.stepper-main-btn {
-//     background: #2675bb;
-//     color: #fff;
-//     margin-right: 0.5em;
-//   }
-//   .example-action-button {
-//     margin-top: 8px;
-//     margin-right: 8px;
-//   }
-//   .example-tab-icon {
-//     margin-right: 8px;
-//   }
-//   .fields-form-container{
-//     display: flex;
-//     flex-wrap: wrap;
-//     align-items: center;
-//     mat-form-field{
-//         margin-right: 0.5em;
-//     }
-//   }
-//   .mat-radio-button ~ .mat-radio-button {
-//     margin-left: 16px;
-//   }
-//   .example-section {
-//     display: flex;
-//     align-content: center;
-//     align-items: center;
-//     height: 60px;
-//     flex-wrap: wrap;
-//   }
 
-//   .example-margin {
-//     margin: 0 10px;
-//   }
-//   .mat-form-field {
-//     margin-top: 1px;
-//     width: -webkit-fill-available;
-// }
-// .container-hv-radios{
-//   display: flex;
-//   flex-direction: column;
-//   margin: -25px 0 0 0;
-//   mat-label{
-//     margin-bottom: 0.2em;
-//     text-decoration: underline;
-//   }
-// }
-// .container-hv-referencia{
-//   display: flex;
-//   flex-direction: column;
-//   margin: 10px 0 0 20px;
-//   mat-label{
-//     margin-bottom: 1em;
-//     text-decoration: underline;
-//   }
-// }
-// mat-grid-list.mat-grid-list {
-//   margin: 1em;
-// }
-// .subtitle-hv{
-//   margin-top: 1em;
-// }
-// .mat-divider {
-//   border-top-color: rgba(38, 117, 187, 0.555);
-// }
-// .subtitle-container {
-//   display: flex;
-//   align-items: center;
-//   mat-icon{
-//     margin-right: 0.5em;
-//     color: #2675bb;
-//   }
-//   h2{
-//     text-decoration: underline;
-//     text-decoration-color: #2675bb;
-//     text-transform: uppercase;
-//   }
-// }
-
-// .mat-form-field-upload {
-//   margin: 40px 0;
-//   // width: 500px !important;
-//   width: 100%;
-// }
-// .mat-toolbar-single-row {
-//   height: auto !important;
-//   background: transparent;
-// }
-// .mat-toolbar-single-row button {
-//   width: 200px;
-// }
-// .mat-form-field {
-//   width: 100%;
-// }
-// #uploadFile {
-//   top: 0px;
-//   left: 0px;
-//   width: 100%;
-//   z-index: 9;
-//   opacity: 0;
-//   height: 100%;
-//   cursor: pointer;
-//   position: absolute;
-// }
-// .w-100{
-//   width: 100% !important;
-// }
 .mat-step-label.mat-step-label {
   text-overflow: inherit;
   white-space: normal;
+}
+
+@media screen and (max-width: 700px) {
+  .wizard-card{
+    margin: 1.2em 0em;
+}
 }

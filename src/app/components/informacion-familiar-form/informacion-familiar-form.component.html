@@ -8,19 +8,19 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
-        <input matInput placeholder="Identificación" #nit="ngModel" required id="nit" name="nit"  [(ngModel)]="datosInfoFamilia.nit" (ngModelChange)="datosInfoFamilia.nit = $event.toUpperCase()" />
+        <input matInput placeholder="Identificación" #nit="ngModel" required id="nit" name="nit"  [(ngModel)]="setRelatives.nit" (ngModelChange)="setRelatives.nit = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre </mat-label>
-        <input matInput placeholder="Nombre Familiar" #nombreFamiliar="ngModel" required id="nombreFamiliar" name="nombre"  [(ngModel)]="datosInfoFamilia.nombre" (ngModelChange)="datosInfoFamilia.nombre = $event.toUpperCase()" />
+        <input matInput placeholder="Nombre Familiar" #nombreFamiliar="ngModel" required id="nombreFamiliar" name="nombre"  [(ngModel)]="setRelatives.nombre" (ngModelChange)="setRelatives.nombre = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha Nacimiento</mat-label>
-        <input matInput [matDatepicker]="nacimiento" name="fechaNace" [(ngModel)]="datosInfoFamilia.fechaNace"
+        <input matInput [matDatepicker]="nacimiento" name="fechaNace" [(ngModel)]="setRelatives.fechaNace"
         #fechaNace="ngModel" required id="fechaNace"/>
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
@@ -48,7 +48,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Parentesco</mat-label>
-        <mat-select placeholder="Parentesco" #id_Parentesco="ngModel" required id="id_Parentesco" name="id_Parentesco"  [(ngModel)]="datosInfoFamilia.id_Parentesco">
+        <mat-select placeholder="Parentesco" #id_Parentesco="ngModel" required id="id_Parentesco" name="id_Parentesco"  [(ngModel)]="setRelatives.id_Parentesco">
           <mat-option
             *ngFor="let parentesco of parentescos"
             [value]="parentesco.value"
@@ -61,12 +61,51 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono / móvil</mat-label>
-        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" required id="telResidencia" name="telResidencia"  [(ngModel)]="datosInfoFamilia.telResidencia" />
+        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" required id="telResidencia" name="telResidencia"  [(ngModel)]="setRelatives.telResidencia" />
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
 
-  <button mat-flat-button color="primary">Adicionar</button>
+  <div class="step-btn-container">
+    <button class="add-button" mat-flat-button color="primary" (click)="addReference()"><mat-icon>playlist_add</mat-icon> Adicionar</button>
+  </div>
+
+  <div class="scroller-table">
+    <table mat-table class=" demo-table table-form-peritaje" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
+        <ng-container matColumnDef="identificacion">
+            <th mat-header-cell *matHeaderCellDef>Identificación</th>
+            <td mat-cell *matCellDef="let element">{{element.nit}}</td>
+        </ng-container>
+        <ng-container matColumnDef="nombre">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let element">{{element.nombre }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fecha_nace">
+            <th mat-header-cell *matHeaderCellDef>Fecha Nacimiento</th>
+            <td mat-cell *matCellDef="let element">{{element.fechaNace }}</td>
+        </ng-container>
+        <ng-container matColumnDef="parentezco">
+            <th mat-header-cell *matHeaderCellDef>Parentesco</th>
+            <td mat-cell *matCellDef="let element">{{labelTable(element.id_Parentesco, parentescos) }}</td>
+        </ng-container>
+        <ng-container matColumnDef="telefono">
+            <th mat-header-cell *matHeaderCellDef>Teléfono</th>
+            <td mat-cell *matCellDef="let element">{{element.telResidencia}}</td>
+        </ng-container>
+        <ng-container matColumnDef="borrar">
+            <th mat-header-cell *matHeaderCellDef>Borrar</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="borrarItem(element)">delete</mat-icon>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsReference"></tr>
+        <tr class="row-peritaje" mat-row *matRowDef="let row; columns: columnsReference;">
+        </tr>
+    </table>
+
+</div>
+
+
   <div class="step-btn-container">
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
@@ -77,11 +116,4 @@
     <button type="button" class="stepper-main-btn" mat-button (click)="enviarFormulario()">
       Enviar
     </button>
-    <!-- <button
-      class="stepper-main-btn"
-      mat-button
-      (click)="stepper.reset()"
-    >
-      Reset
-    </button> -->
   </div>

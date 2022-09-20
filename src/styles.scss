@@ -115,16 +115,44 @@ button.add-button{
   margin-left: 1em;
 }
 
-
-mat-table.estudios-mat-table{
-  margin: 1.5em 1em;
+.demo-table {
+  width: 100%;
 }
+
+.mat-row:hover .mat-cell {
+  // border-color: currentColor;
+}
+
+.demo-row-is-clicked {
+  font-weight: bold;
+}
+
+.table-form-peritaje {
+  tr,
+  th {
+      text-align: center;
+      width: auto;
+  }
+  th {
+
+      text-transform: uppercase;
+  }
+}
+
+.scroller-table {
+  width: 100%;
+}
+
+// mat-table.estudios-mat-table{
+//   margin: 1.5em 1em;
+// }
 
 @media screen and (min-width: 700px) {
   .step-btn-container{
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    margin: 1em;
   }
 }
 

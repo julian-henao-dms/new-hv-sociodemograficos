@@ -8,7 +8,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Experiencia General</mat-label>
-        <mat-select>
+        <mat-select >
           <mat-option
             *ngFor="let anioExp of aniosExp"
             [value]="anioExp.value"
@@ -196,13 +196,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Licencia</mat-label>
-        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel" required id="licencia" name="licencia"  [(ngModel)]="licencia"   (ngModelChange)="licencia = $event.toUpperCase()"  />
+        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel" required id="licencia" name="licencia"  [(ngModel)]="setLicences.licencia"   (ngModelChange)="licencia = $event.toUpperCase()"  />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">
       <div class="container-hv-radios">
         <mat-label>Tipo de Licencia:</mat-label>
-        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="tipo_licencia">
+        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="setLicences.tipo_licencia">
           <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.value" color="primary">
             {{ tipoLicencia.name }}
           </mat-radio-button>
@@ -213,7 +213,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha Vencimiento</mat-label>
-        <input matInput [matDatepicker]="vencimiento" />
+        <input matInput [matDatepicker]="vencimiento" #fecha_vence_licencia="ngModel" required id="fecha_vence_licencia" name="fecha_vence_licencia"  [(ngModel)]="setLicences.fecha_vence_licencia" />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matSuffix
@@ -225,7 +225,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Categoría</mat-label>
-        <mat-select>
+        <mat-select #id_rh_categoria="ngModel" required id="id_rh_categoria" name="id_rh_categoria"  [(ngModel)]="setLicences.id_rh_categoria">
           <mat-option
             *ngFor="let categoria of categorias"
             [value]="categoria.value"
@@ -236,6 +236,45 @@
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
+
+  <div class="step-btn-container ">
+    <button class="add-button" mat-flat-button color="primary" (click)="addReference()"><mat-icon>playlist_add</mat-icon> Adicionar</button>
+  </div>
+  <div class="scroller-table table-licence">
+    <table mat-table class=" demo-table table-form-peritaje" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
+        <ng-container matColumnDef="licencia">
+            <th mat-header-cell *matHeaderCellDef>Nº de licencia</th>
+            <td mat-cell *matCellDef="let element">{{element.licencia}}</td>
+        </ng-container>
+        <ng-container matColumnDef="tipo_licencia">
+            <th mat-header-cell *matHeaderCellDef>Tipo  de Licencia</th>
+            <td mat-cell *matCellDef="let element">{{labelTable(element.tipo_licencia, tiposLicencia) }}</td>
+        </ng-container>
+        <ng-container matColumnDef="fecha_vence">
+            <th mat-header-cell *matHeaderCellDef>Fecha Vencimiento</th>
+            <td mat-cell *matCellDef="let element">{{element.fecha_vence_licencia }}</td>
+        </ng-container>
+        <ng-container matColumnDef="categoria">
+            <th mat-header-cell *matHeaderCellDef>Categoría</th>
+            <td mat-cell *matCellDef="let element">{{labelTable(element.id_rh_categoria, categorias) }}</td>
+        </ng-container>
+        <!-- <ng-container matColumnDef="tipo">
+            <th mat-header-cell *matHeaderCellDef>Tipo Referencia</th>
+            <td mat-cell *matCellDef="let element">{{labelTable(element.tipo, tiposReferencia) }}</td>
+        </ng-container> -->
+        <ng-container matColumnDef="borrar">
+            <th mat-header-cell *matHeaderCellDef>Borrar</th>
+            <td mat-cell *matCellDef="let element">
+                <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="borrarItem(element)">delete</mat-icon>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="columnsReference"></tr>
+        <tr class="row-peritaje" mat-row *matRowDef="let row; columns: columnsReference;">
+        </tr>
+    </table>
+
+</div>
+
 
   <mat-divider></mat-divider>
   <div class="subtitle-container">

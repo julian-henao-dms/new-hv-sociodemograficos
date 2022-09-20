@@ -387,13 +387,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Lengua Extranjera</mat-label>
         <mat-select name="idIdi" [(ngModel)]="idiomasCandidato.idIdi"
-        #idIdi="ngModel" required id="idIdi">
-          <mat-option
-            *ngFor="let lengua of lenguas"
-            [value]="lengua.value"
-          >
-            {{ lengua.viewValue }}
-          </mat-option>
+        #idIdi="ngModel" required id="idIdi" multiple>
+          <mat-option *ngFor="let lengua of lenguas" [value]="lengua.value">{{lengua.viewValue}}</mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>

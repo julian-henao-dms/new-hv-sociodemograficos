@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import { Referencias } from './interfaces/referencias.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 
 export interface user {
   userName: string;
@@ -19,12 +20,27 @@ export interface Referencia {
   nivel: string;
 }
 
+interface ReferenceList {
+  tipo_referencia: number;
+  nombre: string;
+  celular: string;
+  telefono: string;
+  correo: string;
+  empresa: string;
+  cargo: string;
+  tiempo_laborado: string;
+  motivo_retiro: string;
+  notas: string;
+
+}
+
 @Component({
   selector: 'app-referencias-form',
   templateUrl: './referencias-form.component.html',
   styleUrls: ['./referencias-form.component.scss']
 })
 export class ReferenciasFormComponent implements OnInit {
+
   public disabledButtonNext: boolean = true;
   public datosReferencias: Referencias = {
     idCandidato: 0,
@@ -43,9 +59,31 @@ export class ReferenciasFormComponent implements OnInit {
     motivoRetiro: '',
   }
 
+  public columnsReference: any[] = ["nombre", "celular", "telefono", "mail", "observaciones", "tipo", 'borrar' ];
+  public REFERENCE_DATA: Referencias[] = [];
+
+  public myReferenceArray: any[] = [];
+  public setReferences = {
+    idCandidato: 0,
+    nombre: '',
+    celular: '',
+    telefono: '',
+    mail: '',
+    tipo: 0,
+    idUsuario: 0,
+    empresa: '',
+    cargo: '',
+    observaciones: '',
+    id: 0,
+    accion: 0,
+    tiempoLaborado: '',
+    motivoRetiro: '',
+    borrar: 0
+  };
+
    public tiposReferencia = [
-      { value: 0, name: "Personal" },
-      { value: 1, name: "Laboral" }
+      { value: 1, viewValue: "Personal" },
+      { value: 2, viewValue: "Laboral" }
     ];
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -58,7 +96,11 @@ export class ReferenciasFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private _storaged: LocalStorageService,
+    private _addItemTable: AddLabelToTableService
+    ){
     // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -96,36 +138,41 @@ export class ReferenciasFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  // columnsToDisplay: string[] = ["userName", "age"];
-  // columnsReference: string[] = ["institucion", "titulo", "estado", "tipo", "nivel" ];
-  // public USER_DATA: user[] = [
-  //   { userName: "Wacco", age: 12 },
-  //   { userName: "Wacca", age: 13 },
-  //   { userName: "Waccu", age: 14 }
-  // ];
-  // public REFERENCE_DATA: Referencia[] = [];
-  // public newUser = {userName: "", age: 0};
-  // public newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: '' };
-  // public myDataArray: any;
-  // public myReferenceArray: any;
 
-  // addName() {
-  //   const newUsersArray = this.USER_DATA;
-  //   newUsersArray.push(this.newUser);
-  //   this.myDataArray = [...newUsersArray];
-  //   this.newUser = {userName:"", age: 0};
-  //   console.warn(this.myDataArray);
-  // }
-
-  // addReference() {
-  //   const newReferencesArray = this.REFERENCE_DATA;
-  //   newReferencesArray.push(this.newReference);
-  //   this.myReferenceArray = [...newReferencesArray];
-  //   this.newReference = {institucion: '', titulo: '', estado: '', tipo: '', nivel: ''};
-  //   console.warn(this.myReferenceArray);
-  // }
+  addReference() {
+    this.REFERENCE_DATA.push(this.setReferences);
+    console.log('Data reference',this.REFERENCE_DATA);
+    this.myReferenceArray.push(this.setReferences);
+    this.setReferences = {idCandidato: 0,
+      nombre: '',
+      celular: '',
+      telefono: '',
+      mail: '',
+      tipo: 0,
+      idUsuario: 0,
+      empresa: '',
+      cargo: '',
+      observaciones: '',
+      id: 0,
+      accion: 0,
+      tiempoLaborado: '',
+      motivoRetiro: '',
+      borrar: 0};
+    this.myReferenceArray = [...this.myReferenceArray];
 
 
+    console.warn(this.myReferenceArray);
+  }
+
+  public  borrarItem(element: any){
+    this.myReferenceArray.splice(element, 1);
+    this.myReferenceArray = [...this.myReferenceArray];
+    console.log(this.myReferenceArray);
+  }
+
+  public labelTable(id: number, list: any[]){
+    return this._addItemTable.findLabel(id, list);
+  }
 
   public guardarProgreso(){
     console.log('Referencias', this.datosReferencias);
@@ -137,4 +184,6 @@ export class ReferenciasFormComponent implements OnInit {
     console.log('Cargar Datos Adicionales', this.datosReferencias);
     this._storaged.get('datosReferenciasStorage');
   }
+
+
 }

@@ -4,6 +4,7 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 
 interface Pais{
   value: number;
@@ -49,8 +50,37 @@ interface CategoriaLicencia{
   value: number;
   viewValue: string;
 }
+interface Licencia{
+  licencia: string;
+  tipo_licencia: number;
+  fecha_vence_licencia: string;
+  id_rh_categoria: number;
+}
 interface DatosAdicionalesCandidato{
-
+  id_rh_experiencia_sector: number;
+  id_rh_experiencia_equipo: number;
+  aspiracion: number;
+  salario_especifico: number;
+  id_rh_fuente_reclutamiento: number;
+  tarjeta: string;
+  id_Entidad: number;
+  id_participacion_anterior: number;
+  id_trajo_hoja_vida: number;
+  id_disponibilidad_viaje: number;
+  runt: number;
+  idRhEps: number;
+  idRhFondoPension: number;
+  idRhFondoCaja: number;
+  idRhFondoCesantias: number;
+  licencia: string;
+  tipo_licencia: number;
+  fecha_vence_licencia: string;
+  id_rh_categoria: number;
+  id_rh_color_piel: number;
+  id_rh_grupo_sanguineo: number;
+  rh: number;
+  peso: number;
+  altura: number;
 }
 @Component({
   selector: 'app-datos-adicionales-form',
@@ -58,9 +88,45 @@ interface DatosAdicionalesCandidato{
   styleUrls: ['./datos-adicionales-form.component.scss']
 })
 export class DatosAdicionalesFormComponent implements OnInit {
+
+  public columnsReference: any[] = ["licencia", "tipo_licencia", "fecha_vence", "categoria", 'borrar' ];
+  public ADDITIONAL_DATA: Licencia[] = [];
+
+  public myReferenceArray: any[] = [];
+
+  public setLicences: Licencia = {
+    licencia: '',
+    tipo_licencia: 0,
+    fecha_vence_licencia: '',
+    id_rh_categoria: 0,
+  }
+
  public disabledButtonNext: boolean = true;
  public datosAdicionales: DatosAdicionalesCandidato = {
-
+  id_rh_experiencia_sector: 0,
+  id_rh_experiencia_equipo: 0,
+  aspiracion: 0,
+  salario_especifico: 0,
+  id_rh_fuente_reclutamiento: 0,
+  tarjeta: '',
+  id_Entidad: 0,
+  id_participacion_anterior: 0,
+  id_trajo_hoja_vida: 0,
+  id_disponibilidad_viaje: 0,
+  runt: 0,
+  idRhEps: 0,
+  idRhFondoPension: 0,
+  idRhFondoCaja: 0,
+  idRhFondoCesantias: 0,
+  licencia: '',
+  tipo_licencia: 0,
+  fecha_vence_licencia: '',
+  id_rh_categoria: 0,
+  id_rh_color_piel: 0,
+  id_rh_grupo_sanguineo: 0,
+  rh: 0,
+  peso: 0,
+  altura: 0,
  }
   public tipo_licencia = 0;
   public licencia = '';
@@ -133,7 +199,11 @@ export class DatosAdicionalesFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
-  constructor(private breakpointObserver: BreakpointObserver, private _storaged: LocalStorageService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private _storaged: LocalStorageService,
+    private _addItemTable: AddLabelToTableService
+    ) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
@@ -169,14 +239,40 @@ export class DatosAdicionalesFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  addReference() {
+    this.ADDITIONAL_DATA.push(this.setLicences);
+    console.log('Data reference',this.ADDITIONAL_DATA);
+    this.myReferenceArray.push(this.setLicences);
+    this.setLicences = {
+      licencia: '',
+      tipo_licencia: 0,
+      fecha_vence_licencia: '',
+      id_rh_categoria: 0,
+    };
+    this.myReferenceArray = [...this.myReferenceArray];
+
+
+    console.warn(this.myReferenceArray);
+  }
+
+  public  borrarItem(element: any){
+    this.myReferenceArray.splice(element, 1);
+    this.myReferenceArray = [...this.myReferenceArray];
+    console.log(this.myReferenceArray);
+  }
+
+  public labelTable(id: number, list: any[]){
+    return this._addItemTable.findLabel(id, list);
+  }
+
   public guardarProgreso(){
-    console.log('Datos Adicionales', this.datosAdicionales);
-    this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+    // console.log('Datos Adicionales', this.datosAdicionales);
+    // this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    console.log('Cargar Datos Adicionales', this.datosAdicionales);
-    this._storaged.get('datosAdicionalesStorage');
+    // console.log('Cargar Datos Adicionales', this.datosAdicionales);
+    // this.datosAdicionales = this._storaged.get('datosAdicionalesStorage');
   }
 }

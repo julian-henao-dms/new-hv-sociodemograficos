@@ -189,14 +189,14 @@ export class SociodemograficosComponent implements OnInit {
     {value: 1, viewValue: 'Luz'},
     {value: 2, viewValue: 'Gas'},
     {value: 3, viewValue: 'Teléfono'},
-    {value: 3, viewValue: 'Internet'},
+    {value: 4, viewValue: 'Internet'},
   ];
   dependencias: DependeEconomica[] = [
     {value: 0, viewValue: 'Hijos'},
     {value: 1, viewValue: 'Madre'},
     {value: 2, viewValue: 'Padre'},
     {value: 3, viewValue: 'Pareja'},
-    {value: 3, viewValue: 'Familiar'},
+    {value: 4, viewValue: 'Familiar'},
   ];
 
   tiposTransporte: TipoTransporte[] = [
@@ -204,7 +204,7 @@ export class SociodemograficosComponent implements OnInit {
     {value: 1, viewValue: 'Bicicleta'},
     {value: 2, viewValue: 'Moto'},
     {value: 3, viewValue: 'Vehiculo Particular'},
-    {value: 3, viewValue: 'Transporte Público'},
+    {value: 4, viewValue: 'Transporte Público'},
   ];
 
 
@@ -281,6 +281,10 @@ export class SociodemograficosComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  public enviarSociodemograficos(){
+    console.log('Enviar', this.sociodemograficos);
   }
 
 

@@ -34,7 +34,7 @@ interface NivelAcademico{
   viewValue: string;
 }
 interface LenguajeExtranjera{
-  value: string;
+  value: number;
   viewValue: string;
 }
 interface EstadoCivil{
@@ -48,6 +48,32 @@ interface Cargo{
 interface AniosExperiencia{
   value: string;
   viewValue: string;
+}
+interface DatosBasicosCandidato {
+  id_tipo_candidato: number;
+  nit: string;
+  id_rh_tipo_documento: number;
+  fecExpedicion: Date;
+  lugar_expedicion_pais:number;
+  lugar_expedicion_depto:number;
+  lugar_expedicion_ciudad:number;
+  nombre: string;
+  apellido: string;
+  id_usuario: number;
+  genero: number;
+  fecha_nacimiento: Date;
+  idRhEstadoCivil: number;
+  telefono: string;
+  mail: string;
+  celular: string;
+  direccion: string;
+  pais:number;
+  depto:number;
+  ciudad:number;
+  barrio: number;
+  id_rh_experiencia: number;
+  id_rh_nivel_academico: number;
+  cargo_aplica: number;
 }
 @Component({
   selector: 'app-datos-basicos-form',
@@ -199,8 +225,9 @@ public idiomasCandidato: Idioma = {
 
   ];
   lenguas: LenguajeExtranjera[] = [
-    {value: '0', viewValue: 'Inglés'},
-    {value: '1', viewValue: 'Frances'}
+    {value: 0, viewValue: 'Inglés'},
+    {value: 1, viewValue: 'Frances'},
+    {value: 2, viewValue: 'Frances'}
   ];
   estados: EstadoCivil[] = [
     {value: '0', viewValue: 'Soltero'},
@@ -218,8 +245,8 @@ public idiomasCandidato: Idioma = {
   public txtnombre:string="";
 
   constructor(private _storaged: LocalStorageService, private breakpointObserver: BreakpointObserver) {
-
     this.getLocalStorage();
+
 
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
@@ -266,7 +293,7 @@ public idiomasCandidato: Idioma = {
   }
 
   ngOnInit(): void {
-    this.getLocalStorage();
+    // this.getLocalStorage();
   }
 
 
@@ -278,13 +305,14 @@ public idiomasCandidato: Idioma = {
 
   public guardarProgreso(){
     console.log('Datos Básicos Guardados', this.datosBasicos);
+    console.log('Datos Idiomas', this.idiomasCandidato);
     this._storaged.set('datosBasicosStorage', this.datosBasicos);
     // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
     this.disabledButtonNext = false;
   }
   public getLocalStorage(){
     console.log('Cargar Datos Básicos', this.datosBasicos);
-    this._storaged.get('datosBasicosStorage');
+    this.datosBasicos = this._storaged.get('datosBasicosStorage');
     // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
   }
 
