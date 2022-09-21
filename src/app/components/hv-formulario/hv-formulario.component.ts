@@ -106,7 +106,7 @@ export class HvFormularioComponent implements OnInit {
   public tiposReferencia: string[] = ['Personal', 'Laboral'];
   public typeCandidato: number = 0;
   public operacionesDisabled = true;
-  public isLinear = false;
+  public isLinear = true;
   public isActive = true;
   public txtnombre:string="";
 
