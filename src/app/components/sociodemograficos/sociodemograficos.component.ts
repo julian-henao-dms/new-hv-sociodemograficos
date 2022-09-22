@@ -1,6 +1,7 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, OnChanges, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import { MessagesService } from 'src/app/services/messages.service';
 import { Sociodemograficos } from './interfaces/sociodemograficos.interface';
 
 interface AnioAntiguedad{
@@ -88,6 +89,7 @@ export class SociodemograficosComponent implements OnInit {
     serviciosVivienda: 0,
     tamanoVivienda: 0,
     condicionesVivienda: 0,
+    estratoServicios: 0,
     numPesonasVive: 0,
     numHijos: 0,
     edadHijos: 0,
@@ -96,7 +98,7 @@ export class SociodemograficosComponent implements OnInit {
     tipoTransporte: 0,
     rutaSegura: 0,
     tiempoLibre: 0,
-    reduceDescanso: 0,
+    reduceDescanso: '',
     actividadFisica: 0,
     fumador: 0,
     accesoSalud: 0,
@@ -227,7 +229,7 @@ export class SociodemograficosComponent implements OnInit {
     xs: 1
   };
 
-  constructor(private breakpointObserver: BreakpointObserver) {
+  constructor(private breakpointObserver: BreakpointObserver, private messages: MessagesService) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -285,6 +287,14 @@ export class SociodemograficosComponent implements OnInit {
 
   public enviarSociodemograficos(){
     console.log('Enviar', this.sociodemograficos);
+    if(this.sociodemograficos.consentimiento == 0){
+      this.messages.info("Consentimiento no aceptado", "Ha marcado NO en la casilla de consentimiento informado, solo almacenaremos esta respuesta.");
+    }else if(this.sociodemograficos.consentimiento == 1){
+      this.messages.success("Perfecto", "Los datos sociodemográficos se almacenaron correctamente");
+    }else{
+      this.messages.error("Error", "No se pudo almacenar la información");
+    }
+
   }
 
 

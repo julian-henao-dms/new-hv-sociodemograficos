@@ -30,7 +30,7 @@ interface Barrio{
   viewValue: string;
 }
 interface NivelAcademico{
-  value: string;
+  value: number;
   viewValue: string;
 }
 interface LenguajeExtranjera{
@@ -38,15 +38,15 @@ interface LenguajeExtranjera{
   viewValue: string;
 }
 interface EstadoCivil{
-  value: string;
+  value: number;
   viewValue: string;
 }
 interface Cargo{
-  value: string;
+  value: number;
   viewValue: string;
 }
 interface AniosExperiencia{
-  value: string;
+  value: number;
   viewValue: string;
 }
 interface DatosBasicosCandidato {
@@ -84,9 +84,7 @@ export class DatosBasicosFormComponent implements OnInit {
 
   @Output() changeSelect = new EventEmitter<any>();
 
-  // public depto: string = '';
-  // public ciudad: string = '';
-  // public barrio: string = '';
+
 public datosBasicos: Candidato = {
    emp:  0,
    nit: '',
@@ -150,13 +148,16 @@ public datosBasicos: Candidato = {
 }
 
 public disabledButtonNext: boolean = true;
-public idiomasCandidato: Idioma = {
-  idIdi: 0,
-  idCandidato: 0,
-  idUsuario: 0,
-  id: 0,
-  accion: 0,
-}
+
+public idiomasCandidato: Idioma[] = [
+  {
+    idIdi: 0,
+    idCandidato: 0,
+    idUsuario: 0,
+    id: 0,
+    accion: 0,
+    }
+];
 
   colsAlt : number | undefined;
 
@@ -220,26 +221,26 @@ public idiomasCandidato: Idioma = {
 
   ];
   nivelesAcademia: NivelAcademico[] = [
-    {value: '0', viewValue: 'Primaria'},
-    {value: '1', viewValue: 'Bachiller'}
+    {value: 0, viewValue: 'Primaria'},
+    {value: 1, viewValue: 'Bachiller'}
 
   ];
   lenguas: LenguajeExtranjera[] = [
-    {value: 0, viewValue: 'Inglés'},
-    {value: 1, viewValue: 'Frances'},
-    {value: 2, viewValue: 'Frances'}
+    {value: 1, viewValue: 'Inglés'},
+    {value: 2, viewValue: 'Frances'},
+    {value: 3, viewValue: 'Italiano'}
   ];
   estados: EstadoCivil[] = [
-    {value: '0', viewValue: 'Soltero'},
-    {value: '1', viewValue: 'Unión Libre'}
+    {value: 0, viewValue: 'Soltero'},
+    {value: 1, viewValue: 'Unión Libre'}
   ];
   cargos: Cargo[] = [
-    {value: '0', viewValue: 'Director Informática'},
-    {value: '1', viewValue: 'Consultor'}
+    {value: 0, viewValue: 'Director Informática'},
+    {value: 1, viewValue: 'Consultor'}
   ];
   aniosExp: AniosExperiencia[] = [
-    {value: '0', viewValue: '1 Año a 2 Años'},
-    {value: '1', viewValue: '3 Año a 5 Años'}
+    {value: 0, viewValue: '1 Año a 2 Años'},
+    {value: 1, viewValue: '3 Año a 5 Años'}
   ];
   public typeCandidato: number = 0;
   public txtnombre:string="";

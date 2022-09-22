@@ -90,7 +90,7 @@ interface DatosAdicionalesCandidato{
 export class DatosAdicionalesFormComponent implements OnInit {
 
   public columnsReference: any[] = ["licencia", "tipo_licencia", "fecha_vence", "categoria", 'borrar' ];
-  public ADDITIONAL_DATA: Licencia[] = [];
+  public LICENCE_DATA: Licencia[] = [];
 
   public myReferenceArray: any[] = [];
 
@@ -102,6 +102,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
   }
 
  public disabledButtonNext: boolean = true;
+
  public datosAdicionales: DatosAdicionalesCandidato = {
   id_rh_experiencia_sector: 0,
   id_rh_experiencia_equipo: 0,
@@ -148,8 +149,9 @@ export class DatosAdicionalesFormComponent implements OnInit {
     {value: 1, viewValue: '2 Años a 3 Años'}
   ];
   categorias: CategoriaLicencia[] = [
-    {value: 0, viewValue: 'A1'},
-    {value: 1, viewValue: 'B1'}
+    {value: 1, viewValue: 'A1'},
+    {value: 2, viewValue: 'B1'},
+    {value: 2, viewValue: 'C1'},
   ];
   salarios: AspiracionSalarial[] = [
     {value: 0, viewValue: '1.000.000$ - 1.500.000$'},
@@ -182,8 +184,8 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
 
   tiposLicencia = [
-    { value: 0, name: "Pública" },
-    { value: 1, name: "Privada" }
+    { value: 1, name: "Pública" },
+    { value: 2, name: "Privada" }
   ];
   coloresPiel: ColorPiel[] = [
     {value: 0, viewValue: 'Negro'},
@@ -240,8 +242,8 @@ export class DatosAdicionalesFormComponent implements OnInit {
   }
 
   addReference() {
-    this.ADDITIONAL_DATA.push(this.setLicences);
-    console.log('Data reference',this.ADDITIONAL_DATA);
+    this.LICENCE_DATA.push(this.setLicences);
+    console.log('Data reference',this.LICENCE_DATA);
     this.myReferenceArray.push(this.setLicences);
     this.setLicences = {
       licencia: '',
@@ -266,8 +268,9 @@ export class DatosAdicionalesFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    // console.log('Datos Adicionales', this.datosAdicionales);
-    // this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+    console.log('Datos Adicionales', this.datosAdicionales);
+    this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+    this._storaged.set('datosLicencia', this.setLicences);
     this.disabledButtonNext = false;
 
   }

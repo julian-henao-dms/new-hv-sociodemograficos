@@ -252,7 +252,7 @@
         </ng-container>
         <ng-container matColumnDef="fecha_vence">
             <th mat-header-cell *matHeaderCellDef>Fecha Vencimiento</th>
-            <td mat-cell *matCellDef="let element">{{element.fecha_vence_licencia }}</td>
+            <td mat-cell *matCellDef="let element">{{element.fecha_vence_licencia | date:'dd/MM/yyyy' }}</td>
         </ng-container>
         <ng-container matColumnDef="categoria">
             <th mat-header-cell *matHeaderCellDef>Categoría</th>

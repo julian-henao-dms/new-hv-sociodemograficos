@@ -33,17 +33,7 @@
     rowHeight="85px"
     gutterSize="10px"
   >
-    <!-- <mat-grid-tile>
-              <mat-form-field appearance="outline">
-                <mat-label>Seleccionar Tipo Candidato</mat-label>
-                <mat-select>
-                  <mat-option *ngFor="let tipoCandidato of tiposCandidato" [value]="tipoCandidato.value">
-                    {{tipoCandidato.viewValue}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-          </mat-grid-tile> -->
-    <mat-grid-tile>
+  <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
         <input
@@ -386,7 +376,7 @@
     <mat-grid-tile [colspan]="colsAlt">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Lengua Extranjera</mat-label>
-        <mat-select name="idIdi" [(ngModel)]="idiomasCandidato.idIdi"
+        <mat-select name="idIdi" [(ngModel)]="idiomasCandidato[0].idIdi"
         #idIdi="ngModel" required id="idIdi" multiple>
           <mat-option *ngFor="let lengua of lenguas" [value]="lengua.value">{{lengua.viewValue}}</mat-option>
         </mat-select>

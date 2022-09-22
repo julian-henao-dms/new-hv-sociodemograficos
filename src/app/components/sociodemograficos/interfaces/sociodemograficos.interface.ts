@@ -16,6 +16,7 @@ export interface Sociodemograficos {
   zonaVivienda:number;
   cuentaConServicios:number;
   serviciosVivienda:number;// list or array
+  estratoServicios:number;// list or array
   tamanoVivienda:number;
   condicionesVivienda:number;
   numPesonasVive:number;
@@ -26,7 +27,7 @@ export interface Sociodemograficos {
   tipoTransporte:number;
   rutaSegura:number;
   tiempoLibre:number;
-  reduceDescanso:number;
+  reduceDescanso:string;
   actividadFisica:number;
   fumador:number;
   accesoSalud:number;

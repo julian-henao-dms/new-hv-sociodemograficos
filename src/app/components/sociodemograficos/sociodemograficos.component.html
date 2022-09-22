@@ -230,7 +230,7 @@
            <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Estrato Servicios Públicos</mat-label>
-              <mat-select #serviciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="sociodemograficos.serviciosVivienda">
+              <mat-select #estrato="ngModel" required id="estrato" name="estrato"  [(ngModel)]="sociodemograficos.estratoServicios">
                 <mat-option
                   *ngFor="let estrato of estratos"
                   [value]="estrato.value"
