@@ -70,39 +70,39 @@ export class SociodemograficosComponent implements OnInit {
   public buttonDisabled: boolean = true;
 
   public sociodemograficos: Sociodemograficos = {
-    consentimiento: -1,
-    empresa:'',
-    sede:'',
-    area:'',
-    fechaIngreso: new Date,
-    antiguedadEmpresa: 0,
-    antiguedadCargo: 0,
-    promedioIngresos: 0,
-    arl: 0,
-    tipoAfiliadoEps: 0,
-    paisNacimiento: 0,
-    deptoNacimiento: 0,
-    ciudadNacimiento: 0,
-    caracteristicasVivienda: 0,
-    zonaVivienda: 0,
-    cuentaConServicios: 0,
-    serviciosVivienda: 0,
-    tamanoVivienda: 0,
-    condicionesVivienda: 0,
-    estratoServicios: 0,
-    numPesonasVive: 0,
-    numHijos: 0,
-    edadHijos: 0,
-    dependenciaEconomica: 0,
-    familiarDiscapacitado: 0,
-    tipoTransporte: 0,
-    rutaSegura: 0,
-    tiempoLibre: 0,
-    reduceDescanso: '',
-    actividadFisica: 0,
+    consentimiento_informado: -1,
+    // empresa:'',
+    // sede:'',
+    // area:'',e
+    // fechaIngreso: new Date,
+    id_antiguedad_empresa: 0,
+    id_antiguedad_cargo: 0,
+    id_ingresos: 0,
+    // arl: 0,
+    id_tipo_afiliacion: 0,
+    // paisNacimiento: 0,
+    // deptoNacimiento: 0,
+    // ciudadNacimiento: 0,
+    id_caracteristica_vivienda: 0,
+    id_zona_ubica: 0,
+    servicios: 0, // cuenta con servicios
+    servicios_vivienda: 0,
+    tamano_vivienda: 0,
+    condicion_vivienda: 0,
+    id_estrato_servicios: 0,
+    personas_vive: 0,
+    numero_hijos: 0,
+    id_edad_hijos: 0,
+    personas_depende: 0,
+    persona_discapacidad: 0,
+    tipo_transporte: 0,
+    ruta_segura: 0,
+    tiempo_descanso: 0,
+    otras_actividades: '',
+    actividad_fisica: 0,
     fumador: 0,
-    accesoSalud: 0,
-    lentesMedicados: 0,
+    servicios_salud: 0,
+    usa_lentes: 0,
   }
 
   public showFields = false;
@@ -287,9 +287,11 @@ export class SociodemograficosComponent implements OnInit {
 
   public enviarSociodemograficos(){
     console.log('Enviar', this.sociodemograficos);
-    if(this.sociodemograficos.consentimiento == 0){
+    if(this.sociodemograficos.consentimiento_informado
+ == 0){
       this.messages.info("Consentimiento no aceptado", "Ha marcado NO en la casilla de consentimiento informado, solo almacenaremos esta respuesta.");
-    }else if(this.sociodemograficos.consentimiento == 1){
+    }else if(this.sociodemograficos.consentimiento_informado
+ == 1){
       this.messages.success("Perfecto", "Los datos sociodemográficos se almacenaron correctamente");
     }else{
       this.messages.error("Error", "No se pudo almacenar la información");

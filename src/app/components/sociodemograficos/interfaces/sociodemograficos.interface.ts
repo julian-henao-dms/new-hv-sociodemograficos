@@ -1,35 +1,35 @@
 export interface Sociodemograficos {
-  consentimiento: number;
-  empresa:string;
-  sede:string;
-  area:string;
-  fechaIngreso:Date;
-  antiguedadEmpresa:number;
-  antiguedadCargo: number;
-  promedioIngresos:number;
-  arl:number;
-  tipoAfiliadoEps:number;
-  paisNacimiento:number;
-  deptoNacimiento:number;
-  ciudadNacimiento:number;
-  caracteristicasVivienda:number;
-  zonaVivienda:number;
-  cuentaConServicios:number;
-  serviciosVivienda:number;// list or array
-  estratoServicios:number;// list or array
-  tamanoVivienda:number;
-  condicionesVivienda:number;
-  numPesonasVive:number;
-  numHijos:number;
-  edadHijos:number;
-  dependenciaEconomica:number;
-  familiarDiscapacitado:number;
-  tipoTransporte:number;
-  rutaSegura:number;
-  tiempoLibre:number;
-  reduceDescanso:string;
-  actividadFisica:number;
+  consentimiento_informado: number;
+  // empresa:string;
+  // sede:string;
+  // area:string;
+  // fechaIngreso:Date;
+  id_antiguedad_empresa:number;
+  id_antiguedad_cargo: number;
+  id_ingresos:number;
+  // arl:number;
+  id_tipo_afiliacion:number;
+  // paisNacimiento:number;
+  // deptoNacimiento:number;
+  // ciudadNacimiento:number;
+  id_caracteristica_vivienda:number;
+  id_zona_ubica:number;
+  servicios:number;
+  servicios_vivienda:number;// list or array
+  id_estrato_servicios:number;// list or array
+  tamano_vivienda:number;
+  condicion_vivienda:number;
+  personas_vive:number;
+  numero_hijos:number;
+  id_edad_hijos:number;
+  personas_depende:number;
+  persona_discapacidad:number;
+  tipo_transporte:number;
+  ruta_segura:number;
+  tiempo_descanso:number;
+  otras_actividades:string;
+  actividad_fisica:number;
   fumador:number;
-  accesoSalud:number;
-  lentesMedicados:number;
+  servicios_salud:number;
+  usa_lentes:number;
 }

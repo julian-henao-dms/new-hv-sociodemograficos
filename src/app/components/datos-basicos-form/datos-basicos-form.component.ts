@@ -146,18 +146,17 @@ public datosBasicos: Candidato = {
    barrio: 0,
    cargoAplica: 0,
 }
-
+public idIdiPrevio: number[] = [];
+public idiomasArray: any[] = [];
 public disabledButtonNext: boolean = true;
 
-public idiomasCandidato: Idioma[] = [
-  {
-    idIdi: 0,
+public idiomasCandidato: Idioma = {
+    idIdi:0,
     idCandidato: 0,
     idUsuario: 0,
     id: 0,
     accion: 0,
-    }
-];
+    };
 
   colsAlt : number | undefined;
 
@@ -306,14 +305,20 @@ public idiomasCandidato: Idioma[] = [
 
   public guardarProgreso(){
     console.log('Datos Básicos Guardados', this.datosBasicos);
-    console.log('Datos Idiomas', this.idiomasCandidato);
+
+    this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
+      ...this.idiomasCandidato, idIdi
+    }));
+    console.log('Datos Idiomas', this.idiomasArray);
     this._storaged.set('datosBasicosStorage', this.datosBasicos);
+    this._storaged.set('idiomasStorage', this.idiomasArray);
     // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
     this.disabledButtonNext = false;
   }
   public getLocalStorage(){
     console.log('Cargar Datos Básicos', this.datosBasicos);
     this.datosBasicos = this._storaged.get('datosBasicosStorage');
+    this.idiomasArray = this._storaged.get('idiomasStorage');
     // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
   }
 

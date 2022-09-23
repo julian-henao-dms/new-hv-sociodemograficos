@@ -212,6 +212,7 @@ export class EstudiosFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLocalStorage();
   }
 
 
@@ -236,14 +237,14 @@ export class EstudiosFormComponent implements OnInit {
 
 
   public guardarProgreso(){
-    console.log('Datos Estudios Guardados', this.datosEstudios);
-    this._storaged.set('datosEstudiosStorage', this.datosEstudios);
+    console.log('Datos Estudios Guardados', this.myReferenceArray);
+    this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    console.log('Cargar Datos Estudios', this.datosEstudios);
-    this._storaged.get('datosEstudiosStorage');
+    console.log('Cargar Datos Estudios');
+    this.myReferenceArray = this._storaged.get('datosEstudiosStorage');
   }
 
   public  borrarItem(element: any){
