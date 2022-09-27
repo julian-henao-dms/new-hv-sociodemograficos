@@ -21,7 +21,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Operaciones de Equipos </mat-label>
-        <mat-select [disabled]="tipoCandidato == 1 ? true : false ">
+        <mat-select [disabled]="tipoCandidato == 0 ? true : false ">
           <mat-option
             *ngFor="let pais of paises"
             [value]="pais.value"

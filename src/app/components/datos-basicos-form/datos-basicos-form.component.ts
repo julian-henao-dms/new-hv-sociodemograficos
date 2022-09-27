@@ -1,7 +1,9 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { MessagesService } from 'src/app/services/messages.service';
 import { Candidato, Idioma } from "./interfaces/candidato.interface"
 
 
@@ -84,6 +86,16 @@ export class DatosBasicosFormComponent implements OnInit {
 
   @Output() changeSelect = new EventEmitter<any>();
 
+  public param: any = 3;
+  public pais: Array<any> = [];
+  public paises: Pais[] = [
+    {value: '0', viewValue: 'Argentina'},
+    {value: '1', viewValue: 'Bolivia'},
+    {value: '2', viewValue: 'Brasil'},
+    {value: '3', viewValue: 'Colombia'},
+    {value: '4', viewValue: 'Ecuador'},
+    {value: '5', viewValue: 'Perú'}
+  ];
 
 public datosBasicos: Candidato = {
    emp:  0,
@@ -190,14 +202,7 @@ public idiomasCandidato: Idioma = {
     {value: '3', viewValue: 'Permisos Especiales de Permanencia'},
     {value: '4', viewValue: 'Otros'}
   ];
-  paises: Pais[] = [
-    {value: '0', viewValue: 'Argentina'},
-    {value: '1', viewValue: 'Bolivia'},
-    {value: '2', viewValue: 'Brasil'},
-    {value: '3', viewValue: 'Colombia'},
-    {value: '4', viewValue: 'Ecuador'},
-    {value: '5', viewValue: 'Perú'}
-  ];
+
   deptos: Depto[] = [
     {value: '0', viewValue: 'Antioquia'},
     {value: '1', viewValue: 'Cundinamarca'},
@@ -244,8 +249,13 @@ public idiomasCandidato: Idioma = {
   public typeCandidato: number = 0;
   public txtnombre:string="";
 
-  constructor(private _storaged: LocalStorageService, private breakpointObserver: BreakpointObserver) {
-    this.getLocalStorage();
+  constructor(
+    private _storaged: LocalStorageService,
+    private breakpointObserver: BreakpointObserver,
+    private readonly apiService: ApiService,
+    private readonly messageService: MessagesService
+    ){
+    // this.getLocalStorage();
 
 
     this.breakpointObserver.observe([
@@ -292,11 +302,45 @@ public idiomasCandidato: Idioma = {
     });
   }
 
-  ngOnInit(): void {
-    // this.getLocalStorage();
+  async ngOnInit(): Promise<void> {
+
+   const paises = await this.getAnyInformation('/pais/3');
+   console.log(paises.response);
+
+   const departamentos = await this.getAnyInformation('/pais/Departamentos/3/11746');
+    console.log(departamentos.response);
+
+    // return new Promise((resolve, reject) => {
+
+    // })
+
+    // (await this.apiService.getInformacion('/pais/', this.param)).subscribe({
+    //   next: (v) => {
+    //     console.log(v.response);
+    //   },
+    //   error: (e) => {
+    //     console.error(e);
+    //   },
+    //   complete: () => {
+    //     console.log('Se completó la consulta a la API');
+    //   }
+    // });
+
+
   }
 
 
+  private async getAnyInformation(service: string): Promise<any> {
+    return new Promise(async (resolve, reject) => {
+       (await this.apiService.getInformacion(service)).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
+  }
 
  public onChange(event:any){
     console.log("Evento", event);
