@@ -10,9 +10,9 @@
         <mat-select placeholder="Seleccionar Institución" #idInstitucion="ngModel"  id="idInstitucion" name="idInstitucion"  (selectionChange)="onSelectionInstitucion()" [(ngModel)]="setStudies.institucion"> <!-- [(ngModel)]="datosEstudios.idInstitucion" -->
           <mat-option
             *ngFor="let institucion of instituciones"
-            [value]="institucion.value"
+            [value]="institucion.id"
           >
-            {{ institucion.viewValue }}
+            {{ institucion.descripcion }}
           </mat-option>
         </mat-select>
 
@@ -25,9 +25,9 @@
         <mat-select #titulo="ngModel"  id="titulo" name="titulo"  [(ngModel)]="setStudies.titulo"> <!-- [(ngModel)]="datosEstudios.titulo" -->
           <mat-option
             *ngFor="let titulo of titulos"
-            [value]="titulo.value"
+            [value]="titulo.id"
           >
-            {{ titulo.viewValue }}
+            {{ titulo.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -53,9 +53,9 @@
         <mat-select #id_estado_estudio="ngModel"  id="id_estado_estudio" name="id_estado_estudio"  [(ngModel)]="setStudies.estado"> <!-- [(ngModel)]="datosEstudios.id_estado_estudio" -->
           <mat-option
             *ngFor="let estadoEstudio of estadosEstudio"
-            [value]="estadoEstudio.value"
+            [value]="estadoEstudio.id"
           >
-            {{ estadoEstudio.viewValue }}
+            {{ estadoEstudio.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -66,9 +66,9 @@
         <mat-select #id_tipo_estudio="ngModel"  id="id_tipo_estudio" name="id_tipo_estudio"  [(ngModel)]="setStudies.tipo_estudio" > <!-- [(ngModel)]="datosEstudios.id_tipo_estudio" -->
           <mat-option
             *ngFor="let tipoEstudio of tiposEstudio"
-            [value]="tipoEstudio.value"
+            [value]="tipoEstudio.id"
           >
-            {{ tipoEstudio.viewValue }}
+            {{ tipoEstudio.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -79,9 +79,9 @@
         <mat-select #id_nivel_estudio="ngModel"  id="id_nivel_estudio" name="id_nivel_estudio"  [(ngModel)]="setStudies.nivel"> <!-- [(ngModel)]="datosEstudios.id_nivel_estudio" -->
           <mat-option
             *ngFor="let nivelEstudio of nivelesEstudio"
-            [value]="nivelEstudio.value"
+            [value]="nivelEstudio.id"
           >
-            {{ nivelEstudio.viewValue }}
+            {{ nivelEstudio.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -94,9 +94,9 @@
         <mat-select #id_tipo_curso="ngModel"  id="id_tipo_curso" name="id_tipo_curso"  [(ngModel)]="setStudies.tipo_curso"> <!-- [(ngModel)]="datosEstudios.id_tipo_estudio" -->
           <mat-option
             *ngFor="let tipoCurso of tiposCurso"
-            [value]="tipoCurso.value"
+            [value]="tipoCurso.id"
           >
-            {{ tipoCurso.viewValue }}
+            {{ tipoCurso.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>

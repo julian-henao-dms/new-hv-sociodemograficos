@@ -215,7 +215,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
    const idEmp = this.idEmp;
-   const numRegla = this.numRegla
+   const numRegla = this.numRegla;
 
   const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
    console.log(experienciaEspecifica);

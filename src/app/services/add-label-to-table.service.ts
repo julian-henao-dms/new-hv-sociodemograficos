@@ -12,8 +12,8 @@ export class AddLabelToTableService {
   public findLabel(id: number, list: any[]){
     // console.log('id', id);
     if(id > 0){
-      const objectLabel = list.find((e) => e.value == id);
-      return objectLabel?.viewValue || '';
+      const objectLabel = list.find((e) => e.id == id);
+      return objectLabel?.descripcion || '';
     }else{
       return '--o--'
     }

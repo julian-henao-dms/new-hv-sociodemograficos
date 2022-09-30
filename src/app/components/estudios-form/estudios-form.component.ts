@@ -7,32 +7,34 @@ import { Estudios } from "./interfaces/estudios.interface"
 import { MatTableDataSource } from '@angular/material/table';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MessagesService } from 'src/app/services/messages.service';
 
 
 
 interface Institucion{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface TipoEstudio{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface NivelEstudio{
-  value: number;
-  viewValue: string;
+   id: number;
+  descripcion: string;
 }
 interface Titulo{
-  value: number;
-  viewValue: string;
+   id: number;
+  descripcion: string;
 }
 interface EstadoEstudio{
-  value: number;
-  viewValue: string;
+   id: number;
+  descripcion: string;
 }
 interface TipoCurso{
-  value: number;
-  viewValue: string;
+   id: number;
+  descripcion: string;
 }
 
 export interface user {
@@ -58,27 +60,6 @@ interface EstudiosList {
   tipo_estudio: number;
   tipo_curso: number;
   nivel: number;
-
-  // institucion: {
-  //   value: number;
-  //   description: string;
-  // };
-  // titulo: {
-  //   value: number;
-  //   description: string;
-  // };
-  // estado: {
-  //   value: number;
-  //   description: string;
-  // };
-  // tipo: {
-  //   value: number;
-  //   description: string;
-  // };
-  // nivel: {
-  //   value: number;
-  //   description: string;
-  // };
 }
 
 @Component({
@@ -87,8 +68,36 @@ interface EstudiosList {
   styleUrls: ['./estudios-form.component.scss']
 })
 export class EstudiosFormComponent implements OnInit {
-
+  public idEmp: number = 3;
+  public numRegla: number = 159;
   public disabledButtonNext: boolean = true;
+
+  public instituciones: Institucion[] = [];
+  public titulos: Titulo[] = [];
+  public tiposCurso: TipoCurso[] = [];
+
+  public nivelesEstudio: NivelEstudio[] = [
+    {id: 0, descripcion: 'Seleccionar '},
+    {id: 1, descripcion: 'Técnica Laboral'},
+    {id: 2, descripcion: 'Formación Técnica Profesional'},
+    {id: 3, descripcion: 'Tecnológica'},
+    {id: 4, descripcion: 'Universidad'},
+  ];
+  public tiposEstudio: TipoEstudio[] = [
+    {id: 0, descripcion: 'Seleccionar '},
+    {id: 1, descripcion: 'Pregrado'},
+    {id: 2, descripcion: 'Especialización'},
+    {id: 3, descripcion: 'Estudio Complementario'},
+    {id: 4, descripcion: 'Maestría'},
+    {id: 5, descripcion: 'Doctorado'},
+  ];
+  public estadosEstudio: EstadoEstudio[] = [
+    {id: 0, descripcion: 'Seleccionar '},
+    {id: 1, descripcion: 'Culminado'},
+    {id: 2, descripcion: 'En Curso'},
+    {id: 3, descripcion: 'Abandonado'},
+    {id: 4, descripcion: 'Aplazado'}
+  ];
 
 
   public datosEstudios: Estudios ={
@@ -112,55 +121,6 @@ export class EstudiosFormComponent implements OnInit {
   public setStudies = {institucion: 0, titulo: 0, estado: 0, tipo_estudio: 0, tipo_curso: 0, nivel: 0, borrar: 0};
   public myReferenceArray: any[] = [];
 
-  // public selectedInstitucion ="";
-  public instituciones: Institucion[] = [
-    {value: 0, viewValue: 'Seleccionar '},
-    {value: 1, viewValue: 'SENA'},
-    {value: 2, viewValue: 'Universidad del Valle'},
-    {value: 3, viewValue: 'Universidad Nacional'},
-    {value: 4, viewValue: 'Universidad Haveriana'},
-  ];
-
-  public titulos: Titulo[] = [
-    {value: 0, viewValue: 'Seleccionar '},
-    {value: 1, viewValue: 'Abogado'},
-    {value: 2, viewValue: 'Ingeniero Civil'},
-    {value: 3, viewValue: 'Ingeniero de Sistemas'},
-    {value: 4, viewValue: 'Analista'},
-    {value: 5, viewValue: 'Economista'},
-  ];
-  public estadosEstudio: EstadoEstudio[] = [
-    {value: 0, viewValue: 'Seleccionar '},
-    {value: 1, viewValue: 'Culminado'},
-    {value: 2, viewValue: 'En Curso'},
-    {value: 3, viewValue: 'Abandonado'},
-    {value: 4, viewValue: 'Aplazado'},
-    {value: 5, viewValue: 'Economista'},
-  ];
-
-  public tiposEstudio: TipoEstudio[] = [
-    {value: 0, viewValue: 'Seleccionar '},
-    {value: 1, viewValue: 'Pregrado'},
-    {value: 2, viewValue: 'Especialización'},
-    {value: 3, viewValue: 'Estudio Complementario'},
-    {value: 4, viewValue: 'Maestría'},
-    {value: 5, viewValue: 'Doctorado'},
-  ];
-  public nivelesEstudio: NivelEstudio[] = [
-    {value: 0, viewValue: 'Seleccionar '},
-    {value: 1, viewValue: 'Técnica Laboral'},
-    {value: 2, viewValue: 'Formación Técnica Profesional'},
-    {value: 3, viewValue: 'Tecnológica'},
-    {value: 4, viewValue: 'Universidad'},
-  ];
-  public tiposCurso: TipoCurso[] = [
-    {value: 0, viewValue: 'Seleccionar '},
-    {value: 1, viewValue: 'Curso'},
-    {value: 2, viewValue: 'Taller'},
-    {value: 3, viewValue: 'Seminario'},
-    {value: 4, viewValue: 'Diplomado'},
-    {value: 5, viewValue: 'Otros'},
-  ];
   public stepperOrientation: Observable<StepperOrientation>;
   public cols : number | undefined;
   public gridByBreakpoint = {
@@ -173,11 +133,10 @@ export class EstudiosFormComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private _storaged: LocalStorageService,
-    private _addItemTable: AddLabelToTableService
+    private _addItemTable: AddLabelToTableService,
+    private apiService: ApiService,
+    private messageService: MessagesService
     ) {
-
-    // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
-    // this.myReferenceArray = new MatTableDataSource<EstudiosList>([...this.STUDIES_DATA]);
 
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -211,12 +170,36 @@ export class EstudiosFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     this.getLocalStorage();
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    const numRegla = this.numRegla;
+
+    const institucion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'institucion' + '/' + 'subcriterio');
+    this.instituciones = institucion;
+
+    const titulo = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'titulo' + '/' + 'subcriterio');
+    this.titulos = titulo;
+
+    const tipoCurso = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_curso' + '/' + 'subcriterio');
+    this.tiposCurso = tipoCurso;
+
+
   }
 
 
-
+  private async getAnyInformationAlt(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacionMaestros(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
+  }
 
 
 
