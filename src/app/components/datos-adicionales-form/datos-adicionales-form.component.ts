@@ -5,50 +5,56 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MessagesService } from 'src/app/services/messages.service';
 
 interface Pais{
   value: number;
   viewValue: string;
 }
 interface AniosExperiencia{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface AspiracionSalarial{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface FuenteReclutamiento{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface EntidadExpedicion{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface EPS{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface FondoPension{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface CajaCompensacion{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface Cesantia{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
+}
+interface GrupoSanguineo{
+  id: number;
+  descripcion: string;
 }
 interface ColorPiel{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface CategoriaLicencia{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface Licencia{
   licencia: string;
@@ -88,6 +94,22 @@ interface DatosAdicionalesCandidato{
   styleUrls: ['./datos-adicionales-form.component.scss']
 })
 export class DatosAdicionalesFormComponent implements OnInit {
+
+  public idEmp: number = 3;
+  public numRegla: number = 159;
+
+  public  aniosExp: AniosExperiencia[] = [];
+  public salarios: AspiracionSalarial[] = [];
+   fuentesReclutamiento: FuenteReclutamiento[] = [];
+  public entidades: EntidadExpedicion[] = [];
+  public epss: EPS[] = [];
+  public fondosPension: FondoPension[] = [];
+  cajasCompensacion: CajaCompensacion[] = [];
+  cesantias: Cesantia[] = [];
+  categoriasLicencia: CategoriaLicencia[] = [];
+  gruposSanguineos: GrupoSanguineo[] = [];
+  coloresPiel: ColorPiel[] = [];
+
 
   public columnsReference: any[] = ["licencia", "tipo_licencia", "fecha_vence", "categoria", 'borrar' ];
   public LICENCE_DATA: Licencia[] = [];
@@ -136,62 +158,12 @@ export class DatosAdicionalesFormComponent implements OnInit {
   @Input() tipoCandidato: number = 1;
 
   public operacionesDisabled = true;
-  paises: Pais[] = [
-    {value: 0, viewValue: 'Argentina'},
-    {value: 1, viewValue: 'Bolivia'},
-    {value: 2, viewValue: 'Brasil'},
-    {value: 3, viewValue: 'Colombia'},
-    {value: 4, viewValue: 'Ecuador'},
-    {value: 5, viewValue: 'Perú'}
-  ];
-  aniosExp: AniosExperiencia[] = [
-    {value: 0, viewValue: '1 Año a 2 Años'},
-    {value: 1, viewValue: '2 Años a 3 Años'}
-  ];
-  categorias: CategoriaLicencia[] = [
-    {value: 1, viewValue: 'A1'},
-    {value: 2, viewValue: 'B1'},
-    {value: 2, viewValue: 'C1'},
-  ];
-  salarios: AspiracionSalarial[] = [
-    {value: 0, viewValue: '1.000.000$ - 1.500.000$'},
-    {value: 1, viewValue: '1.500.000$ - 2.500.000$'}
-  ];
-  fuentesReclutamiento: FuenteReclutamiento[] = [
-    {value: 0, viewValue: 'LinkedIn'},
-    {value: 1, viewValue: 'Computrabajo'}
-  ];
-  entidades: EntidadExpedicion[] = [
-    {value: 0, viewValue: 'CONSEJO PROFESIONAL NACIONAL DE TECNÓLOGOS EN ELECTRICIDAD, ELECTROMECÁNICA, ELECTRÓNICA Y AFINES- CONALTEL'},
-    {value: 1, viewValue: 'CONSEJO NACIONAL DE INGENIERÍAS ELÉCTRICA, MECÁNICA Y PROFESIONES AFINES'}
-  ];
-  epss: EPS[] = [
-    {value: 0, viewValue: 'Sanitas'},
-    {value: 1, viewValue: 'Coomeva'}
-  ];
-  fondosPension: FondoPension[] = [
-    {value: 0, viewValue: 'Porvenir'},
-    {value: 1, viewValue: 'Sura'}
-  ];
-  cajasCompensacion: CajaCompensacion[] = [
-    {value: 0, viewValue: 'Comfenalco'},
-    {value: 1, viewValue: 'Comfama'}
-  ];
-  cesantias: Cesantia[] = [
-    {value: 0, viewValue: 'AFP Colfondos'},
-    {value: 1, viewValue: 'AFP Porvenir'}
-  ];
-
 
   tiposLicencia = [
     { value: 1, name: "Pública" },
     { value: 2, name: "Privada" }
   ];
-  coloresPiel: ColorPiel[] = [
-    {value: 0, viewValue: 'Negro'},
-    {value: 1, viewValue: 'Trigueño'},
-    {value: 2, viewValue: 'Blanco'}
-  ];
+
   stepperOrientation: Observable<StepperOrientation>;
   cols : number | undefined;
   gridByBreakpoint = {
@@ -204,7 +176,9 @@ export class DatosAdicionalesFormComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private _storaged: LocalStorageService,
-    private _addItemTable: AddLabelToTableService
+    private _addItemTable: AddLabelToTableService,
+    private readonly messageService: MessagesService,
+    private apiService: ApiService
     ) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -238,7 +212,56 @@ export class DatosAdicionalesFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+   const idEmp = this.idEmp;
+   const numRegla = this.numRegla
+
+  const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+   console.log(experienciaEspecifica);
+   this.aniosExp = experienciaEspecifica;
+
+  const aspiracionSalarial = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'rango_salario' + '/' + 'subcriterio');
+   console.log(aspiracionSalarial);
+   this.salarios = aspiracionSalarial;
+
+  const fuenteReclutamiento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fuente_reclutamiento' + '/' + 'subcriterio');
+   console.log(fuenteReclutamiento);
+   this.fuentesReclutamiento = fuenteReclutamiento;
+
+  const entidadExpedicion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'entidad' + '/' + 'subcriterio');
+   console.log(entidadExpedicion);
+   this.entidades = entidadExpedicion;
+
+  const eps = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'eps' + '/' + 'subcriterio');
+   console.log(eps);
+   this.epss = eps;
+
+  const fondoPension = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_pension' + '/' + 'subcriterio');
+   console.log(fondoPension);
+   this.fondosPension = fondoPension;
+
+  const cajaCompensacion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_caja' + '/' + 'subcriterio');
+   console.log(cajaCompensacion);
+   this.cajasCompensacion = cajaCompensacion;
+
+  const cesantia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_cesantias' + '/' + 'subcriterio');
+   console.log(cesantia);
+   this.cesantias = cesantia;
+
+  const categoriaLicencia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'categoria_licencia' + '/' + 'subcriterio');
+   console.log(categoriaLicencia);
+   this.categoriasLicencia = categoriaLicencia;
+
+  const grupoSanguineo = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'grupo_sanguineo' + '/' + 'subcriterio');
+   console.log(grupoSanguineo);
+   this.gruposSanguineos = grupoSanguineo;
+
+  const colorPiel = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'color_piel' + '/' + 'subcriterio');
+   console.log(colorPiel);
+   this.coloresPiel = colorPiel;
+
+   loading.close();
   }
 
   addReference() {
@@ -255,6 +278,18 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
 
     console.warn(this.myReferenceArray);
+  }
+
+  private async getAnyInformationAlt(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacionMaestros(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
   }
 
   public  borrarItem(element: any){

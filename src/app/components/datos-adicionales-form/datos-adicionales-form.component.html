@@ -11,9 +11,9 @@
         <mat-select >
           <mat-option
             *ngFor="let anioExp of aniosExp"
-            [value]="anioExp.value"
+            [value]="anioExp.id"
           >
-            {{ anioExp.viewValue }}
+            {{ anioExp.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -23,10 +23,10 @@
         <mat-label>Seleccionar Operaciones de Equipos </mat-label>
         <mat-select [disabled]="tipoCandidato == 0 ? true : false ">
           <mat-option
-            *ngFor="let pais of paises"
-            [value]="pais.value"
+          *ngFor="let anioExp of aniosExp"
+          [value]="anioExp.id"
           >
-            {{ pais.viewValue }}
+          {{ anioExp.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -37,9 +37,9 @@
         <mat-select>
           <mat-option
             *ngFor="let salario of salarios"
-            [value]="salario.value"
+            [value]="salario.id"
           >
-            {{ salario.viewValue }}
+            {{ salario.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -62,9 +62,9 @@
         <mat-select>
           <mat-option
             *ngFor="let fuente of fuentesReclutamiento"
-            [value]="fuente.value"
+            [value]="fuente.id"
           >
-            {{ fuente.viewValue }}
+            {{ fuente.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -81,9 +81,9 @@
         <mat-select >
           <mat-option
             *ngFor="let entidad of entidades"
-            [value]="entidad.value"
+            [value]="entidad.id"
           >
-            {{ entidad.viewValue }}
+            {{ entidad.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -131,9 +131,9 @@
         <mat-select>
           <mat-option
             *ngFor="let eps of epss"
-            [value]="eps.value"
+            [value]="eps.id"
           >
-            {{ eps.viewValue }}
+            {{ eps.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -145,9 +145,9 @@
       <mat-select>
         <mat-option
           *ngFor="let fondoPension of fondosPension"
-          [value]="fondoPension.value"
+          [value]="fondoPension.id"
         >
-          {{ fondoPension.viewValue }}
+          {{ fondoPension.descripcion }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -158,9 +158,9 @@
       <mat-select>
         <mat-option
           *ngFor="let cajaCompensacion of cajasCompensacion"
-          [value]="cajaCompensacion.value"
+          [value]="cajaCompensacion.id"
         >
-          {{ cajaCompensacion.viewValue }}
+          {{ cajaCompensacion.descripcion }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -171,9 +171,9 @@
       <mat-select>
         <mat-option
           *ngFor="let cesantia of cesantias"
-          [value]="cesantia.value"
+          [value]="cesantia.id"
         >
-          {{ cesantia.viewValue }}
+          {{ cesantia.descripcion }}
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -227,10 +227,10 @@
         <mat-label>Seleccionar Categoría</mat-label>
         <mat-select #id_rh_categoria="ngModel" required id="id_rh_categoria" name="id_rh_categoria"  [(ngModel)]="setLicences.id_rh_categoria">
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let categoriaLic of categoriasLicencia"
+            [value]="categoriaLic.id"
           >
-            {{ categoria.viewValue }}
+            {{ categoriaLic.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -256,7 +256,7 @@
         </ng-container>
         <ng-container matColumnDef="categoria">
             <th mat-header-cell *matHeaderCellDef>Categoría</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.id_rh_categoria, categorias) }}</td>
+            <td mat-cell *matCellDef="let element">{{labelTable(element.id_rh_categoria, categoriasLicencia) }}</td>
         </ng-container>
         <!-- <ng-container matColumnDef="tipo">
             <th mat-header-cell *matHeaderCellDef>Tipo Referencia</th>
@@ -293,9 +293,9 @@
         <mat-select>
           <mat-option
             *ngFor="let colorPiel of coloresPiel"
-            [value]="colorPiel.value"
+            [value]="colorPiel.id"
           >
-            {{ colorPiel.viewValue }}
+            {{ colorPiel.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -305,10 +305,10 @@
         <mat-label>Seleccionar Grupo Sanguineo</mat-label>
         <mat-select>
           <mat-option
-            *ngFor="let categoria of categorias"
-            [value]="categoria.value"
+            *ngFor="let grupoSangre of gruposSanguineos"
+            [value]="grupoSangre.id"
           >
-            {{ categoria.viewValue }}
+            {{ grupoSangre.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -8,14 +8,21 @@ import { environment } from '../../environments/environment';
 })
 export class ApiService {
   private apiUrl: string;
+  private apiUrlAlt: string;
   private readonly token = '';
 
   constructor(private http: HttpClient) {
     this.apiUrl = environment.apiUrl;
+    this.apiUrlAlt = environment.apiUrlAlt;
    }
 
-   public async getInformacion(servicio: string): Promise<Observable<any>> {
+   public  getInformacion(servicio: string): Observable<any> {
     const url = this.apiUrl + servicio;
+    console.log(url)
+    return this.http.get(url);
+  }
+   public  getInformacionMaestros(servicio: string): Observable<any> {
+    const url = this.apiUrlAlt + servicio;
     console.log(url)
     return this.http.get(url);
   }
@@ -28,14 +35,14 @@ export class ApiService {
   //   return this.http.get(url, { headers: Headers });
   // }
 
-  public async saveInformacion(servicio: string, document: any): Promise<Observable<any>> {
+  public saveInformacion(servicio: string, document: any): Observable<any> {
     const url = this.apiUrl + servicio;
     const params = JSON.stringify(document);
     const Headers = new HttpHeaders().set('Content-Type', 'application/json').set('Authorization', this.token);
     return this.http.post(url, params, { headers: Headers });
   }
 
-  public async updateInformacion(servicio: string, document: any): Promise<Observable<any>> {
+  public updateInformacion(servicio: string, document: any): Observable<any> {
     const url = this.apiUrl + servicio;
     const params = JSON.stringify(document);
     const Headers = new HttpHeaders().set('Content-Type', 'application/json');

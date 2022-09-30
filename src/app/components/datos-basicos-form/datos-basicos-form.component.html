@@ -50,10 +50,10 @@
         <mat-select  [(ngModel)]="datosBasicos.id_rh_tipo_documento"
         name="id_rh_tipo_documento" #id_rh_tipo_documento="ngModel" required id="id_rh_tipo_documento">
           <mat-option
-            *ngFor="let tipoDoc of tiposDoc"
-            [value]="tipoDoc.value"
+            *ngFor="let tipoDoc of tiposDocumento"
+            [value]="tipoDoc.id"
           >
-            {{ tipoDoc.viewValue }}
+            {{ tipoDoc.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -92,9 +92,9 @@
         name="id_cot_cliente_pais" #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais">
           <mat-option
             *ngFor="let pais of paises"
-            [value]="pais.value"
+            [value]="pais.id"
           >
-            {{ pais.viewValue }}
+            {{ pais.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -106,9 +106,9 @@
         name="depto" #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
-            [value]="depto.value"
+            [value]="depto.id"
           >
-            {{ depto.viewValue }}
+            {{ depto.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -194,9 +194,9 @@
         #idRhEstadoCivil="ngModel" required id="idRhEstadoCivil">
           <mat-option
             *ngFor="let estadoCivil of estados"
-            [value]="estadoCivil.value"
+            [value]="estadoCivil.id"
           >
-            {{ estadoCivil.viewValue }}
+            {{ estadoCivil.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -248,16 +248,25 @@
       </mat-form-field>
     </mat-grid-tile>
 
+<!--         <mat-form-field appearance="fill">
+          <mat-label>Marca</mat-label>
+          <mat-select [(ngModel)]="upload.mark" (selectionChange)="onSelectionChangeMark(upload.mark.id_veh_marca)">
+            <mat-option *ngFor="let mark of marks" [value]="mark">
+              {{mark.marca}}
+            </mat-option>
+          </mat-select>
+          <mat-hint><span>*</span> Selecciona una marca</mat-hint>
+        </mat-form-field> -->
+
+
+
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar País</mat-label>
         <mat-select name="pais" [(ngModel)]="datosBasicos.pais"
-        #pais="ngModel" required id="pais">
-          <mat-option
-            *ngFor="let pais of paises"
-            [value]="pais.value"
-          >
-            {{ pais.viewValue }}
+        #pais="ngModel" required id="pais" (selectionChange)="onSelectionChangePais(datosBasicos.pais)">
+          <mat-option *ngFor="let pais of paises" [value]="pais.id">
+            {{ pais.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -269,9 +278,9 @@
         #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
-            [value]="depto.value"
+            [value]="depto.id"
           >
-            {{ depto.viewValue }}
+            {{ depto.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -323,9 +332,9 @@
         required>
           <mat-option
             *ngFor="let anioExp of aniosExp"
-            [value]="anioExp.value"
+            [value]="anioExp.id"
           >
-            {{ anioExp.viewValue }}
+            {{ anioExp.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -338,9 +347,9 @@
         #id_rh_nivel_academico="ngModel" required id="id_rh_nivel_academico">
           <mat-option
             *ngFor="let nivelAcademia of nivelesAcademia"
-            [value]="nivelAcademia.value"
+            [value]="nivelAcademia.id"
           >
-            {{ nivelAcademia.viewValue }}
+            {{ nivelAcademia.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -352,9 +361,9 @@
         #cargoAplica="ngModel" required id="cargoAplica">
           <mat-option
             *ngFor="let cargo of cargos"
-            [value]="cargo.value"
+            [value]="cargo.id"
           >
-            {{ cargo.viewValue }}
+            {{ cargo.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -378,7 +387,7 @@
         <mat-label>Seleccionar Lengua Extranjera</mat-label>
         <mat-select name="idIdi" [(ngModel)]="idIdiPrevio"
         #idIdi="ngModel" id="idIdi" multiple>
-          <mat-option *ngFor="let lengua of lenguas" [value]="lengua.value">{{lengua.viewValue}}</mat-option>
+          <mat-option *ngFor="let lengua of lenguas" [value]="lengua.id">{{lengua.descripcion}}</mat-option>
         </mat-select>
       </mat-form-field>
     </mat-grid-tile>

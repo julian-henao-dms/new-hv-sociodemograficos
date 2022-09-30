@@ -11,17 +11,19 @@ interface TipoCandidato{
   value: string;
   viewValue: string;
 }
-interface Doc{
-  value: string;
-  viewValue: string;
+interface TipoDocumento{
+  id: string;
+  descripcion: string;
 }
 interface Pais{
-  value: string;
-  viewValue: string;
+  id: number;
+  codigo: string;
+  descripcion: string;
+  id_cot_cliente_pais:number;
 }
 interface Depto{
-  value: string;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface Ciudad{
   value: string;
@@ -32,24 +34,24 @@ interface Barrio{
   viewValue: string;
 }
 interface NivelAcademico{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface LenguajeExtranjera{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface EstadoCivil{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface Cargo{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface AniosExperiencia{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface DatosBasicosCandidato {
   id_tipo_candidato: number;
@@ -86,16 +88,20 @@ export class DatosBasicosFormComponent implements OnInit {
 
   @Output() changeSelect = new EventEmitter<any>();
 
-  public param: any = 3;
-  public pais: Array<any> = [];
-  public paises: Pais[] = [
-    {value: '0', viewValue: 'Argentina'},
-    {value: '1', viewValue: 'Bolivia'},
-    {value: '2', viewValue: 'Brasil'},
-    {value: '3', viewValue: 'Colombia'},
-    {value: '4', viewValue: 'Ecuador'},
-    {value: '5', viewValue: 'Perú'}
-  ];
+  public typeCandidato: number = 0;
+
+  public idEmp: number = 3;
+  public numRegla: number = 159;
+  public paises: Pais[] = [];
+  public deptos: Depto[] = [];
+  public tiposDocumento: TipoDocumento[] = [];
+  public estados: EstadoCivil[] = [];
+  public  aniosExp: AniosExperiencia[] = [];
+  public nivelesAcademia: NivelAcademico[] = [];
+  public cargos: Cargo[] = [];
+  public lenguas: LenguajeExtranjera[] = [];
+
+
 
 public datosBasicos: Candidato = {
    emp:  0,
@@ -195,22 +201,7 @@ public idiomasCandidato: Idioma = {
 
   ];
 
-  tiposDoc: Doc[] = [
-    {value: '0', viewValue: 'Cédula  (CC)'},
-    {value: '1', viewValue: 'Tarjeta de Identidad (TI)'},
-    {value: '2', viewValue: 'Cédula Extranjería (CE)'},
-    {value: '3', viewValue: 'Permisos Especiales de Permanencia'},
-    {value: '4', viewValue: 'Otros'}
-  ];
 
-  deptos: Depto[] = [
-    {value: '0', viewValue: 'Antioquia'},
-    {value: '1', viewValue: 'Cundinamarca'},
-    {value: '2', viewValue: 'Nariño'},
-    {value: '3', viewValue: 'Valle del Cauca'},
-    {value: '4', viewValue: 'Quindío'},
-    {value: '5', viewValue: 'Risaralda'}
-  ];
   ciudades: Ciudad[] = [
     {value: '0', viewValue: 'Buenos Aires'},
     {value: '1', viewValue: 'La Paz'},
@@ -224,30 +215,13 @@ public idiomasCandidato: Idioma = {
     {value: '1', viewValue: 'La Paz'},
 
   ];
-  nivelesAcademia: NivelAcademico[] = [
-    {value: 0, viewValue: 'Primaria'},
-    {value: 1, viewValue: 'Bachiller'}
 
-  ];
-  lenguas: LenguajeExtranjera[] = [
-    {value: 1, viewValue: 'Inglés'},
-    {value: 2, viewValue: 'Frances'},
-    {value: 3, viewValue: 'Italiano'}
-  ];
-  estados: EstadoCivil[] = [
-    {value: 0, viewValue: 'Soltero'},
-    {value: 1, viewValue: 'Unión Libre'}
-  ];
-  cargos: Cargo[] = [
-    {value: 0, viewValue: 'Director Informática'},
-    {value: 1, viewValue: 'Consultor'}
-  ];
-  aniosExp: AniosExperiencia[] = [
-    {value: 0, viewValue: '1 Año a 2 Años'},
-    {value: 1, viewValue: '3 Año a 5 Años'}
-  ];
-  public typeCandidato: number = 0;
-  public txtnombre:string="";
+
+
+
+
+
+
 
   constructor(
     private _storaged: LocalStorageService,
@@ -303,13 +277,52 @@ public idiomasCandidato: Idioma = {
   }
 
   async ngOnInit(): Promise<void> {
+   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+   const idEmp = this.idEmp;
+   const numRegla = this.numRegla
 
-   const paises = await this.getAnyInformation('/pais/3');
+
+   const paises = await this.getAnyInformation('/pais/' + idEmp);
    console.log(paises.response);
+   this.paises = paises.response;
+   console.log(this.paises);
+   console.log(this.datosBasicos.pais);
 
-   const departamentos = await this.getAnyInformation('/pais/Departamentos/3/11746');
-    console.log(departamentos.response);
 
+   const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
+   console.log(tipoDocumento);
+   this.tiposDocumento = tipoDocumento;
+
+   const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
+   console.log(estadoCivil);
+   this.estados = estadoCivil;
+
+   const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+   console.log(experienciaEspecifica);
+   this.aniosExp = experienciaEspecifica;
+
+   const nivelAcademico = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'academico' + '/' + 'subcriterio');
+   console.log(nivelAcademico);
+   this.nivelesAcademia = nivelAcademico;
+
+   const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
+   console.log(cargoAplica);
+   this.cargos = cargoAplica;
+
+   const LenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
+   console.log(LenguaExtranjera);
+   this.lenguas = LenguaExtranjera;
+
+  //  if(paises){
+  //   this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
+  //   return;
+  //  }
+   loading.close();
+
+  //  const departamentos = await this.getAnyInformation('/pais/Departamentos' + '/' + this.datosBasicos.pais);
+  //   console.log(departamentos.response);
+  //   this.deptos = departamentos.response;
+  //   console.log(this.deptos);
     // return new Promise((resolve, reject) => {
 
     // })
@@ -325,14 +338,31 @@ public idiomasCandidato: Idioma = {
     //     console.log('Se completó la consulta a la API');
     //   }
     // });
-
-
   }
 
+  public async onSelectionChangePais(idPais:number): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    const deptos = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
+    console.log('deptos', deptos);
+    this.deptos = deptos.response;
+    console.log('datos select deptos', this.deptos);
+  }
 
   private async getAnyInformation(service: string): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-       (await this.apiService.getInformacion(service)).subscribe({
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacion(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
+  }
+  private async getAnyInformationAlt(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacionMaestros(service).subscribe({
         next: (v) => resolve(v),
         error: (e) => {
           console.info(e);
@@ -342,10 +372,14 @@ public idiomasCandidato: Idioma = {
     });
   }
 
+
+
  public onChange(event:any){
     console.log("Evento", event);
     this.changeSelect.emit({'data':event});
   }
+
+
 
   public guardarProgreso(){
     console.log('Datos Básicos Guardados', this.datosBasicos);
