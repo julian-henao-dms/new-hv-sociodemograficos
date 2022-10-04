@@ -51,9 +51,9 @@
         <mat-select placeholder="Parentesco" #id_Parentesco="ngModel" required id="id_Parentesco" name="id_Parentesco"  [(ngModel)]="setRelatives.id_Parentesco">
           <mat-option
             *ngFor="let parentesco of parentescos"
-            [value]="parentesco.value"
+            [value]="parentesco.id"
           >
-            {{ parentesco.viewValue }}
+            {{ parentesco.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>

@@ -3,7 +3,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
@@ -160,8 +160,8 @@ export class DatosAdicionalesFormComponent implements OnInit {
   public operacionesDisabled = true;
 
   tiposLicencia = [
-    { value: 1, name: "Pública" },
-    { value: 2, name: "Privada" }
+    { id: 1, descripcion: "Pública" },
+    { id: 2, descripcion: "Privada" }
   ];
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -175,7 +175,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
   };
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private _storaged: LocalStorageService,
+    private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
     private readonly messageService: MessagesService,
     private apiService: ApiService
@@ -213,55 +213,44 @@ export class DatosAdicionalesFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
-   const idEmp = this.idEmp;
-   const numRegla = this.numRegla;
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    const numRegla = this.numRegla;
 
-  const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
-   console.log(experienciaEspecifica);
-   this.aniosExp = experienciaEspecifica;
+    const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+    this.aniosExp = experienciaEspecifica;
 
-  const aspiracionSalarial = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'rango_salario' + '/' + 'subcriterio');
-   console.log(aspiracionSalarial);
-   this.salarios = aspiracionSalarial;
+    const aspiracionSalarial = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'rango_salario' + '/' + 'subcriterio');
+    this.salarios = aspiracionSalarial;
 
-  const fuenteReclutamiento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fuente_reclutamiento' + '/' + 'subcriterio');
-   console.log(fuenteReclutamiento);
-   this.fuentesReclutamiento = fuenteReclutamiento;
+    const fuenteReclutamiento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fuente_reclutamiento' + '/' + 'subcriterio');
+    this.fuentesReclutamiento = fuenteReclutamiento;
 
-  const entidadExpedicion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'entidad' + '/' + 'subcriterio');
-   console.log(entidadExpedicion);
-   this.entidades = entidadExpedicion;
+    const entidadExpedicion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'entidad' + '/' + 'subcriterio');
+    this.entidades = entidadExpedicion;
 
-  const eps = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'eps' + '/' + 'subcriterio');
-   console.log(eps);
-   this.epss = eps;
+    const eps = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'eps' + '/' + 'subcriterio');
+    this.epss = eps;
 
-  const fondoPension = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_pension' + '/' + 'subcriterio');
-   console.log(fondoPension);
-   this.fondosPension = fondoPension;
+    const fondoPension = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_pension' + '/' + 'subcriterio');
+    this.fondosPension = fondoPension;
 
-  const cajaCompensacion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_caja' + '/' + 'subcriterio');
-   console.log(cajaCompensacion);
-   this.cajasCompensacion = cajaCompensacion;
+    const cajaCompensacion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_caja' + '/' + 'subcriterio');
+    this.cajasCompensacion = cajaCompensacion;
 
-  const cesantia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_cesantias' + '/' + 'subcriterio');
-   console.log(cesantia);
-   this.cesantias = cesantia;
+    const cesantia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_cesantias' + '/' + 'subcriterio');
+    this.cesantias = cesantia;
 
-  const categoriaLicencia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'categoria_licencia' + '/' + 'subcriterio');
-   console.log(categoriaLicencia);
-   this.categoriasLicencia = categoriaLicencia;
+    const categoriaLicencia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'categoria_licencia' + '/' + 'subcriterio');
+    this.categoriasLicencia = categoriaLicencia;
 
-  const grupoSanguineo = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'grupo_sanguineo' + '/' + 'subcriterio');
-   console.log(grupoSanguineo);
-   this.gruposSanguineos = grupoSanguineo;
+    const grupoSanguineo = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'grupo_sanguineo' + '/' + 'subcriterio');
+    this.gruposSanguineos = grupoSanguineo;
 
-  const colorPiel = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'color_piel' + '/' + 'subcriterio');
-   console.log(colorPiel);
-   this.coloresPiel = colorPiel;
+    const colorPiel = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'color_piel' + '/' + 'subcriterio');
+    this.coloresPiel = colorPiel;
 
-   loading.close();
+  //  loading.close();
   }
 
   addReference() {
@@ -304,8 +293,8 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Datos Adicionales', this.datosAdicionales);
-    this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
-    this._storaged.set('datosLicencia', this.setLicences);
+    // this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+    // this._storaged.set('datosLicencia', this.setLicences);
     this.disabledButtonNext = false;
 
   }

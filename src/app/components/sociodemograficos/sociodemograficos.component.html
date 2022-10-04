@@ -72,9 +72,9 @@
               <mat-select #antiguedadEmpresa="ngModel" required id="antiguedadEmpresa" name="antiguedadEmpresa"  [(ngModel)]="sociodemograficos.id_antiguedad_empresa" >
                 <mat-option
                   *ngFor="let anioAntigEmpresa of aniosAntigEmpresa"
-                  [value]="anioAntigEmpresa.value"
+                  [value]="anioAntigEmpresa.id"
                 >
-                  {{ anioAntigEmpresa.viewValue }}
+                  {{ anioAntigEmpresa.descripcion }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
@@ -85,9 +85,9 @@
               <mat-select #antiguedadCargo="ngModel" required id="antiguedadCargo" name="antiguedadCargo"  [(ngModel)]="sociodemograficos.id_antiguedad_cargo">
                 <mat-option
                   *ngFor="let anioAntiguedad of aniosAntiguedad"
-                  [value]="anioAntiguedad.value"
+                  [value]="anioAntiguedad.id"
                 >
-                  {{ anioAntiguedad.viewValue }}
+                  {{ anioAntiguedad.descripcion }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
@@ -98,9 +98,9 @@
               <mat-select #promedioIngresos="ngModel" required id="promedioIngresos" name="promedioIngresos"  [(ngModel)]="sociodemograficos.id_ingresos">
                 <mat-option
                   *ngFor="let salario of rangosEdad"
-                  [value]="salario.value"
+                  [value]="salario.id"
                 >
-                  {{ salario.viewValue }}
+                  {{ salario.descripcion }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
@@ -137,9 +137,9 @@
                 <mat-select #paisNacimiento="ngModel" required id="paisNacimiento" name="paisNacimiento"  [(ngModel)]="sociodemograficos.paisNacimiento">
                   <mat-option
                     *ngFor="let pais of paises"
-                    [value]="pais.value"
+                    [value]="pais.id"
                   >
-                    {{ pais.viewValue }}
+                    {{ pais.descripcion }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -150,9 +150,9 @@
                 <mat-select #deptoNacimiento="ngModel" required id="deptoNacimiento" name="deptoNacimiento"  [(ngModel)]="sociodemograficos.deptoNacimiento">
                   <mat-option
                     *ngFor="let depto of deptos"
-                    [value]="depto.value"
+                    [value]="depto.id"
                   >
-                    {{ depto.viewValue }}
+                    {{ depto.descripcion }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -163,9 +163,9 @@
                 <mat-select #ciudadNacimiento="ngModel" required id="ciudadNacimiento" name="ciudadNacimiento"  [(ngModel)]="sociodemograficos.ciudadNacimiento">
                   <mat-option
                     *ngFor="let ciudad of ciudades"
-                    [value]="ciudad.value"
+                    [value]="ciudad.id"
                   >
-                    {{ ciudad.viewValue }}
+                    {{ ciudad.descripcion }}
                   </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -186,9 +186,9 @@
                 <mat-select #caracteristicasVivienda="ngModel" required id="caracteristicasVivienda" name="caracteristicasVivienda"  [(ngModel)]="sociodemograficos.id_caracteristica_vivienda">
                   <mat-option
                     *ngFor="let caracteristica of caracteristicas"
-                    [value]="caracteristica.value"
+                    [value]="caracteristica.id"
                   >
-                    {{ caracteristica.viewValue }}
+                    {{ caracteristica.descripcion }}
                   </mat-option>
                 </mat-select>
                 </mat-form-field>
@@ -199,9 +199,9 @@
                 <mat-select #zonaVivienda="ngModel" required id="zonaVivienda" name="zonaVivienda"  [(ngModel)]="sociodemograficos.id_zona_ubica">
                   <mat-option
                     *ngFor="let ubicacion of ubicaciones"
-                    [value]="ubicacion.value"
+                    [value]="ubicacion.id"
                   >
-                    {{ ubicacion.viewValue }}
+                    {{ ubicacion.descripcion }}
                   </mat-option>
                 </mat-select>
                 </mat-form-field>
@@ -223,7 +223,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Servicios de la Vivienda</mat-label>
               <mat-select #serviciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="sociodemograficos.servicios_vivienda" multiple>
-                <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.value">{{servicioPublico.viewValue}}</mat-option>
+                <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.id">{{servicioPublico.descripcion}}</mat-option>
               </mat-select>
             </mat-form-field>
            </mat-grid-tile>
@@ -233,9 +233,9 @@
               <mat-select #estrato="ngModel" required id="estrato" name="estrato"  [(ngModel)]="sociodemograficos.id_estrato_servicios">
                 <mat-option
                   *ngFor="let estrato of estratos"
-                  [value]="estrato.value"
+                  [value]="estrato.id"
                 >
-                  {{ estrato.viewValue }}
+                  {{ estrato.descripcion }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
@@ -277,9 +277,9 @@
               <mat-select #condicionesVivienda="ngModel" required id="condicionesVivienda" name="condicionesVivienda"  [(ngModel)]="sociodemograficos.personas_vive">
                 <mat-option
                   *ngFor="let persona of numPersonas"
-                  [value]="persona.value"
+                  [value]="persona.id"
                 >
-                  {{ persona.viewValue }}
+                  {{ persona.descripcion }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
@@ -301,9 +301,9 @@
               <mat-select #edadHijos="ngModel" required id="edadHijos" name="edadHijos"  [(ngModel)]="sociodemograficos.id_edad_hijos">
                 <mat-option
                   *ngFor="let rangoEdad of rangosEdad"
-                  [value]="rangoEdad.value"
+                  [value]="rangoEdad.id"
                 >
-                  {{ rangoEdad.viewValue }}
+                  {{ rangoEdad.descripcion }}
                 </mat-option>
               </mat-select>
               </mat-form-field>
@@ -314,7 +314,7 @@
           <mat-form-field appearance="outline">
             <mat-label>¿Quién o quiénes dependen Económicamente de Usted?</mat-label>
             <mat-select #dependenciaEconomica="ngModel" required id="dependenciaEconomica" name="dependenciaEconomica"  [(ngModel)]="sociodemograficos.personas_depende" multiple>
-              <mat-option *ngFor="let dependiente of dependencias" [value]="dependiente.value">{{dependiente.viewValue}}</mat-option>
+              <mat-option *ngFor="let dependiente of dependencias" [value]="dependiente.id">{{dependiente.descripcion}}</mat-option>
             </mat-select>
           </mat-form-field>
          </mat-grid-tile>
@@ -343,7 +343,7 @@
           <mat-form-field appearance="outline">
             <mat-label>Tipo del Transporte para ir al Trabajo</mat-label>
             <mat-select #tipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte"  [(ngModel)]="sociodemograficos.tipo_transporte" multiple>
-              <mat-option *ngFor="let transporte of tiposTransporte" [value]="transporte.value">{{transporte.viewValue}}</mat-option>
+              <mat-option *ngFor="let transporte of tiposTransporte" [value]="transporte.id">{{transporte.descripcion}}</mat-option>
             </mat-select>
           </mat-form-field>
          </mat-grid-tile>

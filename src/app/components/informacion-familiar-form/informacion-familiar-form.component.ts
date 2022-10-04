@@ -4,18 +4,27 @@ import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Familiar } from './interfaces/familiar.interface';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
+import { ApiService } from 'src/app/services/api.service';
+import { MessagesService } from 'src/app/services/messages.service';
+
 interface Parentesco{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
+
 @Component({
   selector: 'app-informacion-familiar-form',
   templateUrl: './informacion-familiar-form.component.html',
   styleUrls: ['./informacion-familiar-form.component.scss']
 })
 export class InformacionFamiliarFormComponent implements OnInit {
+
+
+  public idEmp: number = 3;
+  public numRegla: number = 159;
+  parentescos: Parentesco[] = [];
 
   public columnsReference: any[] = ["identificacion", "nombre", "fecha_nace", "parentezco", "telefono", 'borrar' ];
   public FAMILIAR_DATA: Familiar[] = [];
@@ -53,14 +62,9 @@ export class InformacionFamiliarFormComponent implements OnInit {
   accion: 0,
   nit: '',
   fechaNace: new Date,
- }
+ };
 
 
-  parentescos: Parentesco[] = [
-    {value: 1, viewValue: 'Abuela/Abuelo'},
-    {value: 2, viewValue: 'Esposa/Esposo'},
-    {value: 3, viewValue: 'Padre/Madre'},
-  ];
   stepperOrientation: Observable<StepperOrientation>;
   cols : number | undefined;
 
@@ -73,8 +77,10 @@ export class InformacionFamiliarFormComponent implements OnInit {
   };
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private _storaged: LocalStorageService,
-    private _addItemTable: AddLabelToTableService
+    private _storaged: SessionStorageService,
+    private _addItemTable: AddLabelToTableService,
+    private readonly apiService: ApiService,
+    private readonly messageService: MessagesService
     ) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -108,7 +114,28 @@ export class InformacionFamiliarFormComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    const numRegla = this.numRegla;
+
+    const parentesco = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'parentesco' + '/' + 'subcriterio');
+    console.log(parentesco);
+    this.parentescos = parentesco;
+
+    // loading.close();
+  }
+
+  private async getAnyInformationAlt(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacionMaestros(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
   }
 
   addReference() {
@@ -144,13 +171,13 @@ export class InformacionFamiliarFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    console.log('Info Familiar Guardada', this.datosInfoFamilia);
-    this._storaged.set('datosInfoFamilia', this.datosInfoFamilia);
+    // console.log('Info Familiar Guardada', this.datosInfoFamilia);
+    // this._storaged.set('datosInfoFamilia', this.datosInfoFamilia);
   }
 
   public getLocalStorage(){
-    console.log('Cargar Datos Info Familiar', this.datosInfoFamilia);
-    this._storaged.get('datosInfoFamilia');
+    // console.log('Cargar Datos Info Familiar', this.datosInfoFamilia);
+    // this._storaged.get('datosInfoFamilia');
   }
 
   public enviarFormulario(){

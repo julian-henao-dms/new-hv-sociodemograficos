@@ -2,7 +2,7 @@ import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { Candidato, Idioma } from "./interfaces/candidato.interface"
 
@@ -26,12 +26,12 @@ interface Depto{
   descripcion: string;
 }
 interface Ciudad{
-  value: string;
-  viewValue: string;
+  id: string;
+  descripcion: string;
 }
 interface Barrio{
-  value: string;
-  viewValue: string;
+  id: string;
+  descripcion: string;
 }
 interface NivelAcademico{
   id: number;
@@ -100,6 +100,8 @@ export class DatosBasicosFormComponent implements OnInit {
   public nivelesAcademia: NivelAcademico[] = [];
   public cargos: Cargo[] = [];
   public lenguas: LenguajeExtranjera[] = [];
+  ciudades: Ciudad[] = [];
+  barrios: Barrio[] = [];
 
 
 
@@ -202,34 +204,15 @@ public idiomasCandidato: Idioma = {
   ];
 
 
-  ciudades: Ciudad[] = [
-    {value: '0', viewValue: 'Buenos Aires'},
-    {value: '1', viewValue: 'La Paz'},
-    {value: '2', viewValue: 'Brasil'},
-    {value: '3', viewValue: 'Bogotá'},
-    {value: '4', viewValue: 'Medellín'},
-    {value: '5', viewValue: 'Quito'}
-  ];
-  barrios: Barrio[] = [
-    {value: '0', viewValue: 'Buenos Aires'},
-    {value: '1', viewValue: 'La Paz'},
-
-  ];
-
-
-
-
-
-
 
 
   constructor(
-    private _storaged: LocalStorageService,
+    private _storaged: SessionStorageService,
     private breakpointObserver: BreakpointObserver,
     private readonly apiService: ApiService,
     private readonly messageService: MessagesService
     ){
-    // this.getLocalStorage();
+    //
 
 
     this.breakpointObserver.observe([
@@ -277,47 +260,41 @@ public idiomasCandidato: Idioma = {
   }
 
   async ngOnInit(): Promise<void> {
-   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    this.getLocalStorage();
+  //  const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
    const idEmp = this.idEmp;
    const numRegla = this.numRegla
 
 
    const paises = await this.getAnyInformation('/pais/' + idEmp);
-   console.log(paises.response);
-   this.paises = paises.response;
-   console.log(this.paises);
-   console.log(this.datosBasicos.pais);
+    console.log(paises.response);
+    this.paises = paises.response;
+    console.log(this.paises);
+    console.log(this.datosBasicos.pais);
 
+    const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
+    this.tiposDocumento = tipoDocumento;
 
-   const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
-   console.log(tipoDocumento);
-   this.tiposDocumento = tipoDocumento;
+    const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
+    this.estados = estadoCivil;
 
-   const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
-   console.log(estadoCivil);
-   this.estados = estadoCivil;
+    const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+    this.aniosExp = experienciaEspecifica;
 
-   const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
-   console.log(experienciaEspecifica);
-   this.aniosExp = experienciaEspecifica;
+    const nivelAcademico = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'academico' + '/' + 'subcriterio');
+    this.nivelesAcademia = nivelAcademico;
 
-   const nivelAcademico = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'academico' + '/' + 'subcriterio');
-   console.log(nivelAcademico);
-   this.nivelesAcademia = nivelAcademico;
+    const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
+    this.cargos = cargoAplica;
 
-   const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
-   console.log(cargoAplica);
-   this.cargos = cargoAplica;
-
-   const LenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
-   console.log(LenguaExtranjera);
-   this.lenguas = LenguaExtranjera;
+    const LenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
+    this.lenguas = LenguaExtranjera;
 
   //  if(paises){
   //   this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
   //   return;
   //  }
-   loading.close();
+  //  loading.close();
 
   //  const departamentos = await this.getAnyInformation('/pais/Departamentos' + '/' + this.datosBasicos.pais);
   //   console.log(departamentos.response);
@@ -343,10 +320,29 @@ public idiomasCandidato: Idioma = {
   public async onSelectionChangePais(idPais:number): Promise<void> {
     // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idPais);
     const deptos = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
     console.log('deptos', deptos);
     this.deptos = deptos.response;
     console.log('datos select deptos', this.deptos);
+  }
+  public async onSelectionChangeDepto(idDepto:number): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idDepto);
+    const ciudades = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
+    console.log('deptos', ciudades);
+    this.ciudades = ciudades.response;
+    console.log('datos select deptos', this.ciudades);
+  }
+  public async onSelectionChangeCiudad(idCiudad:number): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idCiudad);
+    const barrios = await this.getAnyInformation('/pais/barrios/' + idCiudad);
+    console.log('deptos', barrios);
+    this.barrios = barrios.response;
+    console.log('datos select deptos', this.barrios);
   }
 
   private async getAnyInformation(service: string): Promise<any> {
@@ -373,7 +369,6 @@ public idiomasCandidato: Idioma = {
   }
 
 
-
  public onChange(event:any){
     console.log("Evento", event);
     this.changeSelect.emit({'data':event});
@@ -388,15 +383,15 @@ public idiomasCandidato: Idioma = {
       ...this.idiomasCandidato, idIdi
     }));
     console.log('Datos Idiomas', this.idiomasArray);
-    this._storaged.set('datosBasicosStorage', this.datosBasicos);
-    this._storaged.set('idiomasStorage', this.idiomasArray);
+    // this._storaged.set('datosBasicosStorage', this.datosBasicos);
+    // this._storaged.set('idiomasStorage', this.idiomasArray);
     // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
     this.disabledButtonNext = false;
   }
   public getLocalStorage(){
     console.log('Cargar Datos Básicos', this.datosBasicos);
-    this.datosBasicos = this._storaged.get('datosBasicosStorage');
-    this.idiomasArray = this._storaged.get('idiomasStorage');
+    // this.datosBasicos = this._storaged.get('datosBasicosStorage');
+    // this.idiomasArray = this._storaged.get('idiomasStorage');
     // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
   }
 

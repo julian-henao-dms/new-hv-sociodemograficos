@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Estudios } from "./interfaces/estudios.interface"
 import { MatTableDataSource } from '@angular/material/table';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
@@ -132,7 +132,7 @@ export class EstudiosFormComponent implements OnInit {
   };
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private _storaged: LocalStorageService,
+    private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
     private apiService: ApiService,
     private messageService: MessagesService
@@ -172,7 +172,7 @@ export class EstudiosFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.getLocalStorage();
-    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
@@ -184,7 +184,7 @@ export class EstudiosFormComponent implements OnInit {
 
     const tipoCurso = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_curso' + '/' + 'subcriterio');
     this.tiposCurso = tipoCurso;
-
+    // loading.close();
 
   }
 
@@ -209,9 +209,7 @@ export class EstudiosFormComponent implements OnInit {
     this.myReferenceArray.push(this.setStudies);
     this.setStudies = {institucion: 0, titulo: 0, estado: 0, tipo_estudio: 0, tipo_curso: 0, nivel: 0, borrar: 0};
     this.myReferenceArray = [...this.myReferenceArray];
-
-
-    console.warn(this.myReferenceArray);
+    // console.warn(this.myReferenceArray);
   }
 
   onSelectionInstitucion(){
@@ -220,14 +218,14 @@ export class EstudiosFormComponent implements OnInit {
 
 
   public guardarProgreso(){
-    console.log('Datos Estudios Guardados', this.myReferenceArray);
-    this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
+    // console.log('Datos Estudios Guardados', this.myReferenceArray);
+    // this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    console.log('Cargar Datos Estudios');
-    this.myReferenceArray = this._storaged.get('datosEstudiosStorage');
+    // console.log('Cargar Datos Estudios');
+    // this.myReferenceArray = this._storaged.get('datosEstudiosStorage');
   }
 
   public  borrarItem(element: any){

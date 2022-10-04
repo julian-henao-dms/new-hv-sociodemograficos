@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageService {
+export class SessionStorageService {
 
   constructor() {}
 
   public set(key: string, data: any){
     try {
-      localStorage.setItem(key, JSON.stringify(data));
+      sessionStorage.setItem(key, JSON.stringify(data));
     } catch (e) {
       console.error('Error al guardar los datos', e);
     }
@@ -17,7 +17,7 @@ export class LocalStorageService {
 
   public get(key: string){
     try {
-      return JSON.parse(localStorage.getItem(key)!);
+      return JSON.parse(sessionStorage.getItem(key)!);
     } catch (e) {
       console.error('Error al cargar los datos', e);
       return null;
@@ -26,7 +26,7 @@ export class LocalStorageService {
 
   public remove(key: string){
     try {
-      localStorage.removeItem(key);
+      sessionStorage.removeItem(key);
     } catch (e) {
       console.error('Error al eliminar datos', e);
     }
@@ -34,7 +34,7 @@ export class LocalStorageService {
 
   public clear(): void{
     try {
-      localStorage.clear();
+      sessionStorage.clear();
     } catch (e) {
       console.error('Error al limpiar el LocalStorage', e);
     }

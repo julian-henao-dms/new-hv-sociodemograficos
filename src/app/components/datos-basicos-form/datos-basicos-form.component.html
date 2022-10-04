@@ -87,9 +87,9 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar País Exp</mat-label>
+        <mat-label>Seleccionar País Expedición</mat-label>
         <mat-select [(ngModel)]="datosBasicos.id_cot_cliente_pais"
-        name="id_cot_cliente_pais" #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais">
+        name="id_cot_cliente_pais" #id_cot_cliente_pais="ngModel" (selectionChange)="onSelectionChangePais(datosBasicos.id_cot_cliente_pais)" required id="id_cot_cliente_pais">
           <mat-option
             *ngFor="let pais of paises"
             [value]="pais.id"
@@ -101,8 +101,8 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Departamento Exp</mat-label>
-        <mat-select [(ngModel)]="datosBasicos.depto"
+        <mat-label>Seleccionar Departamento Expedición</mat-label>
+        <mat-select [(ngModel)]="datosBasicos.depto" (selectionChange)="onSelectionChangeDepto(datosBasicos.depto)"
         name="depto" #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
@@ -115,14 +115,14 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Ciudad Exp</mat-label>
+        <mat-label>Seleccionar Ciudad Expedición</mat-label>
         <mat-select [(ngModel)]="datosBasicos.ciudad"
         name="ciudad" #ciudad="ngModel" required id="ciudad">
           <mat-option
             *ngFor="let ciudad of ciudades"
-            [value]="ciudad.value"
+            [value]="ciudad.id"
           >
-            {{ ciudad.viewValue }}
+            {{ ciudad.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -263,7 +263,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar País</mat-label>
-        <mat-select name="pais" [(ngModel)]="datosBasicos.pais"
+        <mat-select name="datosBasicos.pais" [(ngModel)]="datosBasicos.pais"
         #pais="ngModel" required id="pais" (selectionChange)="onSelectionChangePais(datosBasicos.pais)">
           <mat-option *ngFor="let pais of paises" [value]="pais.id">
             {{ pais.descripcion }}
@@ -274,7 +274,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Departamento</mat-label>
-        <mat-select name="depto" [(ngModel)]="datosBasicos.depto"
+        <mat-select name="depto" [(ngModel)]="datosBasicos.depto" (selectionChange)="onSelectionChangeDepto(datosBasicos.depto)"
         #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
@@ -288,13 +288,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Ciudad</mat-label>
-        <mat-select name="ciudad" [(ngModel)]="datosBasicos.ciudad"
+        <mat-select name="ciudad" [(ngModel)]="datosBasicos.ciudad" (selectionChange)="onSelectionChangeCiudad(datosBasicos.ciudad)"
         #ciudad="ngModel" required id="ciudad">
           <mat-option
             *ngFor="let ciudad of ciudades"
-            [value]="ciudad.value"
+            [value]="ciudad.id"
           >
-            {{ ciudad.viewValue }}
+            {{ ciudad.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>
@@ -306,9 +306,9 @@
         #barrio="ngModel" required id="barrio">
           <mat-option
             *ngFor="let barrio of barrios"
-            [value]="barrio.value"
+            [value]="barrio.id"
           >
-            {{ barrio.viewValue }}
+            {{ barrio.descripcion }}
           </mat-option>
         </mat-select>
       </mat-form-field>

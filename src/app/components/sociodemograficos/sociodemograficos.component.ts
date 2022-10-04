@@ -1,64 +1,65 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, OnChanges, OnInit } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from '@angular/forms';
+import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { Sociodemograficos } from './interfaces/sociodemograficos.interface';
 
 interface AnioAntiguedad{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface AnioAntigEmpresa{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface RangoEdad{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface Salario{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface CaracteristicaVivienda{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface UbicacionVivienda{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface EstratoServicios{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface ServicioVivienda{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface NumPersonasVive{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface DependeEconomica{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface TipoTransporte{
-  value: number;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface Pais{
-  value: string;
-  viewValue: string;
+  id: string;
+  descripcion: string;
 }
 interface Depto{
-  value: string;
-  viewValue: string;
+  id: string;
+  descripcion: string;
 }
 interface Ciudad{
-  value: string;
-  viewValue: string;
+  id: string;
+  descripcion: string;
 }
 @Component({
   selector: 'app-sociodemograficos',
@@ -66,6 +67,10 @@ interface Ciudad{
   styleUrls: ['./sociodemograficos.component.scss']
 })
 export class SociodemograficosComponent implements OnInit {
+
+  public idEmp: number = 3;
+  public numRegla: number = 159;
+
   public isDisable: boolean = true;
   public buttonDisabled: boolean = true;
 
@@ -118,95 +123,95 @@ export class SociodemograficosComponent implements OnInit {
   ];
 
   aniosAntiguedad: AnioAntiguedad[] = [
-    {value: 0, viewValue: '0-1 años'},
-    {value: 1, viewValue: '1 a 5 años'},
+    {id: 0, descripcion: '0-1 años'},
+    {id: 1, descripcion: '1 a 5 años'},
 
   ];
   aniosAntigEmpresa: AnioAntigEmpresa[] = [
-    {value: 0, viewValue: '0-1 años'},
-    {value: 1, viewValue: '1 a 5 años'}
+    {id: 0, descripcion: '0-1 años'},
+    {id: 1, descripcion: '1 a 5 años'}
   ];
   rangosEdad: RangoEdad[] = [
-    {value: 0, viewValue: '0 a 2 años'},
-    {value: 1, viewValue: '2 a 5 años'}
+    {id: 0, descripcion: '0 a 2 años'},
+    {id: 1, descripcion: '2 a 5 años'}
   ];
   salarios: Salario[] = [
-    {value: 0, viewValue: '0 a 2 años'},
-    {value: 1, viewValue: '2 a 5 años'}
+    {id: 0, descripcion: '0 a 2 años'},
+    {id: 1, descripcion: '2 a 5 años'}
 
   ];
   caracteristicas: CaracteristicaVivienda[] = [
-    {value: 0, viewValue: 'Arrendada'},
-    {value: 1, viewValue: 'Propia'},
-    {value: 2, viewValue: 'Familiar'}
+    {id: 0, descripcion: 'Arrendada'},
+    {id: 1, descripcion: 'Propia'},
+    {id: 2, descripcion: 'Familiar'}
   ];
   ubicaciones: UbicacionVivienda[] = [
-    {value: 0, viewValue: 'Rural'},
-    {value: 1, viewValue: 'Urbana'}
+    {id: 0, descripcion: 'Rural'},
+    {id: 1, descripcion: 'Urbana'}
   ];
   estratos: EstratoServicios[] = [
-    {value: 0, viewValue: '1'},
-    {value: 1, viewValue: '2'},
-    {value: 2, viewValue: '3'},
-    {value: 3, viewValue: '4'},
+    {id: 0, descripcion: '1'},
+    {id: 1, descripcion: '2'},
+    {id: 2, descripcion: '3'},
+    {id: 3, descripcion: '4'},
   ];
   numPersonas: NumPersonasVive[] = [
-    {value: 0, viewValue: '1'},
-    {value: 1, viewValue: '2'},
-    {value: 2, viewValue: '3'},
-    {value: 3, viewValue: '4'},
-    {value: 4, viewValue: '5'},
-    {value: 5, viewValue: '6 o más'},
+    {id: 0, descripcion: '1'},
+    {id: 1, descripcion: '2'},
+    {id: 2, descripcion: '3'},
+    {id: 3, descripcion: '4'},
+    {id: 4, descripcion: '5'},
+    {id: 5, descripcion: '6 o más'},
   ];
   paises: Pais[] = [
-    {value: '0', viewValue: 'Argentina'},
-    {value: '1', viewValue: 'Bolivia'},
-    {value: '2', viewValue: 'Brasil'},
-    {value: '3', viewValue: 'Colombia'},
-    {value: '4', viewValue: 'Ecuador'},
-    {value: '5', viewValue: 'Perú'}
+    {id: '0', descripcion: 'Argentina'},
+    {id: '1', descripcion: 'Bolivia'},
+    {id: '2', descripcion: 'Brasil'},
+    {id: '3', descripcion: 'Colombia'},
+    {id: '4', descripcion: 'Ecuador'},
+    {id: '5', descripcion: 'Perú'}
   ];
   deptos: Depto[] = [
-    {value: '0', viewValue: 'Antioquia'},
-    {value: '1', viewValue: 'Cundinamarca'},
-    {value: '2', viewValue: 'Nariño'},
-    {value: '3', viewValue: 'Valle del Cauca'},
-    {value: '4', viewValue: 'Quindío'},
-    {value: '5', viewValue: 'Risaralda'}
+    {id: '0', descripcion: 'Antioquia'},
+    {id: '1', descripcion: 'Cundinamarca'},
+    {id: '2', descripcion: 'Nariño'},
+    {id: '3', descripcion: 'Valle del Cauca'},
+    {id: '4', descripcion: 'Quindío'},
+    {id: '5', descripcion: 'Risaralda'}
   ];
   ciudades: Ciudad[] = [
-    {value: '0', viewValue: 'Buenos Aires'},
-    {value: '1', viewValue: 'La Paz'},
-    {value: '2', viewValue: 'Brasil'},
-    {value: '3', viewValue: 'Bogotá'},
-    {value: '4', viewValue: 'Medellín'},
-    {value: '5', viewValue: 'Quito'}
+    {id: '0', descripcion: 'Buenos Aires'},
+    {id: '1', descripcion: 'La Paz'},
+    {id: '2', descripcion: 'Brasil'},
+    {id: '3', descripcion: 'Bogotá'},
+    {id: '4', descripcion: 'Medellín'},
+    {id: '5', descripcion: 'Quito'}
   ];
   serviciosVivienda = new FormControl('');
   dependenciaFamiliar = new FormControl('');
   serviciosPublicosFamilia = new FormControl('');
   transporteTrabajo = new FormControl('');
   serviciosPublicos: EstratoServicios[] = [
-    {value: 0, viewValue: 'Agua Potable'},
-    {value: 1, viewValue: 'Luz'},
-    {value: 2, viewValue: 'Gas'},
-    {value: 3, viewValue: 'Teléfono'},
-    {value: 4, viewValue: 'Internet'},
+    {id: 0, descripcion: 'Agua Potable'},
+    {id: 1, descripcion: 'Luz'},
+    {id: 2, descripcion: 'Gas'},
+    {id: 3, descripcion: 'Teléfono'},
+    {id: 4, descripcion: 'Internet'},
   ];
   dependencias: DependeEconomica[] = [
-    {value: 0, viewValue: 'Hijos'},
-    {value: 1, viewValue: 'Madre'},
-    {value: 2, viewValue: 'Padre'},
-    {value: 3, viewValue: 'Pareja'},
-    {value: 4, viewValue: 'Familiar'},
+    {id: 0, descripcion: 'Hijos'},
+    {id: 1, descripcion: 'Madre'},
+    {id: 2, descripcion: 'Padre'},
+    {id: 3, descripcion: 'Pareja'},
+    {id: 4, descripcion: 'Familiar'},
   ];
 
   tiposTransporte: TipoTransporte[] = [
-    {value: 0, viewValue: 'Caminando'},
-    {value: 1, viewValue: 'Bicicleta'},
-    {value: 2, viewValue: 'Moto'},
-    {value: 3, viewValue: 'Vehiculo Particular'},
-    {value: 4, viewValue: 'Transporte Público'},
+    {id: 0, descripcion: 'Caminando'},
+    {id: 1, descripcion: 'Bicicleta'},
+    {id: 2, descripcion: 'Moto'},
+    {id: 3, descripcion: 'Vehiculo Particular'},
+    {id: 4, descripcion: 'Transporte Público'},
   ];
 
 
@@ -229,7 +234,11 @@ export class SociodemograficosComponent implements OnInit {
     xs: 1
   };
 
-  constructor(private breakpointObserver: BreakpointObserver, private messages: MessagesService) {
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private readonly apiService: ApiService,
+    private readonly messageService: MessagesService
+    ) {
     this.breakpointObserver.observe([
       Breakpoints.XSmall,
       Breakpoints.Small,
@@ -279,22 +288,65 @@ export class SociodemograficosComponent implements OnInit {
     console.log('OnChanges', event);
     if( event.value != -1){
       this.buttonDisabled = false;
+      this.sociodemograficos.consentimiento_informado = event.value
     }
   }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+
   }
+
+  private async getAnyInformation(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacion(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
+  }
+
+  public async onSelectionChangePais(idPais:number): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idPais);
+    const deptos = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
+    console.log('deptos', deptos);
+    this.deptos = deptos.response;
+    console.log('datos select deptos', this.deptos);
+  }
+  public async onSelectionChangeDepto(idDepto:number): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idDepto);
+    const ciudades = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
+    console.log('deptos', ciudades);
+    this.ciudades = ciudades.response;
+    console.log('datos select deptos', this.ciudades);
+  }
+  // public async onSelectionChangeCiudad(idCiudad:number): Promise<void> {
+  //   // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+  //   const idEmp = this.idEmp;
+  //   console.log('Datos pais', idEmp, idCiudad);
+  //   const barrios = await this.getAnyInformation('/pais/barrios/' + idEmp + '/' + idCiudad);
+  //   console.log('deptos', barrios);
+  //   this.barrios = barrios.response;
+  //   console.log('datos select deptos', this.barrios);
+  // }
+
 
   public enviarSociodemograficos(){
     console.log('Enviar', this.sociodemograficos);
     if(this.sociodemograficos.consentimiento_informado
  == 0){
-      this.messages.info("Consentimiento no aceptado", "Ha marcado NO en la casilla de consentimiento informado, solo almacenaremos esta respuesta.");
+      this.messageService.info("Consentimiento no aceptado", "Ha marcado NO en la casilla de consentimiento informado, solo almacenaremos esta respuesta.");
     }else if(this.sociodemograficos.consentimiento_informado
  == 1){
-      this.messages.success("Perfecto", "Los datos sociodemográficos se almacenaron correctamente");
+      this.messageService.success("Perfecto", "Los datos sociodemográficos se almacenaron correctamente");
     }else{
-      this.messages.error("Error", "No se pudo almacenar la información");
+      this.messageService.error("Error", "No se pudo almacenar la información");
     }
 
   }

@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 
 @Component({
   selector: 'app-carga-archivos-form',
@@ -12,7 +12,7 @@ export class CargaArchivosFormComponent implements OnInit {
   fileInput!: ElementRef;
   fileAttr = 'Cargar Archivos';
 
-  constructor(private _storaged: LocalStorageService) { }
+  constructor(private _storaged: SessionStorageService) { }
 
   ngOnInit(): void {
   }

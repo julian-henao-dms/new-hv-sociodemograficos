@@ -1,42 +1,72 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ApiService } from 'src/app/services/api.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
+import { MessagesService } from 'src/app/services/messages.service';
 import { Cargos } from './interfaces/cargos.interface';
+
 interface Cargo{
-  value: string;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
+
 @Component({
   selector: 'app-cargos-form',
   templateUrl: './cargos-form.component.html',
   styleUrls: ['./cargos-form.component.scss']
 })
 export class CargosFormComponent implements OnInit {
+
   public disabledButtonNext: boolean = true;
-public otrosCargos: Cargos = {
-  idPerfil: 0,
-  idCandidato: 0,
-  idUsuario: 0,
-  id: 0,
-  accion: 0,
-}
 
-public cargos: Cargo[] = [
-  {value: '0', viewValue: 'Director Informática'},
-  {value: '1', viewValue: 'Consultor'}
-];
-  constructor(private _storaged: LocalStorageService) { }
+  public idEmp: number = 3;
+  public numRegla: number = 159;
+  public cargos: Cargo[] = [];
 
-  ngOnInit(): void {
+  public otrosCargos: Cargos = {
+    idPerfil: 0,
+    idCandidato: 0,
+    idUsuario: 0,
+    id: 0,
+    accion: 0,
+  }
+
+  constructor(
+    private _storaged: SessionStorageService,
+    private apiService: ApiService,
+    private messageService: MessagesService
+    ) { }
+
+  async ngOnInit(): Promise<void> {
+    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    const numRegla = this.numRegla
+
+    const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
+    console.log(cargoAplica);
+    this.cargos = cargoAplica;
+    // loading.close();
+  }
+
+  private async getAnyInformationAlt(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacionMaestros(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
   }
 
   public guardarProgreso(){
-    console.log('Cargos Guardados', this.otrosCargos);
-    this._storaged.set('otrosCargosStorage', this.otrosCargos);
+    // console.log('Cargos Guardados', this.otrosCargos);
+    // this._storaged.set('otrosCargosStorage', this.otrosCargos);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    console.log('Cargar Cargos', this.otrosCargos);
-    this._storaged.get('otrosCargosStorage');
+    // console.log('Cargar Cargos', this.otrosCargos);
+    // this._storaged.get('otrosCargosStorage');
   }
 }

@@ -203,8 +203,8 @@
       <div class="container-hv-radios">
         <mat-label>Tipo de Licencia:</mat-label>
         <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="setLicences.tipo_licencia">
-          <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.value" color="primary">
-            {{ tipoLicencia.name }}
+          <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.id" color="primary">
+            {{ tipoLicencia.descripcion }}
           </mat-radio-button>
         </mat-radio-group>
         </div>

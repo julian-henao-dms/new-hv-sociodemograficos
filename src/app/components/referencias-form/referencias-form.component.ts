@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
 import { Referencias } from './interfaces/referencias.interface';
 import { MatTableDataSource } from '@angular/material/table';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 
 export interface user {
@@ -98,7 +98,7 @@ export class ReferenciasFormComponent implements OnInit {
   };
   constructor(
     private breakpointObserver: BreakpointObserver,
-    private _storaged: LocalStorageService,
+    private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService
     ){
     // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
@@ -175,14 +175,14 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    console.log('Referencias', this.datosReferencias);
-    this._storaged.set('datosReferenciasStorage', this.datosReferencias);
+    // console.log('Referencias', this.datosReferencias);
+    // this._storaged.set('datosReferenciasStorage', this.datosReferencias);
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    console.log('Cargar Datos Adicionales', this.datosReferencias);
-    this._storaged.get('datosReferenciasStorage');
+    // console.log('Cargar Datos Adicionales', this.datosReferencias);
+    // this._storaged.get('datosReferenciasStorage');
   }
 
 
