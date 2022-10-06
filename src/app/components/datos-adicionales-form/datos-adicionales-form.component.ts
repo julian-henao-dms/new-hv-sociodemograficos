@@ -100,15 +100,15 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
   public  aniosExp: AniosExperiencia[] = [];
   public salarios: AspiracionSalarial[] = [];
-   fuentesReclutamiento: FuenteReclutamiento[] = [];
+  public fuentesReclutamiento: FuenteReclutamiento[] = [];
   public entidades: EntidadExpedicion[] = [];
   public epss: EPS[] = [];
   public fondosPension: FondoPension[] = [];
-  cajasCompensacion: CajaCompensacion[] = [];
-  cesantias: Cesantia[] = [];
-  categoriasLicencia: CategoriaLicencia[] = [];
-  gruposSanguineos: GrupoSanguineo[] = [];
-  coloresPiel: ColorPiel[] = [];
+  public cajasCompensacion: CajaCompensacion[] = [];
+  public cesantias: Cesantia[] = [];
+  public categoriasLicencia: CategoriaLicencia[] = [];
+  public gruposSanguineos: GrupoSanguineo[] = [];
+  public coloresPiel: ColorPiel[] = [];
 
 
   public columnsReference: any[] = ["licencia", "tipo_licencia", "fecha_vence", "categoria", 'borrar' ];

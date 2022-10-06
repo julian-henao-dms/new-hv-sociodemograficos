@@ -120,8 +120,15 @@ export class InformacionFamiliarFormComponent implements OnInit {
     const numRegla = this.numRegla;
 
     const parentesco = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'parentesco' + '/' + 'subcriterio');
-    console.log(parentesco);
-    this.parentescos = parentesco;
+    if(parentesco === null){
+      setTimeout(
+        () => {
+          this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de parentezco');
+        }, 1000);
+    }else{
+            console.log(parentesco);
+      this.parentescos = parentesco;
+    }
 
     // loading.close();
   }

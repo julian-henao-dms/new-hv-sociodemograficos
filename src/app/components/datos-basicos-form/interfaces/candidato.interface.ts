@@ -79,60 +79,63 @@ accion: number;
 
 export interface newCandidato{
   emp: number;
-  nit: string;
-  id_rh_tipo_documento: number;
-  nombre: string;
-  apellido: string;
   id_usuario: number;
-  genero: number;
-  fecha_nacimiento: string;
-  id_cot_cliente_pais: number;
-  direccion: string;
-  telefono: string;
-  celular: string;
-  mail: string;
-  id_rh_perfil: number;
-  id_cot_cliente: number;
-  id_rh_requisicion_personal: number;
-  id_rh_nivel_academico: number;
-  id_rh_experiencia: number;
-  observaciones: string;
   id_tipo_candidato: number;
-  id_rh_experiencia_sector: number;
-  id_disponibilidad_viaje: number;
-  id_participacion_anterior: number;
-  id_salario: number;
+  nit: string;  //*
+  id_rh_tipo_documento: number;//*
+  fecExpedicion: string;//*
+  lugarExpedicion: string;//*
+  idCotClientePais: number;//
+  nombre: string;//*
+  apellido: string;//*
+  genero: number;//*
+  fecha_nacimiento: string;//*
+  idRhEstadoCivil: number;//*
+  telefono: string;//*
+  mail: string;//*
+  celular: string;//*
+  direccion: string;//*
+  id_cot_cliente_pais: number;//*
+  id_cot_cliente_barrio: number;//*
+  id_rh_experiencia: number;//*
+  id_rh_nivel_academico: number;//*
+  id_rh_perfil: number;// cargo?
+  //
+  observaciones: string;
+  //
+  id_rh_experiencia_sector: number;//?
+  id_rh_experiencia_equipo: number;//?
+  id_salario: number;//?
+  salario: number;//?
   id_rh_fuente_reclutamiento: number;
-  id_trajo_hoja_vida: number;
-  estado: number;
-  bloqueado: number;
-  motivo: string;
-  licencia: string;
   tarjeta: string;
-  tipo_licencia: number;
-  fecha_vence_licencia: string;
+  id_Entidad: number; //?
+  id_participacion_anterior: number;
+  id_trajo_hoja_vida: number;
+  id_disponibilidad_viaje: number;
   runt: number;
-  id_rh_categoria: number;
-  id_rh_color_piel: number;
-  id_rh_grupo_sanguineo: number;
-  rh: number;
-  id_rh_experiencia_equipo: number;
-  peso: number;
-  altura: number;
-  salario: number;
-  id: number;
-  accion: number;
-  id_Usuario_Asociado: number;
-  id_con_cco: number;
-  id_Entidad: number;
-  fecExpedicion: string;
-  lugarExpedicion: string;
-  idRhEstadoCivil: number;
+  estado: number;
   idRhEps: number;
   idRhFondoPension: number;
   idRhFondoCaja: number;
   idRhFondoCesantias: number;
-  id_cot_cliente_barrio: number;
+  licencia: string;
+  tipo_licencia: number;
+  fecha_vence_licencia: string;
+  id_rh_categoria: number;
+  id_rh_color_piel: number;
+  id_rh_grupo_sanguineo: number;
+  rh: number;
+  peso: number;
+  altura: number;
+  bloqueado: number;
+  id_rh_requisicion_personal: number;
+  motivo: string;
+  id: number;
+  accion: number;
+  id_Usuario_Asociado: number;
+  id_con_cco: number;
   sync: number;
-  idCotClientePais: number;
+  id_cot_cliente: number;
+
 }

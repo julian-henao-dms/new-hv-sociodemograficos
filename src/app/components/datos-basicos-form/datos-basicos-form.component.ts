@@ -8,8 +8,8 @@ import { Candidato, Idioma } from "./interfaces/candidato.interface"
 
 
 interface TipoCandidato{
-  value: string;
-  viewValue: string;
+  id: number;
+  descripcion: string;
 }
 interface TipoDocumento{
   id: string;
@@ -54,30 +54,28 @@ interface AniosExperiencia{
   descripcion: string;
 }
 interface DatosBasicosCandidato {
-  id_tipo_candidato: number;
-  nit: string;
-  id_rh_tipo_documento: number;
-  fecExpedicion: Date;
-  lugar_expedicion_pais:number;
-  lugar_expedicion_depto:number;
-  lugar_expedicion_ciudad:number;
-  nombre: string;
-  apellido: string;
+  emp: number;
   id_usuario: number;
-  genero: number;
-  fecha_nacimiento: Date;
-  idRhEstadoCivil: number;
-  telefono: string;
-  mail: string;
-  celular: string;
-  direccion: string;
-  pais:number;
-  depto:number;
-  ciudad:number;
-  barrio: number;
-  id_rh_experiencia: number;
-  id_rh_nivel_academico: number;
-  cargo_aplica: number;
+  id_tipo_candidato: number;
+  id_rh_tipo_documento: number;//*
+  nit: string;  //*
+  fecExpedicion: string;//*
+  lugarExpedicion: string;//*
+  idCotClientePais: number;//
+  nombre: string;//*
+  apellido: string;//*
+  genero: number;//*
+  fecha_nacimiento: string;//*
+  idRhEstadoCivil: number;//*
+  telefono: string;//*
+  mail: string;//*
+  celular: string;//*
+  direccion: string;//*
+  id_cot_cliente_pais: number;//*
+  id_cot_cliente_barrio: number;//*
+  id_rh_experiencia: number;//*
+  id_rh_nivel_academico: number;//*
+  id_rh_perfil: number;// cargo?
 }
 @Component({
   selector: 'app-datos-basicos-form',
@@ -103,7 +101,30 @@ export class DatosBasicosFormComponent implements OnInit {
   ciudades: Ciudad[] = [];
   barrios: Barrio[] = [];
 
-
+public datosCandidato: DatosBasicosCandidato = {
+  emp: 0,
+  id_usuario: 0,
+  id_tipo_candidato: -1,
+  id_rh_tipo_documento: 0,//*
+  nit: '',   //*
+  fecExpedicion: '', //*
+  lugarExpedicion: '', //*
+  idCotClientePais: 0,//
+  nombre: '', //*
+  apellido: '', //*
+  genero: 0,//*
+  fecha_nacimiento: '', //*
+  idRhEstadoCivil: 0,//*
+  telefono: '', //*
+  mail: '', //*
+  celular: '', //*
+  direccion: '', //*
+  id_cot_cliente_pais: 0,//*
+  id_cot_cliente_barrio: 0,//*
+  id_rh_experiencia: 0,//*
+  id_rh_nivel_academico: 0,//*
+  id_rh_perfil: 0,// cargo?
+}
 
 public datosBasicos: Candidato = {
    emp:  0,
@@ -198,8 +219,8 @@ public idiomasCandidato: Idioma = {
   };
 
   tiposCandidato: TipoCandidato[] = [
-    {value: '0', viewValue: 'Personal Táctico y Soporte'},
-    {value: '1', viewValue: 'Personal Operativo'},
+    {id: 0, descripcion: 'Personal Táctico y Soporte'},
+    {id: 1, descripcion: 'Personal Operativo'},
 
   ];
 
@@ -207,7 +228,7 @@ public idiomasCandidato: Idioma = {
 
 
   constructor(
-    private _storaged: SessionStorageService,
+    private storaged: SessionStorageService,
     private breakpointObserver: BreakpointObserver,
     private readonly apiService: ApiService,
     private readonly messageService: MessagesService
@@ -260,89 +281,157 @@ public idiomasCandidato: Idioma = {
   }
 
   async ngOnInit(): Promise<void> {
-    this.getLocalStorage();
-  //  const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+
+
+   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
    const idEmp = this.idEmp;
    const numRegla = this.numRegla
 
 
    const paises = await this.getAnyInformation('/pais/' + idEmp);
+  //  if(paises.response.length > 0){
+  //    this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
+  //    return;
+  //   }
     console.log(paises.response);
     this.paises = paises.response;
     console.log(this.paises);
     console.log(this.datosBasicos.pais);
 
+
     const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
+    if(tipoDocumento === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
+         return;
+        }
     this.tiposDocumento = tipoDocumento;
 
     const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
+    if(estadoCivil === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de estado civil');
+         return;
+        }
     this.estados = estadoCivil;
 
     const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+    if(experienciaEspecifica === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de experiencia');
+      return;
+    }
     this.aniosExp = experienciaEspecifica;
 
     const nivelAcademico = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'academico' + '/' + 'subcriterio');
+    if(nivelAcademico === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los niveles académicos');
+      return;
+    }
     this.nivelesAcademia = nivelAcademico;
 
     const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
-    this.cargos = cargoAplica;
+    if(cargoAplica === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
+      return;
+    }else{
+      this.cargos = cargoAplica;
+    }
 
-    const LenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
-    this.lenguas = LenguaExtranjera;
 
-  //  if(paises){
-  //   this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
-  //   return;
-  //  }
-  //  loading.close();
+    const lenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
+    if(lenguaExtranjera === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los idiomas');
+      return;
+    }
+    this.lenguas = lenguaExtranjera;
 
-  //  const departamentos = await this.getAnyInformation('/pais/Departamentos' + '/' + this.datosBasicos.pais);
-  //   console.log(departamentos.response);
-  //   this.deptos = departamentos.response;
-  //   console.log(this.deptos);
-    // return new Promise((resolve, reject) => {
+    // await this.selectsValidate(paises);
+    // await this.selectsValidate(tipoDocumento);
+    // await this.selectsValidate(estadoCivil);
+    // await this.selectsValidate(experienciaEspecifica);
+    // await this.selectsValidate(nivelAcademico);
+    // await this.selectsValidate(cargoAplica);
+    // await this.selectsValidate(LenguaExtranjera);
 
-    // })
+        loading.close();
 
-    // (await this.apiService.getInformacion('/pais/', this.param)).subscribe({
-    //   next: (v) => {
-    //     console.log(v.response);
-    //   },
-    //   error: (e) => {
-    //     console.error(e);
-    //   },
-    //   complete: () => {
-    //     console.log('Se completó la consulta a la API');
-    //   }
-    // });
+        //  const departamentos = await this.getAnyInformation('/pais/Departamentos' + '/' + this.datosBasicos.pais);
+        //   console.log(departamentos.response);
+        //   this.deptos = departamentos.response;
+        //   console.log(this.deptos);
+        // return new Promise((resolve, reject) => {
+
+          // })
+
+          // (await this.apiService.getInformacion('/pais/', this.param)).subscribe({
+            //   next: (v) => {
+              //     console.log(v.response);
+              //   },
+              //   error: (e) => {
+                //     console.error(e);
+                //   },
+                //   complete: () => {
+                  //     console.log('Se completó la consulta a la API');
+                  //   }
+                  // });
+  }
+
+  public async selectsValidate(selectContent:boolean){
+    if(selectContent){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los cargos');
+      return;
+     }
   }
 
   public async onSelectionChangePais(idPais:number): Promise<void> {
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     console.log('Datos pais', idEmp, idPais);
     const deptos = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
-    console.log('deptos', deptos);
-    this.deptos = deptos.response;
-    console.log('datos select deptos', this.deptos);
+    if(deptos === null){
+      setTimeout(
+        () => {
+          this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
+        }, 1000);
+    }else{
+      console.log('deptos', deptos);
+      //   this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
+      //   return;
+      // }
+
+      this.deptos = deptos.response;
+      console.log('datos select deptos', this.deptos);
+      loading.close();
+    }
+
   }
   public async onSelectionChangeDepto(idDepto:number): Promise<void> {
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     console.log('Datos pais', idEmp, idDepto);
     const ciudades = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
+     if(ciudades.length === 0){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
+      return;
+    }
     console.log('deptos', ciudades);
     this.ciudades = ciudades.response;
     console.log('datos select deptos', this.ciudades);
+    loading.close();
   }
   public async onSelectionChangeCiudad(idCiudad:number): Promise<void> {
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     console.log('Datos pais', idEmp, idCiudad);
     const barrios = await this.getAnyInformation('/pais/barrios/' + idCiudad);
-    console.log('deptos', barrios);
-    this.barrios = barrios.response;
-    console.log('datos select deptos', this.barrios);
+     if(barrios === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los barrios');
+      return;
+    }else{
+      console.log('deptos', barrios);
+      this.barrios = barrios.response;
+      console.log('datos select deptos', this.barrios);
+      loading.close();
+    }
+
   }
 
   private async getAnyInformation(service: string): Promise<any> {
@@ -383,16 +472,16 @@ public idiomasCandidato: Idioma = {
       ...this.idiomasCandidato, idIdi
     }));
     console.log('Datos Idiomas', this.idiomasArray);
-    // this._storaged.set('datosBasicosStorage', this.datosBasicos);
-    // this._storaged.set('idiomasStorage', this.idiomasArray);
-    // localStorage.setItem('datosBasicosStorage', JSON.stringify(this.datosBasicos) );
+    this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+    this.storaged.set('datosBasicosStorage', this.datosBasicos);
+    this.storaged.set('idiomasStorage', this.idiomasArray);
     this.disabledButtonNext = false;
   }
-  public getLocalStorage(){
-    console.log('Cargar Datos Básicos', this.datosBasicos);
-    // this.datosBasicos = this._storaged.get('datosBasicosStorage');
-    // this.idiomasArray = this._storaged.get('idiomasStorage');
-    // this.datosBasicos = JSON.parse(localStorage.getItem('datosBasicosStorage')! );
+  public getSessionStorage(){
+    // this.idiomasArray = this.storaged.get('idiomasStorage');
+    // this.datosCandidato = this.storaged.get('datosCandidatoStorage');
+    // this.datosBasicos = this.storaged.get('datosBasicosStorage');
+
   }
 
 }
