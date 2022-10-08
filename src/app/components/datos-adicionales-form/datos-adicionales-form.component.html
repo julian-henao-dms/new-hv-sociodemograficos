@@ -8,7 +8,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Experiencia General</mat-label>
-        <mat-select >
+        <mat-select [(ngModel)]="datosAdicionales.id_rh_experiencia_sector"
+        name="id_rh_experiencia_sector" #id_rh_experiencia_sector="ngModel" required id="id_rh_experiencia_sector">
           <mat-option
             *ngFor="let anioExp of aniosExp"
             [value]="anioExp.id"
@@ -21,7 +22,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Operaciones de Equipos </mat-label>
-        <mat-select [disabled]="tipoCandidato == 0 ? true : false ">
+        <mat-select [disabled]="tipoCandidato == 0 ? true : false " [(ngModel)]="datosAdicionales.id_rh_experiencia_equipo"
+        name="id_rh_experiencia_equipo" #id_rh_experiencia_equipo="ngModel" required id="id_rh_experiencia_equipo">
           <mat-option
           *ngFor="let anioExp of aniosExp"
           [value]="anioExp.id"
@@ -34,7 +36,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Aspiración </mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="datosAdicionales.id_salario"
+        name="id_salario" #id_salario="ngModel" required id="id_salario">
           <mat-option
             *ngFor="let salario of salarios"
             [value]="salario.id"
@@ -52,14 +55,16 @@
           type="number"
           placeholder="$ 0.00"
           name=""
-          required
+          [(ngModel)]="datosAdicionales.salario_especifico"
+        name="salario_especifico" #salario_especifico="ngModel" id="salario_especifico"
         />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Fuente de Reclutamiento</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="datosAdicionales.id_rh_fuente_reclutamiento"
+        name="id_rh_fuente_reclutamiento" #id_rh_fuente_reclutamiento="ngModel" id="id_rh_fuente_reclutamiento">
           <mat-option
             *ngFor="let fuente of fuentesReclutamiento"
             [value]="fuente.id"
@@ -72,13 +77,14 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Tarjeta Profesional</mat-label>
-        <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" required id="tarjeta" name="tarjeta"  [(ngModel)]="tarjeta"   (ngModelChange)="tarjeta = $event.toUpperCase()" />
+        <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" required id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"   (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile >
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Entidad de Expedición</mat-label>
-        <mat-select >
+        <mat-select [(ngModel)]="datosAdicionales.id_Entidad"
+        name="id_Entidad" #id_Entidad="ngModel" id="id_Entidad">
           <mat-option
             *ngFor="let entidad of entidades"
             [value]="entidad.id"
@@ -92,10 +98,16 @@
   <mat-grid-tile class="tile-checks-hv left-grid-position">
 
     <section class="example-section">
-      <mat-checkbox class="example-margin"
+      <mat-checkbox   [checked]="datosAdicionales.id_participacion_anterior === -1"
+      (change)="datosAdicionales.id_participacion_anterior = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_participacion_anterior"
+      name="id_participacion_anterior" #id_participacion_anterior="ngModel" id="id_participacion_anterior" class="example-margin"
         >Participacion Anterior
       </mat-checkbox>
-      <mat-checkbox class="example-margin"
+
+      <mat-checkbox
+      [checked]="datosAdicionales.id_trajo_hoja_vida === -1"
+      (change)="datosAdicionales.id_trajo_hoja_vida = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_trajo_hoja_vida"
+      name="id_trajo_hoja_vida" #id_trajo_hoja_vida="ngModel" id="id_trajo_hoja_vida" class="example-margin"
       >Hoja de Vida
     </mat-checkbox>
     </section>
@@ -103,11 +115,15 @@
   <mat-grid-tile class="tile-checks-hv left-grid-position">
     <section class="example-section">
 
-      <mat-checkbox class="example-margin"
+      <mat-checkbox  [checked]="datosAdicionales.id_disponibilidad_viaje === -1"
+      (change)="datosAdicionales.id_disponibilidad_viaje = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_disponibilidad_viaje"
+      name="id_disponibilidad_viaje" #id_disponibilidad_viaje="ngModel" id="id_disponibilidad_viaje" class="example-margin"
         >Disponibilidad para Viajar
       </mat-checkbox>
 
-      <mat-checkbox class="example-margin">Runt</mat-checkbox>
+      <mat-checkbox [checked]="datosAdicionales.runt === -1"
+      (change)="datosAdicionales.runt = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.runt"
+      name="runt" #runt="ngModel" id="runt" class="example-margin">Runt</mat-checkbox>
 
     </section>
 
@@ -128,7 +144,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar EPS</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="datosAdicionales.idRhEps"
+        name="idRhEps" #idRhEps="ngModel" id="idRhEps" >
           <mat-option
             *ngFor="let eps of epss"
             [value]="eps.id"
@@ -142,7 +159,8 @@
   <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Seleccionar Fondo Pensión</mat-label>
-      <mat-select>
+      <mat-select  [(ngModel)]="datosAdicionales.idRhFondoPension"
+        name="idRhFondoPension" #idRhFondoPension="ngModel" id="idRhFondoPension">
         <mat-option
           *ngFor="let fondoPension of fondosPension"
           [value]="fondoPension.id"
@@ -155,7 +173,8 @@
   <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Seleccionar Caja Compensación</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="datosAdicionales.idRhFondoCaja"
+        name="idRhFondoCaja" #idRhFondoCaja="ngModel" id="idRhFondoCaja">
         <mat-option
           *ngFor="let cajaCompensacion of cajasCompensacion"
           [value]="cajaCompensacion.id"
@@ -168,7 +187,8 @@
   <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Seleccionar Cesantías</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="datosAdicionales.idRhFondoCesantias"
+        name="idRhFondoCesantias" #idRhFondoCesantias="ngModel" id="idRhFondoCesantias">
         <mat-option
           *ngFor="let cesantia of cesantias"
           [value]="cesantia.id"
@@ -290,7 +310,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Color de Piel</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="datosAdicionales.id_rh_color_piel"
+        name="id_rh_color_piel" #id_rh_color_piel="ngModel" id="id_rh_color_piel">
           <mat-option
             *ngFor="let colorPiel of coloresPiel"
             [value]="colorPiel.id"
@@ -303,7 +324,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Grupo Sanguineo</mat-label>
-        <mat-select>
+        <mat-select [(ngModel)]="datosAdicionales.id_rh_grupo_sanguineo"
+        name="id_rh_grupo_sanguineo" #id_rh_grupo_sanguineo="ngModel" id="id_rh_grupo_sanguineo">
           <mat-option
             *ngFor="let grupoSangre of gruposSanguineos"
             [value]="grupoSangre.id"
@@ -314,7 +336,8 @@
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">
-      <mat-radio-group aria-label="Select an option">
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="datosAdicionales.rh"
+      name="rh" #rh="ngModel" id="rh">
         <mat-radio-button value="0">Positivo +</mat-radio-button>
         <mat-radio-button value="1">Negativo -</mat-radio-button>
       </mat-radio-group>
@@ -327,7 +350,8 @@
           type="number"
           placeholder="0"
           name=""
-          required
+          [(ngModel)]="datosAdicionales.peso"
+        name="peso" #peso="ngModel" id="peso"
         />
       </mat-form-field>
     </mat-grid-tile>
@@ -339,7 +363,8 @@
           type="number"
           placeholder="0"
           name=""
-          required
+          [(ngModel)]="datosAdicionales.altura"
+        name="altura" #altura="ngModel" id="altura"
         />
       </mat-form-field>
     </mat-grid-tile>

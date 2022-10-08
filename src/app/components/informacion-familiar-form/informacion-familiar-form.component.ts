@@ -133,6 +133,16 @@ export class InformacionFamiliarFormComponent implements OnInit {
     // loading.close();
   }
 
+  public async selectsValidate(selectContent:any, text: string, arrayData:any){
+    if(selectContent === null){
+      setTimeout(
+        () => {
+          this.messageService.error('Error', 'Error interno del servidor al cargar ' + text);
+        }, 1000);
+     }else{
+      arrayData = selectContent;
+     }
+  }
   private async getAnyInformationAlt(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
        this.apiService.getInformacionMaestros(service).subscribe({

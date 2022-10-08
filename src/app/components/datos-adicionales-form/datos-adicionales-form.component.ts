@@ -65,7 +65,7 @@ interface Licencia{
 interface DatosAdicionalesCandidato{
   id_rh_experiencia_sector: number;
   id_rh_experiencia_equipo: number;
-  aspiracion: number;
+  id_salario: number;
   salario_especifico: number;
   id_rh_fuente_reclutamiento: number;
   tarjeta: string;
@@ -128,7 +128,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
  public datosAdicionales: DatosAdicionalesCandidato = {
   id_rh_experiencia_sector: 0,
   id_rh_experiencia_equipo: 0,
-  aspiracion: 0,
+  id_salario: 0,
   salario_especifico: 0,
   id_rh_fuente_reclutamiento: 0,
   tarjeta: '',
@@ -264,9 +264,6 @@ export class DatosAdicionalesFormComponent implements OnInit {
       id_rh_categoria: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];
-
-
-    console.warn(this.myReferenceArray);
   }
 
   private async getAnyInformationAlt(service: string): Promise<any> {
@@ -293,8 +290,8 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Datos Adicionales', this.datosAdicionales);
-    // this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
-    // this._storaged.set('datosLicencia', this.setLicences);
+    this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+    this._storaged.set('datosLicencia', this.setLicences);
     this.disabledButtonNext = false;
 
   }

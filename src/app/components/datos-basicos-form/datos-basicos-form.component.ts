@@ -352,32 +352,14 @@ public idiomasCandidato: Idioma = {
     // await this.selectsValidate(LenguaExtranjera);
 
         loading.close();
-
-        //  const departamentos = await this.getAnyInformation('/pais/Departamentos' + '/' + this.datosBasicos.pais);
-        //   console.log(departamentos.response);
-        //   this.deptos = departamentos.response;
-        //   console.log(this.deptos);
-        // return new Promise((resolve, reject) => {
-
-          // })
-
-          // (await this.apiService.getInformacion('/pais/', this.param)).subscribe({
-            //   next: (v) => {
-              //     console.log(v.response);
-              //   },
-              //   error: (e) => {
-                //     console.error(e);
-                //   },
-                //   complete: () => {
-                  //     console.log('Se completó la consulta a la API');
-                  //   }
-                  // });
   }
 
-  public async selectsValidate(selectContent:boolean){
-    if(selectContent){
-      this.messageService.error('Error', 'Error interno del servidor al cargar los cargos');
+  public async selectsValidate(selectContent:any, text: string, arrayData:any){
+    if(selectContent === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar ' + text);
       return;
+     }else{
+      arrayData = selectContent;
      }
   }
 
