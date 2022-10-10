@@ -57,10 +57,11 @@ interface CategoriaLicencia{
   descripcion: string;
 }
 interface Licencia{
-  licencia: string;
-  tipo_licencia: number;
-  fecha_vence_licencia: string;
-  id_rh_categoria: number;
+    idCandidato: 0;
+    idCategoria: 0;
+    fechaVence: string;
+    id: number;
+    accion: number;
 }
 interface DatosAdicionalesCandidato{
   id_rh_experiencia_sector: number;
@@ -111,16 +112,17 @@ export class DatosAdicionalesFormComponent implements OnInit {
   public coloresPiel: ColorPiel[] = [];
 
 
-  public columnsReference: any[] = ["licencia", "tipo_licencia", "fecha_vence", "categoria", 'borrar' ];
+  public columnsReference: any[] = ["id", "fecha_vence", "categoria", 'borrar' ];
   public LICENCE_DATA: Licencia[] = [];
 
   public myReferenceArray: any[] = [];
 
   public setLicences: Licencia = {
-    licencia: '',
-    tipo_licencia: 0,
-    fecha_vence_licencia: '',
-    id_rh_categoria: 0,
+    idCandidato: 0,
+    idCategoria: 0,
+    fechaVence: "2022-09-22T14:55:44.760Z",
+    id: 0,
+    accion: 0,
   }
 
  public disabledButtonNext: boolean = true;
@@ -258,10 +260,11 @@ export class DatosAdicionalesFormComponent implements OnInit {
     console.log('Data reference',this.LICENCE_DATA);
     this.myReferenceArray.push(this.setLicences);
     this.setLicences = {
-      licencia: '',
-      tipo_licencia: 0,
-      fecha_vence_licencia: '',
-      id_rh_categoria: 0,
+      idCandidato: 0,
+      idCategoria: 0,
+      fechaVence: "2022-09-22T14:55:44.760Z",
+      id: 0,
+      accion: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];
   }
@@ -291,7 +294,7 @@ export class DatosAdicionalesFormComponent implements OnInit {
   public guardarProgreso(){
     console.log('Datos Adicionales', this.datosAdicionales);
     this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
-    this._storaged.set('datosLicencia', this.setLicences);
+    this._storaged.set('datosLicencia', this.myReferenceArray);
     this.disabledButtonNext = false;
 
   }

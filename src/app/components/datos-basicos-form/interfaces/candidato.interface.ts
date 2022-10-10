@@ -18,7 +18,7 @@ id_rh_requisicion_personal: number;
 id_rh_nivel_academico: number;
 id_rh_experiencia: number;
 observaciones: string;
-id_tipo_candidato: number;
+id_tipo_candidato: number;// es 1 o 2
 id_rh_experiencia_sector: number;
 id_disponibilidad_viaje: number;
 id_participacion_anterior: number;
@@ -58,6 +58,7 @@ depto:number;
 ciudad:number;
 barrio:number;
 cargoAplica: number;
+//sync 2
 }
 
 export interface Idioma{
@@ -129,7 +130,7 @@ export interface newCandidato{
   peso: number;
   altura: number;
   bloqueado: number;
-  id_rh_requisicion_personal: number;
+  id_rh_requisicion_personal: number;//?
   motivo: string;
   id: number;
   accion: number;
