@@ -16,10 +16,12 @@ interface Cargo{
 })
 export class CargosFormComponent implements OnInit {
 
+  public idPerfilPrevio: number[] = [];
   public disabledButtonNext: boolean = true;
 
   public idEmp: number = 3;
   public numRegla: number = 159;
+  public cargosArray: any[] = [];
   public cargos: Cargo[] = [];
 
   public otrosCargos: Cargos = {
@@ -60,8 +62,11 @@ export class CargosFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
+    this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+      ...this.otrosCargos, idPerfil
+    }));
     // console.log('Cargos Guardados', this.otrosCargos);
-    // this._storaged.set('otrosCargosStorage', this.otrosCargos);
+    this._storaged.set('otrosCargosStorage', this.cargosArray);
     this.disabledButtonNext = false;
 
   }

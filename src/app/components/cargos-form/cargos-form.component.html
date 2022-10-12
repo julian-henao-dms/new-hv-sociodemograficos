@@ -6,7 +6,8 @@
   </div>
   <mat-form-field appearance="outline">
     <mat-label>Seleccionar Cargos</mat-label>
-    <mat-select #idPerfil="ngModel" required id="idPerfil" name="idPerfil"  [(ngModel)]="otrosCargos.idPerfil" multiple >
+    <mat-select #idPerfil="ngModel" required id="idPerfil" name="idPerfil"
+    [(ngModel)]="idPerfilPrevio" multiple >
       <mat-option
         *ngFor="let cargo of cargos"
         [value]="cargo.id"
