@@ -45,6 +45,7 @@ import { EstudiosFormComponent } from './components/estudios-form/estudios-form.
 import { ReferenciasFormComponent } from './components/referencias-form/referencias-form.component';
 import { CargosFormComponent } from './components/cargos-form/cargos-form.component';
 import { InformacionFamiliarFormComponent } from './components/informacion-familiar-form/informacion-familiar-form.component';
+import { CargaArchivosHvComponent } from './components/carga-archivos-hv/carga-archivos-hv.component';
 
 
 const MY_DATE_FORMAT = {
@@ -73,6 +74,7 @@ const MY_DATE_FORMAT = {
     ReferenciasFormComponent,
     CargosFormComponent,
     InformacionFamiliarFormComponent,
+    CargaArchivosHvComponent,
 
   ],
   imports: [

@@ -11,16 +11,21 @@ export class CargaArchivosFormComponent implements OnInit {
   @ViewChild('fileInput')
   fileInput!: ElementRef;
   fileAttr = 'Cargar Archivos';
+  fileList: File[] = [];
+  listOfFiles: any[] = [];
 
   constructor(private _storaged: SessionStorageService) { }
 
   ngOnInit(): void {
   }
   uploadFileEvt(imgFile: any) {
+    console.log('????',imgFile);
     if (imgFile.target.files && imgFile.target.files[0]) {
       this.fileAttr = '';
       Array.from(imgFile.target.files).forEach((file: any) => {
-        this.fileAttr += file.name + ' - ';
+        console.log('archivo', file);
+        console.log('archivo??', imgFile.target.files);
+        this.fileAttr += file.name + '  ';
       });
       // HTML5 FileReader API
       let reader = new FileReader();
@@ -37,6 +42,7 @@ export class CargaArchivosFormComponent implements OnInit {
     } else {
       this.fileAttr = 'Cargar Archivos';
     }
+    console.log('input file',this.fileInput);
   }
 
   public guardarProgreso(){
@@ -48,5 +54,12 @@ export class CargaArchivosFormComponent implements OnInit {
   public getLocalStorage(){
     // console.log('Cargar Archivos', this.archivos);
     // this._storaged.get('archivosStorage');
+  }
+
+  removeSelectedFile(index: number) {
+    // Delete the item from fileNames list
+    this.listOfFiles.splice(index, 1);
+    // delete file from FileList
+    this.fileList.splice(index, 1);
   }
 }

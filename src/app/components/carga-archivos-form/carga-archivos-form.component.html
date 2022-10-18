@@ -9,7 +9,7 @@
        <!-- </div> -->
         <!-- Browse Button -->
 
-        <button mat-flat-button color="primary"><mat-icon class="icon-file-button">upload_file</mat-icon> Subir archivos</button>
+        <button mat-flat-button color="primary"><mat-icon class="icon-file-button">upload_file</mat-icon> Cargar archivo</button>
       </mat-toolbar>
       <!-- Fetch selected filed on change -->
       <input
@@ -22,8 +22,13 @@
         accept="image/png, image/jpeg, application/pdf"
       />
     </div>
-  </mat-form-field>
 
+
+  </mat-form-field>
+  <div *ngFor="let selected of listOfFiles; let index = index">
+    <h3>{{ selected }}</h3>
+    <button mat-icon-button (click)="removeSelectedFile(index)">delete</button>
+  </div>
   <div class="step-btn-container">
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás

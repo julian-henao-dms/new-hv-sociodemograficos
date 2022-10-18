@@ -8,20 +8,20 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
-        <input matInput placeholder="Identificación" #nit="ngModel" required id="nit" name="nit"  [(ngModel)]="setRelatives.nit" (ngModelChange)="setRelatives.nit = $event.toUpperCase()" />
+        <input matInput placeholder="Identificación" #nit="ngModel" id="nit" name="nit"  [(ngModel)]="setRelatives.nit" (ngModelChange)="setRelatives.nit = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre </mat-label>
-        <input matInput placeholder="Nombre Familiar" #nombreFamiliar="ngModel" required id="nombreFamiliar" name="nombre"  [(ngModel)]="setRelatives.nombre" (ngModelChange)="setRelatives.nombre = $event.toUpperCase()" />
+        <input matInput placeholder="Nombre Familiar" #nombreFamiliar="ngModel" id="nombreFamiliar" name="nombre"  [(ngModel)]="setRelatives.nombre" (ngModelChange)="setRelatives.nombre = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha Nacimiento</mat-label>
         <input matInput [matDatepicker]="nacimiento" name="fechaNace" [(ngModel)]="setRelatives.fechaNace"
-        #fechaNace="ngModel" required id="fechaNace"/>
+        #fechaNace="ngModel" id="fechaNace"/>
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matSuffix
@@ -48,7 +48,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Parentesco</mat-label>
-        <mat-select placeholder="Parentesco" #id_Parentesco="ngModel" required id="id_Parentesco" name="id_Parentesco"  [(ngModel)]="setRelatives.id_Parentesco">
+        <mat-select placeholder="Parentesco" #id_Parentesco="ngModel" id="id_Parentesco" name="id_Parentesco"  [(ngModel)]="setRelatives.id_Parentesco">
           <mat-option
             *ngFor="let parentesco of parentescos"
             [value]="parentesco.id"
@@ -61,7 +61,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono / móvil</mat-label>
-        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" required id="telResidencia" name="telResidencia"  [(ngModel)]="setRelatives.telResidencia" />
+        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" id="telResidencia" name="telResidencia"  [(ngModel)]="setRelatives.telResidencia" />
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>

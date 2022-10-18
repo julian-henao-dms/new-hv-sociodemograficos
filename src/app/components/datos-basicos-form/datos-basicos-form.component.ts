@@ -218,13 +218,21 @@ public idiomasCandidato: Idioma = {
     xs: 1
   };
 
-  tiposCandidato: TipoCandidato[] = [
+  public tiposCandidato: TipoCandidato[] = [
     {id: 0, descripcion: 'Personal Táctico y Soporte'},
     {id: 1, descripcion: 'Personal Operativo'},
 
   ];
 
 
+
+  public expresiones = {
+    usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    password: /^.{4,12}$/, // 4 a 12 digitos.
+    correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    telefono: /^\d{7,14}$/ // 7 a 14 numeros.
+  }
 
 
   constructor(
@@ -300,11 +308,12 @@ public idiomasCandidato: Idioma = {
 
 
     const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
-    if(tipoDocumento === null){
-         this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
-         return;
-        }
-    this.tiposDocumento = tipoDocumento;
+    this.selectsValidate(tipoDocumento, ' los tipos de documento', this.tiposDocumento)
+    // if(tipoDocumento === null){
+    //      this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
+    //      return;
+    //     }
+    // this.tiposDocumento = tipoDocumento;
 
     const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
     if(estadoCivil === null){
@@ -445,9 +454,47 @@ public idiomasCandidato: Idioma = {
     this.changeSelect.emit({'data':event});
   }
 
+  public validarCampos(): boolean{
+    let that = this;
+    let valid = true;
+    let inputsHdv = document.getElementsByClassName('input-hdv');
+    console.log('ìnputs validete', inputsHdv);
 
+    let elements = document.getElementsByClassName('input-hdv');
+    console.log('Elements', elements);
+    Array.prototype.map.call(elements, function(element){
+      console.log('value Element', element.value);
+      console.log('name Element', element.name);
+      if(!element.value || element.value === ''){
+        element.focus();
+        that.messageService.warning('Oops...', 'Debe llenar el campo "' + element.name + '" para continuar');
+        valid = false;
+      }
+    });
+//     for (let i = 0; i < inputsHdv.length; i++){
+//       const itemName = inputsHdv[i].getAttribute('name');
+//       const itemValue = inputsHdv[i].getAttribute('value');
+//       console.log('items', itemValue);
+//       // console.log('tipo', typeof(itemValue));
+//         let element = document.getElementsByName(itemValue!)[0];
+//         // console.log('element', element);
+// //
+
+//         console.log('elementValue', element);
+//         element.focus();
+//         this.messageService.warning('Oops...', 'Debe llenar el campo "' + itemValue + '" para continuar');
+//         valid = false;
+//       }
+
+    return valid;
+  }
+
+public validarFormulario(e:any){
+  console.log('target name', e.target.name);
+}
 
   public guardarProgreso(){
+    this.validarCampos();
     console.log('Datos Básicos Guardados', this.datosBasicos);
 
     this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
@@ -467,3 +514,7 @@ public idiomasCandidato: Idioma = {
   }
 
 }
+function typeOf(itemValue: string | null): any {
+  throw new Error('Function not implemented.');
+}
+

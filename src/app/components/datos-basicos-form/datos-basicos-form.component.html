@@ -36,7 +36,7 @@
   <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
-        <input
+        <input class="input-hdv"
           matInput
           placeholder="Identidicación"
           name="nit"
@@ -146,7 +146,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input
+        <input class="input-hdv"
           matInput
           placeholder="Nombre"
           name="nombre"
@@ -159,7 +159,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Apellidos</mat-label>
-        <input matInput placeholder="Apellidos" name="apellido"
+        <input class="input-hdv" matInput placeholder="Apellidos" name="apellido"
         [(ngModel)]="datosCandidato.apellido"
         (ngModelChange)="datosCandidato.apellido = $event.toUpperCase()"
         #apellido="ngModel" required id="apellido" />
@@ -206,14 +206,14 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
-        <input matInput placeholder="Teléfono" name="telefono" [(ngModel)]="datosCandidato.telefono"
+        <input class="input-hdv" matInput placeholder="Teléfono" name="telefono" [(ngModel)]="datosCandidato.telefono"
         #telefono="ngModel" required id="telefono" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Correo</mat-label>
-        <input
+        <input class="input-hdv"
           matInput
           type="email"
           placeholder="Correo"
@@ -226,7 +226,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
-        <input matInput placeholder="Celular" name="celular" [(ngModel)]="datosCandidato.celular"
+        <input class="input-hdv" matInput placeholder="Celular" name="celular" [(ngModel)]="datosCandidato.celular"
         #celular="ngModel" required id="celular" />
       </mat-form-field>
     </mat-grid-tile>
@@ -245,7 +245,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Dirección</mat-label>
-        <input matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion"
+        <input class="input-hdv" matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion"
         #direccion="ngModel" required id="direccion" />
       </mat-form-field>
     </mat-grid-tile>
