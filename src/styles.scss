@@ -4,6 +4,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 $main-color: #2675bb;
+$alert-color:#f44336;
 .mat-form-field {
   margin-top: 16px;
 }
@@ -27,11 +28,14 @@ $main-color: #2675bb;
 }
 .container-hv-radios{
 display: flex;
-flex-direction: column;
-margin: -25px 0 0 0;
+// flex-direction: column;
+// margin: -25px 0 0 0;
+padding: 10px 0 0 0;
 mat-label{
   margin-bottom: 0.2em;
-  text-decoration: underline;
+  // text-decoration: underline;
+  margin-right: 15px;
+  color: #666666;
 }
 }
 .container-hv-referencia{
@@ -94,7 +98,7 @@ button.stepper-main-btn {
 }
 mat-grid-tile.mat-grid-tile.left-grid-position {
   div.mat-grid-tile-content{
-    margin-left: 15px;
+    // margin-left: 15px;
     display: flex;
     justify-content: flex-start;
     .example-section {
@@ -141,6 +145,23 @@ button.add-button{
 
 .scroller-table {
   width: 100%;
+}
+
+.message-error{
+  color:$alert-color;
+  opacity: 0;
+  transition: all linear .5s;
+  &.invalid{
+    opacity: 1;
+  }
+}
+
+fieldset {
+  border-radius: 4px;
+  width: 100%;
+  height: 35px;
+  border: solid 0.1em #e0e0e0;
+  margin: -18px 0 0 0;
 }
 
 // mat-table.estudios-mat-table{

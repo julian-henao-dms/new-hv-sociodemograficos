@@ -1,27 +1,5 @@
 
-  <mat-grid-list
-    #grid
-    [cols]="cols"
-    rowHeight="85px"
-    gutterSize="10px"
-  >
-    <mat-grid-tile [colspan]="colsAlt">
-      <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Tipo Candidato</mat-label>
-        <mat-select  name="id_tipo_candidato" (ngModelChange)="onChange($event)"
-        [(ngModel)]="datosCandidato.id_tipo_candidato"
-        name="id_tipo_candidato" #id_tipo_candidato="ngModel" required id="id_tipo_candidato">
-          <mat-option
-            *ngFor="let tipoCandidato of tiposCandidato"
-            [value]="tipoCandidato.id"
-          >
-            {{ tipoCandidato.descripcion }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <mat-divider></mat-divider>
+
   <div class="subtitle-container">
     <mat-icon>badge </mat-icon>
     <h2 class="subtitle-hv">Identificación</h2>
@@ -43,7 +21,16 @@
           [(ngModel)]="datosCandidato.nit"
           (ngModelChange)="datosCandidato.nit = $event.toUpperCase()"
           #nit="ngModel" required id="nit"
+          [pattern]="expresiones.numbersText"
         />
+        <mat-icon class="icon-search" matSuffix (click)="search()">search</mat-icon>
+        <mat-error class="message-error" [class.invalid]="nit.invalid" *ngIf="nit.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="nit.invalid" *ngIf="nit.errors?.['pattern']">
+          Identificación no válida, solo se permiten números y letras
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -67,6 +54,9 @@
         [(ngModel)]="datosCandidato.fecExpedicion"
         name="fecExpedicion" #fecExpedicion="ngModel" required id="fecExpedicion"/>
         <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-error class="message-error" [class.invalid]="fecExpedicion.invalid" *ngIf="fecExpedicion.errors?.['required']">
+          * La fecha de expedición es requerida
+        </mat-error>
         <mat-datepicker-toggle
           matSuffix
           [for]="expedicion"
@@ -76,6 +66,35 @@
     </mat-grid-tile>
   </mat-grid-list>
   <mat-divider></mat-divider>
+  <div class="subtitle-container">
+    <mat-icon>group </mat-icon>
+    <h2 class="subtitle-hv">Tipo de Candidato</h2>
+  </div>
+  <mat-grid-list
+    #grid
+    [cols]="cols"
+    rowHeight="85px"
+    gutterSize="10px"
+  >
+    <mat-grid-tile [colspan]="colsAlt">
+      <mat-form-field appearance="outline">
+        <mat-label>Seleccionar Tipo Candidato</mat-label>
+        <mat-select  name="id_tipo_candidato" (ngModelChange)="onChange($event)"
+        [(ngModel)]="datosCandidato.id_tipo_candidato"
+        name="id_tipo_candidato" #id_tipo_candidato="ngModel" required id="id_tipo_candidato">
+          <mat-option
+            *ngFor="let tipoCandidato of tiposCandidato"
+            [value]="tipoCandidato.id"
+          >
+            {{ tipoCandidato.descripcion }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <mat-divider></mat-divider>
+
+
   <div class="subtitle-container">
     <mat-icon>south_america </mat-icon>
     <h2 class="subtitle-hv">Lugar de Expedición</h2>
@@ -153,7 +172,15 @@
           [(ngModel)]="datosCandidato.nombre"
           (ngModelChange)="datosCandidato.nombre = $event.toUpperCase()"
           #nombre="ngModel" required id="nombre"
+          [pattern]="expresiones.textSpacesAccent"
         />
+        <mat-error class="message-error" [class.invalid]="nombre.invalid" *ngIf="nombre.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="nombre.invalid" *ngIf="nombre.errors?.['pattern']">
+          El nombre solo puede contener letras y espacios
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -162,10 +189,19 @@
         <input class="input-hdv" matInput placeholder="Apellidos" name="apellido"
         [(ngModel)]="datosCandidato.apellido"
         (ngModelChange)="datosCandidato.apellido = $event.toUpperCase()"
-        #apellido="ngModel" required id="apellido" />
+        #apellido="ngModel" required id="apellido"
+        [pattern]="expresiones.textSpacesAccent"/>
+        <mat-error class="message-error" [class.invalid]="apellido.invalid" *ngIf="apellido.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="apellido.invalid" *ngIf="apellido.errors?.['pattern']">
+          El apellido solo puede contener letras y espacios
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">
+      <fieldset>
       <div class="container-hv-radios">
         <mat-label>Género:</mat-label>
         <mat-radio-group aria-label="Select an option"  name="genero"
@@ -175,6 +211,7 @@
           <mat-radio-button [value]="1">Masculino</mat-radio-button>
         </mat-radio-group>
       </div>
+    </fieldset>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
@@ -182,6 +219,9 @@
         <input matInput [matDatepicker]="nacimiento" name="fecha_nacimiento" [(ngModel)]="datosCandidato.fecha_nacimiento"
         #fecha_nacimiento="ngModel" required id="fecha_nacimiento"/>
         <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-error class="message-error" [class.invalid]="fecha_nacimiento.invalid" *ngIf="fecha_nacimiento.errors?.['required']">
+          * La fecha de expedición es requerida
+        </mat-error>
         <mat-datepicker-toggle
           matSuffix
           [for]="nacimiento"
@@ -206,8 +246,19 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
-        <input class="input-hdv" matInput placeholder="Teléfono" name="telefono" [(ngModel)]="datosCandidato.telefono"
-        #telefono="ngModel" required id="telefono" />
+        <input class="input-hdv" matInput
+        placeholder="Teléfono" name="telefono" [(ngModel)]="datosCandidato.telefono"
+        #telefono="ngModel"  id="telefono"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        [pattern]="expresiones.nums"
+        />
+        <mat-error class="message-error" [class.invalid]="telefono.invalid" *ngIf="telefono.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="telefono.invalid" *ngIf="telefono.errors?.['pattern']">
+          Solo se permiten números
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -215,11 +266,20 @@
         <mat-label>Correo</mat-label>
         <input class="input-hdv"
           matInput
+          pattern="[/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/]"
           type="email"
           placeholder="Correo"
           name="mail" [(ngModel)]="datosCandidato.mail"
         #mail="ngModel" required id="mail"
+        [pattern]="expresiones.correo"
         />
+        <mat-error class="message-error" [class.invalid]="mail.invalid" *ngIf="mail.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="mail.invalid" *ngIf="mail.errors?.['pattern']">
+          El formato del correo digitado no es válido
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
 
@@ -227,7 +287,17 @@
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
         <input class="input-hdv" matInput placeholder="Celular" name="celular" [(ngModel)]="datosCandidato.celular"
-        #celular="ngModel" required id="celular" />
+        #celular="ngModel" required id="celular"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        [pattern]="expresiones.nums"
+        />
+        <mat-error class="message-error" [class.invalid]="celular.invalid" *ngIf="celular.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="celular.invalid" *ngIf="celular.errors?.['pattern']">
+          El número de contener más de 7 dígitos
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
@@ -399,7 +469,7 @@
     <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()" >
       Guardar Progreso
     </button>
-    <button [disabled]="disabledButtonNext" class="stepper-main-btn" mat-button matStepperNext>
+    <button type="button" [disabled]="disabledButtonNext" class="stepper-main-btn" mat-button matStepperNext>
       Siguiente
     </button>
 

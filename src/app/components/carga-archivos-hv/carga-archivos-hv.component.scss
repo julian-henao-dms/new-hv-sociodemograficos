@@ -23,7 +23,7 @@
 }
 
 .mat-toolbar-single-row button {
-  width: 100px;
+  // width: 100px;
 }
 
 .mat-form-field {
@@ -37,4 +37,14 @@
   border: #aaa solid 1px;
   border-radius: 4px;
   margin-bottom: 10px;
+}
+
+.icon-file-input {
+  margin-right: 0.2em;
+  color: #2675bb;
+  width: 40px;
+}
+.icon-file-button{
+  margin-bottom: 0.15em;
+  margin-right: 0.2em;
 }

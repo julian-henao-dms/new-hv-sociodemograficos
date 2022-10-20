@@ -77,7 +77,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Tarjeta Profesional</mat-label>
-        <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" required id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"   (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()" />
+        <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"   (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile >
@@ -216,10 +216,11 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Licencia</mat-label>
-        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel" required id="licencia" name="licencia"  [(ngModel)]="datosAdicionales.licencia"   (ngModelChange)="datosAdicionales.licencia = $event.toUpperCase()"  />
+        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel"  id="licencia" name="licencia"  [(ngModel)]="datosAdicionales.licencia"   (ngModelChange)="datosAdicionales.licencia = $event.toUpperCase()"  />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">
+      <fieldset>
       <div class="container-hv-radios">
         <mat-label>Tipo de Licencia:</mat-label>
         <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="datosAdicionales.tipo_licencia">
@@ -228,12 +229,12 @@
           </mat-radio-button>
         </mat-radio-group>
         </div>
-
+      </fieldset>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha Vencimiento</mat-label>
-        <input matInput [matDatepicker]="vencimiento" #fechaVence="ngModel" required id="fechaVence" name="fechaVence"  [(ngModel)]="setLicences.fechaVence" />
+        <input matInput [matDatepicker]="vencimiento" #fechaVence="ngModel"  id="fechaVence" name="fechaVence"  [(ngModel)]="setLicences.fechaVence" />
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-datepicker-toggle
           matSuffix
@@ -245,7 +246,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Categoría</mat-label>
-        <mat-select #idCategoria="ngModel" required id="idCategoria" name="idCategoria"  [(ngModel)]="setLicences.idCategoria">
+        <mat-select #idCategoria="ngModel"  id="idCategoria" name="idCategoria"  [(ngModel)]="setLicences.idCategoria">
           <mat-option
             *ngFor="let categoriaLic of categoriasLicencia"
             [value]="categoriaLic.id"
@@ -321,7 +322,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Grupo Sanguineo</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_grupo_sanguineo"
-        name="id_rh_grupo_sanguineo" #id_rh_grupo_sanguineo="ngModel" id="id_rh_grupo_sanguineo">
+        name="id_rh_grupo_sanguineo" required #id_rh_grupo_sanguineo="ngModel" id="id_rh_grupo_sanguineo">
           <mat-option
             *ngFor="let grupoSangre of gruposSanguineos"
             [value]="grupoSangre.id"
@@ -332,11 +333,15 @@
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">
+      <fieldset>
+        <div class="container-hv-radios">
       <mat-radio-group aria-label="Select an option" [(ngModel)]="datosAdicionales.rh"
-      name="rh" #rh="ngModel" id="rh" color="primary">
+      name="rh" #rh="ngModel" id="rh" color="primary" required>
         <mat-radio-button [value]="0">Positivo +</mat-radio-button>
         <mat-radio-button [value]="1">Negativo -</mat-radio-button>
       </mat-radio-group>
+      </div>
+      </fieldset>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">

@@ -14,7 +14,7 @@ export class CargaArchivosHvComponent implements OnInit {
   progress = 0;
   message = '';
 
-  fileName = 'Select File';
+  fileName = 'Seleccionar archivo';
   fileInfos?: Observable<any>;
 
   constructor(private uploadService: FileUploadService) { }
@@ -25,7 +25,7 @@ export class CargaArchivosHvComponent implements OnInit {
       this.currentFile = file;
       this.fileName = this.currentFile.name;
     } else {
-      this.fileName = 'Select File';
+      this.fileName = 'Seleccione un archivo';
     }
   }
 
@@ -50,7 +50,7 @@ export class CargaArchivosHvComponent implements OnInit {
           if (err.error && err.error.message) {
             this.message = err.error.message;
           } else {
-            this.message = 'Could not upload the file!';
+            this.message = 'No se puede cargar el archivo!';
           }
 
           this.currentFile = undefined;

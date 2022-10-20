@@ -94,7 +94,7 @@ export class DatosBasicosFormComponent implements OnInit {
   public deptos: Depto[] = [];
   public tiposDocumento: TipoDocumento[] = [];
   public estados: EstadoCivil[] = [];
-  public  aniosExp: AniosExperiencia[] = [];
+  public aniosExp: AniosExperiencia[] = [];
   public nivelesAcademia: NivelAcademico[] = [];
   public cargos: Cargo[] = [];
   public lenguas: LenguajeExtranjera[] = [];
@@ -224,14 +224,19 @@ public idiomasCandidato: Idioma = {
 
   ];
 
+  // public numbersText = "^[A-Za-z0-9_-]{1,20}$"
+  // public numbersText2 = "^[A-Za-z0-9_-]{8,20}$"
 
 
   public expresiones = {
+    numbersText: /^[A-Za-z0-9_-]{1,20}$/,
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
-    nombre: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
-    correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    telefono: /^\d{7,14}$/ // 7 a 14 numeros.
+    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    // correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
+    nums: /^\d{7,15}$/ // 7 a 14 numeros.
   }
 
 
@@ -290,30 +295,24 @@ public idiomasCandidato: Idioma = {
 
   async ngOnInit(): Promise<void> {
 
-
    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
    const idEmp = this.idEmp;
    const numRegla = this.numRegla
 
 
    const paises = await this.getAnyInformation('/pais/' + idEmp);
-  //  if(paises.response.length > 0){
-  //    this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
-  //    return;
-  //   }
-    console.log(paises.response);
+   if(paises === null){
+     this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
+     return;
+    }
     this.paises = paises.response;
-    console.log(this.paises);
-    console.log(this.datosBasicos.pais);
-
 
     const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
-    this.selectsValidate(tipoDocumento, ' los tipos de documento', this.tiposDocumento)
-    // if(tipoDocumento === null){
-    //      this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
-    //      return;
-    //     }
-    // this.tiposDocumento = tipoDocumento;
+    if(tipoDocumento === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
+         return;
+        }
+    this.tiposDocumento = tipoDocumento;
 
     const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
     if(estadoCivil === null){
@@ -340,10 +339,8 @@ public idiomasCandidato: Idioma = {
     if(cargoAplica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
       return;
-    }else{
-      this.cargos = cargoAplica;
     }
-
+    this.cargos = cargoAplica;
 
     const lenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
     if(lenguaExtranjera === null){
@@ -352,25 +349,22 @@ public idiomasCandidato: Idioma = {
     }
     this.lenguas = lenguaExtranjera;
 
-    // await this.selectsValidate(paises);
-    // await this.selectsValidate(tipoDocumento);
-    // await this.selectsValidate(estadoCivil);
-    // await this.selectsValidate(experienciaEspecifica);
-    // await this.selectsValidate(nivelAcademico);
-    // await this.selectsValidate(cargoAplica);
-    // await this.selectsValidate(LenguaExtranjera);
+    loading.close();
+  }
 
-        loading.close();
+  public search(){
+    console.log('Buscando');
   }
 
   public async selectsValidate(selectContent:any, text: string, arrayData:any){
     if(selectContent === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar ' + text);
       return;
-     }else{
-      arrayData = selectContent;
      }
+     //
   }
+
+
 
   public async onSelectionChangePais(idPais:number): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
