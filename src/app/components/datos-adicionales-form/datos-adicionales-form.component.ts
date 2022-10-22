@@ -219,37 +219,37 @@ export class DatosAdicionalesFormComponent implements OnInit {
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
-    const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+    const experienciaEspecifica = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'experiencia');
     this.aniosExp = experienciaEspecifica;
 
-    const aspiracionSalarial = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'rango_salario' + '/' + 'subcriterio');
+    const aspiracionSalarial = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'rango_salario');
     this.salarios = aspiracionSalarial;
 
-    const fuenteReclutamiento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fuente_reclutamiento' + '/' + 'subcriterio');
+    const fuenteReclutamiento = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fuente_reclutamiento');
     this.fuentesReclutamiento = fuenteReclutamiento;
 
-    const entidadExpedicion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'entidad' + '/' + 'subcriterio');
+    const entidadExpedicion = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'entidad');
     this.entidades = entidadExpedicion;
 
-    const eps = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'eps' + '/' + 'subcriterio');
+    const eps = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'eps');
     this.epss = eps;
 
-    const fondoPension = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_pension' + '/' + 'subcriterio');
+    const fondoPension = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fondo_pension');
     this.fondosPension = fondoPension;
 
-    const cajaCompensacion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_caja' + '/' + 'subcriterio');
+    const cajaCompensacion = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fondo_caja');
     this.cajasCompensacion = cajaCompensacion;
 
-    const cesantia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'fondo_cesantias' + '/' + 'subcriterio');
+    const cesantia = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fondo_cesantias');
     this.cesantias = cesantia;
 
-    const categoriaLicencia = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'categoria_licencia' + '/' + 'subcriterio');
+    const categoriaLicencia = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'categoria_licencia');
     this.categoriasLicencia = categoriaLicencia;
 
-    const grupoSanguineo = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'grupo_sanguineo' + '/' + 'subcriterio');
+    const grupoSanguineo = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'grupo_sanguineo');
     this.gruposSanguineos = grupoSanguineo;
 
-    const colorPiel = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'color_piel' + '/' + 'subcriterio');
+    const colorPiel = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'color_piel');
     this.coloresPiel = colorPiel;
 
   //  loading.close();
@@ -267,6 +267,18 @@ export class DatosAdicionalesFormComponent implements OnInit {
       accion: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];
+  }
+
+  private async getAnyInformation(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacion(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
   }
 
   private async getAnyInformationAlt(service: string): Promise<any> {

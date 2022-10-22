@@ -8,6 +8,7 @@ import { SessionStorageService } from 'src/app/services/session-storage.service'
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
+import { CandidatoHv } from './interfaces/hv-candidato.interface';
 
 interface Parentesco{
   id: number;
@@ -21,10 +22,37 @@ interface Parentesco{
 })
 export class InformacionFamiliarFormComponent implements OnInit {
 
+public datosBasicos: any;
+public idiomas: any;
+public datosadicionales: any;
+public categoriaLicencia: any;
+public archivos: any;
+public estudios: any;
+public referencias: any;
+public cargos: any;
+public inforFamilia: any;
 
   public idEmp: number = 3;
   public numRegla: number = 159;
   parentescos: Parentesco[] = [];
+
+  public datosInfoFamilia: Familiar ={
+    id_candidato: 0,
+    nombre: '',
+    id_Parentesco: 0,
+    edad: 0,
+    ne: 0,
+    ec: 0,
+    ocupacion: '',
+    empresa: '',
+    telResidencia: '',
+    otroFamiliar: 0,
+    id: 0,
+    accion: 0,
+    nit: '',
+    fechaNace: new Date,
+   };
+
 
   public columnsReference: any[] = ["identificacion", "nombre", "fecha_nace", "parentezco", "telefono", 'borrar' ];
   public FAMILIAR_DATA: Familiar[] = [];
@@ -47,22 +75,9 @@ export class InformacionFamiliarFormComponent implements OnInit {
     fechaNace: new Date,
   };
 
- public datosInfoFamilia: Familiar ={
-  id_candidato: 0,
-  nombre: '',
-  id_Parentesco: 0,
-  edad: 0,
-  ne: 0,
-  ec: 0,
-  ocupacion: '',
-  empresa: '',
-  telResidencia: '',
-  otroFamiliar: 0,
-  id: 0,
-  accion: 0,
-  nit: '',
-  fechaNace: new Date,
- };
+  // public datosCompletosCandidato: CandidatoHv = {
+
+  // }
 
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -119,7 +134,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
-    const parentesco = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'parentesco' + '/' + 'subcriterio');
+    const parentesco = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'parentesco');
     if(parentesco === null){
       setTimeout(
         () => {
@@ -143,6 +158,19 @@ export class InformacionFamiliarFormComponent implements OnInit {
       arrayData = selectContent;
      }
   }
+
+  private async getAnyInformation(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacion(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
+  }
+
   private async getAnyInformationAlt(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
        this.apiService.getInformacionMaestros(service).subscribe({
@@ -188,12 +216,12 @@ export class InformacionFamiliarFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    // console.log('Info Familiar Guardada', this.datosInfoFamilia);
-    // this._storaged.set('datosInfoFamilia', this.datosInfoFamilia);
+    console.log('Info Familiar Guardada', this.datosInfoFamilia);
+    this._storaged.set('datosInfoFamilia', this.myReferenceArray);
   }
 
   public getLocalStorage(){
-    // console.log('Cargar Datos Info Familiar', this.datosInfoFamilia);
+    console.log('Cargar Datos Info Familiar', this.myReferenceArray);
     // this._storaged.get('datosInfoFamilia');
   }
 

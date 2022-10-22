@@ -109,8 +109,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar País Expedición</mat-label>
-        <mat-select [(ngModel)]="datosCandidato.idCotClientePais"
-        name="idCotClientePais" #idCotClientePais="ngModel" (selectionChange)="onSelectionChangePais(datosCandidato.idCotClientePais)" required id="datosCandidato">
+        <mat-select [(ngModel)]="datosCandidato.pais"
+        name="idCotClientePais" #idCotClientePais="ngModel" (selectionChange)="onSelectionChangePais(datosCandidato.pais)" required id="datosCandidato">
           <mat-option
             *ngFor="let pais of paises"
             [value]="pais.id"
@@ -123,7 +123,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Departamento Expedición</mat-label>
-        <mat-select [(ngModel)]="datosBasicos.depto" (selectionChange)="onSelectionChangeDepto(datosBasicos.depto)"
+        <mat-select [(ngModel)]="datosCandidato.depto" (selectionChange)="onSelectionChangeDepto(datosCandidato.depto)"
         name="depto" #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
@@ -137,7 +137,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Ciudad Expedición</mat-label>
-        <mat-select [(ngModel)]="datosBasicos.ciudad"
+        <mat-select [(ngModel)]="datosCandidato.idCotClientePais"
         name="ciudad" #ciudad="ngModel" required id="ciudad">
           <mat-option
             *ngFor="let ciudad of ciudades"
@@ -220,7 +220,7 @@
         #fecha_nacimiento="ngModel" required id="fecha_nacimiento"/>
         <mat-hint>MM/DD/YYYY</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecha_nacimiento.invalid" *ngIf="fecha_nacimiento.errors?.['required']">
-          * La fecha de expedición es requerida
+          * La fecha de nacimiento es requerida
         </mat-error>
         <mat-datepicker-toggle
           matSuffix
@@ -257,7 +257,7 @@
         </mat-error>
         <mat-hint  class="message-error"
         [class.invalid]="telefono.invalid" *ngIf="telefono.errors?.['pattern']">
-          Solo se permiten números
+          El teléfono debe tener más de 7 dígitos
        </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
@@ -336,7 +336,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar País</mat-label>
         <mat-select name="datosBasicos.pais" [(ngModel)]="datosCandidato.id_cot_cliente_pais"
-        #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais" (selectionChange)="onSelectionChangePais(datosCandidato.id_cot_cliente_pais)">
+        #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais" (selectionChange)="onSelectionChangePais(datosCandidato.pais)">
           <mat-option *ngFor="let pais of paises" [value]="pais.id">
             {{ pais.descripcion }}
           </mat-option>
@@ -346,7 +346,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Departamento</mat-label>
-        <mat-select name="depto" [(ngModel)]="datosBasicos.depto" (selectionChange)="onSelectionChangeDepto(datosBasicos.depto)"
+        <mat-select name="depto" [(ngModel)]="datosCandidato.depto" (selectionChange)="onSelectionChangeDepto(datosCandidato.depto)"
         #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
@@ -360,7 +360,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Ciudad</mat-label>
-        <mat-select name="ciudad" [(ngModel)]="datosBasicos.ciudad" (selectionChange)="onSelectionChangeCiudad(datosBasicos.ciudad)"
+        <mat-select name="ciudad" [(ngModel)]="datosCandidato.id_cot_cliente_pais" (selectionChange)="onSelectionChangeCiudad(datosCandidato.id_cot_cliente_pais)"
         #ciudad="ngModel" required id="ciudad">
           <mat-option
             *ngFor="let ciudad of ciudades"

@@ -76,6 +76,8 @@ interface DatosBasicosCandidato {
   id_rh_experiencia: number;//*
   id_rh_nivel_academico: number;//*
   id_rh_perfil: number;// cargo?
+  depto:number;
+  pais:number;
 }
 @Component({
   selector: 'app-datos-basicos-form',
@@ -124,69 +126,14 @@ public datosCandidato: DatosBasicosCandidato = {
   id_rh_experiencia: 0,//*
   id_rh_nivel_academico: 0,//*
   id_rh_perfil: 0,// cargo?
+  pais: 0,
+  depto: 0,
 }
 
-public datosBasicos: Candidato = {
-   emp:  0,
-   nit: '',
-   id_rh_tipo_documento:  0,
-   nombre: '',
-   apellido: '',
-   id_usuario:  0,
-   genero:  0,
-   fecha_nacimiento: new Date,
-   id_cot_cliente_pais:  0,
-   direccion: '',
-   telefono: '',
-   celular: '',
-   mail: '',
-   id_rh_perfil:  0,
-   id_cot_cliente:  0,
-   id_rh_requisicion_personal:  0,
-   id_rh_nivel_academico:  0,
-   id_rh_experiencia:  0,
-   observaciones: '',
-   id_tipo_candidato:  0,
-   id_rh_experiencia_sector:  0,
-   id_disponibilidad_viaje:  0,
-   id_participacion_anterior:  0,
-   id_salario:  0,
-   id_rh_fuente_reclutamiento:  0,
-   id_trajo_hoja_vida:  0,
-   estado:  0,
-   bloqueado:  0,
-   motivo: '',
-   licencia: '',
-   tarjeta: '',
-   tipo_licencia:  0,
-   fecha_vence_licencia: '',
-   runt:  0,
-   id_rh_categoria:  0,
-   id_rh_color_piel:  0,
-   id_rh_grupo_sanguineo:  0,
-   rh:  0,
-   id_rh_experiencia_equipo:  0,
-   peso:  0,
-   altura:  0,
-   salario:  0,
-   id:  0,
-   accion:  0,
-   id_Usuario_Asociado:  0,
-   id_con_cco:  0,
-   id_Entidad:  0,
-   fecExpedicion: new Date,
-   lugarExpedicion: '',
-   idRhEstadoCivil:  0,
-   idRhEps:  0,
-   idRhFondoPension:  0,
-   idRhFondoCaja:  0,
-   idRhFondoCesantias:  0,
-   pais: 0,
-   depto: 0,
-   ciudad: 0,
-   barrio: 0,
-   cargoAplica: 0,
-}
+public depto = 0;
+public ciudad = 0;
+
+
 public idIdiPrevio: number[] = [];
 public idiomasArray: any[] = [];
 public disabledButtonNext: boolean = true;
@@ -305,44 +252,45 @@ public idiomasCandidato: Idioma = {
      this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
      return;
     }
-    this.paises = paises.response;
+    this.paises = paises;
 
-    const tipoDocumento = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_documento' + '/' + 'subcriterio');
+    const tipoDocumento = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_documento');
+    console.log('regla tipo doc',tipoDocumento)
     if(tipoDocumento === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
          return;
         }
     this.tiposDocumento = tipoDocumento;
 
-    const estadoCivil = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'estado_civil' + '/' + 'subcriterio');
+    const estadoCivil = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'estado_civil');
     if(estadoCivil === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de estado civil');
          return;
         }
     this.estados = estadoCivil;
 
-    const experienciaEspecifica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'experiencia' + '/' + 'subcriterio');
+    const experienciaEspecifica = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'experiencia');
     if(experienciaEspecifica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de experiencia');
       return;
     }
     this.aniosExp = experienciaEspecifica;
 
-    const nivelAcademico = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'academico' + '/' + 'subcriterio');
+    const nivelAcademico = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'academico');
     if(nivelAcademico === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los niveles académicos');
       return;
     }
     this.nivelesAcademia = nivelAcademico;
 
-    const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
+    const cargoAplica = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
     if(cargoAplica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
       return;
     }
     this.cargos = cargoAplica;
 
-    const lenguaExtranjera = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'idioma' + '/' + 'subcriterio');
+    const lenguaExtranjera = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'idioma');
     if(lenguaExtranjera === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los idiomas');
       return;
@@ -382,7 +330,7 @@ public idiomasCandidato: Idioma = {
       //   return;
       // }
 
-      this.deptos = deptos.response;
+      this.deptos = deptos;
       console.log('datos select deptos', this.deptos);
       loading.close();
     }
@@ -394,11 +342,11 @@ public idiomasCandidato: Idioma = {
     console.log('Datos pais', idEmp, idDepto);
     const ciudades = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
      if(ciudades.length === 0){
-      this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
+      this.messageService.error('Error', 'Error interno del servidor al cargar las ciudades');
       return;
     }
     console.log('deptos', ciudades);
-    this.ciudades = ciudades.response;
+    this.ciudades = ciudades;
     console.log('datos select deptos', this.ciudades);
     loading.close();
   }
@@ -412,7 +360,7 @@ public idiomasCandidato: Idioma = {
       return;
     }else{
       console.log('deptos', barrios);
-      this.barrios = barrios.response;
+      this.barrios = barrios;
       console.log('datos select deptos', this.barrios);
       loading.close();
     }
@@ -451,20 +399,20 @@ public idiomasCandidato: Idioma = {
   public validarCampos(): boolean{
     let that = this;
     let valid = true;
-    let inputsHdv = document.getElementsByClassName('input-hdv');
-    console.log('ìnputs validete', inputsHdv);
+    // let inputsHdv = document.getElementsByClassName('input-hdv');
+    // console.log('ìnputs validete', inputsHdv);
 
-    let elements = document.getElementsByClassName('input-hdv');
-    console.log('Elements', elements);
-    Array.prototype.map.call(elements, function(element){
-      console.log('value Element', element.value);
-      console.log('name Element', element.name);
-      if(!element.value || element.value === ''){
-        element.focus();
-        that.messageService.warning('Oops...', 'Debe llenar el campo "' + element.name + '" para continuar');
-        valid = false;
-      }
-    });
+    // let elements = document.getElementsByClassName('input-hdv');
+    // console.log('Elements', elements);
+    // Array.prototype.map.call(elements, function(element){
+    //   console.log('value Element', element.value);
+    //   console.log('name Element', element.name);
+    //   if(!element.value || element.value === ''){
+    //     element.focus();
+    //     that.messageService.warning('Oops...', 'Debe llenar el campo "' + element.name + '" para continuar');
+    //     valid = false;
+    //   }
+    // });
 //     for (let i = 0; i < inputsHdv.length; i++){
 //       const itemName = inputsHdv[i].getAttribute('name');
 //       const itemValue = inputsHdv[i].getAttribute('value');
@@ -489,15 +437,16 @@ public validarFormulario(e:any){
 
   public guardarProgreso(){
     this.validarCampos();
-    console.log('Datos Básicos Guardados', this.datosBasicos);
+    console.log('Datos Básicos Guardados', this.datosCandidato);
 
     this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
       ...this.idiomasCandidato, idIdi
     }));
     console.log('Datos Idiomas', this.idiomasArray);
     this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-    this.storaged.set('datosBasicosStorage', this.datosBasicos);
+    // this.storaged.set('datosBasicosStorage', this.datosBasicos);
     this.storaged.set('idiomasStorage', this.idiomasArray);
+    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
   }
   public getSessionStorage(){
@@ -508,7 +457,7 @@ public validarFormulario(e:any){
   }
 
 }
-function typeOf(itemValue: string | null): any {
-  throw new Error('Function not implemented.');
-}
+// function typeOf(itemValue: string | null): any {
+//   throw new Error('Function not implemented.');
+// }
 

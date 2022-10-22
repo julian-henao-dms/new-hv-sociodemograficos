@@ -236,6 +236,9 @@
         <mat-label>Fecha Vencimiento</mat-label>
         <input matInput [matDatepicker]="vencimiento" #fechaVence="ngModel"  id="fechaVence" name="fechaVence"  [(ngModel)]="setLicences.fechaVence" />
         <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-error class="message-error" [class.invalid]="fechaVence.invalid" *ngIf="fechaVence.errors?.['required']">
+          * La fecha de vencimiento es requerida
+        </mat-error>
         <mat-datepicker-toggle
           matSuffix
           [for]="vencimiento"

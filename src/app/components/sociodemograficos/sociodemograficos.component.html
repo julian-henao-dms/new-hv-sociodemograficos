@@ -20,7 +20,8 @@
 </div>
 
           <div class="consentimiento-check left-grid-position" >
-            <div class="container-hv-radios">
+            <fieldset>
+            <div class="container-hv-referencia">
              <mat-label>Consentimiento Informado:</mat-label>
              <mat-radio-group class="" name="sociodemograficos.consentimiento" (ngModelChange)="onChange($event)"  [(ngModel)]="sociodemograficos.consentimiento_informado">
                <mat-radio-button *ngFor="let optionConsentimiento of optionsYesNo" [value]="optionConsentimiento.value" color="primary">
@@ -29,7 +30,7 @@
              </mat-radio-group>
 
            </div>
-
+          </fieldset>
            </div>
           </div>
 

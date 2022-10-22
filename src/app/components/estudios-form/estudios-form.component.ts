@@ -176,22 +176,22 @@ export class EstudiosFormComponent implements OnInit {
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
-    const institucion = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'institucion' + '/' + 'subcriterio');
+    const institucion = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'institucion');
     this.instituciones = institucion;
 
-    const titulo = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'titulo' + '/' + 'subcriterio');
+    const titulo = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'titulo');
     this.titulos = titulo;
 
-    const tipoCurso = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'tipo_curso' + '/' + 'subcriterio');
+    const tipoCurso = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_curso');
     this.tiposCurso = tipoCurso;
     // loading.close();
 
   }
 
 
-  private async getAnyInformationAlt(service: string): Promise<any> {
+  private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
-       this.apiService.getInformacionMaestros(service).subscribe({
+       this.apiService.getInformacion(service).subscribe({
         next: (v) => resolve(v),
         error: (e) => {
           console.info(e);
@@ -219,7 +219,7 @@ export class EstudiosFormComponent implements OnInit {
 
   public guardarProgreso(){
     // console.log('Datos Estudios Guardados', this.myReferenceArray);
-    // this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
+    this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     this.disabledButtonNext = false;
 
   }

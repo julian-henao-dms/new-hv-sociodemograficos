@@ -176,7 +176,7 @@ export class ReferenciasFormComponent implements OnInit {
 
   public guardarProgreso(){
     // console.log('Referencias', this.datosReferencias);
-    // this._storaged.set('datosReferenciasStorage', this.datosReferencias);
+    this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
     this.disabledButtonNext = false;
 
   }

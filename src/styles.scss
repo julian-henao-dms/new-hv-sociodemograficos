@@ -40,11 +40,12 @@ mat-label{
 }
 .container-hv-referencia{
 display: flex;
-flex-direction: column;
+// flex-direction: column;
 margin: 10px 0 0 20px;
 mat-label{
-  margin-bottom: 1em;
-  text-decoration: underline;
+  // margin-bottom: 1em;
+  // text-decoration: underline;
+  padding-right: 15px;
 }
 }
 mat-grid-list.mat-grid-list {

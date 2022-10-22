@@ -1,11 +1,4 @@
-<fieldset>
-  <div class="container-hv-referencia">
-    <mat-label>Tipo Referencia:</mat-label>
-    <mat-radio-group #tipoReferencia="ngModel"  id="tipo" name="tipo"  [(ngModel)]="setReferences.tipo">
-      <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia.value">{{ tipoReferencia.viewValue}}</mat-radio-button>
-    </mat-radio-group>
-  </div>
-</fieldset>
+
 
   <mat-grid-list
     #grid
@@ -13,6 +6,16 @@
     rowHeight="85px"
     gutterSize="10px"
   >
+  <mat-grid-tile>
+  <fieldset>
+    <div class="container-hv-referencia">
+      <mat-label>Tipo Referencia:</mat-label>
+      <mat-radio-group #tipoReferencia="ngModel"  id="tipo" name="tipo"  [(ngModel)]="setReferences.tipo">
+        <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia.value">{{ tipoReferencia.viewValue}}</mat-radio-button>
+      </mat-radio-group>
+    </div>
+  </fieldset>
+</mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre Referencia</mat-label>
