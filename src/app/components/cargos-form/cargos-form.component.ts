@@ -39,19 +39,23 @@ export class CargosFormComponent implements OnInit {
     ) { }
 
   async ngOnInit(): Promise<void> {
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla
 
-    const cargoAplica = await this.getAnyInformationAlt('/ReglaNegocio/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
-    console.log(cargoAplica);
+    const cargoAplica = await this.getAnyInformation('/hojadevida/perfiles/' + idEmp);
+    if(cargoAplica === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
+      return;
+    }
     this.cargos = cargoAplica;
-    // loading.close();
+
+    loading.close();
   }
 
-  private async getAnyInformationAlt(service: string): Promise<any> {
+  private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
-       this.apiService.getInformacionMaestros(service).subscribe({
+       this.apiService.getInformacion(service).subscribe({
         next: (v) => resolve(v),
         error: (e) => {
           console.info(e);

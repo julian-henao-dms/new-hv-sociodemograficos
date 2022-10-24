@@ -85,7 +85,7 @@
               <mat-label>Antigüedad en el cargo desempeñado</mat-label>
               <mat-select #antiguedadCargo="ngModel" required id="antiguedadCargo" name="antiguedadCargo"  [(ngModel)]="sociodemograficos.id_antiguedad_cargo">
                 <mat-option
-                  *ngFor="let anioAntiguedad of aniosAntiguedad"
+                  *ngFor="let anioAntiguedad of aniosAntigCargo"
                   [value]="anioAntiguedad.id"
                 >
                   {{ anioAntiguedad.descripcion }}
@@ -124,7 +124,7 @@
           </mat-grid-tile>
         </mat-grid-list>
         <mat-divider></mat-divider>
-        <div class="subtitle-container">
+        <!-- <div class="subtitle-container">
           <mat-icon>south_america</mat-icon>
           <h2 class="subtitle-hv">
             Lugar de Nacimiento
@@ -132,7 +132,7 @@
         </div>
         <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
 
-            <!-- <mat-grid-tile>
+            <mat-grid-tile>
               <mat-form-field appearance="outline">
                 <mat-label>Seleccionar País</mat-label>
                 <mat-select #paisNacimiento="ngModel" required id="paisNacimiento" name="paisNacimiento"  [(ngModel)]="sociodemograficos.paisNacimiento">
@@ -170,9 +170,9 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-              </mat-grid-tile> -->
+              </mat-grid-tile>
         </mat-grid-list>
-        <mat-divider></mat-divider>
+        <mat-divider></mat-divider> -->
         <div class="subtitle-container">
           <mat-icon>house</mat-icon>
           <h2 class="subtitle-hv">

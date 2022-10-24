@@ -22,19 +22,162 @@ interface Parentesco{
 })
 export class InformacionFamiliarFormComponent implements OnInit {
 
-public datosBasicos: any;
-public idiomas: any;
-public datosadicionales: any;
-public categoriaLicencia: any;
-public archivos: any;
-public estudios: any;
-public referencias: any;
-public cargos: any;
-public inforFamilia: any;
+public todosDatosCandidato: CandidatoHv = {
+  candidato: {
+    id: 0,
+    emp: 0,
+    nit: '',
+    id_rh_tipo_documento: 0,
+    nombre: '',
+    apellido: '',
+    id_usuario: 0,
+    genero: 0,
+    fecha_nacimiento: new Date,
+    id_cot_cliente_pais: 0,
+    direccion: '',
+    telefono: '',
+    celular: '',
+    mail: '',
+    id_rh_perfil: 0,
+    id_cot_cliente: 0,
+    id_rh_requisicion_personal: 0,
+    id_rh_nivel_academico: 0,
+    id_rh_experiencia: 0,
+    observaciones: '',
+    id_tipo_candidato: 0,
+    id_rh_experiencia_sector: 0,
+    id_disponibilidad_viaje: 0,
+    id_participacion_anterior: 0,
+    id_salario: 0,
+    id_rh_fuente_reclutamiento: 0,
+    id_trajo_hoja_vida: 0,
+    estado: 0,
+    bloqueado: 0,
+    motivo: '',
+    licencia: '',
+    tarjeta: '',
+    tipo_licencia: 0,
+    fecha_vence_licencia: new Date,
+    runt: 0,
+    id_rh_categoria: 0,
+    id_rh_color_piel: 0,
+    id_rh_grupo_sanguineo: 0,
+    rh: 0,
+    id_rh_experiencia_equipo: 0,
+    peso: 0,
+    altura: 0,
+    salario: 0,
+    accion: 0,
+    id_Usuario_Asociado: 0,
+    id_con_cco: 0,
+    id_Entidad: 0,
+    fecExpedicion: new Date,
+    lugarExpedicion: '',
+    idRhEstadoCivil: 0,
+    idRhEps: 0,
+    idRhFondoPension: 0,
+    idRhFondoCaja: 0,
+    idRhFondoCesantias: 0,
+    id_cot_cliente_barrio: 0,
+    sync: 0,
+    idCotClientePais: 0
+},
+referencias_familiares: [
+    {
+        id: 0,
+        id_candidato: 0,
+        nombre: '',
+        idParentesco: 0,
+        edad: 0,
+        ne: 0,
+        ec: 0,
+        ocupacion: '',
+        empresa: '',
+        telResidencia: '',
+        otroFamiliar: 0,
+        accion: 0,
+        nit: '',
+        fechaNace: new Date
+    }
+],
+estudios: [
+    {
+        id: 0,
+        idEstudio: 0,
+        idCandidato: 0,
+        idUsuario: 0,
+        idInstitucion: 0,
+        fecha_Desde: new Date,
+        fecha_Hasta: new Date,
+        id_estado_estudio: 0,
+        id_tipo_estudio: 0,
+        id_nivel_estudio: 0,
+        id_tipo_curso: 0,
+        accion: 0
+    }
+],
+idiomas: [
+    {
+        id: 0,
+        idIdi: 0,
+        idCandidato: 0,
+        idUsuario: 0,
+        accion: 0
+    }
+],
+referencias: [
+    {
+        id: 0,
+        idCandidato: 0,
+        nombre: '',
+        celular: '',
+        telefono: '',
+        mail: '',
+        tipo: 0,
+        idUsuario: 0,
+        empresa: '',
+        Cargo: '',
+        Observaciones: '',
+        TiempoLaborado: '',
+        MotivoRetiro: '',
+        accion: 0
+    }
+],
+categorias: [
+    {
+        id: 0,
+        idCandidato: 0,
+        IdCategoria: 0,
+        FechaVence: new Date,
+        accion: 0,
+    }
+],
+cargos: [
+    {
+        id: 0,
+        idCandidato: 0,
+        idPerfil: 0,
+        idUsuario: 0,
+        accion: 0
+    }
+]
+
+}
+public datosBasicos: any = {};
+public idiomas: any[] = [];
+public datosadicionales: any = {};
+public categoriaLicencia: any[] = [];
+public archivos: any[] = [];
+public estudios: any[] = [];
+public referencias: any[] = [];
+public cargos: any[] = [];
+public inforFamilia: any[] = [];
 
   public idEmp: number = 3;
   public numRegla: number = 159;
   parentescos: Parentesco[] = [];
+
+
 
   public datosInfoFamilia: Familiar ={
     id_candidato: 0,
@@ -130,7 +273,150 @@ public inforFamilia: any;
   }
 
   async ngOnInit(): Promise<void> {
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+
+    this.getLocalStorage();
+    this.todosDatosCandidato = {
+      candidato: {
+        id: 0,
+        emp: 0,
+        nit: '',
+        id_rh_tipo_documento: 0,
+        nombre: this.datosBasicos.nombre,
+        apellido: this.datosBasicos.apellido,
+        id_usuario: 0,
+        genero: this.datosBasicos.genero,
+        fecha_nacimiento: new Date,
+        id_cot_cliente_pais: 0,
+        direccion: this.datosBasicos.direccion,
+        telefono: this.datosBasicos.telefono,
+        celular: this.datosBasicos.celular,
+        mail: this.datosBasicos.mail,
+        id_rh_perfil: 0,
+        id_cot_cliente: 0,
+        id_rh_requisicion_personal: 0,
+        id_rh_nivel_academico: 0,
+        id_rh_experiencia: 0,
+        observaciones: '',
+        id_tipo_candidato: 0,
+        id_rh_experiencia_sector: 0,
+        id_disponibilidad_viaje: 0,
+        id_participacion_anterior: 0,
+        id_salario: 0,
+        id_rh_fuente_reclutamiento: 0,
+        id_trajo_hoja_vida: 0,
+        estado: 0,
+        bloqueado: 0,
+        motivo: '',
+        licencia: '',
+        tarjeta: '',
+        tipo_licencia: 0,
+        fecha_vence_licencia: new Date,
+        runt: 0,
+        id_rh_categoria: 0,
+        id_rh_color_piel: 0,
+        id_rh_grupo_sanguineo: 0,
+        rh: 0,
+        id_rh_experiencia_equipo: 0,
+        peso: 0,
+        altura: 0,
+        salario: 0,
+        accion: 0,
+        id_Usuario_Asociado: 0,
+        id_con_cco: 0,
+        id_Entidad: 0,
+        fecExpedicion: new Date,
+        lugarExpedicion: '',
+        idRhEstadoCivil: this.datosBasicos.idRhEstadoCivil,
+        idRhEps: 0,
+        idRhFondoPension: 0,
+        idRhFondoCaja: 0,
+        idRhFondoCesantias: 0,
+        id_cot_cliente_barrio: 0,
+        sync: 0,
+        idCotClientePais: 0
+    },
+    referencias_familiares: [
+        {
+            id: 0,
+            id_candidato: 0,
+            nombre: '',
+            idParentesco: 0,
+            edad: 0,
+            ne: 0,
+            ec: 0,
+            ocupacion: '',
+            empresa: '',
+            telResidencia: '',
+            otroFamiliar: 0,
+            accion: 0,
+            nit: '',
+            fechaNace: new Date
+        }
+    ],
+    estudios: [
+        {
+            id: 0,
+            idEstudio: 0,
+            idCandidato: 0,
+            idUsuario: 0,
+            idInstitucion: 0,
+            fecha_Desde: new Date,
+            fecha_Hasta: new Date,
+            id_estado_estudio: 0,
+            id_tipo_estudio: 0,
+            id_nivel_estudio: 0,
+            id_tipo_curso: 0,
+            accion: 0
+        }
+    ],
+    idiomas: [
+        {
+            id: 0,
+            idIdi: 0,
+            idCandidato: 0,
+            idUsuario: 0,
+            accion: 0
+        }
+    ],
+    referencias: [
+        {
+            id: 0,
+            idCandidato: 0,
+            nombre: '',
+            celular: '',
+            telefono: '',
+            mail: '',
+            tipo: 0,
+            idUsuario: 0,
+            empresa: '',
+            Cargo: '',
+            Observaciones: '',
+            TiempoLaborado: '',
+            MotivoRetiro: '',
+            accion: 0
+        }
+    ],
+    categorias: [
+        {
+            id: 0,
+            idCandidato: 0,
+            IdCategoria: 0,
+            FechaVence: new Date,
+            accion: 0,
+        }
+    ],
+    cargos: [
+        {
+            id: 0,
+            idCandidato: 0,
+            idPerfil: 0,
+            idUsuario: 0,
+            accion: 0
+        }
+    ]
+    }
+    console.log('datos temporales', this.datosBasicos);
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
@@ -145,7 +431,7 @@ public inforFamilia: any;
       this.parentescos = parentesco;
     }
 
-    // loading.close();
+    loading.close();
   }
 
   public async selectsValidate(selectContent:any, text: string, arrayData:any){
@@ -218,15 +504,26 @@ public inforFamilia: any;
   public guardarProgreso(){
     console.log('Info Familiar Guardada', this.datosInfoFamilia);
     this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+
   }
 
   public getLocalStorage(){
     console.log('Cargar Datos Info Familiar', this.myReferenceArray);
+      this.datosBasicos = this._storaged.get('datosCandidatoStorage');
+      this.idiomas = this._storaged.get('idiomasStorage');
+      this.datosadicionales = this._storaged.get('datosAdicionalesStorage');
+      this.categoriaLicencia = this._storaged.get('datosLicencia');
+      // this.archivos = this._storaged.get('datosInfoFamilia');
+      this.estudios = this._storaged.get('datosEstudiosStorage');
+      this.referencias = this._storaged.get('datosReferenciasStorage');
+      this.cargos = this._storaged.get('otrosCargosStorage');
+      this.inforFamilia = this._storaged.get('datosInfoFamilia');
     // this._storaged.get('datosInfoFamilia');
   }
 
   public enviarFormulario(){
-    console.log('Formulario Guardado');
+    console.log('Formulario Guardado', this.todosDatosCandidato);
+
     this._storaged.clear();
   }
 

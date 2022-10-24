@@ -262,40 +262,41 @@ public idiomasCandidato: Idioma = {
         }
     this.tiposDocumento = tipoDocumento;
 
-    const estadoCivil = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'estado_civil');
+    const estadoCivil = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'estado_civil');
     if(estadoCivil === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de estado civil');
          return;
         }
     this.estados = estadoCivil;
 
-    const experienciaEspecifica = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'experiencia');
+    const experienciaEspecifica = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'experiencia');
     if(experienciaEspecifica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de experiencia');
       return;
     }
     this.aniosExp = experienciaEspecifica;
 
-    const nivelAcademico = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'academico');
+    const nivelAcademico = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'academico');
     if(nivelAcademico === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los niveles académicos');
       return;
     }
     this.nivelesAcademia = nivelAcademico;
 
-    const cargoAplica = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'p' + '/' + 'perfil');
-    if(cargoAplica === null){
-      this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
-      return;
-    }
-    this.cargos = cargoAplica;
 
-    const lenguaExtranjera = await this.getAnyInformationAlt('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'idioma');
+    const lenguaExtranjera = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'idioma');
     if(lenguaExtranjera === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los idiomas');
       return;
     }
     this.lenguas = lenguaExtranjera;
+
+    const cargoAplica = await this.getAnyInformation('/hojadevida/perfiles/' + idEmp);
+    if(cargoAplica === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
+      return;
+    }
+    this.cargos = cargoAplica;
 
     loading.close();
   }
