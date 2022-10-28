@@ -98,7 +98,7 @@
               <mat-label>Promedio Ingresos</mat-label>
               <mat-select #promedioIngresos="ngModel" required id="promedioIngresos" name="promedioIngresos"  [(ngModel)]="sociodemograficos.id_ingresos">
                 <mat-option
-                  *ngFor="let salario of rangosEdad"
+                  *ngFor="let salario of salarios"
                   [value]="salario.id"
                 >
                   {{ salario.descripcion }}
@@ -179,7 +179,7 @@
             Información de la Vivienda
           </h2>
         </div>
-        <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+        <mat-grid-list #grid [cols]="colsAlt" rowHeight="85px" gutterSize="10px" >
 
             <mat-grid-tile>
               <mat-form-field appearance="outline">
@@ -207,7 +207,9 @@
                 </mat-select>
                 </mat-form-field>
             </mat-grid-tile>
-            <mat-grid-tile>
+            </mat-grid-list>
+            <mat-grid-list #grid [cols]="colsOne" rowHeight="85px" gutterSize="10px" >
+            <mat-grid-tile class="left-grid-position">
               <div class="container-hv-radios">
                <mat-label>El lugar donde vivo, ¿Cuenta con los servicios públicos que mi familia necesita?</mat-label>
                <mat-radio-group #cuentaConServicios="ngModel" required id="cuentaConServicios" name="cuentaConServicios"  [(ngModel)]="sociodemograficos.servicios">
@@ -218,7 +220,8 @@
 
              </div>
              </mat-grid-tile>
-
+            </mat-grid-list>
+            <mat-grid-list #grid [cols]="colsAlt" rowHeight="85px" gutterSize="10px" >
 
            <mat-grid-tile>
             <mat-form-field appearance="outline">
@@ -241,7 +244,7 @@
               </mat-select>
               </mat-form-field>
           </mat-grid-tile>
-           <mat-grid-tile>
+           <mat-grid-tile class="left-grid-position">
             <div class="container-hv-radios">
              <mat-label>¿ El tamaño de la vivienda es suficiente para las personas que conforman mi hogar ?</mat-label>
              <mat-radio-group #tamanoVivienda="ngModel" required id="tamanoVivienda" name="tamanoVivienda"  [(ngModel)]="sociodemograficos.tamano_vivienda">
@@ -252,7 +255,7 @@
 
            </div>
            </mat-grid-tile>
-           <mat-grid-tile>
+           <mat-grid-tile class="left-grid-position">
             <div class="container-hv-radios">
              <mat-label>¿Las Condiciones en que está construida mi vivienda son seguras? </mat-label>
              <mat-radio-group #condicionesVivienda="ngModel" required id="condicionesVivienda" name="condicionesVivienda"  [(ngModel)]="sociodemograficos.condicion_vivienda">
@@ -271,7 +274,7 @@
               Información Familiar
             </h2>
           </div>
-          <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px" >
+          <mat-grid-list #grid [cols]="colsAlt" rowHeight="85px" gutterSize="10px" >
            <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Nº de Personas con las que Vive</mat-label>
@@ -319,7 +322,9 @@
             </mat-select>
           </mat-form-field>
          </mat-grid-tile>
-         <mat-grid-tile>
+         </mat-grid-list>
+         <mat-grid-list #grid [cols]="colsOne" rowHeight="85px" gutterSize="10px" >
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿En tu grupo familiar hay alguna persona tiene una condición de discapacidad? </mat-label>
            <mat-radio-group #familiarDiscapacitado="ngModel" required id="familiarDiscapacitado" name="familiarDiscapacitado"  [(ngModel)]="sociodemograficos.persona_discapacidad" >
@@ -338,7 +343,7 @@
               Información Complementaria
             </h2>
           </div>
-        <mat-grid-list #grid [cols]="cols" rowHeight="90px" gutterSize="10px" >
+        <mat-grid-list #grid [cols]="colsOne" rowHeight="90px" gutterSize="10px" >
 
          <mat-grid-tile>
           <mat-form-field appearance="outline">
@@ -348,7 +353,10 @@
             </mat-select>
           </mat-form-field>
          </mat-grid-tile>
-         <mat-grid-tile>
+         </mat-grid-list>
+         <mat-grid-list #grid [cols]="colsAlt" rowHeight="90px" gutterSize="10px" >
+
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿La ruta que utilizo para desplazarme entre mi casa y el trabajo es segura</mat-label>
            <mat-radio-group #rutaSegura="ngModel" required id="rutaSegura" name="rutaSegura"  [(ngModel)]="sociodemograficos.ruta_segura">
@@ -370,6 +378,9 @@
 
          </div>
          </mat-grid-tile>
+         </mat-grid-list>
+         <mat-grid-list #grid [cols]="colsOne" rowHeight="90px" gutterSize="10px" >
+
          <mat-grid-tile>
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Otras actividades fuera del trabajo que reducen mi tiempo de descanso</mat-label>
@@ -387,7 +398,10 @@
             ></textarea>
           </mat-form-field> -->
         </mat-grid-tile>
-         <mat-grid-tile>
+        </mat-grid-list>
+        <mat-grid-list #grid [cols]="colsAlt" rowHeight="90px" gutterSize="10px" >
+
+         <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
            <mat-label>¿Practica actividad física por lo menos 3 veces a la semana por 30 minutos mínimo? </mat-label>
            <mat-radio-group #actividadFisica="ngModel" required id="actividadFisica" name="actividadFisica"  [(ngModel)]="sociodemograficos.actividad_fisica">

@@ -121,71 +121,29 @@ export class SociodemograficosComponent implements OnInit {
     { value: 0, name: 'No' },
   ];
 
-  aniosAntigCargo: AnioAntiguedad[] = [
-    { id: 0, descripcion: '0 a 2 años' },
-    { id: 1, descripcion: '2 a 5 años' },
-  ];
-  aniosAntigEmpresa: AnioAntigEmpresa[] = [
-    { id: 0, descripcion: '0 a 2 años' },
-    { id: 1, descripcion: '2 a 5 años' },
-  ];
+  aniosAntigCargo: AnioAntiguedad[] = [];
+  aniosAntigEmpresa: AnioAntigEmpresa[] = [];
   rangosEdad: RangoEdad[] = [
     { id: 0, descripcion: '0 a 2 años' },
     { id: 1, descripcion: '2 a 5 años' },
   ];
-  salarios: Salario[] = [
-    { id: 0, descripcion: '0 a 2 años' },
-    { id: 1, descripcion: '2 a 5 años' },
-  ];
+  salarios: Salario[] = [];
   caracteristicas: CaracteristicaVivienda[] = [
     { id: 0, descripcion: 'Arrendada' },
     { id: 1, descripcion: 'Propia' },
     { id: 2, descripcion: 'Familiar' },
   ];
-  ubicaciones: UbicacionVivienda[] = [
-    { id: 0, descripcion: 'Rural' },
-    { id: 1, descripcion: 'Urbana' },
-  ];
-  estratos: EstratoServicios[] = [
-    { id: 0, descripcion: '1' },
-    { id: 1, descripcion: '2' },
-    { id: 2, descripcion: '3' },
-    { id: 3, descripcion: '4' },
-  ];
-  numPersonas: NumPersonasVive[] = [
-    { id: 0, descripcion: '1' },
-    { id: 1, descripcion: '2' },
-    { id: 2, descripcion: '3' },
-    { id: 3, descripcion: '4' },
-    { id: 4, descripcion: '5' },
-    { id: 5, descripcion: '6 o más' },
-  ];
+  ubicaciones: UbicacionVivienda[] = [];
+  estratos: EstratoServicios[] = [];
+  numPersonas: NumPersonasVive[] = [];
   paises: Pais[] = [];
   deptos: Depto[] = [];
   ciudades: Ciudad[] = [];
 
-  serviciosPublicos: EstratoServicios[] = [
-    { id: 0, descripcion: 'Agua Potable' },
-    { id: 1, descripcion: 'Luz' },
-    { id: 2, descripcion: 'Gas' },
-    { id: 3, descripcion: 'Teléfono' },
-    { id: 4, descripcion: 'Internet' },
-  ];
-  dependencias: DependeEconomica[] = [
-    { id: 0, descripcion: 'Hijos' },
-    { id: 1, descripcion: 'Madre' },
-    { id: 2, descripcion: 'Padre' },
-    { id: 3, descripcion: 'Pareja' },
-    { id: 4, descripcion: 'Nadie' },
-  ];
+  serviciosPublicos: EstratoServicios[] = [];
+  dependencias: DependeEconomica[] = [];
 
-  tiposTransporte: TipoTransporte[] = [
-    { id: 0, descripcion: 'Caminando' },
-    { id: 1, descripcion: 'Bicicleta' },
-    { id: 2, descripcion: 'Moto' },
-    { id: 3, descripcion: 'Vehiculo Particular' },
-    { id: 4, descripcion: 'Transporte Público' },
-  ];
+  tiposTransporte: TipoTransporte[] = [];
 
   cols: number | undefined;
   gridByBreakpoint = {
@@ -193,6 +151,14 @@ export class SociodemograficosComponent implements OnInit {
     lg: 3,
     md: 2,
     sm: 2,
+    xs: 1,
+  };
+  colsOne: number | undefined;
+  gridByBreakpointOne = {
+    xl: 1,
+    lg: 1,
+    md: 1,
+    sm: 1,
     xs: 1,
   };
   colsAlt: number | undefined;
@@ -253,6 +219,23 @@ export class SociodemograficosComponent implements OnInit {
             this.colsAlt = this.gridByBreakpointAlt.xl;
           }
         }
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.colsOne = this.gridByBreakpointOne.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.colsOne = this.gridByBreakpointOne.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.colsOne = this.gridByBreakpointOne.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.colsOne = this.gridByBreakpointOne.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.colsOne = this.gridByBreakpointOne.xl;
+          }
+        }
       });
   }
 
@@ -302,15 +285,8 @@ export class SociodemograficosComponent implements OnInit {
         }
     this.salarios = promIngresos;
 
-    const caracteristicasVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdCaraVivi');
-    console.log('regla caracteristicas vivienda',caracteristicasVivienda)
-    if(caracteristicasVivienda === null){
-         this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
-         return;
-        }
-    this.caracteristicas = caracteristicasVivienda;
 
-    const ubicacionVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
+    const ubicacionVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdZona');
     console.log('regla ubicación',ubicacionVivienda)
     if(ubicacionVivienda === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar las zonas de ubicación');
@@ -318,13 +294,29 @@ export class SociodemograficosComponent implements OnInit {
         }
     this.ubicaciones = ubicacionVivienda;
 
-    const estratos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
+    const estratos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEstratos');
     console.log('regla estratos',estratos)
     if(estratos === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los datos de estratificación social ');
          return;
         }
     this.estratos = estratos;
+
+    const personasDependen = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdPersDepe');
+    console.log('regla personas dependientes',personasDependen)
+    if(personasDependen === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar los');
+         return;
+        }
+    this.dependencias = personasDependen;
+
+    const tiposTransporte = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdTipoTrans');
+    console.log('regla tipo transporte',tiposTransporte)
+    if(tiposTransporte === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de transporte');
+         return;
+        }
+    this.tiposTransporte = tiposTransporte;
 
     const numPersonasVive = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
     console.log('regla Personas vive',numPersonasVive)
@@ -334,7 +326,8 @@ export class SociodemograficosComponent implements OnInit {
         }
     this.numPersonas = numPersonasVive;
 
-    const rangoEdadHijos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
+
+    const rangoEdadHijos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEdadHijo');
     console.log('regla rango edad hijos',rangoEdadHijos)
     if(rangoEdadHijos === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los rangos de edad ');
@@ -342,22 +335,17 @@ export class SociodemograficosComponent implements OnInit {
         }
     this.rangosEdad = rangoEdadHijos;
 
-    const personasDependen = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
-    console.log('regla personas dependientes',personasDependen)
-    if(personasDependen === null){
-         this.messageService.error('Error', 'Error interno del servidor al cargar los');
+
+
+
+
+    const caracteristicasVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdCaraVivi');
+    console.log('regla caracteristicas vivienda',caracteristicasVivienda)
+    if(caracteristicasVivienda === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
         }
-    this.dependencias = personasDependen;
-
-    const tiposTransporte = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
-    console.log('regla tipo transporte',tiposTransporte)
-    if(tiposTransporte === null){
-         this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de transporte');
-         return;
-        }
-    this.tiposTransporte = tiposTransporte;
-
+    this.caracteristicas = caracteristicasVivienda;
 
 
     loading.close();
