@@ -9,7 +9,7 @@ import { SessionStorageService } from 'src/app/services/session-storage.service'
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
-
+import * as _ from 'lodash';
 
 
 interface Institucion{
@@ -101,6 +101,7 @@ export class EstudiosFormComponent implements OnInit {
 
 
   public datosEstudios: Estudios ={
+    id: 0,
     idEstudio: 0,
     idCandidato: 0,
     idUsuario: 0,
@@ -111,14 +112,26 @@ export class EstudiosFormComponent implements OnInit {
     id_tipo_estudio: 0,
     id_nivel_estudio: 0,
     id_tipo_curso: 0,
-    id: 0,
     accion: 0,
-    titulo: 0 // subitem?
+    //titulo: 0 // subitem? no esta en el sp
   }
 
-  public columnsReference: any[] = ["institucion", "titulo", "estado", "tipo_estudio", "tipo_curso", "nivel", 'borrar' ];
-  public STUDIES_DATA: EstudiosList[] = [];
-  public setStudies = {institucion: 0, titulo: 0, estado: 0, tipo_estudio: 0, tipo_curso: 0, nivel: 0, borrar: 0};
+  public columnsReference: any[] = ["idInstitucion", "idEstudio", "id_estado_estudio", "id_tipo_estudio", "id_tipo_curso", "id_nivel_estudio", 'borrar' ];
+  public STUDIES_DATA: Estudios[] = [];
+  public setStudies = {
+    id: 0,
+    idEstudio: 0,
+    idCandidato: 0,
+    idUsuario: 0,
+    idInstitucion: 0,
+    fecha_Desde: new Date,
+    fecha_Hasta: new Date,
+    id_estado_estudio: 0,
+    id_tipo_estudio: 0,
+    id_nivel_estudio: 0,
+    id_tipo_curso: 0,
+    accion: 0,
+  };
   public myReferenceArray: any[] = [];
 
   public stepperOrientation: Observable<StepperOrientation>;
@@ -177,13 +190,13 @@ export class EstudiosFormComponent implements OnInit {
     const numRegla = this.numRegla;
 
     const institucion = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'institucion');
-    this.instituciones = institucion;
+    this.instituciones = _.orderBy(institucion, ['id'], ['asc']);
 
     const titulo = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'titulo');
-    this.titulos = titulo;
+    this.titulos = _.orderBy(titulo, ['id'], ['asc']);
 
     const tipoCurso = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_curso');
-    this.tiposCurso = tipoCurso;
+    this.tiposCurso = _.orderBy(tipoCurso, ['id'], ['asc']);
     // loading.close();
 
   }
@@ -207,7 +220,20 @@ export class EstudiosFormComponent implements OnInit {
     this.STUDIES_DATA.push(this.setStudies);
     console.log('Data reference',this.STUDIES_DATA);
     this.myReferenceArray.push(this.setStudies);
-    this.setStudies = {institucion: 0, titulo: 0, estado: 0, tipo_estudio: 0, tipo_curso: 0, nivel: 0, borrar: 0};
+    this.setStudies = {
+      id: 0,
+      idEstudio: 0,
+      idCandidato: 0,
+      idUsuario: 0,
+      idInstitucion: 0,
+      fecha_Desde: new Date,
+      fecha_Hasta: new Date,
+      id_estado_estudio: 0,
+      id_tipo_estudio: 0,
+      id_nivel_estudio: 0,
+      id_tipo_curso: 0,
+      accion: 0,
+    };
     this.myReferenceArray = [...this.myReferenceArray];
     // console.warn(this.myReferenceArray);
   }

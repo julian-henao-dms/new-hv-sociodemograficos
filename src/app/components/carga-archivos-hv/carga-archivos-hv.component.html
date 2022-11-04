@@ -47,3 +47,15 @@
     </mat-list>
   </mat-card-content>
 </mat-card>
+
+<div class="step-btn-container">
+  <button class="stepper-main-btn" mat-button matStepperPrevious>
+    Atrás
+  </button>
+  <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
+    Guardar Progreso
+  </button>
+  <button [disabled]="disabledButtonNext" class="stepper-main-btn" mat-button matStepperNext>
+    Siguiente
+  </button>
+</div>

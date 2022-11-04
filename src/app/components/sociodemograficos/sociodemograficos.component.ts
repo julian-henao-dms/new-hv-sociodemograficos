@@ -1,9 +1,11 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { Sociodemograficos } from './interfaces/sociodemograficos.interface';
+import * as _ from 'lodash';
 
 interface AnioAntiguedad {
   id: number;
@@ -37,7 +39,7 @@ interface ServicioVivienda {
   id: number;
   descripcion: string;
 }
-interface NumPersonasVive {
+interface IdServiciosVivi {
   id: number;
   descripcion: string;
 }
@@ -74,39 +76,40 @@ export class SociodemograficosComponent implements OnInit {
   public buttonDisabled: boolean = true;
 
   public sociodemograficos: Sociodemograficos = {
-    consentimiento_informado: -1,
+    idRhCandidato:0,
+    consentimientoinformado: -1,
+    idAntiguedadCargo: 0,
+    idAntiguedadEmpresa: 0,
+    idTipoAfiliacion: 0,
+    numeroHijos: 0,
+    idEdadHijos: 0,
+    idingresos: 0,
+    idCaracteristicaVivienda: 0,
+    idZonaUbica: 0,
+    idEstratoServicios: 0,
+    serviciosVivienda: '',
+    servicios: 0, // cuenta con servicios
+    personasVive: 0,
+    tamanoVivienda: 0,
+    condicionVivienda: 0,
+    personasDepende: '',
+    personaDiscapacidad: 0,
+    serviciosSalud: 0,
+    tipoTransporte: '',
+    rutaSegura: 0,
+    tiempoDescanso: 0,
+    otrasActividades: '',
+    actividadFisica: 0,
+    fumador: 0,
+    usaLentes: 0,
     // empresa:'',
     // sede:'',
     // area:'',e
     // fechaIngreso: new Date,
-    id_antiguedad_empresa: 0,
-    id_antiguedad_cargo: 0,
-    id_ingresos: 0,
     // arl: 0,
-    id_tipo_afiliacion: 0,
     // paisNacimiento: 0,
     // deptoNacimiento: 0,
     // ciudadNacimiento: 0,
-    id_caracteristica_vivienda: 0,
-    id_zona_ubica: 0,
-    servicios: 0, // cuenta con servicios
-    servicios_vivienda: 0,
-    tamano_vivienda: 0,
-    condicion_vivienda: 0,
-    id_estrato_servicios: 0,
-    personas_vive: 0,
-    numero_hijos: 0,
-    id_edad_hijos: 0,
-    personas_depende: 0,
-    persona_discapacidad: 0,
-    tipo_transporte: 0,
-    ruta_segura: 0,
-    tiempo_descanso: 0,
-    otras_actividades: '',
-    actividad_fisica: 0,
-    fumador: 0,
-    servicios_salud: 0,
-    usa_lentes: 0,
   };
 
   public showFields = false;
@@ -135,12 +138,11 @@ export class SociodemograficosComponent implements OnInit {
   ];
   ubicaciones: UbicacionVivienda[] = [];
   estratos: EstratoServicios[] = [];
-  numPersonas: NumPersonasVive[] = [];
   paises: Pais[] = [];
   deptos: Depto[] = [];
   ciudades: Ciudad[] = [];
 
-  serviciosPublicos: EstratoServicios[] = [];
+  serviciosPublicos: IdServiciosVivi[] = [];
   dependencias: DependeEconomica[] = [];
 
   tiposTransporte: TipoTransporte[] = [];
@@ -172,6 +174,7 @@ export class SociodemograficosComponent implements OnInit {
   };
 
   constructor(
+    private storaged: SessionStorageService,
     private breakpointObserver: BreakpointObserver,
     private readonly apiService: ApiService,
     private readonly messageService: MessagesService
@@ -243,7 +246,7 @@ export class SociodemograficosComponent implements OnInit {
     console.log('OnChanges', event);
     if (event.value != -1) {
       this.buttonDisabled = false;
-      this.sociodemograficos.consentimiento_informado = event.value;
+      this.sociodemograficos.consentimientoinformado = event.value;
     }
   }
 
@@ -258,7 +261,7 @@ export class SociodemograficosComponent implements OnInit {
      this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
      return;
     }
-    this.paises = paises;
+    this.paises = _.orderBy(paises, ['id'], ['asc']);
 
     const aniosAntigEmpresa = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdAntiEmp');
     console.log('regla antg empresa',aniosAntigEmpresa)
@@ -266,7 +269,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en la empresa');
          return;
         }
-    this.aniosAntigEmpresa = aniosAntigEmpresa;
+    this.aniosAntigEmpresa = _.orderBy(aniosAntigEmpresa, ['id'], ['asc']);
 
     const aniosAntigCargo = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdAnticargo');
     console.log('regla antg cargo',aniosAntigCargo)
@@ -274,7 +277,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
         }
-    this.aniosAntigCargo = aniosAntigCargo;
+    this.aniosAntigCargo = _.orderBy(aniosAntigCargo, ['id'], ['asc']);
 
 
     const promIngresos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdIngresos');
@@ -283,7 +286,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
         }
-    this.salarios = promIngresos;
+    this.salarios = _.orderBy(promIngresos, ['id'], ['asc']);
 
 
     const ubicacionVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdZona');
@@ -292,7 +295,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar las zonas de ubicación');
          return;
         }
-    this.ubicaciones = ubicacionVivienda;
+    this.ubicaciones = _.orderBy(ubicacionVivienda, ['id'], ['asc']);
 
     const estratos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEstratos');
     console.log('regla estratos',estratos)
@@ -300,7 +303,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los datos de estratificación social ');
          return;
         }
-    this.estratos = estratos;
+    this.estratos = _.orderBy(estratos, ['id'], ['asc']);
 
     const personasDependen = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdPersDepe');
     console.log('regla personas dependientes',personasDependen)
@@ -308,7 +311,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los');
          return;
         }
-    this.dependencias = personasDependen;
+    this.dependencias = _.orderBy(personasDependen, ['id'], ['asc']);
 
     const tiposTransporte = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdTipoTrans');
     console.log('regla tipo transporte',tiposTransporte)
@@ -316,15 +319,15 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de transporte');
          return;
         }
-    this.tiposTransporte = tiposTransporte;
+    this.tiposTransporte = _.orderBy(tiposTransporte, ['id'], ['asc']);
 
-    const numPersonasVive = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'id_zona_ubica');
-    console.log('regla Personas vive',numPersonasVive)
-    if(numPersonasVive === null){
-         this.messageService.error('Error', 'Error interno del servidor al cargar los datos de estratificación social ');
+    const IdServiciosVivi = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdServiciosVivi');
+    console.log('regla Personas vive',IdServiciosVivi)
+    if(IdServiciosVivi === null){
+         this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de servicios públicos');
          return;
         }
-    this.numPersonas = numPersonasVive;
+    this.serviciosPublicos = _.orderBy(IdServiciosVivi, ['id'], ['asc']);
 
 
     const rangoEdadHijos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEdadHijo');
@@ -333,7 +336,7 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los rangos de edad ');
          return;
         }
-    this.rangosEdad = rangoEdadHijos;
+    this.rangosEdad = _.orderBy(rangoEdadHijos, ['id'], ['asc']);
 
 
 
@@ -345,11 +348,16 @@ export class SociodemograficosComponent implements OnInit {
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
         }
-    this.caracteristicas = caracteristicasVivienda;
+    this.caracteristicas = _.orderBy(caracteristicasVivienda, ['id'], ['asc']);
 
 
     loading.close();
   }
+
+// public toStringArray(data: { toString: () => any; }){
+//   const convertArray = data.toString();
+//   console.log('Array coinvertido', convertArray);
+// }
 
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -395,13 +403,13 @@ export class SociodemograficosComponent implements OnInit {
   // }
 
   public enviarSociodemograficos() {
-
-    if (this.sociodemograficos.consentimiento_informado == 0) {
+    this.storaged.set('Sociodemograficos', this.sociodemograficos);
+    if (this.sociodemograficos.consentimientoinformado == 0) {
       this.messageService.info(
         'Consentimiento no aceptado',
         'Ha marcado NO en la casilla de consentimiento informado, solo almacenaremos esta respuesta.'
       );
-    } else if (this.sociodemograficos.consentimiento_informado == 1) {
+    } else if (this.sociodemograficos.consentimientoinformado == 1) {
       this.messageService.success(
         'Perfecto',
         'Los datos sociodemográficos se almacenaron correctamente'

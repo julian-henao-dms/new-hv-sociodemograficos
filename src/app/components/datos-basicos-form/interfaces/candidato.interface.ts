@@ -1,4 +1,5 @@
 export interface Candidato {
+id: number;
 emp: number;
 nit: string;
 id_rh_tipo_documento: number;
@@ -41,7 +42,6 @@ id_rh_experiencia_equipo: number;
 peso: number;
 altura: number;
 salario: number;
-id: number;
 accion: number;
 id_Usuario_Asociado: number;
 id_con_cco: number;
@@ -62,10 +62,10 @@ cargoAplica: number;
 }
 
 export interface Idioma{
+ id: number;
  idIdi: number;
  idCandidato: number;
  idUsuario: number;
- id: number;
  accion: number;
 }
 

@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { Cargos } from './interfaces/cargos.interface';
+import * as _ from 'lodash';
 
 interface Cargo{
   id: number;
@@ -25,10 +26,10 @@ export class CargosFormComponent implements OnInit {
   public cargos: Cargo[] = [];
 
   public otrosCargos: Cargos = {
+    id: 0,
     idPerfil: 0,
     idCandidato: 0,
     idUsuario: 0,
-    id: 0,
     accion: 0,
   }
 
@@ -48,7 +49,7 @@ export class CargosFormComponent implements OnInit {
       this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
       return;
     }
-    this.cargos = cargoAplica;
+    this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
     loading.close();
   }

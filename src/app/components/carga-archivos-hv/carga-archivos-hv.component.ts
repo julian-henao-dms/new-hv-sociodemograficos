@@ -9,7 +9,7 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
   styleUrls: ['./carga-archivos-hv.component.scss']
 })
 export class CargaArchivosHvComponent implements OnInit {
-
+  public disabledButtonNext: boolean = true;
   currentFile?: File;
   progress = 0;
   message = '';
@@ -63,4 +63,10 @@ export class CargaArchivosHvComponent implements OnInit {
     this.fileInfos = this.uploadService.getFiles();
   }
 
+  public guardarProgreso(){
+    // console.log('Archivos', this.archivos);
+    // this._storaged.set('archivosStorage', this.archivos);
+    this.disabledButtonNext = false;
+
+  }
 }

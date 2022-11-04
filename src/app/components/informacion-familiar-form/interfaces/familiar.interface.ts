@@ -1,7 +1,8 @@
 export interface Familiar {
+id: number;
 id_candidato: number;
 nombre: string;
-id_Parentesco: number;
+idParentesco: number;
 edad: number;
 ne: number;
 ec: number;
@@ -9,7 +10,6 @@ ocupacion: string;
 empresa: string;
 telResidencia: string;
 otroFamiliar: number;
-id: number;
 accion: number;
 nit: string;
 fechaNace: Date;

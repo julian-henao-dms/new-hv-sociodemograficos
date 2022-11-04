@@ -7,6 +7,7 @@ import { Referencias } from './interfaces/referencias.interface';
 import { MatTableDataSource } from '@angular/material/table';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
+import * as _ from 'lodash';
 
 export interface user {
   userName: string;
@@ -43,6 +44,7 @@ export class ReferenciasFormComponent implements OnInit {
 
   public disabledButtonNext: boolean = true;
   public datosReferencias: Referencias = {
+    id: 0,
     idCandidato: 0,
     nombre: '',
     celular: '',
@@ -51,19 +53,19 @@ export class ReferenciasFormComponent implements OnInit {
     tipo: 0,
     idUsuario: 0,
     empresa: '',
-    cargo: '',
-    observaciones: '',
-    id: 0,
+    Cargo: '',
+    Observaciones: '',
+    TiempoLaborado: '',
+    MotivoRetiro: '',
     accion: 0,
-    tiempoLaborado: '',
-    motivoRetiro: '',
   }
 
-  public columnsReference: any[] = ["nombre", "celular", "telefono", "mail", "observaciones", "tipo", 'borrar' ];
+  public columnsReference: any[] = ["nombre", "celular", "telefono", "mail", "Observaciones", "tipo", 'borrar' ];
   public REFERENCE_DATA: Referencias[] = [];
 
   public myReferenceArray: any[] = [];
   public setReferences = {
+    id: 0,
     idCandidato: 0,
     nombre: '',
     celular: '',
@@ -72,18 +74,28 @@ export class ReferenciasFormComponent implements OnInit {
     tipo: 0,
     idUsuario: 0,
     empresa: '',
-    cargo: '',
-    observaciones: '',
-    id: 0,
+    Cargo: '',
+    Observaciones: '',
+    TiempoLaborado: '',
+    MotivoRetiro: '',
     accion: 0,
-    tiempoLaborado: '',
-    motivoRetiro: '',
-    borrar: 0
   };
 
+  public expresiones = {
+    numbersText: /^[A-Za-z0-9_-]{1,20}$/,
+    usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    password: /^.{4,12}$/, // 4 a 12 digitos.
+    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
+    nums: /^\d{7,15}$/, // 7 a 14 numeros.
+    celular: /^\d{10,15}$/ // 7 a 14 numeros.
+  }
+
    public tiposReferencia = [
-      { value: 1, viewValue: "Personal" },
-      { value: 2, viewValue: "Laboral" }
+      { id: 1, descripcion: "Personal" },
+      { id: 2, descripcion: "Laboral" }
     ];
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -143,7 +155,9 @@ export class ReferenciasFormComponent implements OnInit {
     this.REFERENCE_DATA.push(this.setReferences);
     console.log('Data reference',this.REFERENCE_DATA);
     this.myReferenceArray.push(this.setReferences);
-    this.setReferences = {idCandidato: 0,
+    this.setReferences = {
+      id: 0,
+      idCandidato: 0,
       nombre: '',
       celular: '',
       telefono: '',
@@ -151,17 +165,16 @@ export class ReferenciasFormComponent implements OnInit {
       tipo: 0,
       idUsuario: 0,
       empresa: '',
-      cargo: '',
-      observaciones: '',
-      id: 0,
+      Cargo: '',
+      Observaciones: '',
+      TiempoLaborado: '',
+      MotivoRetiro: '',
       accion: 0,
-      tiempoLaborado: '',
-      motivoRetiro: '',
-      borrar: 0};
+      };
     this.myReferenceArray = [...this.myReferenceArray];
 
 
-    console.warn(this.myReferenceArray);
+    // console.warn(this.myReferenceArray);
   }
 
   public  borrarItem(element: any){

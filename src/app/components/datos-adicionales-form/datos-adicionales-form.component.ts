@@ -7,6 +7,7 @@ import { SessionStorageService } from 'src/app/services/session-storage.service'
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
+import * as _ from 'lodash';
 
 interface Pais{
   value: number;
@@ -57,10 +58,10 @@ interface CategoriaLicencia{
   descripcion: string;
 }
 interface Licencia{
-    idCandidato: 0;
-    idCategoria: 0;
-    fechaVence: string;
     id: number;
+    idCandidato: number;
+    idCategoria: number;
+    fechaVence: Date;
     accion: number;
 }
 interface DatosAdicionalesCandidato{
@@ -118,10 +119,10 @@ export class DatosAdicionalesFormComponent implements OnInit {
   public myReferenceArray: any[] = [];
 
   public setLicences: Licencia = {
+    id: 0,
     idCandidato: 0,
     idCategoria: 0,
-    fechaVence: "2022-09-22T14:55:44.760Z",
-    id: 0,
+    fechaVence: new Date,
     accion: 0,
   }
 
@@ -161,6 +162,18 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
   public operacionesDisabled = true;
 
+  public expresiones = {
+    numbersText: /^[A-Za-z0-9_-]{1,20}$/,
+    usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    password: /^.{4,12}$/, // 4 a 12 digitos.
+    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
+    nums: /^\d{7,15}$/ // 7 a 14 numeros.
+  }
+
+
   tiposLicencia = [
     { id: 1, descripcion: "Pública" },
     { id: 2, descripcion: "Privada" }
@@ -175,6 +188,17 @@ export class DatosAdicionalesFormComponent implements OnInit {
     sm: 1,
     xs: 1
   };
+
+  colsAlt: number | undefined;
+
+  gridByBreakpointAlt = {
+    xl: 2,
+    lg: 2,
+    md: 2,
+    sm: 1,
+    xs: 1,
+  };
+
   constructor(
     private breakpointObserver: BreakpointObserver,
     private _storaged: SessionStorageService,
@@ -210,49 +234,110 @@ export class DatosAdicionalesFormComponent implements OnInit {
           this.cols = this.gridByBreakpoint.xl;
         }
       }
+      if (result.matches) {
+        if (result.breakpoints[Breakpoints.XSmall]) {
+          this.colsAlt = this.gridByBreakpointAlt.xs;
+        }
+        if (result.breakpoints[Breakpoints.Small]) {
+          this.colsAlt = this.gridByBreakpointAlt.sm;
+        }
+        if (result.breakpoints[Breakpoints.Medium]) {
+          this.colsAlt = this.gridByBreakpointAlt.md;
+        }
+        if (result.breakpoints[Breakpoints.Large]) {
+          this.colsAlt = this.gridByBreakpointAlt.lg;
+        }
+        if (result.breakpoints[Breakpoints.XLarge]) {
+          this.colsAlt = this.gridByBreakpointAlt.xl;
+        }
+      }
 
     });
   }
 
   async ngOnInit(): Promise<void> {
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
     const experienciaEspecifica = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'experiencia');
-    this.aniosExp = experienciaEspecifica;
+    if(experienciaEspecifica === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de años de experiencia');
+      return;
+    }
+    this.aniosExp = _.orderBy(experienciaEspecifica, ['id'], ['asc']);
 
     const aspiracionSalarial = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'rango_salario');
-    this.salarios = aspiracionSalarial;
+    if(aspiracionSalarial === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los rangos salariales');
+      return;
+    }
+    this.salarios = _.orderBy(aspiracionSalarial, ['id'], ['asc']);
 
     const fuenteReclutamiento = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fuente_reclutamiento');
-    this.fuentesReclutamiento = fuenteReclutamiento;
+    if(fuenteReclutamiento === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las fuentes de reclutamiento');
+      return;
+    }
+    this.fuentesReclutamiento = _.orderBy(fuenteReclutamiento, ['id'], ['asc']);
 
     const entidadExpedicion = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'entidad');
-    this.entidades = entidadExpedicion;
+    if(entidadExpedicion === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las entidades de expedición');
+      return;
+    }
+    this.entidades = _.orderBy(entidadExpedicion, ['id'], ['asc']);
 
     const eps = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'eps');
-    this.epss = eps;
+    if(eps === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las EPS');
+      return;
+    }
+    this.epss = _.orderBy(eps, ['id'], ['asc']);
 
     const fondoPension = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fondo_pension');
-    this.fondosPension = fondoPension;
+    if(fondoPension === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar los fondos de pensión');
+      return;
+    }
+    this.fondosPension = _.orderBy(fondoPension, ['id'], ['asc']);
 
     const cajaCompensacion = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fondo_caja');
-    this.cajasCompensacion = cajaCompensacion;
+    if(cajaCompensacion === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las cajas de compensación');
+      return;
+    }
+    this.cajasCompensacion = _.orderBy(cajaCompensacion, ['id'], ['asc']);
 
     const cesantia = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'fondo_cesantias');
-    this.cesantias = cesantia;
+     if(cesantia === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las cesantias');
+      return;
+    }
+    this.cesantias = _.orderBy(cesantia, ['id'], ['asc']);
 
     const categoriaLicencia = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'categoria_licencia');
-    this.categoriasLicencia = categoriaLicencia;
+     if(categoriaLicencia === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las categorías de licencia');
+      return;
+    }
+    this.categoriasLicencia = _.orderBy(categoriaLicencia, ['id'], ['asc']);
 
     const grupoSanguineo = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'grupo_sanguineo');
-    this.gruposSanguineos = grupoSanguineo;
+     if(grupoSanguineo === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de grupo sanguineo');
+      return;
+    }
+    this.gruposSanguineos = _.orderBy(grupoSanguineo, ['id'], ['asc']);
 
     const colorPiel = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'color_piel');
-    this.coloresPiel = colorPiel;
+     if(colorPiel === null){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de color de piel');
+      return;
+    }
+    this.coloresPiel = _.orderBy(colorPiel, ['id'], ['asc']);
 
-  //  loading.close();
+   loading.close();
   }
 
   addReference() {
@@ -260,10 +345,10 @@ export class DatosAdicionalesFormComponent implements OnInit {
     console.log('Data reference',this.LICENCE_DATA);
     this.myReferenceArray.push(this.setLicences);
     this.setLicences = {
+      id: 0,
       idCandidato: 0,
       idCategoria: 0,
-      fechaVence: "2022-09-22T14:55:44.760Z",
-      id: 0,
+      fechaVence: new Date,
       accion: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];

@@ -37,7 +37,9 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Tipo Documento</mat-label>
         <mat-select  [(ngModel)]="datosCandidato.id_rh_tipo_documento"
-        name="id_rh_tipo_documento" #id_rh_tipo_documento="ngModel" required id="id_rh_tipo_documento">
+        name="id_rh_tipo_documento" #id_rh_tipo_documento="ngModel" required id="id_rh_tipo_documento"
+        (selectionChange)="validateChanged($event)"
+        >
           <mat-option
             *ngFor="let tipoDoc of tiposDocumento"
             [value]="tipoDoc.id"
@@ -45,6 +47,9 @@
             {{ tipoDoc.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_tipo_documento.invalid" *ngIf="id_rh_tipo_documento.errors?.['required']">
+          *Este campo es requerido. Debe seleccionar una opción
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -53,7 +58,7 @@
         <input matInput [matDatepicker]="expedicion"
         [(ngModel)]="datosCandidato.fecExpedicion"
         name="fecExpedicion" #fecExpedicion="ngModel" required id="fecExpedicion"/>
-        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecExpedicion.invalid" *ngIf="fecExpedicion.errors?.['required']">
           * La fecha de expedición es requerida
         </mat-error>
@@ -218,7 +223,7 @@
         <mat-label>Fecha Nacimiento</mat-label>
         <input matInput [matDatepicker]="nacimiento" name="fecha_nacimiento" [(ngModel)]="datosCandidato.fecha_nacimiento"
         #fecha_nacimiento="ngModel" required id="fecha_nacimiento"/>
-        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecha_nacimiento.invalid" *ngIf="fecha_nacimiento.errors?.['required']">
           * La fecha de nacimiento es requerida
         </mat-error>
@@ -296,7 +301,7 @@
         </mat-error>
         <mat-hint  class="message-error"
         [class.invalid]="celular.invalid" *ngIf="celular.errors?.['pattern']">
-          El número de contener más de 7 dígitos
+          El número de contener más de 10 dígitos
        </mat-hint>
       </mat-form-field>
     </mat-grid-tile>

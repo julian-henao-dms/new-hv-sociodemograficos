@@ -7,7 +7,7 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Experiencia General</mat-label>
+        <mat-label>Seleccionar experiencia general</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_experiencia_sector"
         name="id_rh_experiencia_sector" #id_rh_experiencia_sector="ngModel" required id="id_rh_experiencia_sector">
           <mat-option
@@ -21,7 +21,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Operaciones de Equipos </mat-label>
+        <mat-label>Seleccionar operaciones de equipos </mat-label>
         <mat-select [disabled]="tipoCandidato == 0 ? true : false " [(ngModel)]="datosAdicionales.id_rh_experiencia_equipo"
         name="id_rh_experiencia_equipo" #id_rh_experiencia_equipo="ngModel" required id="id_rh_experiencia_equipo">
           <mat-option
@@ -35,7 +35,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Aspiración </mat-label>
+        <mat-label>Seleccionar aspiración </mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_salario"
         name="id_salario" #id_salario="ngModel" required id="id_salario">
           <mat-option
@@ -62,7 +62,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Fuente de Reclutamiento</mat-label>
+        <mat-label>Seleccionar fuente de reclutamiento</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_fuente_reclutamiento"
         name="id_rh_fuente_reclutamiento" #id_rh_fuente_reclutamiento="ngModel" id="id_rh_fuente_reclutamiento">
           <mat-option
@@ -76,13 +76,13 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Nº Tarjeta Profesional</mat-label>
+        <mat-label>Nº tarjeta profesional</mat-label>
         <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"   (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile >
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Entidad de Expedición</mat-label>
+        <mat-label>Seleccionar entidad de expedición</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_Entidad"
         name="id_Entidad" #id_Entidad="ngModel" id="id_Entidad">
           <mat-option
@@ -101,14 +101,14 @@
       <mat-checkbox   [checked]="datosAdicionales.id_participacion_anterior === -1"
       (change)="datosAdicionales.id_participacion_anterior = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_participacion_anterior"
       name="id_participacion_anterior" #id_participacion_anterior="ngModel" id="id_participacion_anterior" class="example-margin"
-        >Participacion Anterior
+        >Participacion anterior
       </mat-checkbox>
 
       <mat-checkbox
       [checked]="datosAdicionales.id_trajo_hoja_vida === -1"
       (change)="datosAdicionales.id_trajo_hoja_vida = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_trajo_hoja_vida"
       name="id_trajo_hoja_vida" #id_trajo_hoja_vida="ngModel" id="id_trajo_hoja_vida" class="example-margin"
-      >Hoja de Vida
+      >Hoja de vida
     </mat-checkbox>
     </section>
   </mat-grid-tile>
@@ -118,7 +118,7 @@
       <mat-checkbox  [checked]="datosAdicionales.id_disponibilidad_viaje === -1"
       (change)="datosAdicionales.id_disponibilidad_viaje = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_disponibilidad_viaje"
       name="id_disponibilidad_viaje" #id_disponibilidad_viaje="ngModel" id="id_disponibilidad_viaje" class="example-margin"
-        >Disponibilidad para Viajar
+        >Disponibilidad para viajar
       </mat-checkbox>
 
       <mat-checkbox [checked]="datosAdicionales.runt === -1"
@@ -132,7 +132,7 @@
 <mat-divider></mat-divider>
 <div class="subtitle-container">
   <mat-icon>medical_information</mat-icon>
-  <h2 class="subtitle-hv">Información Salud</h2>
+  <h2 class="subtitle-hv">Información salud</h2>
 </div>
 <mat-grid-list
     #grid
@@ -158,7 +158,7 @@
 
   <mat-grid-tile>
     <mat-form-field appearance="outline">
-      <mat-label>Seleccionar Fondo Pensión</mat-label>
+      <mat-label>Seleccionar fondo pensión</mat-label>
       <mat-select  [(ngModel)]="datosAdicionales.idRhFondoPension"
         name="idRhFondoPension" #idRhFondoPension="ngModel" id="idRhFondoPension">
         <mat-option
@@ -172,7 +172,7 @@
   </mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field appearance="outline">
-      <mat-label>Seleccionar Caja Compensación</mat-label>
+      <mat-label>Seleccionar caja compensación</mat-label>
       <mat-select [(ngModel)]="datosAdicionales.idRhFondoCaja"
         name="idRhFondoCaja" #idRhFondoCaja="ngModel" id="idRhFondoCaja">
         <mat-option
@@ -186,7 +186,7 @@
   </mat-grid-tile>
   <mat-grid-tile>
     <mat-form-field appearance="outline">
-      <mat-label>Seleccionar Cesantías</mat-label>
+      <mat-label>Seleccionar cesantías</mat-label>
       <mat-select [(ngModel)]="datosAdicionales.idRhFondoCesantias"
         name="idRhFondoCesantias" #idRhFondoCesantias="ngModel" id="idRhFondoCesantias">
         <mat-option
@@ -203,13 +203,13 @@
   <mat-divider></mat-divider>
   <div class="subtitle-container">
     <mat-icon>badge</mat-icon>
-    <h2 class="subtitle-hv">Licencia de Conducción</h2>
+    <h2 class="subtitle-hv">Licencia de conducción</h2>
   </div>
 
 
   <mat-grid-list
     #grid
-    [cols]="cols"
+    [cols]="colsAlt"
     rowHeight="85px"
     gutterSize="10px"
   >
@@ -222,7 +222,7 @@
     <mat-grid-tile class="left-grid-position">
       <fieldset>
       <div class="container-hv-radios">
-        <mat-label>Tipo de Licencia:</mat-label>
+        <mat-label>Tipo de licencia:</mat-label>
         <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="datosAdicionales.tipo_licencia">
           <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.id" color="primary">
             {{ tipoLicencia.descripcion }}
@@ -233,9 +233,9 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Fecha Vencimiento</mat-label>
+        <mat-label>Fecha vencimiento</mat-label>
         <input matInput [matDatepicker]="vencimiento" #fechaVence="ngModel"  id="fechaVence" name="fechaVence"  [(ngModel)]="setLicences.fechaVence" />
-        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fechaVence.invalid" *ngIf="fechaVence.errors?.['required']">
           * La fecha de vencimiento es requerida
         </mat-error>
@@ -248,7 +248,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Categoría</mat-label>
+        <mat-label>Seleccionar categoría</mat-label>
         <mat-select #idCategoria="ngModel"  id="idCategoria" name="idCategoria"  [(ngModel)]="setLicences.idCategoria">
           <mat-option
             *ngFor="let categoriaLic of categoriasLicencia"
@@ -271,7 +271,7 @@
             <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}}</td>
         </ng-container>
         <ng-container matColumnDef="fecha_vence">
-            <th mat-header-cell *matHeaderCellDef>Fecha Vencimiento</th>
+            <th mat-header-cell *matHeaderCellDef>Fecha vencimiento</th>
             <td mat-cell *matCellDef="let element">{{element.fechaVence | date:'dd/MM/yyyy' }}</td>
         </ng-container>
         <ng-container matColumnDef="categoria">
@@ -309,7 +309,7 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Color de Piel</mat-label>
+        <mat-label>Seleccionar color de piel</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_color_piel"
         name="id_rh_color_piel" #id_rh_color_piel="ngModel" id="id_rh_color_piel">
           <mat-option
@@ -323,7 +323,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Grupo Sanguineo</mat-label>
+        <mat-label>Seleccionar grupo sanguineo</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_grupo_sanguineo"
         name="id_rh_grupo_sanguineo" required #id_rh_grupo_sanguineo="ngModel" id="id_rh_grupo_sanguineo">
           <mat-option
@@ -348,7 +348,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Peso</mat-label>
+        <mat-label>Peso en kg</mat-label>
         <input
           matInput
           type="number"
@@ -361,7 +361,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Altura</mat-label>
+        <mat-label>Altura en metros</mat-label>
         <input
           matInput
           type="number"
@@ -379,7 +379,7 @@
       Atrás
     </button>
     <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
-      Guardar Progreso
+      Guardar progreso
     </button>
     <button [disabled]="disabledButtonNext" class="stepper-main-btn" mat-button matStepperNext>
       Siguiente

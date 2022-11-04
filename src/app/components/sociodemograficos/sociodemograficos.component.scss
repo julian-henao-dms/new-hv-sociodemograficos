@@ -5,14 +5,21 @@ mat-grid-list.mat-grid-list {
     margin-top: 1px;
     width: -webkit-fill-available;
 }
-
+.container-sd-checks {
+  display: flex;
+  margin: 10px 0 0 5px;
+  mat-label{
+    padding-right: 15px;
+  }
+}
 .container-hv-radios{
   display: flex;
   flex-direction: column;
   margin: 0.2em 0;
+  padding: 10px 0 0 5px;
   mat-label{
     margin-bottom: 0.2em;
-    text-decoration: underline;
+    // text-decoration: underline;
   }
 }
 .mat-radio-button ~ .mat-radio-button {

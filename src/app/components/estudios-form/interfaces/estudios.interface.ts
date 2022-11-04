@@ -1,4 +1,5 @@
 export interface Estudios {
+id: number;
 idEstudio: number;
 idCandidato: number;
 idUsuario: number;
@@ -9,7 +10,6 @@ id_estado_estudio: number;
 id_tipo_estudio: number;
 id_nivel_estudio: number;
 id_tipo_curso: number;
-id: number;
 accion: number;
-titulo: number
+//titulo: number
 }

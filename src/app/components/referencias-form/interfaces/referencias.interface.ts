@@ -1,4 +1,5 @@
 export interface Referencias {
+id:number;
 idCandidato: number;
 nombre: string;
 celular: string;
@@ -7,10 +8,9 @@ mail: string;
 tipo: number;
 idUsuario: number;
 empresa: string;
-cargo: string;
-observaciones: string;
-id: number;
+Cargo: string;
+Observaciones: string;
+TiempoLaborado: string;
+MotivoRetiro: string;
 accion: number;
-tiempoLaborado: string;
-motivoRetiro: string;
 }

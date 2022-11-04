@@ -4,7 +4,8 @@ import {FormBuilder, Validators} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
-import { Candidato, Idioma } from "./interfaces/candidato.interface"
+import { Candidato, Idioma } from "./interfaces/candidato.interface";
+import * as _ from 'lodash';
 
 
 interface TipoCandidato{
@@ -107,7 +108,7 @@ public datosCandidato: DatosBasicosCandidato = {
   emp: 0,
   id_usuario: 0,
   id_tipo_candidato: -1,
-  id_rh_tipo_documento: 0,//*
+  id_rh_tipo_documento: -1,//*
   nit: '',   //*
   fecExpedicion: '', //*
   lugarExpedicion: '', //*
@@ -139,10 +140,10 @@ public idiomasArray: any[] = [];
 public disabledButtonNext: boolean = true;
 
 public idiomasCandidato: Idioma = {
+    id: 0,
     idIdi:0,
     idCandidato: 0,
     idUsuario: 0,
-    id: 0,
     accion: 0,
     };
 
@@ -171,19 +172,16 @@ public idiomasCandidato: Idioma = {
 
   ];
 
-  // public numbersText = "^[A-Za-z0-9_-]{1,20}$"
-  // public numbersText2 = "^[A-Za-z0-9_-]{8,20}$"
-
-
   public expresiones = {
     numbersText: /^[A-Za-z0-9_-]{1,20}$/,
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
     // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-    // correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-    correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
-    nums: /^\d{7,15}$/ // 7 a 14 numeros.
+    correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
+    nums: /^\d{7,15}$/, // 7 a 14 numeros.
+    celular: /^\d{10,15}$/ // 7 a 14 numeros.
   }
 
 
@@ -252,7 +250,7 @@ public idiomasCandidato: Idioma = {
      this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
      return;
     }
-    this.paises = paises;
+    this.paises = _.orderBy(paises, ['id'], ['asc']);
 
     const tipoDocumento = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_documento');
     console.log('regla tipo doc',tipoDocumento)
@@ -260,28 +258,29 @@ public idiomasCandidato: Idioma = {
          this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
          return;
         }
-    this.tiposDocumento = tipoDocumento;
+      console.log('ordenados',  _.orderBy(tipoDocumento, ['id'], ['asc']));
+    this.tiposDocumento = _.orderBy(tipoDocumento, ['id'], ['asc']);
 
     const estadoCivil = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'estado_civil');
     if(estadoCivil === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de estado civil');
          return;
         }
-    this.estados = estadoCivil;
+    this.estados = _.orderBy(estadoCivil, ['id'], ['asc']);
 
     const experienciaEspecifica = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'experiencia');
     if(experienciaEspecifica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de experiencia');
       return;
     }
-    this.aniosExp = experienciaEspecifica;
+    this.aniosExp = _.orderBy(experienciaEspecifica, ['id'], ['asc']);
 
     const nivelAcademico = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'academico');
     if(nivelAcademico === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los niveles académicos');
       return;
     }
-    this.nivelesAcademia = nivelAcademico;
+    this.nivelesAcademia = _.orderBy(nivelAcademico, ['id'], ['asc']);
 
 
     const lenguaExtranjera = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'idioma');
@@ -289,20 +288,33 @@ public idiomasCandidato: Idioma = {
       this.messageService.error('Error', 'Error interno del servidor al cargar los idiomas');
       return;
     }
-    this.lenguas = lenguaExtranjera;
+    this.lenguas = _.orderBy(lenguaExtranjera, ['id'], ['asc']);
 
     const cargoAplica = await this.getAnyInformation('/hojadevida/perfiles/' + idEmp);
     if(cargoAplica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
       return;
     }
-    this.cargos = cargoAplica;
+    this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
     loading.close();
   }
 
+  // private async updateInformation(service: string, document: any): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //      this.apiService.updateInformacion(service, document).subscribe({
+  //       next: (v) => resolve(v),
+  //       error: (e) => {
+  //         console.info(e);
+  //         resolve(0);
+  //       }
+  //     });
+  //   });
+  // }
+
   public search(){
     console.log('Buscando');
+
   }
 
   public async selectsValidate(selectContent:any, text: string, arrayData:any){
@@ -313,7 +325,9 @@ public idiomasCandidato: Idioma = {
      //
   }
 
-
+public validateChanged(event:any){
+  console.log(event.value);
+}
 
   public async onSelectionChangePais(idPais:number): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
@@ -331,7 +345,7 @@ public idiomasCandidato: Idioma = {
       //   return;
       // }
 
-      this.deptos = deptos;
+      this.deptos = _.orderBy(deptos, ['id'], ['asc']);
       console.log('datos select deptos', this.deptos);
       loading.close();
     }
@@ -347,7 +361,7 @@ public idiomasCandidato: Idioma = {
       return;
     }
     console.log('deptos', ciudades);
-    this.ciudades = ciudades;
+    this.ciudades = _.orderBy(ciudades, ['id'], ['asc']);
     console.log('datos select deptos', this.ciudades);
     loading.close();
   }
@@ -361,7 +375,7 @@ public idiomasCandidato: Idioma = {
       return;
     }else{
       console.log('deptos', barrios);
-      this.barrios = barrios;
+      this.barrios = _.orderBy(barrios, ['id'], ['asc']);
       console.log('datos select deptos', this.barrios);
       loading.close();
     }
@@ -396,6 +410,7 @@ public idiomasCandidato: Idioma = {
     console.log("Evento", event);
     this.changeSelect.emit({'data':event});
   }
+
 
   public validarCampos(): boolean{
     let that = this;
