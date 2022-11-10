@@ -34,7 +34,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
-        <input matInput placeholder="Celular" #celular="ngModel"  id="celular" name="celular" [(ngModel)]="setReferences.celular"
+        <input matInput placeholder="Celular" #celular="ngModel"  id="celular" name="celular"
+        [(ngModel)]="setReferences.celular" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.celular" />
         <mat-error class="message-error" [class.invalid]="celular.invalid" *ngIf="celular.errors?.['required']">
           *Este campo es requerido
@@ -48,7 +49,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
-        <input matInput placeholder="Teléfono" #telefono="ngModel"  id="telefono" name="telefono" [(ngModel)]="setReferences.telefono"
+        <input matInput placeholder="Teléfono" #telefono="ngModel"  id="telefono" name="telefono"
+        [(ngModel)]="setReferences.telefono" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.nums"/>
         <mat-hint  class="message-error"
         [class.invalid]="telefono.invalid" *ngIf="telefono.errors?.['pattern']">

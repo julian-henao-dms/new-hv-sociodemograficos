@@ -10,7 +10,14 @@
         <mat-label>Identificación</mat-label>
         <input matInput placeholder="Identificación" #nit="ngModel" id="nit" name="nit"
         [(ngModel)]="setRelatives.nit" (ngModelChange)="setRelatives.nit = $event.toUpperCase()"
-        />
+        [pattern]="expresiones.numbersText" />
+        <mat-error class="message-error" [class.invalid]="nit.invalid" *ngIf="nit.errors?.['required']">
+          *Este campo es requerido
+        </mat-error>
+        <mat-hint  class="message-error"
+        [class.invalid]="nit.invalid" *ngIf="nit.errors?.['pattern']">
+          Identificación no válida, solo se permiten números y letras
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -20,9 +27,6 @@
          [(ngModel)]="setRelatives.nombre" (ngModelChange)="setRelatives.nombre = $event.toUpperCase()"
          [pattern]="expresiones.textSpacesAccent"
           />
-        <mat-error class="message-error" [class.invalid]="nombre.invalid" *ngIf="nombre.errors?.['required']">
-          *Este campo es requerido
-        </mat-error>
         <mat-hint  class="message-error"
         [class.invalid]="nombre.invalid" *ngIf="nombre.errors?.['pattern']">
           El nombre solo puede contener letras y espacios
@@ -74,7 +78,9 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono / móvil</mat-label>
-        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" id="telResidencia" name="telResidencia"  [(ngModel)]="setRelatives.telResidencia" />
+        <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" id="telResidencia" name="telResidencia"
+         [(ngModel)]="setRelatives.telResidencia" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+         [pattern]="expresiones.nums" />
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>

@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import {FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, NgForm, Validators} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
@@ -14,6 +14,16 @@ interface TipoCandidato{
 }
 interface TipoDocumento{
   id: string;
+  descripcion: string;
+}
+interface PaisExp{
+  id: number;
+  codigo: string;
+  descripcion: string;
+  id_cot_cliente_pais:number;
+}
+interface DeptoExp{
+  id: number;
   descripcion: string;
 }
 interface Pais{
@@ -57,28 +67,30 @@ interface AniosExperiencia{
 interface DatosBasicosCandidato {
   emp: number;
   id_usuario: number;
-  id_tipo_candidato: number;
-  id_rh_tipo_documento: number;//*
+  id_tipo_candidato: number | null;
+  id_rh_tipo_documento: number | null;//*
   nit: string;  //*
   fecExpedicion: string;//*
   lugarExpedicion: string;//*
   idCotClientePais: number;//
   nombre: string;//*
   apellido: string;//*
-  genero: number;//*
+  genero: number | null;//*
   fecha_nacimiento: string;//*
-  idRhEstadoCivil: number;//*
+  idRhEstadoCivil: number | null;//*
   telefono: string;//*
   mail: string;//*
   celular: string;//*
   direccion: string;//*
-  id_cot_cliente_pais: number;//*
-  id_cot_cliente_barrio: number;//*
-  id_rh_experiencia: number;//*
-  id_rh_nivel_academico: number;//*
-  id_rh_perfil: number;// cargo?
-  depto:number;
-  pais:number;
+  id_cot_cliente_pais: number | null;//*
+  id_cot_cliente_barrio: number | null;//*
+  id_rh_experiencia: number | null;//*
+  id_rh_nivel_academico: number | null;//*
+  id_rh_perfil: number | null;// cargo?
+  depto:number | null;
+  deptoExp:number | null;
+  pais:number | null;
+  paisExp:number | null;
 }
 @Component({
   selector: 'app-datos-basicos-form',
@@ -88,6 +100,15 @@ interface DatosBasicosCandidato {
 export class DatosBasicosFormComponent implements OnInit {
 
   @Output() changeSelect = new EventEmitter<any>();
+  @ViewChild('datosBasicosForm', { static: true })
+  nitatosBasicos!: NgForm;
+
+  @ViewChild('hv-field')
+  hv_field!: ElementRef;
+
+  public showFrm(): void{
+    console.log(this.nitatosBasicos);
+}
 
   public typeCandidato: number = 0;
 
@@ -95,42 +116,49 @@ export class DatosBasicosFormComponent implements OnInit {
   public numRegla: number = 159;
   public paises: Pais[] = [];
   public deptos: Depto[] = [];
+  public paisesExp: PaisExp[] = [];
+  public deptosExp: DeptoExp[] = [];
   public tiposDocumento: TipoDocumento[] = [];
   public estados: EstadoCivil[] = [];
   public aniosExp: AniosExperiencia[] = [];
   public nivelesAcademia: NivelAcademico[] = [];
   public cargos: Cargo[] = [];
   public lenguas: LenguajeExtranjera[] = [];
-  ciudades: Ciudad[] = [];
-  barrios: Barrio[] = [];
+  public ciudades: Ciudad[] = [];
+  public ciudadesExp: Ciudad[] = [];
+  public barrios: Barrio[] = [];
 
 public datosCandidato: DatosBasicosCandidato = {
   emp: 0,
   id_usuario: 0,
-  id_tipo_candidato: -1,
-  id_rh_tipo_documento: -1,//*
+  id_tipo_candidato: null,
+  id_rh_tipo_documento: null,//*
   nit: '',   //*
   fecExpedicion: '', //*
   lugarExpedicion: '', //*
   idCotClientePais: 0,//
   nombre: '', //*
   apellido: '', //*
-  genero: 0,//*
+  genero: null,//*
   fecha_nacimiento: '', //*
-  idRhEstadoCivil: 0,//*
+  idRhEstadoCivil: null,//*
   telefono: '', //*
   mail: '', //*
   celular: '', //*
   direccion: '', //*
-  id_cot_cliente_pais: 0,//*
-  id_cot_cliente_barrio: 0,//*
-  id_rh_experiencia: 0,//*
-  id_rh_nivel_academico: 0,//*
-  id_rh_perfil: 0,// cargo?
-  pais: 0,
-  depto: 0,
+  id_cot_cliente_pais: null,//*
+  id_cot_cliente_barrio: null,//*
+  id_rh_experiencia: null,//*
+  id_rh_nivel_academico: null,//*
+  id_rh_perfil: null,// cargo?
+  pais: null,
+  paisExp: null,
+  depto: null,
+  deptoExp: null,
 }
 
+
+public paisExpedicion = 0;
 public depto = 0;
 public ciudad = 0;
 
@@ -238,6 +266,10 @@ public idiomasCandidato: Idioma = {
     });
   }
 
+  ngAfterViewInit() {
+
+  }
+
   async ngOnInit(): Promise<void> {
 
    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
@@ -251,6 +283,13 @@ public idiomasCandidato: Idioma = {
      return;
     }
     this.paises = _.orderBy(paises, ['id'], ['asc']);
+
+   const paisesExp = await this.getAnyInformation('/pais/' + idEmp);
+   if(paisesExp === null){
+     this.messageService.error('Error', 'Error interno del servidor al cargar los paisesExp');
+     return;
+    }
+    this.paisesExp = _.orderBy(paisesExp, ['id'], ['asc']);
 
     const tipoDocumento = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_documento');
     console.log('regla tipo doc',tipoDocumento)
@@ -329,21 +368,15 @@ public validateChanged(event:any){
   console.log(event.value);
 }
 
-  public async onSelectionChangePais(idPais:number): Promise<void> {
+  public async onSelectionChangePais(idPais:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     console.log('Datos pais', idEmp, idPais);
     const deptos = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
     if(deptos === null){
-      setTimeout(
-        () => {
           this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
-        }, 1000);
     }else{
       console.log('deptos', deptos);
-      //   this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
-      //   return;
-      // }
 
       this.deptos = _.orderBy(deptos, ['id'], ['asc']);
       console.log('datos select deptos', this.deptos);
@@ -351,7 +384,38 @@ public validateChanged(event:any){
     }
 
   }
-  public async onSelectionChangeDepto(idDepto:number): Promise<void> {
+  public async onSelectionChangePaisExp(idPais:number | null): Promise<void> {
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idPais);
+    const deptosExp = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
+    if(deptosExp === null){
+          this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
+    }else{
+      console.log('deptos', deptosExp);
+
+      this.deptosExp = _.orderBy(deptosExp, ['id'], ['asc']);
+      console.log('datos select deptosExp', this.deptosExp);
+      loading.close();
+    }
+
+  }
+  public async onSelectionChangeDeptoExp(idDepto:number | null): Promise<void> {
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const idEmp = this.idEmp;
+    console.log('Datos pais', idEmp, idDepto);
+    const ciudadesExp = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
+     if(ciudadesExp.length === 0){
+      this.messageService.error('Error', 'Error interno del servidor al cargar las ciudadesExp');
+      return;
+    }
+    console.log('deptos', ciudadesExp);
+    this.ciudadesExp = _.orderBy(ciudadesExp, ['id'], ['asc']);
+    console.log('datos select deptos', this.ciudadesExp);
+    loading.close();
+  }
+
+  public async onSelectionChangeDepto(idDepto:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     console.log('Datos pais', idEmp, idDepto);
@@ -365,7 +429,7 @@ public validateChanged(event:any){
     console.log('datos select deptos', this.ciudades);
     loading.close();
   }
-  public async onSelectionChangeCiudad(idCiudad:number): Promise<void> {
+  public async onSelectionChangeCiudad(idCiudad:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     console.log('Datos pais', idEmp, idCiudad);
@@ -413,10 +477,30 @@ public validateChanged(event:any){
 
 
   public validarCampos(): boolean{
+
+    console.log('Prueba validar',this.nitatosBasicos);
+    if(!this.nitatosBasicos.valid){
+      // this.messageService.waitInfo('Debe llenar todos los campos requeridos... Por favor verifique el formulario.');
+      console.log('No valido');
+    }else{
+      // this.messageService.waitInfo('Bien');
+      console.log('valido');
+    }
+
     let that = this;
     let valid = true;
+    // console.log('Valido?:',    this.hv_field);
+
     // let inputsHdv = document.getElementsByClassName('input-hdv');
+    // let hvField = document.getElementsByClassName('hv_field');
     // console.log('ìnputs validete', inputsHdv);
+    // console.log('ìnputs valid', hvField);
+
+    // if(hvField){
+    //   // hvField.focus();
+    //   that.messageService.warning('Oops...', 'Debe llenar el campo "' + hvField + '" para continuar');
+    //   valid = false;
+    // }
 
     // let elements = document.getElementsByClassName('input-hdv');
     // console.log('Elements', elements);

@@ -374,7 +374,7 @@ public inforFamilia: any[] = [];
         id_rh_tipo_documento: this.datosBasicos.id_rh_tipo_documento,
         nombre: this.datosBasicos.nombre,
         apellido: this.datosBasicos.apellido,
-        id_usuario: this.datosBasicos.id_usuario,
+        id_usuario: this.datosBasicos.id_usuario + 100,
         genero: this.datosBasicos.genero,
         fecha_nacimiento: this.datosBasicos.fecha_nacimiento,
         id_cot_cliente_pais: this.datosBasicos.id_cot_cliente_pais,

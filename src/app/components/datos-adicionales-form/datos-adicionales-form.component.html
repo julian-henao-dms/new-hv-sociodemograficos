@@ -77,7 +77,14 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº tarjeta profesional</mat-label>
-        <input matInput placeholder="Nº Tarjeta Profesional" #tarjetaProfesional="ngModel" id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"   (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()" />
+        <input matInput placeholder="Nº Tarjeta Profesional" #tarjeta="ngModel"
+        id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"
+        (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()"
+        [pattern]="expresiones.numbersText"/>
+        <mat-hint  class="message-error"
+        [class.invalid]="tarjeta.invalid" *ngIf="tarjeta.errors?.['pattern']">
+          La tarjeta profesional no es válida, solo se permiten números y letras
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile >
@@ -216,7 +223,14 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nº Licencia</mat-label>
-        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel"  id="licencia" name="licencia"  [(ngModel)]="datosAdicionales.licencia"   (ngModelChange)="datosAdicionales.licencia = $event.toUpperCase()"  />
+        <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel"
+        id="licencia" name="licencia"  [(ngModel)]="datosAdicionales.licencia"
+        (ngModelChange)="datosAdicionales.licencia = $event.toUpperCase()"
+        [pattern]="expresiones.numbersText"/>
+        <mat-hint  class="message-error"
+        [class.invalid]="tarjeta.invalid" *ngIf="tarjeta.errors?.['pattern']">
+          La tarjeta licencia no es válida, solo se permiten números y letras
+       </mat-hint>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">

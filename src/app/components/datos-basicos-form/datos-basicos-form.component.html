@@ -1,4 +1,4 @@
-
+<form #datosBasicosForm="ngForm" >
 
   <div class="subtitle-container">
     <mat-icon>badge </mat-icon>
@@ -20,6 +20,7 @@
           name="nit"
           [(ngModel)]="datosCandidato.nit"
           (ngModelChange)="datosCandidato.nit = $event.toUpperCase()"
+          ngControl="nit"
           #nit="ngModel" required id="nit"
           [pattern]="expresiones.numbersText"
         />
@@ -36,7 +37,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Tipo Documento</mat-label>
-        <mat-select  [(ngModel)]="datosCandidato.id_rh_tipo_documento"
+        <mat-select  [(ngModel)]="datosCandidato.id_rh_tipo_documento" class="hv_field"
         name="id_rh_tipo_documento" #id_rh_tipo_documento="ngModel" required id="id_rh_tipo_documento"
         (selectionChange)="validateChanged($event)"
         >
@@ -48,7 +49,7 @@
           </mat-option>
         </mat-select>
         <mat-error class="message-error" [class.invalid]="id_rh_tipo_documento.invalid" *ngIf="id_rh_tipo_documento.errors?.['required']">
-          *Este campo es requerido. Debe seleccionar una opción
+          *El tipo de documento es requerido, debe seleccionar una opción.
         </mat-error>
       </mat-form-field>
     </mat-grid-tile>
@@ -60,7 +61,7 @@
         name="fecExpedicion" #fecExpedicion="ngModel" required id="fecExpedicion"/>
         <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecExpedicion.invalid" *ngIf="fecExpedicion.errors?.['required']">
-          * La fecha de expedición es requerida
+          *La fecha de expedición es requerida.
         </mat-error>
         <mat-datepicker-toggle
           matSuffix
@@ -94,6 +95,9 @@
             {{ tipoCandidato.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_tipo_candidato.invalid" *ngIf="id_tipo_candidato.errors?.['required']">
+          *El tipo de candidato es requerido, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
@@ -114,43 +118,52 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar País Expedición</mat-label>
-        <mat-select [(ngModel)]="datosCandidato.pais"
-        name="idCotClientePais" #idCotClientePais="ngModel" (selectionChange)="onSelectionChangePais(datosCandidato.pais)" required id="datosCandidato">
+        <mat-select [(ngModel)]="datosCandidato.paisExp"
+        name="paisExp" #paisExp="ngModel" (selectionChange)="onSelectionChangePaisExp(datosCandidato.paisExp)" required id="datosCandidato">
           <mat-option
-            *ngFor="let pais of paises"
-            [value]="pais.id"
+            *ngFor="let paisExp of paisesExp"
+            [value]="paisExp.id"
           >
-            {{ pais.descripcion }}
+            {{ paisExp.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="paisExp.invalid" *ngIf="paisExp.errors?.['required']">
+          *Este campo es requerido, debe seleccionar un país.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Departamento Expedición</mat-label>
-        <mat-select [(ngModel)]="datosCandidato.depto" (selectionChange)="onSelectionChangeDepto(datosCandidato.depto)"
-        name="depto" #depto="ngModel" required id="depto">
+        <mat-select [(ngModel)]="datosCandidato.deptoExp" (selectionChange)="onSelectionChangeDeptoExp(datosCandidato.deptoExp)"
+        name="deptoExp" #deptoExp="ngModel" required id="deptoExp">
           <mat-option
-            *ngFor="let depto of deptos"
-            [value]="depto.id"
+            *ngFor="let deptoExp of deptosExp"
+            [value]="deptoExp.id"
           >
-            {{ depto.descripcion }}
+            {{ deptoExp.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="deptoExp.invalid" *ngIf="deptoExp.errors?.['required']">
+          *Este campo es requerido, debe seleccionar un departamento.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Ciudad Expedición</mat-label>
         <mat-select [(ngModel)]="datosCandidato.idCotClientePais"
-        name="ciudad" #ciudad="ngModel" required id="ciudad">
+        name="ciudadExp" #ciudadExp="ngModel" required id="ciudadExp">
           <mat-option
-            *ngFor="let ciudad of ciudades"
-            [value]="ciudad.id"
+            *ngFor="let ciudadExp of ciudadesExp"
+            [value]="ciudadExp.id"
           >
-            {{ ciudad.descripcion }}
+            {{ ciudadExp.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="ciudadExp.invalid" *ngIf="ciudadExp.errors?.['required']">
+          *Este campo es requerido, debe seleccionar una ciudad.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
@@ -225,7 +238,7 @@
         #fecha_nacimiento="ngModel" required id="fecha_nacimiento"/>
         <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecha_nacimiento.invalid" *ngIf="fecha_nacimiento.errors?.['required']">
-          * La fecha de nacimiento es requerida
+          *La fecha de nacimiento es requerida
         </mat-error>
         <mat-datepicker-toggle
           matSuffix
@@ -246,6 +259,9 @@
             {{ estadoCivil.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="idRhEstadoCivil.invalid" *ngIf="idRhEstadoCivil.errors?.['required']">
+          *El estado civil es requerido, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -340,12 +356,15 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar País</mat-label>
-        <mat-select name="datosBasicos.pais" [(ngModel)]="datosCandidato.id_cot_cliente_pais"
+        <mat-select name="datosBasicos.pais" [(ngModel)]="datosCandidato.pais"
         #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais" (selectionChange)="onSelectionChangePais(datosCandidato.pais)">
           <mat-option *ngFor="let pais of paises" [value]="pais.id">
             {{ pais.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_cot_cliente_pais.invalid" *ngIf="id_cot_cliente_pais.errors?.['required']">
+          *Este campo es requerido, debe seleccionar un país.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -360,6 +379,9 @@
             {{ depto.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="depto.invalid" *ngIf="depto.errors?.['required']">
+          *Este campo es requerido, debe seleccionar un departamento.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -374,12 +396,15 @@
             {{ ciudad.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="ciudad.invalid" *ngIf="ciudad.errors?.['required']">
+          *Este campo es requerido, debe seleccionar una ciudad.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Barrio</mat-label>
-        <mat-select name="barrio" [(ngModel)]="datosCandidato.id_cot_cliente_barrio"
+        <mat-select name="id_cot_cliente_barrio" [(ngModel)]="datosCandidato.id_cot_cliente_barrio"
         #id_cot_cliente_barrio="ngModel" required id="id_cot_cliente_barrio">
           <mat-option
             *ngFor="let barrio of barrios"
@@ -388,6 +413,9 @@
             {{ barrio.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_cot_cliente_barrio.invalid" *ngIf="id_cot_cliente_barrio.errors?.['required']">
+          *Este campo es requerido, debe seleccionar un barrio.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
@@ -404,9 +432,8 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Experiencia Especifica</mat-label>
-        <mat-select name="id_rh_experiencia" [(ngModel)]="datosCandidato.id_rh_experiencia"
-        required>
+        <mat-label>Seleccionar Experiencia Específica</mat-label>
+        <mat-select #id_rh_experiencia="ngModel" name="id_rh_experiencia" [(ngModel)]="datosCandidato.id_rh_experiencia" required id="id_rh_experiencia">
           <mat-option
             *ngFor="let anioExp of aniosExp"
             [value]="anioExp.id"
@@ -414,12 +441,15 @@
             {{ anioExp.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_experiencia.invalid" *ngIf="id_rh_experiencia.errors?.['required']">
+          *La experiencia específica es requerida, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
 
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Nivel Académico</mat-label>
+        <mat-label>Seleccionar nivel académico</mat-label>
         <mat-select name="id_rh_nivel_academico" [(ngModel)]="datosCandidato.id_rh_nivel_academico"
         #id_rh_nivel_academico="ngModel" required id="id_rh_nivel_academico">
           <mat-option
@@ -429,11 +459,14 @@
             {{ nivelAcademia.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_nivel_academico.invalid" *ngIf="id_rh_nivel_academico.errors?.['required']">
+          *El nivel académico es requerido, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Cargo al que Aplica</mat-label>
+        <mat-label>Seleccionar cargo al que aplica</mat-label>
         <mat-select name="id_rh_perfil" [(ngModel)]="datosCandidato.id_rh_perfil"
         #id_rh_perfil="ngModel" required id="id_rh_perfil">
           <mat-option
@@ -443,6 +476,9 @@
             {{ cargo.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_perfil.invalid" *ngIf="id_rh_perfil.errors?.['required']">
+          *El cargo es requerido, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>
@@ -480,3 +516,4 @@
 
   </div>
 
+</form>

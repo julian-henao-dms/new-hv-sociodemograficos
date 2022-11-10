@@ -1,5 +1,5 @@
 <mat-card>
-    <form>
+    <form >
         <div class="consentimiento-content">
 
           <div class="consentimiento-text">
@@ -78,6 +78,9 @@
                   {{ anioAntigEmpresa.descripcion }}
                 </mat-option>
               </mat-select>
+              <mat-error class="message-error" [class.invalid]="idAntiguedadEmpresa.invalid" *ngIf="idAntiguedadEmpresa.dirty">
+                *Este campo es requerido. Debe seleccionar una opción
+              </mat-error>
               </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -226,7 +229,7 @@
            <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Servicios de la Vivienda</mat-label>
-              <mat-select #serviciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="sociodemograficos.serviciosVivienda" multiple>
+              <mat-select #sdServiciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="serviciosVivienda" multiple>
                 <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.descripcion">{{servicioPublico.descripcion}}</mat-option>
               </mat-select>
             </mat-form-field>
@@ -318,7 +321,7 @@
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>¿Quién o quiénes dependen Económicamente de Usted?</mat-label>
-            <mat-select #personasDepende="ngModel" required id="personasDepende" name="personasDepende"  [(ngModel)]="sociodemograficos.personasDepende" multiple>
+            <mat-select #sdPersonasDepende="ngModel" required id="personasDepende" name="personasDepende"  [(ngModel)]="personasDepende" multiple>
               <mat-option *ngFor="let dependiente of dependencias" [value]="dependiente.descripcion">{{dependiente.descripcion}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -349,7 +352,7 @@
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Tipo del Transporte para ir al Trabajo</mat-label>
-            <mat-select #tipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte"  [(ngModel)]="sociodemograficos.tipoTransporte" multiple>
+            <mat-select #sdTipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte"  [(ngModel)]="tipoTransporte" multiple>
               <mat-option *ngFor="let transporte of tiposTransporte" [value]="transporte.descripcion">{{transporte.descripcion}}</mat-option>
             </mat-select>
           </mat-form-field>

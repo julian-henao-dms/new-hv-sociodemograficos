@@ -76,7 +76,7 @@ export class SociodemograficosComponent implements OnInit {
   public buttonDisabled: boolean = true;
 
   public sociodemograficos: Sociodemograficos = {
-    idRhCandidato:0,
+    idRhCandidato:6018,
     consentimientoinformado: -1,
     idAntiguedadCargo: 0,
     idAntiguedadEmpresa: 0,
@@ -111,6 +111,10 @@ export class SociodemograficosComponent implements OnInit {
     // deptoNacimiento: 0,
     // ciudadNacimiento: 0,
   };
+  public serviciosVivienda: [] = [];
+  public personasDepende: [] = [];
+  public tipoTransporte: [] = [];
+
 
   public showFields = false;
   typeAfiliado = 0;
@@ -354,10 +358,12 @@ export class SociodemograficosComponent implements OnInit {
     loading.close();
   }
 
-// public toStringArray(data: { toString: () => any; }){
-//   const convertArray = data.toString();
-//   console.log('Array coinvertido', convertArray);
-// }
+
+public transformToString(){
+  this.sociodemograficos.serviciosVivienda = this.serviciosVivienda.join();
+  this.sociodemograficos.personasDepende = this.personasDepende.join();
+  this.sociodemograficos.tipoTransporte = this.tipoTransporte.join();
+}
 
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -371,6 +377,17 @@ export class SociodemograficosComponent implements OnInit {
     });
   }
 
+  private async updateInformation(service: string, document: any): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.updateInformacion(service, document).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(0);
+        }
+      });
+    });
+  }
   // public async onSelectionChangeDepto(idDepto:number): Promise<void> {
   //   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
   //   const idEmp = this.idEmp;
@@ -402,8 +419,13 @@ export class SociodemograficosComponent implements OnInit {
 
   // }
 
-  public enviarSociodemograficos() {
+  public async enviarSociodemograficos(): Promise<void> {
+    // this.sociodemograficos.serviciosVivienda = this.serviciosVivienda.join();
+    // this.sociodemograficos.personasDepende = this.personasDepende.join();
+    // this.sociodemograficos.tipoTransporte = this.tipoTransporte.join();
+    this.transformToString();
     this.storaged.set('Sociodemograficos', this.sociodemograficos);
+
     if (this.sociodemograficos.consentimientoinformado == 0) {
       this.messageService.info(
         'Consentimiento no aceptado',
@@ -419,6 +441,7 @@ export class SociodemograficosComponent implements OnInit {
     }
 
     console.log('Enviar', this.sociodemograficos);
+    const idUsuarioHv =  await this.updateInformation('/hojadevida/sociodemograficos', this.sociodemograficos);
   }
 
 
