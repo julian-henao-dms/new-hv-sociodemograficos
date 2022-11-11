@@ -48,6 +48,7 @@ import { InformacionFamiliarFormComponent } from './components/informacion-famil
 import { CargaArchivosHvComponent } from './components/carga-archivos-hv/carga-archivos-hv.component';
 
 
+
 const MY_DATE_FORMAT = {
   parse: {
     dateInput: 'DD-MM-YYYY', // this is how your date will be parsed from Input
@@ -75,6 +76,7 @@ const MY_DATE_FORMAT = {
     CargosFormComponent,
     InformacionFamiliarFormComponent,
     CargaArchivosHvComponent,
+
 
   ],
   imports: [

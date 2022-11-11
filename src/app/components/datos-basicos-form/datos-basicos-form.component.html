@@ -1,4 +1,4 @@
-<form #datosBasicosForm="ngForm" >
+<form datosBasicosForm  #datosBasicosForm="ngForm" >
 
   <div class="subtitle-container">
     <mat-icon>badge </mat-icon>
@@ -14,7 +14,7 @@
   <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
-        <input class="input-hdv"
+        <input class="hv-field"
           matInput
           placeholder="Identidicación"
           name="nit"
@@ -183,7 +183,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Nombre</mat-label>
-        <input class="input-hdv"
+        <input class="hv-field"
           matInput
           placeholder="Nombre"
           name="nombre"
@@ -204,7 +204,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Apellidos</mat-label>
-        <input class="input-hdv" matInput placeholder="Apellidos" name="apellido"
+        <input class="hv-field" matInput placeholder="Apellidos" name="apellido"
         [(ngModel)]="datosCandidato.apellido"
         (ngModelChange)="datosCandidato.apellido = $event.toUpperCase()"
         #apellido="ngModel" required id="apellido"
@@ -251,7 +251,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Estado Civil</mat-label>
         <mat-select name="idRhEstadoCivil" [(ngModel)]="datosCandidato.idRhEstadoCivil"
-        #idRhEstadoCivil="ngModel" required id="idRhEstadoCivil">
+        #idRhEstadoCivil="ngModel" required id="idRhEstadoCivil" class="hv-field">
           <mat-option
             *ngFor="let estadoCivil of estados"
             [value]="estadoCivil.id"
@@ -267,7 +267,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
-        <input class="input-hdv" matInput
+        <input class="hv-field" matInput
         placeholder="Teléfono" name="telefono" [(ngModel)]="datosCandidato.telefono"
         #telefono="ngModel"  id="telefono"
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
@@ -285,7 +285,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Correo</mat-label>
-        <input class="input-hdv"
+        <input class="hv-field"
           matInput
           pattern="[/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/]"
           type="email"
@@ -307,7 +307,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
-        <input class="input-hdv" matInput placeholder="Celular" name="celular" [(ngModel)]="datosCandidato.celular"
+        <input class="hv-field" matInput placeholder="Celular" name="celular" [(ngModel)]="datosCandidato.celular"
         #celular="ngModel" required id="celular"
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.nums"
@@ -336,7 +336,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Dirección</mat-label>
-        <input class="input-hdv" matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion"
+        <input class="hv-field" matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion"
         #direccion="ngModel" required id="direccion" />
       </mat-form-field>
     </mat-grid-tile>

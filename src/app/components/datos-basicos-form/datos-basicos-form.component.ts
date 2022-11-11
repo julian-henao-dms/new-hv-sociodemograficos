@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import {FormBuilder, NgForm, Validators} from '@angular/forms';
+import { NgForm} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
@@ -101,13 +101,13 @@ export class DatosBasicosFormComponent implements OnInit {
 
   @Output() changeSelect = new EventEmitter<any>();
   @ViewChild('datosBasicosForm', { static: true })
-  nitatosBasicos!: NgForm;
+  fieldDatosBasicos!: NgForm;
 
   @ViewChild('hv-field')
   hv_field!: ElementRef;
 
   public showFrm(): void{
-    console.log(this.nitatosBasicos);
+    console.log(this.fieldDatosBasicos);
 }
 
   public typeCandidato: number = 0;
@@ -478,23 +478,23 @@ public validateChanged(event:any){
 
   public validarCampos(): boolean{
 
-    console.log('Prueba validar',this.nitatosBasicos);
-    if(!this.nitatosBasicos.valid){
-      // this.messageService.waitInfo('Debe llenar todos los campos requeridos... Por favor verifique el formulario.');
-      console.log('No valido');
-    }else{
-      // this.messageService.waitInfo('Bien');
-      console.log('valido');
-    }
+    // console.log('Prueba validar',this.fieldDatosBasicos);
+    // if(this.fieldDatosBasicos.valid){
+    //   this.messageService.waitInfo('Debe llenar todos los campos requeridos... Por favor verifique el formulario.');
+    //   console.log('No valido');
+    // }else{
+    //   this.messageService.waitInfo('Bien');
+    //   console.log('valido');
+    // }
 
     let that = this;
     let valid = true;
-    // console.log('Valido?:',    this.hv_field);
+    console.log('Valido?:',    this.hv_field);
 
     // let inputsHdv = document.getElementsByClassName('input-hdv');
-    // let hvField = document.getElementsByClassName('hv_field');
+    let hvField = document.getElementsByClassName('hv_field');
     // console.log('ìnputs validete', inputsHdv);
-    // console.log('ìnputs valid', hvField);
+    console.log('ìnputs valid', hvField);
 
     // if(hvField){
     //   // hvField.focus();
@@ -538,16 +538,24 @@ public validarFormulario(e:any){
   public guardarProgreso(){
     this.validarCampos();
     console.log('Datos Básicos Guardados', this.datosCandidato);
+    if(!this.fieldDatosBasicos.valid){
+      console.log('No valido');
+      this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique el formulario.');
+      this.fieldDatosBasicos.control.markAllAsTouched();
+    }else{
+      this.messageService.waitInfo('Bien');
+      console.log('valido');
+      this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
+        ...this.idiomasCandidato, idIdi
+      }));
+      console.log('Datos Idiomas', this.idiomasArray);
+      this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+      // this.storaged.set('datosBasicosStorage', this.datosBasicos);
+      this.storaged.set('idiomasStorage', this.idiomasArray);
+      this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
+      this.disabledButtonNext = false;
+    }
 
-    this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
-      ...this.idiomasCandidato, idIdi
-    }));
-    console.log('Datos Idiomas', this.idiomasArray);
-    this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-    // this.storaged.set('datosBasicosStorage', this.datosBasicos);
-    this.storaged.set('idiomasStorage', this.idiomasArray);
-    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
-    this.disabledButtonNext = false;
   }
   public getSessionStorage(){
     // this.idiomasArray = this.storaged.get('idiomasStorage');
@@ -557,7 +565,4 @@ public validarFormulario(e:any){
   }
 
 }
-// function typeOf(itemValue: string | null): any {
-//   throw new Error('Function not implemented.');
-// }
 
