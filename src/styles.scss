@@ -86,6 +86,11 @@ width: 100%;
     width: 150px;
   }
 }
+
+::ng-deep .mat-horizontal-stepper-header-container .mat-step-header {
+    pointer-events: none !important;
+}
+
 button.stepper-main-btn {
   background: $main-color;
   color: #fff;
@@ -157,6 +162,10 @@ button.add-button{
     opacity: 1;
   }
 }
+.fieldset-error{
+  border: solid 0.12em $alert-color;
+  transition: all linear .5s;
+  }
 
 fieldset {
   border-radius: 4px;
@@ -164,6 +173,17 @@ fieldset {
   height: 35px;
   border: solid 0.1em #e0e0e0;
   margin: -18px 0 0 0;
+}
+
+.error-radio{
+  position: absolute;
+  margin-top: 60px;
+  margin-left: 10px;
+  font-size: 10px;
+}
+
+p.info-formulario{
+  margin: 1em 0 1em 1.2em;
 }
 
 // mat-table.estudios-mat-table{

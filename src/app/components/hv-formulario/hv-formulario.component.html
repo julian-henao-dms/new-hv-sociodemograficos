@@ -6,7 +6,7 @@
        <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
       <mat-stepper [orientation]="(stepperOrientation | async)!" [linear]="isLinear" #stepper class="wizard-datos-candidato">
-        <mat-step state="description">
+        <mat-step state="description" >
           <ng-template matStepLabel>Datos Básicos</ng-template>
           <app-datos-basicos-form (changeSelect)="changeDatosBasicos($event)"></app-datos-basicos-form>
 

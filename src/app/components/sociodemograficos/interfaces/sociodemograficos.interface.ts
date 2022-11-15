@@ -1,30 +1,30 @@
 export interface Sociodemograficos {
-  idRhCandidato:number;
-  consentimientoinformado: number;
-  idAntiguedadCargo:number;
-  idAntiguedadEmpresa: number;
-  idTipoAfiliacion:number;
-  numeroHijos:number;
-  idEdadHijos:number;
-  idingresos:number;
-  idCaracteristicaVivienda:number;
-  idZonaUbica:number;
-  idEstratoServicios:number;// list or array
+  idRhCandidato:number | null;
+  consentimientoinformado: number | null;
+  idAntiguedadCargo:number | null;
+  idAntiguedadEmpresa: number | null;
+  idTipoAfiliacion:number | null;
+  numeroHijos:number | null;
+  idEdadHijos:number | null;
+  idingresos:number | null;
+  idCaracteristicaVivienda:number | null;
+  idZonaUbica:number | null;
+  idEstratoServicios:number | null;// list or array
   serviciosVivienda:string;// list or array
-  servicios:number;
-  personasVive:number;
-  tamanoVivienda:number;
-  condicionVivienda:number;
+  servicios:number | null;
+  personasVive:number | null;
+  tamanoVivienda:number | null;
+  condicionVivienda:number | null;
   personasDepende:string;
-  personaDiscapacidad:number;
-  serviciosSalud:number;
+  personaDiscapacidad:number | null;
+  serviciosSalud:number | null;
   tipoTransporte:string;
-  rutaSegura:number;
-  tiempoDescanso:number;
+  rutaSegura:number | null;
+  tiempoDescanso:number | null;
   otrasActividades:string;
-  actividadFisica:number;
-  fumador:number;
-  usaLentes:number;
+  actividadFisica:number | null;
+  fumador:number | null;
+  usaLentes:number | null;
   // empresa:string;
   // sede:string;
   // area:string;

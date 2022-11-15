@@ -1,4 +1,4 @@
-
+<form datosAdicionalesForm  #datosAdicionalesForm="ngForm" >
   <mat-grid-list
     #grid
     [cols]="cols"
@@ -17,11 +17,14 @@
             {{ anioExp.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_experiencia_sector.invalid" *ngIf="id_rh_experiencia_sector.errors?.['required']">
+          *La experiencia general es requerida, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar operaciones de equipos </mat-label>
+        <mat-label>Seleccionar experiencia en operación de equipos </mat-label>
         <mat-select [disabled]="tipoCandidato == 0 ? true : false " [(ngModel)]="datosAdicionales.id_rh_experiencia_equipo"
         name="id_rh_experiencia_equipo" #id_rh_experiencia_equipo="ngModel" required id="id_rh_experiencia_equipo">
           <mat-option
@@ -31,11 +34,14 @@
           {{ anioExp.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_experiencia_equipo.invalid" *ngIf="id_rh_experiencia_equipo.errors?.['required']">
+          *La experiencia en operación de equipos es requerida, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar aspiración </mat-label>
+        <mat-label>Seleccionar aspiración salarial</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_salario"
         name="id_salario" #id_salario="ngModel" required id="id_salario">
           <mat-option
@@ -45,6 +51,9 @@
             {{ salario.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_salario.invalid" *ngIf="id_salario.errors?.['required']">
+          *La aspiración salarial es requerida, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -57,7 +66,12 @@
           name=""
           [(ngModel)]="datosAdicionales.salario_especifico"
         name="salario_especifico" #salario_especifico="ngModel" id="salario_especifico"
+        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        [pattern]="expresiones.salario"
         />
+        <mat-error class="message-error" [class.invalid]="salario_especifico.invalid" *ngIf="salario_especifico.errors?.['required']">
+          *El salario específico es requerido
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -72,6 +86,9 @@
             {{ fuente.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_fuente_reclutamiento.invalid" *ngIf="id_rh_fuente_reclutamiento.errors?.['required']">
+          *La fuente de reclutamiento es requerida, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile>
@@ -226,6 +243,7 @@
         <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel"
         id="licencia" name="licencia"  [(ngModel)]="datosAdicionales.licencia"
         (ngModelChange)="datosAdicionales.licencia = $event.toUpperCase()"
+        (keydown)="newLicence($event)"
         [pattern]="expresiones.numbersText"/>
         <mat-hint  class="message-error"
         [class.invalid]="tarjeta.invalid" *ngIf="tarjeta.errors?.['pattern']">
@@ -237,7 +255,7 @@
       <fieldset>
       <div class="container-hv-radios">
         <mat-label>Tipo de licencia:</mat-label>
-        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="datosAdicionales.tipo_licencia">
+        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="datosAdicionales.tipo_licencia"  (change)="chooseType($event)">
           <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.id" color="primary">
             {{ tipoLicencia.descripcion }}
           </mat-radio-button>
@@ -337,7 +355,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar grupo sanguineo</mat-label>
+        <mat-label>Seleccionar grupo sanguíneo</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_grupo_sanguineo"
         name="id_rh_grupo_sanguineo" required #id_rh_grupo_sanguineo="ngModel" id="id_rh_grupo_sanguineo">
           <mat-option
@@ -347,6 +365,9 @@
             {{ grupoSangre.descripcion }}
           </mat-option>
         </mat-select>
+        <mat-error class="message-error" [class.invalid]="id_rh_grupo_sanguineo.invalid" *ngIf="id_rh_grupo_sanguineo.errors?.['required']">
+          *El grupo sanguíneo es requerido, debe seleccionar una opción.
+        </mat-error>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile class="left-grid-position">
@@ -359,6 +380,9 @@
       </mat-radio-group>
       </div>
       </fieldset>
+      <mat-error class="message-error error-radio" [class.invalid]="rh.invalid" *ngIf="rh.errors?.['required'] && rh.touched">
+        *El factor RH es requerido.
+      </mat-error>
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
@@ -399,3 +423,4 @@
       Siguiente
     </button>
   </div>
+</form>

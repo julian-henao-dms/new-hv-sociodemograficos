@@ -1,6 +1,6 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnChanges, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
@@ -69,6 +69,8 @@ interface Ciudad {
   styleUrls: ['./sociodemograficos.component.scss'],
 })
 export class SociodemograficosComponent implements OnInit {
+  @ViewChild('sociodemograficosForm', { static: true })
+  fieldSociodemograficos!: NgForm;
   public idEmp: number = 3;
   public numRegla: number = 159;
 
@@ -77,31 +79,31 @@ export class SociodemograficosComponent implements OnInit {
 
   public sociodemograficos: Sociodemograficos = {
     idRhCandidato:6018,
-    consentimientoinformado: -1,
-    idAntiguedadCargo: 0,
-    idAntiguedadEmpresa: 0,
-    idTipoAfiliacion: 0,
-    numeroHijos: 0,
-    idEdadHijos: 0,
-    idingresos: 0,
-    idCaracteristicaVivienda: 0,
-    idZonaUbica: 0,
-    idEstratoServicios: 0,
+    consentimientoinformado: null,
+    idAntiguedadCargo: null,
+    idAntiguedadEmpresa: null,
+    idTipoAfiliacion: null,
+    numeroHijos: null,
+    idEdadHijos: null,
+    idingresos: null,
+    idCaracteristicaVivienda: null,
+    idZonaUbica: null,
+    idEstratoServicios: null,
     serviciosVivienda: '',
-    servicios: 0, // cuenta con servicios
-    personasVive: 0,
-    tamanoVivienda: 0,
-    condicionVivienda: 0,
+    servicios: null, // cuenta con servicios
+    personasVive: null,
+    tamanoVivienda: null,
+    condicionVivienda: null,
     personasDepende: '',
-    personaDiscapacidad: 0,
-    serviciosSalud: 0,
+    personaDiscapacidad: null,
+    serviciosSalud: null,
     tipoTransporte: '',
-    rutaSegura: 0,
-    tiempoDescanso: 0,
+    rutaSegura: null,
+    tiempoDescanso: null,
     otrasActividades: '',
-    actividadFisica: 0,
-    fumador: 0,
-    usaLentes: 0,
+    actividadFisica: null,
+    fumador: null,
+    usaLentes: null,
     // empresa:'',
     // sede:'',
     // area:'',e
@@ -150,6 +152,18 @@ export class SociodemograficosComponent implements OnInit {
   dependencias: DependeEconomica[] = [];
 
   tiposTransporte: TipoTransporte[] = [];
+
+  public expresiones = {
+    numbersText: /^[A-Za-z0-9_-]{1,20}$/,
+    usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
+    textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
+    password: /^.{4,12}$/, // 4 a 12 digitos.
+    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+    correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
+    nums: /^\d{7,15}$/, // 7 a 14 numeros.
+    celular: /^\d{10,15}$/ // 7 a 14 numeros.
+  }
 
   cols: number | undefined;
   gridByBreakpoint = {
@@ -431,17 +445,25 @@ public transformToString(){
         'Consentimiento no aceptado',
         'Ha marcado NO en la casilla de consentimiento informado, solo almacenaremos esta respuesta.'
       );
-    } else if (this.sociodemograficos.consentimientoinformado == 1) {
-      this.messageService.success(
-        'Perfecto',
-        'Los datos sociodemográficos se almacenaron correctamente'
-      );
+    } else if (this.sociodemograficos.consentimientoinformado == 1 ) {
+      if(!this.fieldSociodemograficos.valid){
+        console.log('No valido');
+        this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique los campos indicados.');
+        this.fieldSociodemograficos.control.markAllAsTouched();
+      }else{
+        console.log('Enviar', this.sociodemograficos);
+        const idUsuarioHv =  await this.updateInformation('/hojadevida/sociodemograficos', this.sociodemograficos);
+        this.messageService.success(
+          'Perfecto',
+          'Los datos sociodemográficos se almacenaron correctamente'
+        );
+      }
+
     } else {
       this.messageService.error('Error', 'No se pudo almacenar la información');
     }
 
-    console.log('Enviar', this.sociodemograficos);
-    const idUsuarioHv =  await this.updateInformation('/hojadevida/sociodemograficos', this.sociodemograficos);
+
   }
 
 

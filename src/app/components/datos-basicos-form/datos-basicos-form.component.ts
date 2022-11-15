@@ -6,6 +6,7 @@ import { SessionStorageService } from 'src/app/services/session-storage.service'
 import { MessagesService } from 'src/app/services/messages.service';
 import { Candidato, Idioma } from "./interfaces/candidato.interface";
 import * as _ from 'lodash';
+import { MatStepper } from '@angular/material/stepper';
 
 
 interface TipoCandidato{
@@ -72,7 +73,7 @@ interface DatosBasicosCandidato {
   nit: string;  //*
   fecExpedicion: string;//*
   lugarExpedicion: string;//*
-  idCotClientePais: number;//
+  idCotClientePais: number | null;//
   nombre: string;//*
   apellido: string;//*
   genero: number | null;//*
@@ -102,13 +103,7 @@ export class DatosBasicosFormComponent implements OnInit {
   @Output() changeSelect = new EventEmitter<any>();
   @ViewChild('datosBasicosForm', { static: true })
   fieldDatosBasicos!: NgForm;
-
-  @ViewChild('hv-field')
-  hv_field!: ElementRef;
-
-  public showFrm(): void{
-    console.log(this.fieldDatosBasicos);
-}
+  @ViewChild('stepper') stepper!: MatStepper;
 
   public typeCandidato: number = 0;
 
@@ -136,7 +131,7 @@ public datosCandidato: DatosBasicosCandidato = {
   nit: '',   //*
   fecExpedicion: '', //*
   lugarExpedicion: '', //*
-  idCotClientePais: 0,//
+  idCotClientePais: null,//
   nombre: '', //*
   apellido: '', //*
   genero: null,//*
@@ -457,17 +452,7 @@ public validateChanged(event:any){
       });
     });
   }
-  private async getAnyInformationAlt(service: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-       this.apiService.getInformacionMaestros(service).subscribe({
-        next: (v) => resolve(v),
-        error: (e) => {
-          console.info(e);
-          resolve(null);
-        }
-      });
-    });
-  }
+
 
 
  public onChange(event:any){
@@ -476,83 +461,28 @@ public validateChanged(event:any){
   }
 
 
-  public validarCampos(): boolean{
 
-    // console.log('Prueba validar',this.fieldDatosBasicos);
-    // if(this.fieldDatosBasicos.valid){
-    //   this.messageService.waitInfo('Debe llenar todos los campos requeridos... Por favor verifique el formulario.');
-    //   console.log('No valido');
-    // }else{
-    //   this.messageService.waitInfo('Bien');
-    //   console.log('valido');
-    // }
-
-    let that = this;
-    let valid = true;
-    console.log('Valido?:',    this.hv_field);
-
-    // let inputsHdv = document.getElementsByClassName('input-hdv');
-    let hvField = document.getElementsByClassName('hv_field');
-    // console.log('ìnputs validete', inputsHdv);
-    console.log('ìnputs valid', hvField);
-
-    // if(hvField){
-    //   // hvField.focus();
-    //   that.messageService.warning('Oops...', 'Debe llenar el campo "' + hvField + '" para continuar');
-    //   valid = false;
-    // }
-
-    // let elements = document.getElementsByClassName('input-hdv');
-    // console.log('Elements', elements);
-    // Array.prototype.map.call(elements, function(element){
-    //   console.log('value Element', element.value);
-    //   console.log('name Element', element.name);
-    //   if(!element.value || element.value === ''){
-    //     element.focus();
-    //     that.messageService.warning('Oops...', 'Debe llenar el campo "' + element.name + '" para continuar');
-    //     valid = false;
-    //   }
-    // });
-//     for (let i = 0; i < inputsHdv.length; i++){
-//       const itemName = inputsHdv[i].getAttribute('name');
-//       const itemValue = inputsHdv[i].getAttribute('value');
-//       console.log('items', itemValue);
-//       // console.log('tipo', typeof(itemValue));
-//         let element = document.getElementsByName(itemValue!)[0];
-//         // console.log('element', element);
-// //
-
-//         console.log('elementValue', element);
-//         element.focus();
-//         this.messageService.warning('Oops...', 'Debe llenar el campo "' + itemValue + '" para continuar');
-//         valid = false;
-//       }
-
-    return valid;
-  }
 
 public validarFormulario(e:any){
   console.log('target name', e.target.name);
 }
 
   public guardarProgreso(){
-    this.validarCampos();
     console.log('Datos Básicos Guardados', this.datosCandidato);
     if(!this.fieldDatosBasicos.valid){
       console.log('No valido');
-      this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique el formulario.');
+      this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique los campos indicados.');
       this.fieldDatosBasicos.control.markAllAsTouched();
     }else{
-      this.messageService.waitInfo('Bien');
       console.log('valido');
       this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
         ...this.idiomasCandidato, idIdi
       }));
       console.log('Datos Idiomas', this.idiomasArray);
       this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-      // this.storaged.set('datosBasicosStorage', this.datosBasicos);
       this.storaged.set('idiomasStorage', this.idiomasArray);
       this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
+      console.log('step', this.stepper);
       this.disabledButtonNext = false;
     }
 

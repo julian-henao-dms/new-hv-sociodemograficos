@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -8,6 +8,7 @@ import { AddLabelToTableService } from 'src/app/services/add-label-to-table.serv
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import * as _ from 'lodash';
+import { NgForm} from '@angular/forms';
 
 interface Pais{
   value: number;
@@ -65,37 +66,40 @@ interface Licencia{
     accion: number;
 }
 interface DatosAdicionalesCandidato{
-  id_rh_experiencia_sector: number;
-  id_rh_experiencia_equipo: number;
-  id_salario: number;
-  salario_especifico: number;
-  id_rh_fuente_reclutamiento: number;
+  id_rh_experiencia_sector: number | null;
+  id_rh_experiencia_equipo: number | null;
+  id_salario: number | null;
+  salario_especifico: number | null;
+  id_rh_fuente_reclutamiento: number | null;
   tarjeta: string;
-  id_Entidad: number;
-  id_participacion_anterior: number;
-  id_trajo_hoja_vida: number;
-  id_disponibilidad_viaje: number;
-  runt: number;
-  idRhEps: number;
-  idRhFondoPension: number;
-  idRhFondoCaja: number;
-  idRhFondoCesantias: number;
+  id_Entidad: number | null;
+  id_participacion_anterior: number | null;
+  id_trajo_hoja_vida: number | null;
+  id_disponibilidad_viaje: number | null;
+  runt: number | null;
+  idRhEps: number | null;
+  idRhFondoPension: number | null;
+  idRhFondoCaja: number | null;
+  idRhFondoCesantias: number | null;
   licencia: string;
-  tipo_licencia: number;
+  tipo_licencia: number | null;
   fecha_vence_licencia: string;
-  id_rh_categoria: number;
-  id_rh_color_piel: number;
-  id_rh_grupo_sanguineo: number;
-  rh: number;
-  peso: number;
-  altura: number;
+  id_rh_categoria: number | null;
+  id_rh_color_piel: number | null;
+  id_rh_grupo_sanguineo: number | null;
+  rh: number | null;
+  peso: number | null;
+  altura: number | null;
 }
 @Component({
   selector: 'app-datos-adicionales-form',
   templateUrl: './datos-adicionales-form.component.html',
   styleUrls: ['./datos-adicionales-form.component.scss']
 })
-export class DatosAdicionalesFormComponent implements OnInit {
+export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
+
+  @ViewChild('datosAdicionalesForm', { static: true })
+  fieldDatosAdicionales!: NgForm;
 
   public idEmp: number = 3;
   public numRegla: number = 159;
@@ -129,30 +133,30 @@ export class DatosAdicionalesFormComponent implements OnInit {
  public disabledButtonNext: boolean = true;
 
  public datosAdicionales: DatosAdicionalesCandidato = {
-  id_rh_experiencia_sector: 0,
-  id_rh_experiencia_equipo: 0,
-  id_salario: 0,
-  salario_especifico: 0,
-  id_rh_fuente_reclutamiento: 0,
+  id_rh_experiencia_sector: null,
+  id_rh_experiencia_equipo: null,
+  id_salario: null,
+  salario_especifico: null,
+  id_rh_fuente_reclutamiento: null,
   tarjeta: '',
-  id_Entidad: 0,
-  id_participacion_anterior: 0,
-  id_trajo_hoja_vida: 0,
-  id_disponibilidad_viaje: 0,
-  runt: 0,
-  idRhEps: 0,
-  idRhFondoPension: 0,
-  idRhFondoCaja: 0,
-  idRhFondoCesantias: 0,
+  id_Entidad: null,
+  id_participacion_anterior: null,
+  id_trajo_hoja_vida: null,
+  id_disponibilidad_viaje: null,
+  runt: null,
+  idRhEps: null,
+  idRhFondoPension: null,
+  idRhFondoCaja: null,
+  idRhFondoCesantias: null,
   licencia: '',
-  tipo_licencia: 0,
+  tipo_licencia: null,
   fecha_vence_licencia: '',
-  id_rh_categoria: 0,
-  id_rh_color_piel: 0,
-  id_rh_grupo_sanguineo: 0,
-  rh: 0,
-  peso: 0,
-  altura: 0,
+  id_rh_categoria: null,
+  id_rh_color_piel: null,
+  id_rh_grupo_sanguineo: null,
+  rh: null,
+  peso: null,
+  altura: null,
  }
   public tipo_licencia = 0;
   public licencia = '';
@@ -170,7 +174,8 @@ export class DatosAdicionalesFormComponent implements OnInit {
     // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
     // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
-    nums: /^\d{7,15}$/ // 7 a 14 numeros.
+    nums: /^\d{7,15}$/, // 7 a 14 numeros.
+    salario: /^\d{6,9}$/ // 6 a 9 numeros.
   }
 
 
@@ -340,6 +345,20 @@ export class DatosAdicionalesFormComponent implements OnInit {
    loading.close();
   }
 
+  public ngOnChanges(changes: SimpleChanges) {
+    // changes.prop contains the old and the new value...
+  }
+
+  public newLicence(event: any){
+    if(event){
+      this.myReferenceArray = [];
+    }
+  }
+  public chooseType(event: any){
+    if(event){
+      this.myReferenceArray = [];
+    }
+  }
   addReference() {
     this.LICENCE_DATA.push(this.setLicences);
     console.log('Data reference',this.LICENCE_DATA);
@@ -390,9 +409,17 @@ export class DatosAdicionalesFormComponent implements OnInit {
 
   public guardarProgreso(){
     console.log('Datos Adicionales', this.datosAdicionales);
-    this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
-    this._storaged.set('datosLicencia', this.myReferenceArray);
-    this.disabledButtonNext = false;
+    if(!this.fieldDatosAdicionales.valid){
+      console.log('No valido');
+      this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique los campos indicados.');
+      this.fieldDatosAdicionales.control.markAllAsTouched();
+    }else{
+        console.log('valido');
+      this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+      this._storaged.set('datosLicencia', this.myReferenceArray);
+      this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
+      this.disabledButtonNext = false;
+    }
 
   }
   public getLocalStorage(){

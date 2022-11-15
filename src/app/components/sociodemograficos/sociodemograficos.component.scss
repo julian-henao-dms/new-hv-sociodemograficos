@@ -16,7 +16,7 @@ mat-grid-list.mat-grid-list {
   display: flex;
   flex-direction: column;
   margin: 0.2em 0;
-  padding: 10px 0 0 5px;
+  padding: 0px 0 0 5px;
   mat-label{
     margin-bottom: 0.2em;
     // text-decoration: underline;
@@ -24,6 +24,10 @@ mat-grid-list.mat-grid-list {
 }
 .mat-radio-button ~ .mat-radio-button {
   margin-left: 16px;
+}
+
+mat-error.radio-sd{
+  margin-top: 73px;
 }
 
 .consentimiento-content {

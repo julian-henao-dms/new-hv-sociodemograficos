@@ -172,14 +172,14 @@
   </p>
   <button mat-button type="button" (click)="addName()">submit</button> -->
   <!-- Fin Adicionar items-->
-  <div class="step-btn-container" *ngIf="this.myReferenceArray.length > 0">
+  <div class="step-btn-container" >
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
     </button>
     <button [disabled]="!(this.myReferenceArray.length > 0)" type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
       Guardar Progreso
     </button>
-    <button [disabled]="disabledButtonNext" class="stepper-main-btn" mat-button matStepperNext>
+    <button  class="stepper-main-btn" mat-button matStepperNext>
       Siguiente
     </button>
   </div>

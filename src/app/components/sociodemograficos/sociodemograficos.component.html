@@ -1,5 +1,5 @@
 <mat-card>
-    <form >
+    <form sociodemograficosForm  #sociodemograficosForm="ngForm">
         <div class="consentimiento-content">
 
           <div class="consentimiento-text">
@@ -78,8 +78,8 @@
                   {{ anioAntigEmpresa.descripcion }}
                 </mat-option>
               </mat-select>
-              <mat-error class="message-error" [class.invalid]="idAntiguedadEmpresa.invalid" *ngIf="idAntiguedadEmpresa.dirty">
-                *Este campo es requerido. Debe seleccionar una opción
+              <mat-error class="message-error" [class.invalid]="idAntiguedadEmpresa.invalid" *ngIf="idAntiguedadEmpresa.errors?.['required']">
+                *La antigüedad en la empresa es requerida. Debe seleccionar una opción
               </mat-error>
               </mat-form-field>
           </mat-grid-tile>
@@ -94,6 +94,9 @@
                   {{ anioAntiguedad.descripcion }}
                 </mat-option>
               </mat-select>
+              <mat-error class="message-error" [class.invalid]="idAntiguedadCargo.invalid" *ngIf="idAntiguedadCargo.errors?.['required']">
+                *La antigüedad en el cargo es requerida. Debe seleccionar una opción
+              </mat-error>
               </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -107,6 +110,9 @@
                   {{ salario.descripcion }}
                 </mat-option>
               </mat-select>
+              <mat-error class="message-error" [class.invalid]="idingresos.invalid" *ngIf="idingresos.errors?.['required']">
+                *El promedio de ingresos es requerido. Debe seleccionar una opción
+              </mat-error>
               </mat-form-field>
           </mat-grid-tile>
           <!-- <mat-grid-tile>
@@ -124,6 +130,9 @@
               </mat-radio-button>
             </mat-radio-group>
             </div>
+            <mat-error class="message-error error-radio radio-sd" [class.invalid]="idTipoAfiliacion.invalid" *ngIf="idTipoAfiliacion.errors?.['required'] && idTipoAfiliacion.touched">
+              *El tipo de afiliación a EPS es requerido.
+            </mat-error>
           </mat-grid-tile>
         </mat-grid-list>
         <mat-divider></mat-divider>
@@ -195,6 +204,9 @@
                     {{ caracteristica.descripcion }}
                   </mat-option>
                 </mat-select>
+                <mat-error class="message-error" [class.invalid]="idCaracteristicaVivienda.invalid" *ngIf="idCaracteristicaVivienda.errors?.['required']">
+                  *El tipo de vivienda es requerido. Debe seleccionar una opción
+                </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
             <mat-grid-tile>
@@ -208,6 +220,9 @@
                     {{ ubicacion.descripcion }}
                   </mat-option>
                 </mat-select>
+                <mat-error class="message-error" [class.invalid]="idZonaUbica.invalid" *ngIf="idZonaUbica.errors?.['required']">
+                  *La zona de ubicación es requerida. Debe seleccionar una opción
+                </mat-error>
                 </mat-form-field>
             </mat-grid-tile>
             </mat-grid-list>
@@ -220,8 +235,10 @@
                    {{ servicioNecesario.name }}
                  </mat-radio-button>
                </mat-radio-group>
-
              </div>
+             <mat-error class="message-error error-radio radio-sd" [class.invalid]="cuentaConServicios.invalid" *ngIf="cuentaConServicios.errors?.['required'] && cuentaConServicios.touched">
+              *Esta pregunta es requerida. Por favor elija una respuesta
+            </mat-error>
              </mat-grid-tile>
             </mat-grid-list>
             <mat-grid-list #grid [cols]="colsAlt" rowHeight="85px" gutterSize="10px" >
@@ -232,6 +249,9 @@
               <mat-select #sdServiciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="serviciosVivienda" multiple>
                 <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.descripcion">{{servicioPublico.descripcion}}</mat-option>
               </mat-select>
+              <mat-error class="message-error" [class.invalid]="sdServiciosVivienda.invalid" *ngIf="sdServiciosVivienda.errors?.['required']">
+                *Los servicio de la vivienda son requeridos. Debe seleccionar al menos una opción
+              </mat-error>
             </mat-form-field>
            </mat-grid-tile>
            <mat-grid-tile>
@@ -245,6 +265,9 @@
                   {{ estrato.descripcion }}
                 </mat-option>
               </mat-select>
+              <mat-error class="message-error" [class.invalid]="idEstratoServicios.invalid" *ngIf="idEstratoServicios.errors?.['required']">
+                *El estrato de los servicio públicos es requerido. Debe seleccionar una opción
+              </mat-error>
               </mat-form-field>
           </mat-grid-tile>
            <mat-grid-tile class="left-grid-position">
@@ -255,8 +278,10 @@
                  {{ servicioNecesario.name }}
                </mat-radio-button>
              </mat-radio-group>
-
            </div>
+           <mat-error class="message-error error-radio radio-sd" [class.invalid]="tamanoVivienda.invalid" *ngIf="tamanoVivienda.errors?.['required'] && tamanoVivienda.touched">
+            *Esta pregunta es requerida. Por favor elija una respuesta
+          </mat-error>
            </mat-grid-tile>
            <mat-grid-tile class="left-grid-position">
             <div class="container-hv-radios">
@@ -266,8 +291,10 @@
                  {{ servicioNecesario.name }}
                </mat-radio-button>
              </mat-radio-group>
-
            </div>
+           <mat-error class="message-error error-radio radio-sd" [class.invalid]="condicionVivienda.invalid" *ngIf="condicionVivienda.errors?.['required'] && condicionVivienda.touched">
+            *Esta pregunta es requerida. Por favor elija una respuesta
+          </mat-error>
            </mat-grid-tile>
           </mat-grid-list>
           <mat-divider></mat-divider>
@@ -289,7 +316,11 @@
               required id="personasVive"
               name="personasVive"
               [(ngModel)]="sociodemograficos.personasVive"
+              oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
               />
+              <mat-error class="message-error" [class.invalid]="personasVive.invalid" *ngIf="personasVive.errors?.['required']">
+                *Este campo es requerido. Por favor digite un valor
+              </mat-error>
               </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -301,6 +332,9 @@
                 placeholder="Número de Hijos"
                 #numeroHijos="ngModel" required id="numeroHijos" name="numeroHijos"  [(ngModel)]="sociodemograficos.numeroHijos"
               />
+              <mat-error class="message-error" [class.invalid]="personasVive.invalid" *ngIf="personasVive.errors?.['required']">
+                *El número de hijos es requerido. Por favor digite un valor
+              </mat-error>
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
@@ -314,6 +348,9 @@
                   {{ rangoEdad.descripcion }}
                 </mat-option>
               </mat-select>
+              <mat-error class="message-error" [class.invalid]="idEdadHijos.invalid" *ngIf="idEdadHijos.errors?.['required']">
+                *El rango de edad de los hijos es requerido. Debe seleccionar una opción
+              </mat-error>
               </mat-form-field>
           </mat-grid-tile>
 
@@ -324,6 +361,9 @@
             <mat-select #sdPersonasDepende="ngModel" required id="personasDepende" name="personasDepende"  [(ngModel)]="personasDepende" multiple>
               <mat-option *ngFor="let dependiente of dependencias" [value]="dependiente.descripcion">{{dependiente.descripcion}}</mat-option>
             </mat-select>
+            <mat-error class="message-error" [class.invalid]="sdPersonasDepende.invalid" *ngIf="sdPersonasDepende.errors?.['required']">
+              *Este campo es requerido. Debe seleccionar al menos una opción
+            </mat-error>
           </mat-form-field>
          </mat-grid-tile>
          </mat-grid-list>
@@ -336,8 +376,10 @@
                {{ personaDiscapacitada.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="personaDiscapacidad.invalid" *ngIf="personaDiscapacidad.errors?.['required'] && personaDiscapacidad.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
         </mat-grid-list>
         <mat-divider></mat-divider>
@@ -355,6 +397,9 @@
             <mat-select #sdTipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte"  [(ngModel)]="tipoTransporte" multiple>
               <mat-option *ngFor="let transporte of tiposTransporte" [value]="transporte.descripcion">{{transporte.descripcion}}</mat-option>
             </mat-select>
+            <mat-error class="message-error" [class.invalid]="sdTipoTransporte.invalid" *ngIf="sdTipoTransporte.errors?.['required']">
+              *El tipo de transporte es requerido. Debe seleccionar al menos una opción
+            </mat-error>
           </mat-form-field>
          </mat-grid-tile>
          </mat-grid-list>
@@ -368,8 +413,10 @@
                {{ rutaSegura.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="rutaSegura.invalid" *ngIf="rutaSegura.errors?.['required'] && rutaSegura.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
          <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
@@ -379,8 +426,10 @@
                {{ tiempoLibre.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="tiempoDescanso.invalid" *ngIf="tiempoDescanso.errors?.['required'] && tiempoDescanso.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
          </mat-grid-list>
          <mat-grid-list #grid [cols]="colsOne" rowHeight="90px" gutterSize="10px" >
@@ -388,7 +437,10 @@
          <mat-grid-tile>
           <mat-form-field class="example-full-width" appearance="outline">
             <mat-label>Otras actividades fuera del trabajo que reducen mi tiempo de descanso</mat-label>
-            <textarea matInput placeholder="Nombre Familiar" #otrasActividades="ngModel" required id="otrasActividades" name="otrasActividades"  [(ngModel)]="sociodemograficos.otrasActividades" (ngModelChange)="sociodemograficos.otrasActividades = $event.toUpperCase()"></textarea>
+            <textarea matInput placeholder="Actividades que reducen el tiempo de descanso" #otrasActividades="ngModel" required id="otrasActividades" name="otrasActividades"  [(ngModel)]="sociodemograficos.otrasActividades" (ngModelChange)="sociodemograficos.otrasActividades = $event.toUpperCase()"></textarea>
+            <mat-error class="message-error" [class.invalid]="otrasActividades.invalid" *ngIf="otrasActividades.errors?.['required']">
+              *Este campo es requerido. Por favor escriba al menos una actividad que interfiera con su tiempo de descanso a parte de su trabajo.
+            </mat-error>
           </mat-form-field>
           <!-- <mat-form-field appearance="outline">
             <mat-label>Otras actividades fuera del trabajo que reducen mi tiempo de descanso</mat-label>
@@ -413,8 +465,10 @@
                {{ servicioNecesario.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="actividadFisica.invalid" *ngIf="actividadFisica.errors?.['required'] && actividadFisica.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
          <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
@@ -424,8 +478,10 @@
                {{ servicioNecesario.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="fumador.invalid" *ngIf="fumador.errors?.['required'] && fumador.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
          <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
@@ -435,8 +491,10 @@
                {{ servicioSalud.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="serviciosSalud.invalid" *ngIf="serviciosSalud.errors?.['required'] && serviciosSalud.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
          <mat-grid-tile class="left-grid-position">
           <div class="container-hv-radios">
@@ -446,8 +504,10 @@
                {{ servicioNecesario.name }}
              </mat-radio-button>
            </mat-radio-group>
-
          </div>
+         <mat-error class="message-error error-radio radio-sd" [class.invalid]="usaLentes.invalid" *ngIf="usaLentes.errors?.['required'] && usaLentes.touched">
+          *Esta pregunta es requerida. Por favor elija una respuesta
+        </mat-error>
          </mat-grid-tile>
 
         </mat-grid-list>
