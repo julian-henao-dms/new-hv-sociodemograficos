@@ -31,3 +31,10 @@
 .scroller-table {
   width: 100%;
 }
+
+@media screen and (max-width: 900px) {
+  .scroller-table {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}

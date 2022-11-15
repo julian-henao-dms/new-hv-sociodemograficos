@@ -90,7 +90,7 @@
   </div>
 
   <div class="scroller-table">
-    <table mat-table class=" demo-table table-form-peritaje" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
+    <table mat-table class=" demo-table table-form-hv" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
         <ng-container matColumnDef="nit">
             <th mat-header-cell *matHeaderCellDef>Identificación</th>
             <td mat-cell *matCellDef="let element">{{element.nit}}</td>

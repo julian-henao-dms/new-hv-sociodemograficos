@@ -158,11 +158,9 @@ export class SociodemograficosComponent implements OnInit {
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
-    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
     nums: /^\d{7,15}$/, // 7 a 14 numeros.
-    celular: /^\d{10,15}$/ // 7 a 14 numeros.
+    celular: /^\d{10,15}$/ // 10 a 15 numeros.
   }
 
   cols: number | undefined;
@@ -434,9 +432,6 @@ public transformToString(){
   // }
 
   public async enviarSociodemograficos(): Promise<void> {
-    // this.sociodemograficos.serviciosVivienda = this.serviciosVivienda.join();
-    // this.sociodemograficos.personasDepende = this.personasDepende.join();
-    // this.sociodemograficos.tipoTransporte = this.tipoTransporte.join();
     this.transformToString();
     this.storaged.set('Sociodemograficos', this.sociodemograficos);
 
