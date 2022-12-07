@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import * as _ from 'lodash';
+import { MessagesService } from 'src/app/services/messages.service';
 
 export interface user {
   userName: string;
@@ -43,6 +44,8 @@ interface ReferenceList {
 export class ReferenciasFormComponent implements OnInit {
 
   public disabledButtonNext: boolean = true;
+  public candidatoId = 0;
+
   public datosReferencias: Referencias = {
     id: 0,
     idCandidato: 0,
@@ -111,7 +114,8 @@ export class ReferenciasFormComponent implements OnInit {
   constructor(
     private breakpointObserver: BreakpointObserver,
     private _storaged: SessionStorageService,
-    private _addItemTable: AddLabelToTableService
+    private _addItemTable: AddLabelToTableService,
+    private messageService: MessagesService
     ){
     // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.stepperOrientation = breakpointObserver
@@ -190,6 +194,7 @@ export class ReferenciasFormComponent implements OnInit {
   public guardarProgreso(){
     // console.log('Referencias', this.datosReferencias);
     this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
+    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 
   }

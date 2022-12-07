@@ -71,6 +71,7 @@ export class EstudiosFormComponent implements OnInit {
   public idEmp: number = 3;
   public numRegla: number = 159;
   public disabledButtonNext: boolean = true;
+  public candidatoId = 0;
 
   public instituciones: Institucion[] = [];
   public titulos: Titulo[] = [];
@@ -185,7 +186,7 @@ export class EstudiosFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.getLocalStorage();
-    // const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
@@ -197,7 +198,53 @@ export class EstudiosFormComponent implements OnInit {
 
     const tipoCurso = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_curso');
     this.tiposCurso = _.orderBy(tipoCurso, ['id'], ['asc']);
-    // loading.close();
+
+    const candidatoExistente = this._storaged.get('candidatoExistente');
+    console.log('Datos adicionales desde storage', candidatoExistente);
+    if(candidatoExistente === 0 || candidatoExistente == null){
+      setTimeout(
+        () => {
+          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+        }, 1000);
+        // this.disabledBtnCrear = false;
+    } else{
+    console.log('Candidato existente', candidatoExistente);
+    this.candidatoId = candidatoExistente[0].id_rh_candidato
+
+    const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
+    console.log('Estudios: ', getEstudios);
+    const newArr = getEstudios.map((obj: {
+      id: number;
+      id_rh_candidato: number;
+      id_rh_profesion: number;
+      id_rh_institucion: number,
+      fecha_desde: Date;
+      fecha_hasta: Date;
+      id_estado_estudio: number;
+      id_tipo_estudio: number;
+      id_nivel_estudio: number;
+      id_tipo_curso: number;
+
+    }) => ({
+      id: obj.id,
+      idEstudio: obj.id_rh_profesion,
+      idCandidato: obj.id_rh_candidato,
+      idUsuario: 0,
+      idInstitucion: obj.id_rh_institucion,
+      fecha_Desde: obj.fecha_desde,
+      fecha_Hasta: obj.fecha_hasta,
+      id_estado_estudio: obj.id_estado_estudio,
+      id_tipo_estudio: obj.id_tipo_estudio,
+      id_nivel_estudio: obj.id_nivel_estudio,
+      id_tipo_curso: obj.id_tipo_curso,
+      accion: 0,
+    }));
+    console.log('new Array', newArr);
+    this.myReferenceArray = [...newArr]
+    console.log('Array catg',this.myReferenceArray);
+    }
+    loading.close();
+
 
   }
 
@@ -246,6 +293,7 @@ export class EstudiosFormComponent implements OnInit {
   public guardarProgreso(){
     // console.log('Datos Estudios Guardados', this.myReferenceArray);
     this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
+    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 
   }

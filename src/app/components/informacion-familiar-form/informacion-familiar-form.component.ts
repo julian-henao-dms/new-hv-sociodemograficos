@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
@@ -22,6 +22,7 @@ interface Parentesco{
   styleUrls: ['./informacion-familiar-form.component.scss']
 })
 export class InformacionFamiliarFormComponent implements OnInit {
+  @Output() activeTab = new EventEmitter<any>();
   public todosDatosCandidato = {}
 
 // public todosDatosCandidato: CandidatoHv = {
@@ -424,7 +425,8 @@ public inforFamilia: any[] = [];
         idRhFondoCesantias: this.datosadicionales.idRhFondoCesantias,
         id_cot_cliente_barrio: this.datosBasicos.id_cot_cliente_barrio,
         sync: 2,
-        idCotClientePais: this.datosBasicos.idCotClientePais
+        idCotClientePais: this.datosBasicos.idCotClientePais,
+        fuente: " "
     },
     referencias_familiares: [
         ...this.inforFamilia
@@ -458,6 +460,7 @@ public inforFamilia: any[] = [];
   public guardarProgreso(){
     console.log('Info Familiar Guardada', this.datosInfoFamilia);
     this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.getLocalStorage();
     this.setupDatosCandidato();
     console.log('Datos', this.todosDatosCandidato);
@@ -495,9 +498,14 @@ public inforFamilia: any[] = [];
     const idUsuarioHv =   await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
     console.log(idUsuarioHv);
     if(idUsuarioHv === 0){
-      this.messageService.error('', '');
+      this.messageService.error('Error', 'No se pudo almacenar la información del candidato');
+      this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
+    }else{
+      this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
+      this.activeTab.emit({'data':true});
+      // this._storaged.clear();
     }
-    // this._storaged.clear();
+
   }
 
   public labelTable(id: number, list: any[]){

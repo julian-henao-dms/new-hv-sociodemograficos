@@ -23,8 +23,9 @@
           ngControl="nit"
           #nit="ngModel" required id="nit"
           [pattern]="expresiones.numbersText"
+          (keyup.enter)="search()"
         />
-        <mat-icon class="icon-search" matSuffix (click)="search()">search</mat-icon>
+        <mat-icon class="icon-search" matSuffix  (click)="search()">search</mat-icon>
         <mat-error class="message-error" [class.invalid]="nit.invalid" *ngIf="nit.errors?.['required']">
           *Este campo es requerido
         </mat-error>
@@ -36,7 +37,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Tipo Documento</mat-label>
+        <mat-label>Seleccionar tipo documento</mat-label>
         <mat-select  [(ngModel)]="datosCandidato.id_rh_tipo_documento" class="hv_field"
         name="id_rh_tipo_documento" #id_rh_tipo_documento="ngModel" required id="id_rh_tipo_documento"
         (selectionChange)="validateChanged($event)"
@@ -55,7 +56,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Fecha Expedición</mat-label>
+        <mat-label>Fecha de expedición</mat-label>
         <input matInput [matDatepicker]="expedicion"
         [(ngModel)]="datosCandidato.fecExpedicion"
         name="fecExpedicion" #fecExpedicion="ngModel" required id="fecExpedicion"/>
@@ -74,7 +75,7 @@
   <mat-divider></mat-divider>
   <div class="subtitle-container">
     <mat-icon>group </mat-icon>
-    <h2 class="subtitle-hv">Tipo de Candidato</h2>
+    <h2 class="subtitle-hv">Tipo de candidato</h2>
   </div>
   <mat-grid-list
     #grid
@@ -84,7 +85,7 @@
   >
     <mat-grid-tile [colspan]="colsAlt">
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Tipo Candidato</mat-label>
+        <mat-label>Seleccionar tipo candidato</mat-label>
         <mat-select  name="id_tipo_candidato" (ngModelChange)="onChange($event)"
         [(ngModel)]="datosCandidato.id_tipo_candidato"
         name="id_tipo_candidato" #id_tipo_candidato="ngModel" required id="id_tipo_candidato">
@@ -117,7 +118,7 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar País Expedición</mat-label>
+        <mat-label>Seleccionar país expedición</mat-label>
         <mat-select [(ngModel)]="datosCandidato.paisExp"
         name="paisExp" #paisExp="ngModel" (selectionChange)="onSelectionChangePaisExp(datosCandidato.paisExp)" required id="datosCandidato">
           <mat-option
@@ -134,7 +135,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Departamento Expedición</mat-label>
+        <mat-label>Seleccionar departamento expedición</mat-label>
         <mat-select [(ngModel)]="datosCandidato.deptoExp" (selectionChange)="onSelectionChangeDeptoExp(datosCandidato.deptoExp)"
         name="deptoExp" #deptoExp="ngModel" required id="deptoExp">
           <mat-option
@@ -151,7 +152,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Ciudad Expedición</mat-label>
+        <mat-label>Seleccionar ciudad expedición</mat-label>
         <mat-select [(ngModel)]="datosCandidato.idCotClientePais"
         name="ciudadExp" #ciudadExp="ngModel" required id="ciudadExp">
           <mat-option
@@ -241,7 +242,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Fecha Nacimiento</mat-label>
+        <mat-label>Fecha de nacimiento</mat-label>
         <input matInput [matDatepicker]="nacimiento" name="fecha_nacimiento" [(ngModel)]="datosCandidato.fecha_nacimiento"
         #fecha_nacimiento="ngModel" required id="fecha_nacimiento"/>
         <mat-hint>DD/MM/AAAA</mat-hint>
@@ -257,7 +258,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Estado Civil</mat-label>
+        <mat-label>Seleccionar estado civil</mat-label>
         <mat-select name="idRhEstadoCivil" [(ngModel)]="datosCandidato.idRhEstadoCivil"
         #idRhEstadoCivil="ngModel" required id="idRhEstadoCivil" class="hv-field">
           <mat-option
@@ -363,7 +364,7 @@
 
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar País</mat-label>
+        <mat-label>Seleccionar país</mat-label>
         <mat-select name="datosBasicos.pais" [(ngModel)]="datosCandidato.pais"
         #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais" (selectionChange)="onSelectionChangePais(datosCandidato.pais)">
           <mat-option *ngFor="let pais of paises" [value]="pais.id">
@@ -377,7 +378,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Departamento</mat-label>
+        <mat-label>Seleccionar departamento</mat-label>
         <mat-select name="depto" [(ngModel)]="datosCandidato.depto" (selectionChange)="onSelectionChangeDepto(datosCandidato.depto)"
         #depto="ngModel" required id="depto">
           <mat-option
@@ -394,7 +395,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Ciudad</mat-label>
+        <mat-label>Seleccionar ciudad</mat-label>
         <mat-select name="ciudad" [(ngModel)]="datosCandidato.id_cot_cliente_pais" (selectionChange)="onSelectionChangeCiudad(datosCandidato.id_cot_cliente_pais)"
         #ciudad="ngModel" required id="ciudad">
           <mat-option
@@ -411,7 +412,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Barrio</mat-label>
+        <mat-label>Seleccionar barrio</mat-label>
         <mat-select name="id_cot_cliente_barrio" [(ngModel)]="datosCandidato.id_cot_cliente_barrio"
         #id_cot_cliente_barrio="ngModel" required id="id_cot_cliente_barrio">
           <mat-option
@@ -440,7 +441,7 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Experiencia Específica</mat-label>
+        <mat-label>Seleccionar experiencia específica</mat-label>
         <mat-select #id_rh_experiencia="ngModel" name="id_rh_experiencia" [(ngModel)]="datosCandidato.id_rh_experiencia" required id="id_rh_experiencia">
           <mat-option
             *ngFor="let anioExp of aniosExp"
@@ -505,7 +506,7 @@
   >
     <mat-grid-tile [colspan]="colsAlt">
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Lengua Extranjera</mat-label>
+        <mat-label>Seleccionar lengua extranjera</mat-label>
         <mat-select name="idIdi" [(ngModel)]="idIdiPrevio"
         #idIdi="ngModel" id="idIdi" multiple>
           <mat-option *ngFor="let lengua of lenguas" [value]="lengua.id">{{lengua.descripcion}}</mat-option>

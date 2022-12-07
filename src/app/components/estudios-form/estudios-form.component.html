@@ -6,7 +6,7 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>1.Seleccionar Institución</mat-label>
+        <mat-label>1.Seleccionar institución</mat-label>
         <mat-select placeholder="Seleccionar Institución" #idInstitucion="ngModel"  id="idInstitucion" name="idInstitucion"  (selectionChange)="onSelectionInstitucion()" [(ngModel)]="setStudies.idInstitucion"> <!-- [(ngModel)]="datosEstudios.idInstitucion" -->
           <mat-option
             *ngFor="let institucion of instituciones"
@@ -21,7 +21,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>2.Seleccionar Título</mat-label>
+        <mat-label>2.Seleccionar título</mat-label>
         <mat-select #idEstudio="ngModel"  id="idEstudio" name="idEstudio"  [(ngModel)]="setStudies.idEstudio"> <!-- [(ngModel)]="datosEstudios.titulo" -->
           <mat-option
             *ngFor="let titulo of titulos"
@@ -34,7 +34,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>3. Periodo de Estudios</mat-label>
+        <mat-label>3. Periodo de estudios</mat-label>
         <mat-date-range-input [rangePicker]="periodo">
           <input matStartDate placeholder="Inicio" #fecha_Desde="ngModel"  id="fecha_Desde" name="fecha_Desde"  [(ngModel)]="datosEstudios.fecha_Desde" />
           <input matEndDate placeholder="Culminación" #fecha_Hasta="ngModel"  id="fecha_Hasta" name="fecha_Hasta"  [(ngModel)]="datosEstudios.fecha_Hasta" />
@@ -49,7 +49,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>4. Seleccionar Estado</mat-label>
+        <mat-label>4. Seleccionar estado</mat-label>
         <mat-select #id_estado_estudio="ngModel"  id="id_estado_estudio" name="id_estado_estudio"  [(ngModel)]="setStudies.id_estado_estudio"> <!-- [(ngModel)]="datosEstudios.id_estado_estudio" -->
           <mat-option
             *ngFor="let estadoEstudio of estadosEstudio"
@@ -62,7 +62,7 @@
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>5. Seleccionar Tipo de Estudios</mat-label>
+        <mat-label>5. Seleccionar tipo de estudios</mat-label>
         <mat-select #id_tipo_estudio="ngModel"  id="id_tipo_estudio" name="id_tipo_estudio"  [(ngModel)]="setStudies.id_tipo_estudio" > <!-- [(ngModel)]="datosEstudios.id_tipo_estudio" -->
           <mat-option
             *ngFor="let tipoEstudio of tiposEstudio"
@@ -75,7 +75,7 @@
     </mat-grid-tile>
     <mat-grid-tile *ngIf="setStudies.id_tipo_estudio === 1">
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Nivel de Estudios</mat-label>
+        <mat-label>Seleccionar nivel de estudios</mat-label>
         <mat-select #id_nivel_estudio="ngModel"  id="id_nivel_estudio" name="id_nivel_estudio"  [(ngModel)]="setStudies.id_nivel_estudio"> <!-- [(ngModel)]="datosEstudios.id_nivel_estudio" -->
           <mat-option
             *ngFor="let nivelEstudio of nivelesEstudio"
@@ -90,7 +90,7 @@
 
     <mat-grid-tile *ngIf="setStudies.id_tipo_estudio === 3">
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar Tipo de Curso</mat-label>
+        <mat-label>Seleccionar tipo de curso</mat-label>
         <mat-select #id_tipo_curso="ngModel"  id="id_tipo_curso" name="id_tipo_curso"  [(ngModel)]="setStudies.id_tipo_curso"> <!-- [(ngModel)]="datosEstudios.id_tipo_estudio" -->
           <mat-option
             *ngFor="let tipoCurso of tiposCurso"
@@ -123,11 +123,11 @@
             <td mat-cell *matCellDef="let element">{{labelTable(element.id_estado_estudio, estadosEstudio)}}</td>
         </ng-container>
         <ng-container matColumnDef="id_tipo_estudio">
-            <th mat-header-cell *matHeaderCellDef>Tipo de Estudio</th>
+            <th mat-header-cell *matHeaderCellDef>Tipo de estudio</th>
             <td mat-cell *matCellDef="let element">{{labelTable(element.id_tipo_estudio, tiposEstudio)}}</td>
         </ng-container>
         <ng-container matColumnDef="id_tipo_curso">
-            <th mat-header-cell *matHeaderCellDef>Tipo de Curso</th>
+            <th mat-header-cell *matHeaderCellDef>Tipo de curso</th>
             <td mat-cell *matCellDef="let element">{{labelTable(element.id_tipo_curso, tiposCurso)}}</td>
         </ng-container>
         <ng-container matColumnDef="id_nivel_estudio">

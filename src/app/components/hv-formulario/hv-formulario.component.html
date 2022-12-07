@@ -7,39 +7,48 @@
       </ng-template>
       <mat-stepper [orientation]="(stepperOrientation | async)!" [linear]="isLinear" #stepper class="wizard-datos-candidato">
         <mat-step state="description" >
-          <ng-template matStepLabel>Datos Básicos</ng-template>
+          <ng-template matStepLabel >Datos Básicos</ng-template>
+          <ng-template  matStepContent>
           <app-datos-basicos-form (changeSelect)="changeDatosBasicos($event)"></app-datos-basicos-form>
-
+        </ng-template>
         </mat-step>
 
         <!-- Paso 2 -->
         <mat-step state="note_add"  label="Datos Adicionales">
+          <ng-template  matStepContent>
         <app-datos-adicionales-form [tipoCandidato]="isDatosBasicos"></app-datos-adicionales-form>
-
+      </ng-template>
         </mat-step>
         <!-- Fin paso 2 -->
         <!-- Paso 3 -->
         <mat-step state="attach_file" label="Archivos">
+          <ng-template  matStepContent>
           <!-- <app-carga-archivos-form></app-carga-archivos-form> -->
           <app-carga-archivos-hv></app-carga-archivos-hv>
+        </ng-template>
         </mat-step>
         <!-- Fin Paso 3 -->
         <!-- Paso 4 -->
 
         <mat-step state="school" label="Estudios">
+          <ng-template  matStepContent>
           <app-estudios-form></app-estudios-form>
+        </ng-template>
         </mat-step>
         <mat-step state="groups" label="Referencias">
+          <ng-template  matStepContent>
           <app-referencias-form></app-referencias-form>
-
+        </ng-template>
         </mat-step>
         <mat-step state="engineering" label="Cargos">
+          <ng-template  matStepContent>
           <app-cargos-form></app-cargos-form>
-
+        </ng-template>
         </mat-step>
         <mat-step state="family_restroom" label="Información Familiar">
+          <ng-template  matStepContent>
           <app-informacion-familiar-form></app-informacion-familiar-form>
-
+        </ng-template>
         </mat-step>
         <!-- <mat-step>
         <ng-template matStepLabel>Hecho</ng-template>
@@ -58,7 +67,9 @@
         <label class="title-tabs-hv"> Datos Sociodemográficos</label>
 
       </ng-template>
+      <!-- <ng-template  matStepContent> -->
       <app-sociodemograficos></app-sociodemograficos>
+    <!-- </ng-template> -->
     </mat-tab>
   </mat-tab-group>
 </mat-card>

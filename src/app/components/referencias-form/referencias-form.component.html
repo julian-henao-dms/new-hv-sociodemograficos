@@ -9,7 +9,7 @@
   <mat-grid-tile>
   <fieldset>
     <div class="container-hv-referencia">
-      <mat-label>Tipo Referencia:</mat-label>
+      <mat-label>Tipo referencia:</mat-label>
       <mat-radio-group #tipoReferencia="ngModel"  id="tipo" name="tipo"  [(ngModel)]="setReferences.tipo">
         <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia.id">{{ tipoReferencia.descripcion}}</mat-radio-button>
       </mat-radio-group>
@@ -18,7 +18,7 @@
 </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Nombre Referencia</mat-label>
+        <mat-label>Nombre referencia</mat-label>
         <input matInput placeholder="Nombre Referencia" #nombreReferencia="ngModel"  id="nombreReferencia" name="nombreReferencia"
           [(ngModel)]="setReferences.nombre" (ngModelChange)="setReferences.nombre = $event.toUpperCase()"
           [pattern]="expresiones.textSpacesAccent" />
@@ -84,7 +84,7 @@
     </mat-grid-tile>
     <mat-grid-tile *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline" >
-        <mat-label>Tiempo Laborado</mat-label>
+        <mat-label>Tiempo laborado</mat-label>
         <input matInput placeholder="Tiempo Laborado" #TiempoLaborado="ngModel"  id="TiempoLaborado" name="TiempoLaborado"  [(ngModel)]="setReferences.TiempoLaborado" />
       </mat-form-field>
     </mat-grid-tile>
@@ -150,7 +150,7 @@
 
 </div>
 
-  <div class="step-btn-container" *ngIf="this.myReferenceArray.length > 0">
+  <div class="step-btn-container" >
     <button class="stepper-main-btn" mat-button matStepperPrevious>
       Atrás
     </button>

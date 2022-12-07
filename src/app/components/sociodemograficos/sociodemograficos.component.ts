@@ -267,6 +267,7 @@ export class SociodemograficosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
+    console.log('Inicia Sociodemograficos');
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
 
     const idEmp = this.idEmp;
@@ -368,7 +369,43 @@ export class SociodemograficosComponent implements OnInit {
 
 
     loading.close();
+
+    const candidatoExistente = this.storaged.get('candidatoExistente');
+    if(candidatoExistente === 0 || candidatoExistente == null){
+      setTimeout(
+        () => {
+          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+        }, 1000);
+        // this.disabledBtnCrear = false;
+    } else{
+    console.log('Candidato existente', candidatoExistente);
+    this.sociodemograficos.consentimientoinformado = candidatoExistente[0].consentimiento_informado;
+    this.sociodemograficos.idAntiguedadCargo = candidatoExistente[0].id_antiguedad_cargo;
+    this.sociodemograficos.idAntiguedadEmpresa = candidatoExistente[0].id_antiguedad_empresa;
+    this.sociodemograficos.idTipoAfiliacion = candidatoExistente[0].id_tipo_afiliacion;
+    this.sociodemograficos.numeroHijos = candidatoExistente[0].numero_hijos;
+    this.sociodemograficos.idEdadHijos = candidatoExistente[0].id_edad_hijos;
+    this.sociodemograficos.idingresos = candidatoExistente[0].id_ingresos;
+    this.sociodemograficos.idCaracteristicaVivienda = candidatoExistente[0].id_caracteristica_vivienda;
+    this.sociodemograficos.idZonaUbica = candidatoExistente[0].id_zona_ubica;
+    this.sociodemograficos.idEstratoServicios = candidatoExistente[0].id_estrato_servicios;
+    this.sociodemograficos.serviciosVivienda = candidatoExistente[0].servicios_vivienda;
+    this.sociodemograficos.servicios = candidatoExistente[0].servicios;
+    this.sociodemograficos.personasVive = candidatoExistente[0].personas_vive;
+    this.sociodemograficos.tamanoVivienda = candidatoExistente[0].tamano_vivienda;
+    this.sociodemograficos.condicionVivienda = candidatoExistente[0].condicion_vivienda;
+    this.sociodemograficos.personasDepende = candidatoExistente[0].personas_depende;
+    this.sociodemograficos.personaDiscapacidad = candidatoExistente[0].persona_discapacidad;
+    this.sociodemograficos.serviciosSalud = candidatoExistente[0].servicios_salud;
+    this.sociodemograficos.tipoTransporte = candidatoExistente[0].tipo_transporte;
+    this.sociodemograficos.rutaSegura = candidatoExistente[0].ruta_segura;
+    this.sociodemograficos.tiempoDescanso = candidatoExistente[0].tiempo_descanso;
+    this.sociodemograficos.otrasActividades = candidatoExistente[0].otras_actividades;
+    this.sociodemograficos.actividadFisica = candidatoExistente[0].actividad_fisica;
+    this.sociodemograficos.fumador = candidatoExistente[0].fumador;
+    this.sociodemograficos.usaLentes = candidatoExistente[0].usa_lentes;
   }
+}
 
 
 public transformToString(){
@@ -448,6 +485,7 @@ public transformToString(){
       }else{
         console.log('Enviar', this.sociodemograficos);
         const idUsuarioHv =  await this.updateInformation('/hojadevida/sociodemograficos', this.sociodemograficos);
+        console.log('Respuesta al update', idUsuarioHv);
         this.messageService.success(
           'Perfecto',
           'Los datos sociodemográficos se almacenaron correctamente'

@@ -1,3 +1,14 @@
 .table-licence{
   margin-bottom: 1em;
 }
+
+th.mat-header-cell {
+  text-align: center;
+}
+
+@media screen and (max-width: 860px) {
+  .scroller-table {
+    width: 100%;
+    overflow-x: scroll;
+  }
+}

@@ -36,7 +36,7 @@ export class CargosFormComponent implements OnInit {
   constructor(
     private _storaged: SessionStorageService,
     private apiService: ApiService,
-    private messageService: MessagesService
+    private messageService: MessagesService,
     ) { }
 
   async ngOnInit(): Promise<void> {
@@ -72,6 +72,7 @@ export class CargosFormComponent implements OnInit {
     }));
     // console.log('Cargos Guardados', this.otrosCargos);
     this._storaged.set('otrosCargosStorage', this.cargosArray);
+    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 
   }

@@ -66,6 +66,7 @@ interface AniosExperiencia{
   descripcion: string;
 }
 interface DatosBasicosCandidato {
+  id:number;
   emp: number;
   id_usuario: number;
   id_tipo_candidato: number | null;
@@ -92,6 +93,7 @@ interface DatosBasicosCandidato {
   deptoExp:number | null;
   pais:number | null;
   paisExp:number | null;
+  fuente:string;
 }
 @Component({
   selector: 'app-datos-basicos-form',
@@ -124,6 +126,7 @@ export class DatosBasicosFormComponent implements OnInit {
   public barrios: Barrio[] = [];
 
 public datosCandidato: DatosBasicosCandidato = {
+  id:0,
   emp: 0,
   id_usuario: 0,
   id_tipo_candidato: null,
@@ -150,6 +153,7 @@ public datosCandidato: DatosBasicosCandidato = {
   paisExp: null,
   depto: null,
   deptoExp: null,
+  fuente: ''
 }
 
 
@@ -346,8 +350,49 @@ public idiomasCandidato: Idioma = {
   //   });
   // }
 
-  public search(){
-    console.log('Buscando');
+  public async search(): Promise<void>{
+    console.log('Buscando', this.datosCandidato.nit);
+    this.storaged.clear();
+    if(this.datosCandidato.nit !== ''){
+      this.messageService.info("Atencion", "Estamos cargando los datos del candidato");
+      const idEmp = this.idEmp;
+      const candidatoExistente = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.datosCandidato.nit);
+      if(candidatoExistente === 0 || candidatoExistente == null){
+        setTimeout(
+          () => {
+            this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+          }, 1000);
+          // this.disabledBtnCrear = false;
+      } else{
+        console.log('llego aqui?', candidatoExistente);
+        this.storaged.set('candidatoExistente', candidatoExistente);
+        this.datosCandidato.id = candidatoExistente[0].id_rh_candidato;
+        this.datosCandidato.nit = candidatoExistente[0].nit;
+        this.datosCandidato.id_rh_tipo_documento = candidatoExistente[0].id_rh_tipo_documento;
+        console.log('prueba ',this.datosCandidato.nit);
+        this.datosCandidato.nombre = candidatoExistente[0].nombre;
+        this.datosCandidato.apellido = candidatoExistente[0].apellido;
+        this.datosCandidato.genero = candidatoExistente[0].genero;
+        this.datosCandidato.fecha_nacimiento = candidatoExistente[0].fecha_nacimiento;
+        this.datosCandidato.id_cot_cliente_barrio = candidatoExistente[0].id_cot_cliente_barrio;
+        this.datosCandidato.direccion = candidatoExistente[0].direccion;
+        this.datosCandidato.telefono = candidatoExistente[0].telefono;
+        this.datosCandidato.celular = candidatoExistente[0].celular;
+        this.datosCandidato.mail = candidatoExistente[0].mail;
+        this.datosCandidato.id_rh_perfil = candidatoExistente[0].id_rh_perfil;
+        this.datosCandidato.idCotClientePais = candidatoExistente[0].idCotClientePais;
+        this.datosCandidato.id_cot_cliente_pais = candidatoExistente[0].id_cot_cliente_pais2;
+        this.datosCandidato.id_rh_nivel_academico = candidatoExistente[0].id_rh_nivel_academico;
+        this.datosCandidato.id_rh_experiencia = candidatoExistente[0].id_rh_experiencia;
+        this.datosCandidato.id_tipo_candidato = candidatoExistente[0].id_tipo_candidato;
+        this.datosCandidato.idRhEstadoCivil = candidatoExistente[0].id_rh_estado_civil;
+        this.datosCandidato.fecExpedicion = candidatoExistente[0].fecha_exp_cedula;
+        this.datosCandidato.lugarExpedicion = candidatoExistente[0].lugar_exp_cedula;
+        console.log('New',this.datosCandidato);
+        // const getIdiomasCandidato = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.datosCandidato.id);
+      }
+    }
+
 
   }
 
