@@ -108,6 +108,7 @@ export class DatosBasicosFormComponent implements OnInit {
   @ViewChild('stepper') stepper!: MatStepper;
 
   public typeCandidato: number = 0;
+  public candidatoId = 0;
 
   public idEmp: number = 3;
   public numRegla: number = 159;
@@ -335,7 +336,8 @@ public idiomasCandidato: Idioma = {
     }
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
-    loading.close();
+
+  loading.close();
   }
 
   // private async updateInformation(service: string, document: any): Promise<any> {
@@ -389,6 +391,51 @@ public idiomasCandidato: Idioma = {
         this.datosCandidato.fecExpedicion = candidatoExistente[0].fecha_exp_cedula;
         this.datosCandidato.lugarExpedicion = candidatoExistente[0].lugar_exp_cedula;
         console.log('New',this.datosCandidato);
+
+        console.log('Datos adicionales desde storage', candidatoExistente);
+
+        if(candidatoExistente === 0 || candidatoExistente == null){
+          setTimeout(
+            () => {
+              this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+            }, 1000);
+            // this.disabledBtnCrear = false;
+        } else{
+        console.log('Candidato existente', candidatoExistente);
+        this.candidatoId = candidatoExistente[0].id_rh_candidato
+
+        const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
+        console.log('Idiomas: ', getIdiomas);
+        const newArr = getIdiomas.map((obj: {
+          id: number;
+          id_rh_candidato: number;
+          id_rh_profesion: number;
+          id_rh_institucion: number,
+          fecha_desde: Date;
+          fecha_hasta: Date;
+          id_estado_estudio: number;
+          id_tipo_estudio: number;
+          id_nivel_estudio: number;
+          id_tipo_curso: number;
+
+        }) => ({
+          id: obj.id,
+          idEstudio: obj.id_rh_profesion,
+          idCandidato: obj.id_rh_candidato,
+          idUsuario: 0,
+          idInstitucion: obj.id_rh_institucion,
+          fecha_Desde: obj.fecha_desde,
+          fecha_Hasta: obj.fecha_hasta,
+          id_estado_estudio: obj.id_estado_estudio,
+          id_tipo_estudio: obj.id_tipo_estudio,
+          id_nivel_estudio: obj.id_nivel_estudio,
+          id_tipo_curso: obj.id_tipo_curso,
+          accion: 0,
+        }));
+        console.log('new Array', newArr);
+        // this.myReferenceArray = [...newArr]
+        // console.log('Array catg',this.myReferenceArray);
+        }
         // const getIdiomasCandidato = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.datosCandidato.id);
       }
     }

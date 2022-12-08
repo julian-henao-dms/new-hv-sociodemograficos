@@ -179,6 +179,7 @@ public inforFamilia: any[] = [];
 
   public idEmp: number = 3;
   public numRegla: number = 159;
+  public candidatoId = 0;
   parentescos: Parentesco[] = [];
 
   public expresiones = {
@@ -301,7 +302,52 @@ public inforFamilia: any[] = [];
         return;
       }
       this.parentescos = _.orderBy(parentesco, ['id'], ['asc']);
+      const candidatoExistente = this._storaged.get('candidatoExistente');
+      console.log('Datos adicionales desde storage', candidatoExistente);
 
+      if(candidatoExistente === 0 || candidatoExistente == null){
+        setTimeout(
+          () => {
+            this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+          }, 1000);
+          // this.disabledBtnCrear = false;
+      } else{
+      console.log('Candidato existente', candidatoExistente);
+      this.candidatoId = candidatoExistente[0].id_rh_candidato
+
+      const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
+      console.log('Info Familiar: ', getInfoFamiliar);
+      const newArr = getInfoFamiliar.map((obj: {
+        fecha_nacimiento: Date;
+        id: number;
+        id_rh_candidato: number;
+        id_rh_parentesco: number;
+        nit: string;
+        nombre: string;
+        parentesco: string;
+        tel_residencia: string;
+
+      }) => ({
+        id: obj.id,
+        id_candidato: obj.id_rh_candidato,
+        nombre: obj.nombre,
+        idParentesco: obj.id_rh_parentesco,
+        edad: 0,
+        ne: 0,
+        ec: 0,
+        ocupacion: '',
+        empresa: '',
+        telResidencia: obj.tel_residencia,
+        otroFamiliar: '',
+        accion: 0,
+        nit: obj.nit,
+        fechaNace: obj.fecha_nacimiento,
+
+      }));
+      console.log('new Array', newArr);
+      this.myReferenceArray = [...newArr]
+      console.log('Array Familiar', this.myReferenceArray);
+      }
     loading.close();
   }
 

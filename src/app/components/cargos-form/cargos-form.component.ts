@@ -19,6 +19,7 @@ export class CargosFormComponent implements OnInit {
 
   public idPerfilPrevio: number[] = [];
   public disabledButtonNext: boolean = true;
+  public candidatoId = 0;
 
   public idEmp: number = 3;
   public numRegla: number = 159;
@@ -51,6 +52,36 @@ export class CargosFormComponent implements OnInit {
     }
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
+
+ const candidatoExistente = this._storaged.get('candidatoExistente');
+      console.log('Datos adicionales desde storage', candidatoExistente);
+
+      if(candidatoExistente === 0 || candidatoExistente == null){
+        setTimeout(
+          () => {
+            this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+          }, 1000);
+          // this.disabledBtnCrear = false;
+      } else{
+      console.log('Candidato existente', candidatoExistente);
+      this.candidatoId = candidatoExistente[0].id_rh_candidato
+
+      const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
+      console.log('Cargos: ', getCargos);
+      const newArr = getCargos.map((obj: {
+        id: number;
+        id_rh_candidato: number;
+        id_rh_perfil: number;
+        cargo: string;
+
+      }) => ({
+        id: obj.id,
+       descripcion: obj.cargo
+      }));
+      console.log('new Array', newArr);
+      this.idPerfilPrevio = [...newArr]
+      // console.log('Array cargos',this.cargos);
+      }
     loading.close();
   }
 

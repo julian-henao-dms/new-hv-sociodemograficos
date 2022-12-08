@@ -9,6 +9,7 @@ import { SessionStorageService } from 'src/app/services/session-storage.service'
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
 import * as _ from 'lodash';
 import { MessagesService } from 'src/app/services/messages.service';
+import { ApiService } from 'src/app/services/api.service';
 
 export interface user {
   userName: string;
@@ -97,8 +98,8 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
    public tiposReferencia = [
-      { id: 1, descripcion: "Personal" },
-      { id: 2, descripcion: "Laboral" }
+      { id: 0, descripcion: "Personal" },
+      { id: 1, descripcion: "Laboral" }
     ];
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -115,7 +116,8 @@ export class ReferenciasFormComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
-    private messageService: MessagesService
+    private messageService: MessagesService,
+    private apiService: ApiService
     ){
     // this.myDataArray = new MatTableDataSource<user>([...this.USER_DATA]);
     this.stepperOrientation = breakpointObserver
@@ -151,9 +153,76 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+
+    const candidatoExistente = this._storaged.get('candidatoExistente');
+    console.log('Datos adicionales desde storage', candidatoExistente);
+    if(candidatoExistente === 0 || candidatoExistente == null){
+      setTimeout(
+        () => {
+          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+        }, 1000);
+        // this.disabledBtnCrear = false;
+    } else{
+    console.log('Candidato existente', candidatoExistente);
+    this.candidatoId = candidatoExistente[0].id_rh_candidato
+
+
+    const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
+    console.log('Referencias: ', getInfoFamiliar);
+    const newArr = getInfoFamiliar.map((obj: {
+      id: number;
+      cargo: string;
+      celular: string;
+      empresa: string;
+      id_rh_candidato: number;
+      mail: string;
+      motivo_retiro: string;
+      nombre: string;
+      observaciones: string;
+      observaciones_det: string;
+      telefono: string;
+      tiempo_laborado: string;
+      tipo: number;
+      tipo_ref: string;
+    }) => ({
+
+      id: obj.id,
+      idCandidato: obj.id_rh_candidato,
+      nombre: obj.nombre,
+      celular: obj.celular,
+      telefono: obj.telefono,
+      mail: obj.mail,
+      tipo: obj.tipo,
+      idUsuario: 0,
+      empresa: obj.empresa,
+      Cargo: obj.cargo,
+      Observaciones: obj.observaciones,
+      TiempoLaborado: obj.tiempo_laborado,
+      MotivoRetiro: obj.motivo_retiro,
+      accion: 0,
+    }));
+    console.log('new Array', newArr);
+    console.log('new Array', newArr.tipo);
+    this.myReferenceArray = [...newArr]
+    console.log('Array catg',this.myReferenceArray);
+    }
+  loading.close();
+
   }
 
+  private async getAnyInformation(service: string): Promise<any> {
+    return new Promise((resolve, reject) => {
+       this.apiService.getInformacion(service).subscribe({
+        next: (v) => resolve(v),
+        error: (e) => {
+          console.info(e);
+          resolve(null);
+        }
+      });
+    });
+  }
 
   addReference() {
     this.REFERENCE_DATA.push(this.setReferences);
