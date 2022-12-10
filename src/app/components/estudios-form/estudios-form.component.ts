@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild  } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { AddLabelToTableService } from 'src/app/services/add-label-to-table.serv
 import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import * as _ from 'lodash';
+import { NgForm } from '@angular/forms';
 
 
 interface Institucion{
@@ -68,6 +69,8 @@ interface EstudiosList {
   styleUrls: ['./estudios-form.component.scss']
 })
 export class EstudiosFormComponent implements OnInit {
+  @ViewChild('addEstudiosData', { static: true })
+  fieldDatosEstudios!: NgForm;
   public idEmp: number = 3;
   public numRegla: number = 159;
   public disabledButtonNext: boolean = true;
@@ -103,16 +106,16 @@ export class EstudiosFormComponent implements OnInit {
 
   public datosEstudios: Estudios ={
     id: 0,
-    idEstudio: 0,
+    idEstudio: null,
     idCandidato: 0,
     idUsuario: 0,
-    idInstitucion: 0,
+    idInstitucion: null,
     fecha_Desde: new Date,
     fecha_Hasta: new Date,
-    id_estado_estudio: 0,
-    id_tipo_estudio: 0,
-    id_nivel_estudio: 0,
-    id_tipo_curso: 0,
+    id_estado_estudio: null,
+    id_tipo_estudio: null,
+    id_nivel_estudio: null,
+    id_tipo_curso: null,
     accion: 0,
     //titulo: 0 // subitem? no esta en el sp
   }
@@ -121,16 +124,16 @@ export class EstudiosFormComponent implements OnInit {
   public STUDIES_DATA: Estudios[] = [];
   public setStudies = {
     id: 0,
-    idEstudio: 0,
+    idEstudio: null,
     idCandidato: 0,
     idUsuario: 0,
-    idInstitucion: 0,
+    idInstitucion: null,
     fecha_Desde: new Date,
     fecha_Hasta: new Date,
-    id_estado_estudio: 0,
-    id_tipo_estudio: 0,
-    id_nivel_estudio: 0,
-    id_tipo_curso: 0,
+    id_estado_estudio: null,
+    id_tipo_estudio: null,
+    id_nivel_estudio: null,
+    id_tipo_curso: null,
     accion: 0,
   };
   public myReferenceArray: any[] = [];
@@ -216,14 +219,14 @@ export class EstudiosFormComponent implements OnInit {
     const newArr = getEstudios.map((obj: {
       id: number;
       id_rh_candidato: number;
-      id_rh_profesion: number;
-      id_rh_institucion: number,
+      id_rh_profesion: number | null;
+      id_rh_institucion: number | null;
       fecha_desde: Date;
       fecha_hasta: Date;
-      id_estado_estudio: number;
-      id_tipo_estudio: number;
-      id_nivel_estudio: number;
-      id_tipo_curso: number;
+      id_estado_estudio: number | null;
+      id_tipo_estudio: number | null;
+      id_nivel_estudio: number | null;
+      id_tipo_curso: number | null;
 
     }) => ({
       id: obj.id,
@@ -264,26 +267,31 @@ export class EstudiosFormComponent implements OnInit {
 
 
   addReference() {
-    this.STUDIES_DATA.push(this.setStudies);
+if(this.fieldDatosEstudios.valid){
+      this.STUDIES_DATA.push(this.setStudies);
     console.log('Data reference',this.STUDIES_DATA);
     this.myReferenceArray.push(this.setStudies);
     this.setStudies = {
       id: 0,
-      idEstudio: 0,
+      idEstudio: null,
       idCandidato: 0,
       idUsuario: 0,
-      idInstitucion: 0,
+      idInstitucion: null,
       fecha_Desde: new Date,
       fecha_Hasta: new Date,
-      id_estado_estudio: 0,
-      id_tipo_estudio: 0,
-      id_nivel_estudio: 0,
-      id_tipo_curso: 0,
+      id_estado_estudio: null,
+      id_tipo_estudio: null,
+      id_nivel_estudio: null,
+      id_tipo_curso: null,
       accion: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];
-    // console.warn(this.myReferenceArray);
+    // console.warn(this.myReferenceArray);}
+  }else{
+      this.messageService.info('Atención','Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
+      this.fieldDatosEstudios.control.markAllAsTouched();
   }
+}
 
   onSelectionInstitucion(){
     console.log('Hola');

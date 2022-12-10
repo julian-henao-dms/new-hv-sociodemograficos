@@ -40,6 +40,7 @@ interface ServicioVivienda {
   descripcion: string;
 }
 interface IdServiciosVivi {
+  check: boolean;
   id: number;
   descripcion: string;
 }
@@ -76,6 +77,7 @@ export class SociodemograficosComponent implements OnInit {
 
   public isDisable: boolean = true;
   public buttonDisabled: boolean = true;
+  public selectedServices: any = [];
 
   public sociodemograficos: Sociodemograficos = {
     idRhCandidato:6018,
@@ -149,6 +151,7 @@ export class SociodemograficosComponent implements OnInit {
   ciudades: Ciudad[] = [];
 
   serviciosPublicos: IdServiciosVivi[] = [];
+
   dependencias: DependeEconomica[] = [];
 
   tiposTransporte: TipoTransporte[] = [];
@@ -264,9 +267,14 @@ export class SociodemograficosComponent implements OnInit {
       this.buttonDisabled = false;
       this.sociodemograficos.consentimientoinformado = event.value;
     }
+
+
+
+
   }
 
   async ngOnInit(): Promise<void> {
+
     console.log('Inicia Sociodemograficos');
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
 
@@ -345,6 +353,14 @@ export class SociodemograficosComponent implements OnInit {
          return;
         }
     this.serviciosPublicos = _.orderBy(IdServiciosVivi, ['id'], ['asc']);
+    console.log('servicios publicos', this.serviciosPublicos);
+
+
+    this.serviciosPublicos.forEach(element => {
+      // agregamos un nuevo elemento check de tipo boolean con valor false
+      element.check = false;
+      console.log('servicios publicos v2', this.serviciosPublicos);
+    });
 
 
     const rangoEdadHijos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEdadHijo');
@@ -368,7 +384,7 @@ export class SociodemograficosComponent implements OnInit {
     this.caracteristicas = _.orderBy(caracteristicasVivienda, ['id'], ['asc']);
 
 
-    loading.close();
+
 
     const candidatoExistente = this.storaged.get('candidatoExistente');
     if(candidatoExistente === 0 || candidatoExistente == null){
@@ -404,9 +420,36 @@ export class SociodemograficosComponent implements OnInit {
     this.sociodemograficos.actividadFisica = candidatoExistente[0].actividad_fisica;
     this.sociodemograficos.fumador = candidatoExistente[0].fumador;
     this.sociodemograficos.usaLentes = candidatoExistente[0].usa_lentes;
+
   }
+
+  console.log('servicios vivienda del edit ', this.sociodemograficos.serviciosVivienda);
+  const getServiciosCandidato = this.sociodemograficos.serviciosVivienda.split(',');
+  console.log('string',getServiciosCandidato);
+
+ this.serviciosPublicos.forEach(element => {
+  console.log('Elemento' ,element);
+  getServiciosCandidato.forEach(servicioCandidato =>{
+    // console.log('servicio del string', servicioCandidato);
+    console.log('comparo', servicioCandidato === element.descripcion);
+    if(servicioCandidato === element.descripcion){
+      element.check = true;
+
+      // console.log('Servicios seleccionados', this.serviciosPublicos);
+      // this.selectedServices = this.serviciosPublicos.filter(item => item.check === true);
+      // console.log('fin seleccionados', this.selectedServices);
+    }
+  })
+})
+console.log('fin seleccionados', this.serviciosPublicos);
+
+loading.close();
 }
 
+public selected(event:any){
+console.log('select SERVICIOS', event.source.value);
+console.log('select SERVICIOS1', event.source._selected);
+}
 
 public transformToString(){
   this.sociodemograficos.serviciosVivienda = this.serviciosVivienda.join();

@@ -247,7 +247,7 @@
             <mat-form-field appearance="outline">
               <mat-label>Servicios de la vivienda</mat-label>
               <mat-select #sdServiciosVivienda="ngModel" required id="serviciosVivienda" name="serviciosVivienda"  [(ngModel)]="serviciosVivienda" multiple>
-                <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.descripcion">{{servicioPublico.descripcion}}</mat-option>
+                <mat-option *ngFor="let servicioPublico of serviciosPublicos" [value]="servicioPublico.descripcion" (onSelectionChange)="selected($event)">{{servicioPublico.descripcion}}</mat-option>
               </mat-select>
               <mat-error class="message-error" [class.invalid]="sdServiciosVivienda.invalid" *ngIf="sdServiciosVivienda.errors?.['required']">
                 *Los servicio de la vivienda son requeridos. Debe seleccionar al menos una opción
