@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { AddLabelToTableService } from 'src/app/services/add-label-to-table.serv
 import * as _ from 'lodash';
 import { MessagesService } from 'src/app/services/messages.service';
 import { ApiService } from 'src/app/services/api.service';
+import { NgForm } from '@angular/forms';
 
 export interface user {
   userName: string;
@@ -43,7 +44,8 @@ interface ReferenceList {
   styleUrls: ['./referencias-form.component.scss']
 })
 export class ReferenciasFormComponent implements OnInit {
-
+  @ViewChild('addReferenceData', { static: true })
+  fieldDatosReferencias!: NgForm;
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
 
@@ -54,7 +56,7 @@ export class ReferenciasFormComponent implements OnInit {
     celular: '',
     telefono: '',
     mail: '',
-    tipo: 0,
+    tipo: 1,
     idUsuario: 0,
     empresa: '',
     Cargo: '',
@@ -75,7 +77,7 @@ export class ReferenciasFormComponent implements OnInit {
     celular: '',
     telefono: '',
     mail: '',
-    tipo: 0,
+    tipo: 1,
     idUsuario: 0,
     empresa: '',
     Cargo: '',
@@ -98,8 +100,8 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
    public tiposReferencia = [
-      { id: 0, descripcion: "Personal" },
-      { id: 1, descripcion: "Laboral" }
+      { id: 1, descripcion: "Personal" },
+      { id: 2, descripcion: "Laboral" }
     ];
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -225,6 +227,7 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
   addReference() {
+    if(this.fieldDatosReferencias.valid){
     this.REFERENCE_DATA.push(this.setReferences);
     console.log('Data reference',this.REFERENCE_DATA);
     this.myReferenceArray.push(this.setReferences);
@@ -245,7 +248,10 @@ export class ReferenciasFormComponent implements OnInit {
       accion: 0,
       };
     this.myReferenceArray = [...this.myReferenceArray];
-
+  }else{
+    this.messageService.info('Atención','Para agregar información sobre sus referencias debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
+    this.fieldDatosReferencias.control.markAllAsTouched();
+}
 
     // console.warn(this.myReferenceArray);
   }

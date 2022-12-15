@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, NgForm, Validators } from '@angular/forms';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { ApiService } from 'src/app/services/api.service';
@@ -70,14 +70,17 @@ interface Ciudad {
   styleUrls: ['./sociodemograficos.component.scss'],
 })
 export class SociodemograficosComponent implements OnInit {
+  @Input() initComponent = false;
   @ViewChild('sociodemograficosForm', { static: true })
   fieldSociodemograficos!: NgForm;
+
   public idEmp: number = 3;
   public numRegla: number = 159;
 
   public isDisable: boolean = true;
   public buttonDisabled: boolean = true;
   public selectedServices: any = [];
+
 
   public sociodemograficos: Sociodemograficos = {
     idRhCandidato:6018,
@@ -115,9 +118,9 @@ export class SociodemograficosComponent implements OnInit {
     // deptoNacimiento: 0,
     // ciudadNacimiento: 0,
   };
-  public serviciosVivienda: [] = [];
-  public personasDepende: [] = [];
-  public tipoTransporte: [] = [];
+  public serviciosVivienda:any[] = [];
+  public personasDepende: any[] = [];
+  public tipoTransporte: any[] = [];
 
 
   public showFields = false;
@@ -337,7 +340,7 @@ export class SociodemograficosComponent implements OnInit {
          return;
         }
     this.dependencias = _.orderBy(personasDependen, ['id'], ['asc']);
-
+//
     const tiposTransporte = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdTipoTrans');
     console.log('regla tipo transporte',tiposTransporte)
     if(tiposTransporte === null){
@@ -357,7 +360,7 @@ export class SociodemograficosComponent implements OnInit {
 
 
     this.serviciosPublicos.forEach(element => {
-      // agregamos un nuevo elemento check de tipo boolean con valor false
+      // agregamos un nuevo
       element.check = false;
       console.log('servicios publicos v2', this.serviciosPublicos);
     });
@@ -390,6 +393,7 @@ export class SociodemograficosComponent implements OnInit {
     if(candidatoExistente === 0 || candidatoExistente == null){
       setTimeout(
         () => {
+          console.log('Me estoy ejecutando.............Sociodemografico....................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
           this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
         }, 1000);
         // this.disabledBtnCrear = false;
@@ -426,29 +430,53 @@ export class SociodemograficosComponent implements OnInit {
   console.log('servicios vivienda del edit ', this.sociodemograficos.serviciosVivienda);
   const getServiciosCandidato = this.sociodemograficos.serviciosVivienda.split(',');
   console.log('string',getServiciosCandidato);
+  this.serviciosVivienda = [...getServiciosCandidato]
+  console.log('Servicios consultados',this.serviciosVivienda);
 
- this.serviciosPublicos.forEach(element => {
-  console.log('Elemento' ,element);
-  getServiciosCandidato.forEach(servicioCandidato =>{
-    // console.log('servicio del string', servicioCandidato);
-    console.log('comparo', servicioCandidato === element.descripcion);
-    if(servicioCandidato === element.descripcion){
-      element.check = true;
 
-      // console.log('Servicios seleccionados', this.serviciosPublicos);
-      // this.selectedServices = this.serviciosPublicos.filter(item => item.check === true);
-      // console.log('fin seleccionados', this.selectedServices);
-    }
-  })
-})
-console.log('fin seleccionados', this.serviciosPublicos);
+
+  console.log('personas depende edit ', this.sociodemograficos.personasDepende);
+  const getPersonasDepende = this.sociodemograficos.personasDepende.split(',');
+  console.log('string',getPersonasDepende);
+  this.personasDepende = [...getPersonasDepende]
+  console.log('Servicios consultados',this.personasDepende);
+
+
+  console.log('servicios vivienda del edit ', this.sociodemograficos.tipoTransporte);
+  const getTipoTransporte = this.sociodemograficos.tipoTransporte.split(',');
+  console.log('string',getTipoTransporte);
+  this.tipoTransporte = [...getTipoTransporte]
+  console.log('Servicios consultados',this.tipoTransporte);
+
+
+//  this.serviciosPublicos.forEach(element => {
+//   console.log('Elemento' ,element);
+//   getServiciosCandidato.forEach(servicioCandidato =>{
+//     // console.log('servicio del string', servicioCandidato);
+//     console.log('comparo', servicioCandidato === element.descripcion);
+//     if(servicioCandidato === element.descripcion){
+//       element.check = true;
+
+//       // console.log('Servicios seleccionados', this.serviciosPublicos);
+//       // this.selectedServices = this.serviciosPublicos.filter(item => item.check === true);
+//       // console.log('fin seleccionados', this.selectedServices);
+//     }
+//   })
+// })
+// console.log('fin seleccionados', this.serviciosPublicos);
+//  this.serviciosPublicos.forEach(element => {
+//   console.log('Elemento' ,element);
+//  return element
+
+// })
+// console.log('fin seleccionados', this.serviciosPublicos);
 
 loading.close();
+
 }
 
 public selected(event:any){
-console.log('select SERVICIOS', event.source.value);
-console.log('select SERVICIOS1', event.source._selected);
+
 }
 
 public transformToString(){
@@ -514,7 +542,7 @@ public transformToString(){
   public async enviarSociodemograficos(): Promise<void> {
     this.transformToString();
     this.storaged.set('Sociodemograficos', this.sociodemograficos);
-
+console.log('datos Sociodemograficos enviardos',this.sociodemograficos);
     if (this.sociodemograficos.consentimientoinformado == 0) {
       this.messageService.info(
         'Consentimiento no aceptado',

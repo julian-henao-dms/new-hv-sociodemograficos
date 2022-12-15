@@ -122,14 +122,14 @@
   <mat-grid-tile class="tile-checks-hv left-grid-position">
 
     <section class="example-section">
-      <mat-checkbox   [checked]="datosAdicionales.id_participacion_anterior === -1"
+      <mat-checkbox
       (change)="datosAdicionales.id_participacion_anterior = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_participacion_anterior"
       name="id_participacion_anterior" #id_participacion_anterior="ngModel" id="id_participacion_anterior" class="example-margin"
         >Participacion anterior
       </mat-checkbox>
 
       <mat-checkbox
-      [checked]="datosAdicionales.id_trajo_hoja_vida === -1"
+
       (change)="datosAdicionales.id_trajo_hoja_vida = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_trajo_hoja_vida"
       name="id_trajo_hoja_vida" #id_trajo_hoja_vida="ngModel" id="id_trajo_hoja_vida" class="example-margin"
       >Hoja de vida
@@ -139,13 +139,13 @@
   <mat-grid-tile class="tile-checks-hv left-grid-position">
     <section class="example-section">
 
-      <mat-checkbox  [checked]="datosAdicionales.id_disponibilidad_viaje === -1"
+      <mat-checkbox
       (change)="datosAdicionales.id_disponibilidad_viaje = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_disponibilidad_viaje"
       name="id_disponibilidad_viaje" #id_disponibilidad_viaje="ngModel" id="id_disponibilidad_viaje" class="example-margin"
         >Disponibilidad para viajar
       </mat-checkbox>
 
-      <mat-checkbox [checked]="datosAdicionales.runt === -1"
+      <mat-checkbox
       (change)="datosAdicionales.runt = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.runt"
       name="runt" #runt="ngModel" id="runt" class="example-margin">Runt</mat-checkbox>
 

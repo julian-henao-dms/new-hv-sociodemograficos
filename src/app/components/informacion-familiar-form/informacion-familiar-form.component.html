@@ -1,4 +1,5 @@
 
+  <form addInfoFamiData  #addInfoFamiData="ngForm">
   <mat-grid-list
     #grid
     [cols]="cols"
@@ -9,7 +10,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Identificación</mat-label>
         <input matInput placeholder="Identificación" #nit="ngModel" id="nit" name="nit"
-        [(ngModel)]="setRelatives.nit" (ngModelChange)="setRelatives.nit = $event.toUpperCase()"
+        [(ngModel)]="setRelatives.nit" required (ngModelChange)="setRelatives.nit = $event.toUpperCase()"
         [pattern]="expresiones.numbersText" />
         <mat-error class="message-error" [class.invalid]="nit.invalid" *ngIf="nit.errors?.['required']">
           *Este campo es requerido
@@ -24,7 +25,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Nombre </mat-label>
         <input matInput placeholder="Nombre Familiar" #nombre="ngModel" id="nombre" name="nombre"
-         [(ngModel)]="setRelatives.nombre" (ngModelChange)="setRelatives.nombre = $event.toUpperCase()"
+         [(ngModel)]="setRelatives.nombre" required (ngModelChange)="setRelatives.nombre = $event.toUpperCase()"
          [pattern]="expresiones.textSpacesAccent"
           />
         <mat-hint  class="message-error"
@@ -36,7 +37,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha Nacimiento</mat-label>
-        <input matInput [matDatepicker]="nacimiento" name="fechaNace" [(ngModel)]="setRelatives.fechaNace"
+        <input matInput [matDatepicker]="nacimiento" name="fechaNace" [(ngModel)]="setRelatives.fechaNace" required
         #fechaNace="ngModel" id="fechaNace"/>
         <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-datepicker-toggle
@@ -65,7 +66,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar Parentesco</mat-label>
         <mat-select placeholder="Parentesco" #idParentesco="ngModel" id="idParentesco" name="idParentesco"
-        [(ngModel)]="setRelatives.idParentesco">
+        [(ngModel)]="setRelatives.idParentesco" required>
           <mat-option
             *ngFor="let parentesco of parentescos"
             [value]="parentesco.id"
@@ -79,7 +80,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Teléfono / móvil</mat-label>
         <input matInput placeholder="Teléfono / móvil" #telResidencia="ngModel" id="telResidencia" name="telResidencia"
-         [(ngModel)]="setRelatives.telResidencia" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+         [(ngModel)]="setRelatives.telResidencia" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
          [pattern]="expresiones.nums" />
       </mat-form-field>
     </mat-grid-tile>
@@ -88,7 +89,7 @@
   <div class="step-btn-container">
     <button class="add-button" mat-flat-button color="primary" (click)="addReference()"><mat-icon>playlist_add</mat-icon> Adicionar</button>
   </div>
-
+</form>
   <div class="scroller-table">
     <table mat-table class=" demo-table table-form-hv" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
         <ng-container matColumnDef="nit">

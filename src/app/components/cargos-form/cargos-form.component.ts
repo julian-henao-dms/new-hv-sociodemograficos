@@ -17,7 +17,7 @@ interface Cargo{
 })
 export class CargosFormComponent implements OnInit {
 
-  public idPerfilPrevio: number[] = [];
+  public idPerfilPrevio: any[] = [];
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
 
@@ -68,20 +68,25 @@ export class CargosFormComponent implements OnInit {
 
       const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
       console.log('Cargos: ', getCargos);
-      const newArr = getCargos.map((obj: {
-        id: number;
-        id_rh_candidato: number;
-        id_rh_perfil: number;
-        cargo: string;
+      // const newArr = getCargos.map((obj: {
+      //   id: number;
+      //   id_rh_candidato: number;
+      //   id_rh_perfil: number;
+      //   cargo: string;
 
-      }) => ({
-        id: obj.id,
-       descripcion: obj.cargo
-      }));
+      // }) => ({
+      //   obj.id
+
+      // }));
+      // console.log('new Array', newArr);
+      // this.idPerfilPrevio = [...newArr]
+      // // console.log('Array cargos',this.cargos);
+      // }
+
+      const newArr = getCargos.map((item: { id_rh_perfil: any; }) => item.id_rh_perfil);
       console.log('new Array', newArr);
       this.idPerfilPrevio = [...newArr]
-      // console.log('Array cargos',this.cargos);
-      }
+    }
     loading.close();
   }
 
@@ -98,6 +103,7 @@ export class CargosFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
+    console.log('Como se guardan los perfiles', this.idPerfilPrevio);
     this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
       ...this.otrosCargos, idPerfil
     }));

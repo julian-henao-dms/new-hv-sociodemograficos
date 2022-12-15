@@ -132,8 +132,8 @@ export class EstudiosFormComponent implements OnInit {
     fecha_Hasta: new Date,
     id_estado_estudio: null,
     id_tipo_estudio: null,
-    id_nivel_estudio: null,
-    id_tipo_curso: null,
+    id_nivel_estudio: 0,
+    id_tipo_curso: 0,
     accion: 0,
   };
   public myReferenceArray: any[] = [];
@@ -281,8 +281,8 @@ if(this.fieldDatosEstudios.valid){
       fecha_Hasta: new Date,
       id_estado_estudio: null,
       id_tipo_estudio: null,
-      id_nivel_estudio: null,
-      id_tipo_curso: null,
+      id_nivel_estudio: 0,
+      id_tipo_curso: 0,
       accion: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];

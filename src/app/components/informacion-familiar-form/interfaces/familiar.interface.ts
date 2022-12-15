@@ -2,7 +2,7 @@ export interface Familiar {
 id: number;
 id_candidato: number;
 nombre: string;
-idParentesco: number;
+idParentesco: number | null;
 edad: number;
 ne: number;
 ec: number;

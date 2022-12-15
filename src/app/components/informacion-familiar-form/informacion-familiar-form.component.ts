@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
@@ -10,6 +10,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { CandidatoHv } from './interfaces/hv-candidato.interface';
 import * as _ from 'lodash';
+import { NgForm } from '@angular/forms';
 
 interface Parentesco{
   id: number;
@@ -22,150 +23,12 @@ interface Parentesco{
   styleUrls: ['./informacion-familiar-form.component.scss']
 })
 export class InformacionFamiliarFormComponent implements OnInit {
-  @Output() activeTab = new EventEmitter<any>();
+  @ViewChild('addInfoFamiData', { static: true })
+  fieldDatosFamilia!: NgForm;
+  @Output() activeTab = new EventEmitter<boolean>();
   public todosDatosCandidato = {}
 
-// public todosDatosCandidato: CandidatoHv = {
-//   candidato: {
-//     id: 0,
-//     emp: 0,
-//     nit: '',
-//     id_rh_tipo_documento: 0,
-//     nombre: '',
-//     apellido: '',
-//     id_usuario: 0,
-//     genero: 0,
-//     fecha_nacimiento: new Date,
-//     id_cot_cliente_pais: 0,
-//     direccion: '',
-//     telefono: '',
-//     celular: '',
-//     mail: '',
-//     id_rh_perfil: 0,
-//     id_cot_cliente: 0,
-//     id_rh_requisicion_personal: 0,
-//     id_rh_nivel_academico: 0,
-//     id_rh_experiencia: 0,
-//     observaciones: '',
-//     id_tipo_candidato: 0,
-//     id_rh_experiencia_sector: 0,
-//     id_disponibilidad_viaje: 0,
-//     id_participacion_anterior: 0,
-//     id_salario: 0,
-//     id_rh_fuente_reclutamiento: 0,
-//     id_trajo_hoja_vida: 0,
-//     estado: 0,
-//     bloqueado: 0,
-//     motivo: '',
-//     licencia: '',
-//     tarjeta: '',
-//     tipo_licencia: 0,
-//     fecha_vence_licencia: new Date,
-//     runt: 0,
-//     id_rh_categoria: 0,
-//     id_rh_color_piel: 0,
-//     id_rh_grupo_sanguineo: 0,
-//     rh: 0,
-//     id_rh_experiencia_equipo: 0,
-//     peso: 0,
-//     altura: 0,
-//     salario: 0,
-//     accion: 0,
-//     id_Usuario_Asociado: 0,
-//     id_con_cco: 0,
-//     id_Entidad: 0,
-//     fecExpedicion: new Date,
-//     lugarExpedicion: '',
-//     idRhEstadoCivil: 0,
-//     idRhEps: 0,
-//     idRhFondoPension: 0,
-//     idRhFondoCaja: 0,
-//     idRhFondoCesantias: 0,
-//     id_cot_cliente_barrio: 0,
-//     sync: 0,
-//     idCotClientePais: 0
-// },
-// referencias_familiares: [
-//     {
-//         id: 0,
-//         id_candidato: 0,
-//         nombre: '',
-//         idParentesco: 0,
-//         edad: 0,
-//         ne: 0,
-//         ec: 0,
-//         ocupacion: '',
-//         empresa: '',
-//         telResidencia: '',
-//         otroFamiliar: 0,
-//         accion: 0,
-//         nit: '',
-//         fechaNace: new Date
-//     }
-// ],
-// estudios: [
-//     {
-//         id: 0,
-//         idEstudio: 0,
-//         idCandidato: 0,
-//         idUsuario: 0,
-//         idInstitucion: 0,
-//         fecha_Desde: new Date,
-//         fecha_Hasta: new Date,
-//         id_estado_estudio: 0,
-//         id_tipo_estudio: 0,
-//         id_nivel_estudio: 0,
-//         id_tipo_curso: 0,
-//         accion: 0
-//     }
-// ],
-// idiomas: [
-//     {
-//         id: 0,
-//         idIdi: 0,
-//         idCandidato: 0,
-//         idUsuario: 0,
-//         accion: 0
-//     }
-// ],
-// referencias: [
-//     {
-//         id: 0,
-//         idCandidato: 0,
-//         nombre: '',
-//         celular: '',
-//         telefono: '',
-//         mail: '',
-//         tipo: 0,
-//         idUsuario: 0,
-//         empresa: '',
-//         Cargo: '',
-//         Observaciones: '',
-//         TiempoLaborado: '',
-//         MotivoRetiro: '',
-//         accion: 0
-//     }
-// ],
-// categorias: [
-//     {
-//         id: 0,
-//         idCandidato: 0,
-//         IdCategoria: 0,
-//         FechaVence: new Date,
-//         accion: 0,
-//     }
-// ],
-// cargos: [
-//     {
-//         id: 0,
-//         idCandidato: 0,
-//         idPerfil: 0,
-//         idUsuario: 0,
-//         accion: 0
-//     }
-// ]
 
-// }
 public datosBasicos: any = {};
 public idiomas: any[] = [];
 public datosadicionales: any = {};
@@ -183,7 +46,7 @@ public inforFamilia: any[] = [];
   parentescos: Parentesco[] = [];
 
   public expresiones = {
-    numbersText: /^[A-Za-z0-9_-]{1,20}$/,
+    numbersText: /^[A-Za-z0-9_-]{1,40}$/,
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
@@ -199,7 +62,7 @@ public inforFamilia: any[] = [];
     id: 0,
     id_candidato: 0,
     nombre: '',
-    idParentesco: 0,
+    idParentesco: null,
     edad: 0,
     ne: 0,
     ec: 0,
@@ -221,7 +84,7 @@ public inforFamilia: any[] = [];
     id: 0,
     id_candidato: 0,
     nombre: '',
-    idParentesco: 0,
+    idParentesco: null,
     edad: 0,
     ne: 0,
     ec: 0,
@@ -249,6 +112,7 @@ public inforFamilia: any[] = [];
     sm: 1,
     xs: 1
   };
+  public tabActive: boolean = false;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private _storaged: SessionStorageService,
@@ -287,8 +151,11 @@ public inforFamilia: any[] = [];
 
     });
   }
+  ngOnChanges(){
 
+  }
   async ngOnInit(): Promise<void> {
+
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
 
     this.getLocalStorage();
@@ -321,7 +188,7 @@ public inforFamilia: any[] = [];
         fecha_nacimiento: Date;
         id: number;
         id_rh_candidato: number;
-        id_rh_parentesco: number;
+        id_rh_parentesco: number | null;
         nit: string;
         nombre: string;
         parentesco: string;
@@ -387,6 +254,7 @@ public inforFamilia: any[] = [];
   }
 
   addReference() {
+    if(this.fieldDatosFamilia.valid){
     this.FAMILIAR_DATA.push(this.setRelatives);
     console.log('Data reference',this.FAMILIAR_DATA);
     this.myReferenceArray.push(this.setRelatives);
@@ -394,7 +262,7 @@ public inforFamilia: any[] = [];
       id: 0,
       id_candidato: 0,
       nombre: '',
-      idParentesco: 0,
+      idParentesco: null,
       edad: 0,
       ne: 0,
       ec: 0,
@@ -407,9 +275,11 @@ public inforFamilia: any[] = [];
       fechaNace: new Date,
     };
     this.myReferenceArray = [...this.myReferenceArray];
-
-
     console.warn(this.myReferenceArray);
+  }else{
+    this.messageService.info('Atención','Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
+    this.fieldDatosFamilia.control.markAllAsTouched();
+}
   }
 
   public setupDatosCandidato(){
@@ -548,7 +418,8 @@ public inforFamilia: any[] = [];
       this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
     }else{
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
-      this.activeTab.emit({'data':true});
+      this.tabActive = true;
+      this.activeTab.emit(this.tabActive);
       // this._storaged.clear();
     }
 

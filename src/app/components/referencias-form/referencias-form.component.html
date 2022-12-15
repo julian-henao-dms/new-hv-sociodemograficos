@@ -1,5 +1,6 @@
 
 <p class="info-formulario">*Es obligatorio agregar al menos una referencia</p>
+<form addReferenceData  #addReferenceData="ngForm">
   <mat-grid-list
     #grid
     [cols]="cols"
@@ -10,8 +11,8 @@
   <fieldset>
     <div class="container-hv-referencia">
       <mat-label>Tipo referencia:</mat-label>
-      <mat-radio-group #tipoReferencia="ngModel"  id="tipo" name="tipo"  [(ngModel)]="setReferences.tipo">
-        <mat-radio-button *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia.id">{{ tipoReferencia.descripcion}}</mat-radio-button>
+      <mat-radio-group #tipoReferencia="ngModel"  id="tipo" name="tipo"  required [(ngModel)]="setReferences.tipo">
+        <mat-radio-button  *ngFor="let tipoReferencia of tiposReferencia" [value]="tipoReferencia.id">{{ tipoReferencia.descripcion}}</mat-radio-button>
       </mat-radio-group>
     </div>
   </fieldset>
@@ -20,7 +21,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Nombre referencia</mat-label>
         <input matInput placeholder="Nombre Referencia" #nombreReferencia="ngModel"  id="nombreReferencia" name="nombreReferencia"
-          [(ngModel)]="setReferences.nombre" (ngModelChange)="setReferences.nombre = $event.toUpperCase()"
+        required [(ngModel)]="setReferences.nombre" (ngModelChange)="setReferences.nombre = $event.toUpperCase()"
           [pattern]="expresiones.textSpacesAccent" />
           <mat-error class="message-error" [class.invalid]="nombreReferencia.invalid" *ngIf="nombreReferencia.errors?.['required']">
             *Este campo es requerido
@@ -35,7 +36,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
         <input matInput placeholder="Celular" #celular="ngModel"  id="celular" name="celular"
-        [(ngModel)]="setReferences.celular" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        required [(ngModel)]="setReferences.celular" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.celular" />
         <mat-error class="message-error" [class.invalid]="celular.invalid" *ngIf="celular.errors?.['required']">
           *Este campo es requerido
@@ -50,7 +51,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
         <input matInput placeholder="Teléfono" #telefono="ngModel"  id="telefono" name="telefono"
-        [(ngModel)]="setReferences.telefono" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
+        required [(ngModel)]="setReferences.telefono" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.nums"/>
         <mat-hint  class="message-error"
         [class.invalid]="telefono.invalid" *ngIf="telefono.errors?.['pattern']">
@@ -61,7 +62,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Correo</mat-label>
-        <input matInput placeholder="Correo" #mail="ngModel"  id="mail" name="mail" [(ngModel)]="setReferences.mail"
+        <input matInput placeholder="Correo" #mail="ngModel"  id="mail" name="mail" required [(ngModel)]="setReferences.mail"
         [pattern]="expresiones.correo"
         />
         <mat-hint  class="message-error"
@@ -73,25 +74,25 @@
     <mat-grid-tile  *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline">
         <mat-label>Empresa</mat-label>
-        <input matInput placeholder="Empresa" #empresa="ngModel"  id="empresa" name="empresa"  [(ngModel)]="setReferences.empresa" />
+        <input matInput placeholder="Empresa" #empresa="ngModel"  id="empresa" name="empresa" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.empresa" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline" >
         <mat-label>Cargo</mat-label>
-        <input matInput placeholder="Cargo" #Cargo="ngModel"  id="Cargo" name="Cargo"  [(ngModel)]="setReferences.Cargo" />
+        <input matInput placeholder="Cargo" #Cargo="ngModel"  id="Cargo" name="Cargo" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.Cargo" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline" >
         <mat-label>Tiempo laborado</mat-label>
-        <input matInput placeholder="Tiempo Laborado" #TiempoLaborado="ngModel"  id="TiempoLaborado" name="TiempoLaborado"  [(ngModel)]="setReferences.TiempoLaborado" />
+        <input matInput placeholder="Tiempo Laborado" #TiempoLaborado="ngModel"  id="TiempoLaborado" name="TiempoLaborado" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.TiempoLaborado" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile  *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline">
         <mat-label>Motivo de Retiro</mat-label>
-        <input matInput placeholder="Motivo de Retiro" #MotivoRetiro="ngModel"  id="MotivoRetiro" name="MotivoRetiro"  [(ngModel)]="setReferences.MotivoRetiro" />
+        <input matInput placeholder="Motivo de Retiro" #MotivoRetiro="ngModel"  id="MotivoRetiro" name="MotivoRetiro" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.MotivoRetiro" />
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="cols">
@@ -111,6 +112,7 @@
   <div class="step-btn-container">
     <button class="add-button" mat-flat-button color="primary" (click)="addReference()"><mat-icon>playlist_add</mat-icon> Adicionar</button>
   </div>
+  </form>
   <div class="scroller-table">
     <table mat-table class=" demo-table table-form-hv" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
         <ng-container matColumnDef="nombre">

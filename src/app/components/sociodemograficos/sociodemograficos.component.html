@@ -394,7 +394,7 @@
          <mat-grid-tile>
           <mat-form-field appearance="outline">
             <mat-label>Tipo del transporte para ir al trabajo</mat-label>
-            <mat-select #sdTipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte"  [(ngModel)]="tipoTransporte" multiple>
+            <mat-select #sdTipoTransporte="ngModel" required id="tipoTransporte" name="tipoTransporte" [(value)]="selected" [(ngModel)]="tipoTransporte" multiple>
               <mat-option *ngFor="let transporte of tiposTransporte" [value]="transporte.descripcion">{{transporte.descripcion}}</mat-option>
             </mat-select>
             <mat-error class="message-error" [class.invalid]="sdTipoTransporte.invalid" *ngIf="sdTipoTransporte.errors?.['required']">

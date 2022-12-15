@@ -7,6 +7,8 @@ import { MessagesService } from 'src/app/services/messages.service';
 import { Candidato, Idioma } from "./interfaces/candidato.interface";
 import * as _ from 'lodash';
 import { MatStepper } from '@angular/material/stepper';
+import { MatSelect } from '@angular/material/select';
+import {MatOption} from '@angular/material/core';
 
 
 interface TipoCandidato{
@@ -105,7 +107,10 @@ export class DatosBasicosFormComponent implements OnInit {
   @Output() changeSelect = new EventEmitter<any>();
   @ViewChild('datosBasicosForm', { static: true })
   fieldDatosBasicos!: NgForm;
+
   @ViewChild('stepper') stepper!: MatStepper;
+
+public mostrarOpciones = true;
 
   public typeCandidato: number = 0;
   public candidatoId = 0;
@@ -163,7 +168,7 @@ public depto = 0;
 public ciudad = 0;
 
 
-public idIdiPrevio: number[] = [];
+public idIdiPrevio: any[] = [];
 public idiomasArray: any[] = [];
 public disabledButtonNext: boolean = true;
 
@@ -328,7 +333,13 @@ public idiomasCandidato: Idioma = {
       return;
     }
     this.lenguas = _.orderBy(lenguaExtranjera, ['id'], ['asc']);
+    console.log('idiomas para modificar',this.lenguas);
 
+    // this.lenguas.forEach(element => {
+    //   // agregamos un nuevo elemento check de tipo boolean con valor false
+    //   element.estado = false;
+    //   })
+      // console.log('idiomas modificado',this.lenguas);
     const cargoAplica = await this.getAnyInformation('/hojadevida/perfiles/' + idEmp);
     if(cargoAplica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
@@ -351,8 +362,12 @@ public idiomasCandidato: Idioma = {
   //     });
   //   });
   // }
+  public ngOnChanges(){
+
+  }
 
   public async search(): Promise<void>{
+    console.log('Me estoy ejecutando.................................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
     console.log('Buscando', this.datosCandidato.nit);
     this.storaged.clear();
     if(this.datosCandidato.nit !== ''){
@@ -403,39 +418,20 @@ public idiomasCandidato: Idioma = {
         } else{
         console.log('Candidato existente', candidatoExistente);
         this.candidatoId = candidatoExistente[0].id_rh_candidato
-
+        console.log('previo ', this.idIdiPrevio );
         const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
         console.log('Idiomas: ', getIdiomas);
-        const newArr = getIdiomas.map((obj: {
-          id: number;
-          id_rh_candidato: number;
-          id_rh_profesion: number;
-          id_rh_institucion: number,
-          fecha_desde: Date;
-          fecha_hasta: Date;
-          id_estado_estudio: number;
-          id_tipo_estudio: number;
-          id_nivel_estudio: number;
-          id_tipo_curso: number;
+        const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
+        console.log('idiomasB ', getIdio);
+        this.idIdiPrevio = [...getIdio];
+        console.log('previo2', this.idIdiPrevio );
 
-        }) => ({
-          id: obj.id,
-          idEstudio: obj.id_rh_profesion,
-          idCandidato: obj.id_rh_candidato,
-          idUsuario: 0,
-          idInstitucion: obj.id_rh_institucion,
-          fecha_Desde: obj.fecha_desde,
-          fecha_Hasta: obj.fecha_hasta,
-          id_estado_estudio: obj.id_estado_estudio,
-          id_tipo_estudio: obj.id_tipo_estudio,
-          id_nivel_estudio: obj.id_nivel_estudio,
-          id_tipo_curso: obj.id_tipo_curso,
-          accion: 0,
-        }));
-        console.log('new Array', newArr);
-        // this.myReferenceArray = [...newArr]
-        // console.log('Array catg',this.myReferenceArray);
         }
+
+//
+//         // this.myReferenceArray = [...newArr]
+//         // console.log('Array catg',this.myReferenceArray);
+//         }
         // const getIdiomasCandidato = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.datosCandidato.id);
       }
     }
@@ -550,6 +546,8 @@ public validateChanged(event:any){
  public onChange(event:any){
     console.log("Evento", event);
     this.changeSelect.emit({'data':event});
+
+
   }
 
 
@@ -567,6 +565,8 @@ public validarFormulario(e:any){
       this.fieldDatosBasicos.control.markAllAsTouched();
     }else{
       console.log('valido');
+      console.log("Como vienen estos idiomas? ", this.idIdiPrevio);
+
       this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
         ...this.idiomasCandidato, idIdi
       }));

@@ -73,10 +73,10 @@ interface DatosAdicionalesCandidato{
   id_rh_fuente_reclutamiento: number | null;
   tarjeta: string;
   id_Entidad: number | null;
-  id_participacion_anterior: number | null;
-  id_trajo_hoja_vida: number | null;
-  id_disponibilidad_viaje: number | null;
-  runt: number | null;
+  id_participacion_anterior: number;
+  id_trajo_hoja_vida: number;
+  id_disponibilidad_viaje: number;
+  runt: number;
   idRhEps: number | null;
   idRhFondoPension: number | null;
   idRhFondoCaja: number | null;
@@ -140,10 +140,10 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   id_rh_fuente_reclutamiento: null,
   tarjeta: '',
   id_Entidad: null,
-  id_participacion_anterior: null,
-  id_trajo_hoja_vida: null,
-  id_disponibilidad_viaje: null,
-  runt: null,
+  id_participacion_anterior: 0,
+  id_trajo_hoja_vida: 0,
+  id_disponibilidad_viaje: 0,
+  runt: 0,
   idRhEps: null,
   idRhFondoPension: null,
   idRhFondoCaja: null,
@@ -350,6 +350,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     if(candidatoExistente === 0 || candidatoExistente == null){
       setTimeout(
         () => {
+          console.log('Me estoy ejecutando.................................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
           this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
         }, 1000);
         // this.disabledBtnCrear = false;
