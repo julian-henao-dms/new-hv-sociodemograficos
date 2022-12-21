@@ -26,6 +26,9 @@ export class InformacionFamiliarFormComponent implements OnInit {
   @ViewChild('addInfoFamiData', { static: true })
   fieldDatosFamilia!: NgForm;
   @Output() activeTab = new EventEmitter<boolean>();
+  // @Output() activeTab2 = new EventEmitter<string>();
+  // @Output() selectTab: EventEmitter<number> = new EventEmitter<number>();
+  public ejemploMessage = 'Hola padre';
   public todosDatosCandidato = {}
 
 
@@ -172,49 +175,51 @@ public inforFamilia: any[] = [];
       const candidatoExistente = this._storaged.get('candidatoExistente');
       console.log('Datos adicionales desde storage', candidatoExistente);
 
-      if(candidatoExistente === 0 || candidatoExistente == null){
-        setTimeout(
-          () => {
-            this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-          }, 1000);
-          // this.disabledBtnCrear = false;
-      } else{
-      console.log('Candidato existente', candidatoExistente);
-      this.candidatoId = candidatoExistente[0].id_rh_candidato
+      if(candidatoExistente  && candidatoExistente.length > 0){
+        console.log('Candidato existente', candidatoExistente);
+        this.candidatoId = candidatoExistente[0].id_rh_candidato
 
-      const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
-      console.log('Info Familiar: ', getInfoFamiliar);
-      const newArr = getInfoFamiliar.map((obj: {
-        fecha_nacimiento: Date;
-        id: number;
-        id_rh_candidato: number;
-        id_rh_parentesco: number | null;
-        nit: string;
-        nombre: string;
-        parentesco: string;
-        tel_residencia: string;
+        const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
+        console.log('Info Familiar: ', getInfoFamiliar);
+        const newArr = getInfoFamiliar.map((obj: {
+          fecha_nacimiento: Date;
+          id: number;
+          id_rh_candidato: number;
+          id_rh_parentesco: number | null;
+          nit: string;
+          nombre: string;
+          parentesco: string;
+          tel_residencia: string;
 
-      }) => ({
-        id: obj.id,
-        id_candidato: obj.id_rh_candidato,
-        nombre: obj.nombre,
-        idParentesco: obj.id_rh_parentesco,
-        edad: 0,
-        ne: 0,
-        ec: 0,
-        ocupacion: '',
-        empresa: '',
-        telResidencia: obj.tel_residencia,
-        otroFamiliar: '',
-        accion: 0,
-        nit: obj.nit,
-        fechaNace: obj.fecha_nacimiento,
+        }) => ({
+          id: obj.id,
+          id_candidato: obj.id_rh_candidato,
+          nombre: obj.nombre,
+          idParentesco: obj.id_rh_parentesco,
+          edad: 0,
+          ne: 0,
+          ec: 0,
+          ocupacion: '',
+          empresa: '',
+          telResidencia: obj.tel_residencia,
+          otroFamiliar: '',
+          accion: 0,
+          nit: obj.nit,
+          fechaNace: obj.fecha_nacimiento,
 
-      }));
-      console.log('new Array', newArr);
-      this.myReferenceArray = [...newArr]
-      console.log('Array Familiar', this.myReferenceArray);
+        }));
+        console.log('new Array', newArr);
+        this.myReferenceArray = [...newArr]
+        console.log('Array Familiar', this.myReferenceArray);
+        this.activeTab.emit(false);
       }
+      // else{
+      //        setTimeout(
+      //     () => {
+      //       this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+      //     }, 1000);
+      //     // this.disabledBtnCrear = false;
+      // }
     loading.close();
   }
 
@@ -241,17 +246,17 @@ public inforFamilia: any[] = [];
     });
   }
 
-  private async getAnyInformationAlt(service: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-       this.apiService.getInformacionMaestros(service).subscribe({
-        next: (v) => resolve(v),
-        error: (e) => {
-          console.info(e);
-          resolve(null);
-        }
-      });
-    });
-  }
+  // private async getAnyInformationAlt(service: string): Promise<any> {
+  //   return new Promise((resolve, reject) => {
+  //      this.apiService.getInformacionMaestros(service).subscribe({
+  //       next: (v) => resolve(v),
+  //       error: (e) => {
+  //         console.info(e);
+  //         resolve(null);
+  //       }
+  //     });
+  //   });
+  // }
 
   addReference() {
     if(this.fieldDatosFamilia.valid){
@@ -324,7 +329,7 @@ public inforFamilia: any[] = [];
         id_rh_color_piel: this.datosadicionales.id_rh_color_piel,
         id_rh_grupo_sanguineo: this.datosadicionales.id_rh_grupo_sanguineo,
         rh: this.datosadicionales.rh,
-        id_rh_experiencia_equipo: this.datosadicionales.id_rh_experiencia_equipo,
+        id_rh_experiencia_equipo: this.datosadicionales.id_rh_experiencia_equipo ? this.datosadicionales.id_rh_experiencia_equipo: 0,
         peso: this.datosadicionales.peso,
         altura: this.datosadicionales.altura,
         salario: 0,
@@ -409,17 +414,28 @@ public inforFamilia: any[] = [];
     });
   }
 
+//  selectTabIndex(event: any) {
+//   const index = event.target.value;
+//     this.selectTab.emit(index);
+//   }
   public async enviarFormulario(): Promise<void>{
+
+    // this.activeTab.emit(false);
     console.log('Formulario Guardado', this.todosDatosCandidato);
-    const idUsuarioHv =   await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
+    const idUsuarioHv =  await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
     console.log(idUsuarioHv);
+
     if(idUsuarioHv === 0){
       this.messageService.error('Error', 'No se pudo almacenar la información del candidato');
       this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
     }else{
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
-      this.tabActive = true;
-      this.activeTab.emit(this.tabActive);
+      this._storaged.set('idCandidatoEnviado', idUsuarioHv);
+
+      this.activeTab.emit(false);
+      // this.tabActive = true;
+      // this.activeTab2.emit(this.ejemploMessage);
+      // this.selectTabIndex(1);
       // this._storaged.clear();
     }
 

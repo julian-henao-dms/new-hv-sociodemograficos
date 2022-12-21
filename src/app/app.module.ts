@@ -36,7 +36,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTabsModule} from '@angular/material/tabs';
+import { MatTabsModule, MAT_TAB_GROUP} from '@angular/material/tabs';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { DatosBasicosFormComponent } from './components/datos-basicos-form/datos-basicos-form.component';
 import { DatosAdicionalesFormComponent } from './components/datos-adicionales-form/datos-adicionales-form.component';
@@ -112,7 +112,11 @@ const MY_DATE_FORMAT = {
     MatGridListModule,
     HttpClientModule,
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+  {
+		provide: MAT_TAB_GROUP,
+		useValue: undefined,
+	},],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

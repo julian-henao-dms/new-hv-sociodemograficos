@@ -204,14 +204,8 @@ export class EstudiosFormComponent implements OnInit {
 
     const candidatoExistente = this._storaged.get('candidatoExistente');
     console.log('Datos adicionales desde storage', candidatoExistente);
-    if(candidatoExistente === 0 || candidatoExistente == null){
-      setTimeout(
-        () => {
-          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-        }, 1000);
-        // this.disabledBtnCrear = false;
-    } else{
-    console.log('Candidato existente', candidatoExistente);
+    if(candidatoExistente  && candidatoExistente.length > 0){
+      console.log('Candidato existente', candidatoExistente);
     this.candidatoId = candidatoExistente[0].id_rh_candidato
 
     const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
@@ -238,14 +232,22 @@ export class EstudiosFormComponent implements OnInit {
       fecha_Hasta: obj.fecha_hasta,
       id_estado_estudio: obj.id_estado_estudio,
       id_tipo_estudio: obj.id_tipo_estudio,
-      id_nivel_estudio: obj.id_nivel_estudio,
-      id_tipo_curso: obj.id_tipo_curso,
+      id_nivel_estudio: obj.id_nivel_estudio ? obj.id_nivel_estudio: 0,
+      id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
       accion: 0,
     }));
     console.log('new Array', newArr);
     this.myReferenceArray = [...newArr]
     console.log('Array catg',this.myReferenceArray);
+
     }
+    // else{
+    // // setTimeout(
+    //   //   () => {
+    //   //     this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+    //   //   }, 1000);
+    //   //   // this.disabledBtnCrear = false;
+    // }
     loading.close();
 
 

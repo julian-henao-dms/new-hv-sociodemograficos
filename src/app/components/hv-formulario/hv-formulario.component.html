@@ -1,7 +1,7 @@
 <mat-card class="wizard-card">
   <mat-tab-group #tabGroup tabGroup>
     <mat-tab >
-      <ng-template mat-tab-label>
+      <ng-template mat-tab-label matStepContent>
         <mat-icon class="example-tab-icon">contact_page</mat-icon>
        <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
@@ -47,7 +47,7 @@
         </mat-step>
         <mat-step state="family_restroom" label="Información Familiar">
           <ng-template  matStepContent>
-          <app-informacion-familiar-form></app-informacion-familiar-form>
+          <app-informacion-familiar-form (activeTab)="activeTab($event)"></app-informacion-familiar-form>
         </ng-template>
         </mat-step>
         <!-- <mat-step>
@@ -61,7 +61,7 @@
       </mat-stepper>
     </mat-tab>
 
-    <mat-tab  [disabled]="!isActive">
+    <mat-tab [disabled]="isActive" >
     <!-- <mat-tab (activeTab)="onActiveTab(isActive)" [disabled]="!isActive"> -->
       <ng-template mat-tab-label >
         <mat-icon class="example-tab-icon">groups</mat-icon>

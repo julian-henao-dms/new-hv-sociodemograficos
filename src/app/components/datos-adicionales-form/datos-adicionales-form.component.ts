@@ -347,49 +347,50 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 
     const candidatoExistente = this._storaged.get('candidatoExistente');
     console.log('Datos adicionales desde storage', candidatoExistente);
-    if(candidatoExistente === 0 || candidatoExistente == null){
-      setTimeout(
-        () => {
-          console.log('Me estoy ejecutando.................................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
-          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-        }, 1000);
-        // this.disabledBtnCrear = false;
-    } else{
-    console.log('Candidato existente', candidatoExistente);
-    this.candidatoId = candidatoExistente[0].id_rh_candidato
-    this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector;
-    this.datosAdicionales.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
-    this.datosAdicionales.id_salario = candidatoExistente[0].id_salario;
-    this.datosAdicionales.salario_especifico = candidatoExistente[0].salario;//verificar
-    this.datosAdicionales.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
-    this.datosAdicionales.tarjeta = candidatoExistente[0].tarjeta;
-    this.datosAdicionales.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
-    this.datosAdicionales.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
-    this.datosAdicionales.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
-    this.datosAdicionales.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
-    this.datosAdicionales.runt = candidatoExistente[0].runt;
-    this.datosAdicionales.licencia = candidatoExistente[0].licencia;
-    this.datosAdicionales.tipo_licencia = candidatoExistente[0].tipo_licencia;
-    this.datosAdicionales.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
-    this.datosAdicionales.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
-    this.datosAdicionales.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
-    this.datosAdicionales.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
-    this.datosAdicionales.rh = candidatoExistente[0].rh;
-    this.datosAdicionales.peso = candidatoExistente[0].peso;
-    this.datosAdicionales.altura = candidatoExistente[0].altura;
-    const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
-    console.log('Categorias: ', getCategoriasLic);
-    const newArr = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
-      id: obj.id,
-      idCandidato: obj.id_rh_candidato,
-      idCategoria: obj.id_rh_categoria,
-      fechaVence: obj.fecha_vencimiento,
-      accion: 0
-    }));
-    console.log('new Array', newArr);
-    this.myReferenceArray = [...newArr]
-    console.log('Array catg',this.myReferenceArray);
+    if(candidatoExistente  && candidatoExistente.length > 0){
+        console.log('Candidato existente', candidatoExistente);
+        this.candidatoId = candidatoExistente[0].id_rh_candidato
+        this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector;
+        this.datosAdicionales.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
+        this.datosAdicionales.id_salario = candidatoExistente[0].id_salario;
+        this.datosAdicionales.salario_especifico = candidatoExistente[0].salario;//verificar
+        this.datosAdicionales.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
+        this.datosAdicionales.tarjeta = candidatoExistente[0].tarjeta;
+        this.datosAdicionales.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
+        this.datosAdicionales.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
+        this.datosAdicionales.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
+        this.datosAdicionales.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
+        this.datosAdicionales.runt = candidatoExistente[0].runt;
+        this.datosAdicionales.licencia = candidatoExistente[0].licencia;
+        this.datosAdicionales.tipo_licencia = candidatoExistente[0].tipo_licencia;
+        this.datosAdicionales.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
+        this.datosAdicionales.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
+        this.datosAdicionales.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
+        this.datosAdicionales.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
+        this.datosAdicionales.rh = candidatoExistente[0].rh;
+        this.datosAdicionales.peso = candidatoExistente[0].peso;
+        this.datosAdicionales.altura = candidatoExistente[0].altura;
+        const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
+        console.log('Categorias: ', getCategoriasLic);
+        const newArr = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
+          id: obj.id,
+          idCandidato: obj.id_rh_candidato,
+          idCategoria: obj.id_rh_categoria,
+          fechaVence: obj.fecha_vencimiento,
+          accion: 0
+        }));
+        console.log('new Array', newArr);
+        this.myReferenceArray = [...newArr]
+        console.log('Array catg',this.myReferenceArray);
     }
+      // else{
+      //   setTimeout(
+      //     () => {
+      //       console.log('Me estoy ejecutando.................................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
+      //       this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+      //     }, 1000);
+      //     // this.disabledBtnCrear = false;
+      //  }
     loading.close();
   }
 

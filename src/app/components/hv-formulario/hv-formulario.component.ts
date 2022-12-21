@@ -1,7 +1,7 @@
 import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { StepperOrientation, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -19,8 +19,8 @@ import { map } from 'rxjs/operators';
   ],
 })
 export class HvFormularioComponent implements OnInit {
-  // @ViewChild('tabGroup', { static: false })
-  // tabGroup!: MatTabGroup;
+  @ViewChild('tabGroup', { static: false })
+  tabGroup!: MatTabGroup;
   stepperOrientation: Observable<StepperOrientation>;
 
   public isDatosBasicos:number = 1;
@@ -33,7 +33,8 @@ export class HvFormularioComponent implements OnInit {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private breakpointObserver: BreakpointObserver
+    private breakpointObserver: BreakpointObserver,
+    // private tabGroup: MatTabGroup
     ) {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
@@ -50,12 +51,19 @@ export class HvFormularioComponent implements OnInit {
   ngOnChanges(){
     // console.log('prueba tabs', this.tabGroup);
   }
+  activeTab(event: any):void{
+    console.log('evento que llega info Familiar', event);
+    this.isActive = event
+  }
+// onSelectTab(index: any) {
+//   this.tabGroup.selectedIndex = index;
+// }
 
-public onActiveTab(tabActive:boolean){
-console.log("Evento tab", tabActive);
-console.log("Evento tab  data", tabActive);
-this.isActive = tabActive;
-}
+// public onActiveTab(tabActive: any){
+// console.log("Evento tab", tabActive);
+// console.log("Evento tab  data", tabActive);
+// this.isActive = tabActive;
+// }
 
   public changeDatosBasicos(evento:any){
     console.log("Evento del hijo", evento);
