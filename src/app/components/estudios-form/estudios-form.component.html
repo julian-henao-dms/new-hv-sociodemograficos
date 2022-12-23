@@ -1,14 +1,17 @@
-<form addEstudiosData  #addEstudiosData="ngForm">
-  <mat-grid-list
-    #grid
-    [cols]="cols"
-    rowHeight="85px"
-    gutterSize="10px"
-  >
+<form addEstudiosData #addEstudiosData="ngForm">
+  <mat-grid-list #grid [cols]="cols" rowHeight="85px" gutterSize="10px">
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>1.Seleccionar institución</mat-label>
-        <mat-select placeholder="Seleccionar Institución" #idInstitucion="ngModel"  id="idInstitucion" name="idInstitucion" required (selectionChange)="onSelectionInstitucion()" [(ngModel)]="setStudies.idInstitucion"> <!-- [(ngModel)]="datosEstudios.idInstitucion" -->
+        <mat-select
+          placeholder="Seleccionar Institución"
+          #idInstitucion="ngModel"
+          id="idInstitucion"
+          name="idInstitucion"
+          required
+          (selectionChange)="onSelectionInstitucion()"
+          [(ngModel)]="setStudies.idInstitucion"
+        >
           <mat-option
             *ngFor="let institucion of instituciones"
             [value]="institucion.id"
@@ -16,18 +19,20 @@
             {{ institucion.descripcion }}
           </mat-option>
         </mat-select>
-
       </mat-form-field>
       <!-- <span>{{institucion.valid}}</span> -->
     </mat-grid-tile>
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>2.Seleccionar título</mat-label>
-        <mat-select #idEstudio="ngModel"  id="idEstudio" name="idEstudio"  [(ngModel)]="setStudies.idEstudio" required> <!-- [(ngModel)]="datosEstudios.titulo" -->
-          <mat-option
-            *ngFor="let titulo of titulos"
-            [value]="titulo.id"
-          >
+        <mat-select
+          #idEstudio="ngModel"
+          id="idEstudio"
+          name="idEstudio"
+          [(ngModel)]="setStudies.idEstudio"
+          required
+        >
+          <mat-option *ngFor="let titulo of titulos" [value]="titulo.id">
             {{ titulo.descripcion }}
           </mat-option>
         </mat-select>
@@ -37,8 +42,24 @@
       <mat-form-field appearance="outline">
         <mat-label>3. Periodo de estudios</mat-label>
         <mat-date-range-input [rangePicker]="periodo">
-          <input matStartDate placeholder="Inicio" #fecha_Desde="ngModel"  id="fecha_Desde" name="fecha_Desde"  required [(ngModel)]="datosEstudios.fecha_Desde" />
-          <input matEndDate placeholder="Culminación" #fecha_Hasta="ngModel"  id="fecha_Hasta" name="fecha_Hasta" required [(ngModel)]="datosEstudios.fecha_Hasta" />
+          <input
+            matStartDate
+            placeholder="Inicio"
+            #fecha_Desde="ngModel"
+            id="fecha_Desde"
+            name="fecha_Desde"
+            required
+            [(ngModel)]="datosEstudios.fecha_Desde"
+          />
+          <input
+            matEndDate
+            placeholder="Culminación"
+            #fecha_Hasta="ngModel"
+            id="fecha_Hasta"
+            name="fecha_Hasta"
+            required
+            [(ngModel)]="datosEstudios.fecha_Hasta"
+          />
         </mat-date-range-input>
         <mat-hint>DD/MM/AAAA – DD/MM/AAAA</mat-hint>
         <mat-datepicker-toggle
@@ -51,7 +72,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>4. Seleccionar estado</mat-label>
-        <mat-select #id_estado_estudio="ngModel"  id="id_estado_estudio" name="id_estado_estudio"  [(ngModel)]="setStudies.id_estado_estudio" required> <!-- [(ngModel)]="datosEstudios.id_estado_estudio" -->
+        <mat-select
+          #id_estado_estudio="ngModel"
+          id="id_estado_estudio"
+          name="id_estado_estudio"
+          [(ngModel)]="setStudies.id_estado_estudio"
+          required
+        >
           <mat-option
             *ngFor="let estadoEstudio of estadosEstudio"
             [value]="estadoEstudio.id"
@@ -64,7 +91,13 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>5. Seleccionar tipo de estudios</mat-label>
-        <mat-select #id_tipo_estudio="ngModel"  id="id_tipo_estudio" name="id_tipo_estudio"  [(ngModel)]="setStudies.id_tipo_estudio" required> <!-- [(ngModel)]="datosEstudios.id_tipo_estudio" -->
+        <mat-select
+          #id_tipo_estudio="ngModel"
+          id="id_tipo_estudio"
+          name="id_tipo_estudio"
+          [(ngModel)]="setStudies.id_tipo_estudio"
+          required
+        >
           <mat-option
             *ngFor="let tipoEstudio of tiposEstudio"
             [value]="tipoEstudio.id"
@@ -77,7 +110,13 @@
     <mat-grid-tile *ngIf="setStudies.id_tipo_estudio === 1">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar nivel de estudios</mat-label>
-        <mat-select #id_nivel_estudio="ngModel"  id="id_nivel_estudio" name="id_nivel_estudio"  [(ngModel)]="setStudies.id_nivel_estudio" [required]="setStudies.id_tipo_estudio === 1"> <!-- [(ngModel)]="datosEstudios.id_nivel_estudio" -->
+        <mat-select
+          #id_nivel_estudio="ngModel"
+          id="id_nivel_estudio"
+          name="id_nivel_estudio"
+          [(ngModel)]="setStudies.id_nivel_estudio"
+          [required]="setStudies.id_tipo_estudio === 1"
+        >
           <mat-option
             *ngFor="let nivelEstudio of nivelesEstudio"
             [value]="nivelEstudio.id"
@@ -88,11 +127,16 @@
       </mat-form-field>
     </mat-grid-tile>
 
-
     <mat-grid-tile *ngIf="setStudies.id_tipo_estudio === 3">
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar tipo de curso</mat-label>
-        <mat-select #id_tipo_curso="ngModel"  id="id_tipo_curso" name="id_tipo_curso"  [(ngModel)]="setStudies.id_tipo_curso" [required]="setStudies.id_tipo_estudio === 3"> <!-- [(ngModel)]="datosEstudios.id_tipo_estudio" -->
+        <mat-select
+          #id_tipo_curso="ngModel"
+          id="id_tipo_curso"
+          name="id_tipo_curso"
+          [(ngModel)]="setStudies.id_tipo_curso"
+          [required]="setStudies.id_tipo_estudio === 3"
+        >
           <mat-option
             *ngFor="let tipoCurso of tiposCurso"
             [value]="tipoCurso.id"
@@ -105,60 +149,92 @@
   </mat-grid-list>
 
   <div class="step-btn-container">
-  <button class="add-button" mat-flat-button color="primary" (click)="addReference()"><mat-icon>playlist_add</mat-icon> Adicionar</button>
-</div>
-</form>
-  <!-- Adicionar items-->
-
-  <div class="scroller-table">
-    <table mat-table class=" demo-table table-form-hv" [dataSource]="this.myReferenceArray" *ngIf="this.myReferenceArray.length > 0">
-        <ng-container matColumnDef="idInstitucion">
-            <th mat-header-cell *matHeaderCellDef>Institucion.</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.idInstitucion, instituciones)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="idEstudio">
-            <th mat-header-cell *matHeaderCellDef>Título</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.idEstudio, titulos)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="id_estado_estudio">
-            <th mat-header-cell *matHeaderCellDef>Estado</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.id_estado_estudio, estadosEstudio)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="id_tipo_estudio">
-            <th mat-header-cell *matHeaderCellDef>Tipo de estudio</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.id_tipo_estudio, tiposEstudio)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="id_tipo_curso">
-            <th mat-header-cell *matHeaderCellDef>Tipo de curso</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.id_tipo_curso, tiposCurso)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="id_nivel_estudio">
-            <th mat-header-cell *matHeaderCellDef>Nivel</th>
-            <td mat-cell *matCellDef="let element">{{labelTable(element.id_nivel_estudio, nivelesEstudio)}}</td>
-        </ng-container>
-        <ng-container matColumnDef="borrar">
-            <th mat-header-cell *matHeaderCellDef>Borrar</th>
-            <td mat-cell *matCellDef="let element">
-                <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="borrarItem(element)">delete</mat-icon>
-            </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="columnsReference"></tr>
-        <tr class="row-peritaje" mat-row *matRowDef="let row; columns: columnsReference;">
-        </tr>
-    </table>
-
-</div>
-
-
-  <!-- Fin Adicionar items-->
-  <div class="step-btn-container" >
-    <button class="stepper-main-btn" mat-button matStepperPrevious>
-      Atrás
-    </button>
-    <button [disabled]="!(this.myReferenceArray.length > 0)" type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
-      Guardar Progreso
-    </button>
-    <button  class="stepper-main-btn" mat-button matStepperNext>
-      Siguiente
+    <button
+      class="add-button"
+      mat-flat-button
+      color="primary"
+      (click)="addReference()"
+    >
+      <mat-icon>playlist_add</mat-icon> Adicionar
     </button>
   </div>
+</form>
+<!-- Adicionar items-->
+
+<div class="scroller-table">
+  <table
+    mat-table
+    class="demo-table table-form-hv"
+    [dataSource]="this.myReferenceArray"
+    *ngIf="this.myReferenceArray.length > 0"
+  >
+    <ng-container matColumnDef="idInstitucion">
+      <th mat-header-cell *matHeaderCellDef>Institucion.</th>
+      <td mat-cell *matCellDef="let element">
+        {{ labelTable(element.idInstitucion, instituciones) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="idEstudio">
+      <th mat-header-cell *matHeaderCellDef>Título</th>
+      <td mat-cell *matCellDef="let element">
+        {{ labelTable(element.idEstudio, titulos) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="id_estado_estudio">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let element">
+        {{ labelTable(element.id_estado_estudio, estadosEstudio) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="id_tipo_estudio">
+      <th mat-header-cell *matHeaderCellDef>Tipo de estudio</th>
+      <td mat-cell *matCellDef="let element">
+        {{ labelTable(element.id_tipo_estudio, tiposEstudio) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="id_tipo_curso">
+      <th mat-header-cell *matHeaderCellDef>Tipo de curso</th>
+      <td mat-cell *matCellDef="let element">
+        {{ labelTable(element.id_tipo_curso, tiposCurso) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="id_nivel_estudio">
+      <th mat-header-cell *matHeaderCellDef>Nivel</th>
+      <td mat-cell *matCellDef="let element">
+        {{ labelTable(element.id_nivel_estudio, nivelesEstudio) }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="borrar">
+      <th mat-header-cell *matHeaderCellDef>Borrar</th>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon
+          matTooltip="Borrar elemento"
+          class="ico-table"
+          (click)="borrarItem(element)"
+          >delete</mat-icon
+        >
+      </td>
+    </ng-container>
+    <tr mat-header-row *matHeaderRowDef="columnsReference"></tr>
+    <tr
+      class="row-peritaje"
+      mat-row
+      *matRowDef="let row; columns: columnsReference"
+    ></tr>
+  </table>
+</div>
+
+<!-- Fin Adicionar items-->
+<div class="step-btn-container">
+  <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
+  <button
+    [disabled]="!(this.myReferenceArray.length > 0)"
+    type="button"
+    class="stepper-main-btn"
+    mat-button
+    (click)="guardarProgreso()"
+  >
+    Guardar Progreso
+  </button>
+  <button class="stepper-main-btn" mat-button matStepperNext>Siguiente</button>
+</div>

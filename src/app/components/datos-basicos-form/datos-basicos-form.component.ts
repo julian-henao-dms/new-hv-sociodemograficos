@@ -136,25 +136,25 @@ public datosCandidato: DatosBasicosCandidato = {
   emp: 0,
   id_usuario: 0,
   id_tipo_candidato: null,
-  id_rh_tipo_documento: null,//*
-  nit: '',   //*
-  fecExpedicion: '', //*
-  lugarExpedicion: '', //*
-  idCotClientePais: null,//
-  nombre: '', //*
-  apellido: '', //*
-  genero: null,//*
-  fecha_nacimiento: '', //*
-  idRhEstadoCivil: null,//*
-  telefono: '', //*
-  mail: '', //*
-  celular: '', //*
-  direccion: '', //*
-  id_cot_cliente_pais: null,//*
-  id_cot_cliente_barrio: null,//*
-  id_rh_experiencia: null,//*
-  id_rh_nivel_academico: null,//*
-  id_rh_perfil: null,// cargo?
+  id_rh_tipo_documento: null,
+  nit: '',
+  fecExpedicion: '',
+  lugarExpedicion: '',
+  idCotClientePais: null,
+  nombre: '',
+  apellido: '',
+  genero: null,
+  fecha_nacimiento: '',
+  idRhEstadoCivil: null,
+  telefono: '',
+  mail: '',
+  celular: '',
+  direccion: '',
+  id_cot_cliente_pais: null,
+  id_cot_cliente_barrio: null,
+  id_rh_experiencia: null,
+  id_rh_nivel_academico: null,
+  id_rh_perfil: null,
   pais: null,
   paisExp: null,
   depto: null,
@@ -210,12 +210,12 @@ public idiomasCandidato: Idioma = {
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
-    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
     // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
     nums: /^\d{7,15}$/, // 7 a 14 numeros.
     celular: /^\d{10,15}$/ // 7 a 14 numeros.
   }
+  public todosLugares: any;
 
 
   constructor(
@@ -297,12 +297,10 @@ public idiomasCandidato: Idioma = {
     this.paisesExp = _.orderBy(paisesExp, ['id'], ['asc']);
 
     const tipoDocumento = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_documento');
-    console.log('regla tipo doc',tipoDocumento)
     if(tipoDocumento === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de documento');
          return;
         }
-      console.log('ordenados',  _.orderBy(tipoDocumento, ['id'], ['asc']));
     this.tiposDocumento = _.orderBy(tipoDocumento, ['id'], ['asc']);
 
     const estadoCivil = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'estado_civil');
@@ -333,13 +331,9 @@ public idiomasCandidato: Idioma = {
       return;
     }
     this.lenguas = _.orderBy(lenguaExtranjera, ['id'], ['asc']);
-    console.log('idiomas para modificar',this.lenguas);
 
-    // this.lenguas.forEach(element => {
-    //   // agregamos un nuevo elemento check de tipo boolean con valor false
-    //   element.estado = false;
-    //   })
-      // console.log('idiomas modificado',this.lenguas);
+
+
     const cargoAplica = await this.getAnyInformation('/hojadevida/perfiles/' + idEmp);
     if(cargoAplica === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
@@ -351,24 +345,13 @@ public idiomasCandidato: Idioma = {
   loading.close();
   }
 
-  // private async updateInformation(service: string, document: any): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //      this.apiService.updateInformacion(service, document).subscribe({
-  //       next: (v) => resolve(v),
-  //       error: (e) => {
-  //         console.info(e);
-  //         resolve(0);
-  //       }
-  //     });
-  //   });
-  // }
+
   public ngOnChanges(){
 
   }
 
   public async search(): Promise<void>{
-    console.log('Me estoy ejecutando.................................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
-    console.log('Buscando', this.datosCandidato.nit);
+
     this.storaged.clear();
     if(this.datosCandidato.nit !== ''){
       this.messageService.info("Atencion", "Estamos cargando los datos del candidato");
@@ -379,14 +362,13 @@ public idiomasCandidato: Idioma = {
           () => {
             this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
           }, 1000);
-          // this.disabledBtnCrear = false;
-      } else{
-        console.log('llego aqui?', candidatoExistente);
+        } else{
+
         this.storaged.set('candidatoExistente', candidatoExistente);
         this.datosCandidato.id = candidatoExistente[0].id_rh_candidato;
         this.datosCandidato.nit = candidatoExistente[0].nit;
         this.datosCandidato.id_rh_tipo_documento = candidatoExistente[0].id_rh_tipo_documento;
-        console.log('prueba ',this.datosCandidato.nit);
+
         this.datosCandidato.nombre = candidatoExistente[0].nombre;
         this.datosCandidato.apellido = candidatoExistente[0].apellido;
         this.datosCandidato.genero = candidatoExistente[0].genero;
@@ -405,35 +387,36 @@ public idiomasCandidato: Idioma = {
         this.datosCandidato.idRhEstadoCivil = candidatoExistente[0].id_rh_estado_civil;
         this.datosCandidato.fecExpedicion = candidatoExistente[0].fecha_exp_cedula;
         this.datosCandidato.lugarExpedicion = candidatoExistente[0].lugar_exp_cedula;
-        console.log('New',this.datosCandidato);
 
-        console.log('Datos adicionales desde storage', candidatoExistente);
-
+        this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
         if(candidatoExistente === 0 || candidatoExistente == null){
           setTimeout(
             () => {
               this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
             }, 1000);
-            // this.disabledBtnCrear = false;
+
         } else{
-        console.log('Candidato existente', candidatoExistente);
         this.candidatoId = candidatoExistente[0].id_rh_candidato
-        console.log('previo ', this.idIdiPrevio );
         const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
-        console.log('Idiomas: ', getIdiomas);
         const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
-        console.log('idiomasB ', getIdio);
         this.idIdiPrevio = [...getIdio];
-        console.log('previo2', this.idIdiPrevio );
+
 
         }
 
-//
-//         // this.myReferenceArray = [...newArr]
-//         // console.log('Array catg',this.myReferenceArray);
-//         }
-        // const getIdiomasCandidato = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.datosCandidato.id);
       }
+
+      console.log('Paises Deptos Ciudades', this.todosLugares);
+      console.log('Dato Pais', this.datosCandidato.id_cot_cliente_pais);
+      const ciudadDepto = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.id_cot_cliente_pais);
+
+      // const deptoPais = todosLugares.filter((element: { id_cot_cliente_pais: number | null; }) => element.id_cot_cliente_pais === this.datosCandidato.id_cot_cliente_pais);
+      console.log('Ciudad Pais', ciudadDepto);
+      const deptoCiudad = ciudadDepto.id_cot_cliente_pais
+      console.log('Depto Obtenido', deptoCiudad);
+      const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
+      const paisCandidato = deptoPais.id_cot_cliente_pais;
+      console.log('Pais optenido', paisCandidato);
     }
 
 
@@ -448,21 +431,21 @@ public idiomasCandidato: Idioma = {
   }
 
 public validateChanged(event:any){
-  console.log(event.value);
+
 }
 
   public async onSelectionChangePais(idPais:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
-    console.log('Datos pais', idEmp, idPais);
+
     const deptos = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
     if(deptos === null){
           this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
     }else{
-      console.log('deptos', deptos);
+
 
       this.deptos = _.orderBy(deptos, ['id'], ['asc']);
-      console.log('datos select deptos', this.deptos);
+
       loading.close();
     }
 
@@ -470,15 +453,15 @@ public validateChanged(event:any){
   public async onSelectionChangePaisExp(idPais:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
-    console.log('Datos pais', idEmp, idPais);
+
     const deptosExp = await this.getAnyInformation('/pais/departamentos/' + idEmp + '/' + idPais);
     if(deptosExp === null){
           this.messageService.error('Error', 'Error interno del servidor al cargar los departamentos');
     }else{
-      console.log('deptos', deptosExp);
+
 
       this.deptosExp = _.orderBy(deptosExp, ['id'], ['asc']);
-      console.log('datos select deptosExp', this.deptosExp);
+
       loading.close();
     }
 
@@ -486,44 +469,44 @@ public validateChanged(event:any){
   public async onSelectionChangeDeptoExp(idDepto:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
-    console.log('Datos pais', idEmp, idDepto);
+
     const ciudadesExp = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
      if(ciudadesExp.length === 0){
       this.messageService.error('Error', 'Error interno del servidor al cargar las ciudadesExp');
       return;
     }
-    console.log('deptos', ciudadesExp);
+
     this.ciudadesExp = _.orderBy(ciudadesExp, ['id'], ['asc']);
-    console.log('datos select deptos', this.ciudadesExp);
+
     loading.close();
   }
 
   public async onSelectionChangeDepto(idDepto:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
-    console.log('Datos pais', idEmp, idDepto);
+
     const ciudades = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
      if(ciudades.length === 0){
       this.messageService.error('Error', 'Error interno del servidor al cargar las ciudades');
       return;
     }
-    console.log('deptos', ciudades);
+
     this.ciudades = _.orderBy(ciudades, ['id'], ['asc']);
-    console.log('datos select deptos', this.ciudades);
+
     loading.close();
   }
   public async onSelectionChangeCiudad(idCiudad:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
-    console.log('Datos pais', idEmp, idCiudad);
+
     const barrios = await this.getAnyInformation('/pais/barrios/' + idCiudad);
      if(barrios === null){
       this.messageService.error('Error', 'Error interno del servidor al cargar los barrios');
       return;
     }else{
-      console.log('deptos', barrios);
+
       this.barrios = _.orderBy(barrios, ['id'], ['asc']);
-      console.log('datos select deptos', this.barrios);
+
       loading.close();
     }
 
@@ -542,49 +525,36 @@ public validateChanged(event:any){
   }
 
 
-
  public onChange(event:any){
-    console.log("Evento", event);
+
     this.changeSelect.emit({'data':event});
-
-
   }
 
 
-
-
 public validarFormulario(e:any){
-  console.log('target name', e.target.name);
+
 }
 
   public guardarProgreso(){
-    console.log('Datos Básicos Guardados', this.datosCandidato);
+
     if(!this.fieldDatosBasicos.valid){
-      console.log('No valido');
+
       this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique los campos indicados.');
       this.fieldDatosBasicos.control.markAllAsTouched();
     }else{
-      console.log('valido');
-      console.log("Como vienen estos idiomas? ", this.idIdiPrevio);
+
 
       this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
         ...this.idiomasCandidato, idIdi
       }));
-      console.log('Datos Idiomas', this.idiomasArray);
+
       this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       this.storaged.set('idiomasStorage', this.idiomasArray);
       this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
-      console.log('step', this.stepper);
+
       this.disabledButtonNext = false;
     }
 
   }
-  public getSessionStorage(){
-    // this.idiomasArray = this.storaged.get('idiomasStorage');
-    // this.datosCandidato = this.storaged.get('datosCandidatoStorage');
-    // this.datosBasicos = this.storaged.get('datosBasicosStorage');
-
-  }
-
 }
 

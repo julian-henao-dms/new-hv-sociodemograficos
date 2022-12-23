@@ -262,7 +262,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   }
 
   async ngOnInit(): Promise<void> {
-   console.log('Inicia datos adicionales');
+
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
@@ -346,9 +346,9 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 
 
     const candidatoExistente = this._storaged.get('candidatoExistente');
-    console.log('Datos adicionales desde storage', candidatoExistente);
+
     if(candidatoExistente  && candidatoExistente.length > 0){
-        console.log('Candidato existente', candidatoExistente);
+
         this.candidatoId = candidatoExistente[0].id_rh_candidato
         this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector;
         this.datosAdicionales.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
@@ -371,7 +371,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
         this.datosAdicionales.peso = candidatoExistente[0].peso;
         this.datosAdicionales.altura = candidatoExistente[0].altura;
         const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
-        console.log('Categorias: ', getCategoriasLic);
+
         const newArr = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
           id: obj.id,
           idCandidato: obj.id_rh_candidato,
@@ -379,18 +379,11 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
           fechaVence: obj.fecha_vencimiento,
           accion: 0
         }));
-        console.log('new Array', newArr);
+
         this.myReferenceArray = [...newArr]
-        console.log('Array catg',this.myReferenceArray);
+
     }
-      // else{
-      //   setTimeout(
-      //     () => {
-      //       console.log('Me estoy ejecutando.................................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
-      //       this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-      //     }, 1000);
-      //     // this.disabledBtnCrear = false;
-      //  }
+
     loading.close();
   }
 
@@ -410,8 +403,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   }
   addReference() {
     this.LICENCE_DATA.push(this.setLicences);
-    console.log('Data reference',this.LICENCE_DATA);
-    console.log('Data licencia',this.setLicences);
+
     this.myReferenceArray.push(this.setLicences);
     this.setLicences = {
       id: 0,
@@ -450,7 +442,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   public  borrarItem(element: any){
     this.myReferenceArray.splice(element, 1);
     this.myReferenceArray = [...this.myReferenceArray];
-    console.log(this.myReferenceArray);
+
   }
 
   public labelTable(id: number, list: any[]){
@@ -458,13 +450,13 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   }
 
   public guardarProgreso(){
-    console.log('Datos Adicionales', this.datosAdicionales);
+
     if(!this.fieldDatosAdicionales.valid){
-      console.log('No valido');
+
       this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique los campos indicados.');
       this.fieldDatosAdicionales.control.markAllAsTouched();
     }else{
-        console.log('valido');
+
       this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
       this._storaged.set('datosLicencia', this.myReferenceArray);
       this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
@@ -472,8 +464,5 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     }
 
   }
-  public getLocalStorage(){
-    // console.log('Cargar Datos Adicionales', this.datosAdicionales);
-    // this.datosAdicionales = this._storaged.get('datosAdicionalesStorage');
-  }
+
 }

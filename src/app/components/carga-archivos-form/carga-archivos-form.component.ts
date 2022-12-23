@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild  } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 
 @Component({
   selector: 'app-carga-archivos-form',
   templateUrl: './carga-archivos-form.component.html',
-  styleUrls: ['./carga-archivos-form.component.scss']
+  styleUrls: ['./carga-archivos-form.component.scss'],
 })
 export class CargaArchivosFormComponent implements OnInit {
   public disabledButtonNext: boolean = true;
@@ -14,17 +14,13 @@ export class CargaArchivosFormComponent implements OnInit {
   fileList: File[] = [];
   listOfFiles: any[] = [];
 
-  constructor(private _storaged: SessionStorageService) { }
+  constructor(private _storaged: SessionStorageService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   uploadFileEvt(imgFile: any) {
-    console.log('????',imgFile);
     if (imgFile.target.files && imgFile.target.files[0]) {
       this.fileAttr = '';
       Array.from(imgFile.target.files).forEach((file: any) => {
-        console.log('archivo', file);
-        console.log('archivo??', imgFile.target.files);
         this.fileAttr += file.name + '  ';
       });
       // HTML5 FileReader API
@@ -42,17 +38,13 @@ export class CargaArchivosFormComponent implements OnInit {
     } else {
       this.fileAttr = 'Cargar Archivos';
     }
-    console.log('input file',this.fileInput);
   }
 
-  public guardarProgreso(){
-    // console.log('Archivos', this.archivos);
+  public guardarProgreso() {
     // this._storaged.set('archivosStorage', this.archivos);
     this.disabledButtonNext = false;
-
   }
-  public getLocalStorage(){
-    // console.log('Cargar Archivos', this.archivos);
+  public getLocalStorage() {
     // this._storaged.get('archivosStorage');
   }
 

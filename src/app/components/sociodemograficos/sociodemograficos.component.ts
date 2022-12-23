@@ -433,7 +433,7 @@ export class SociodemograficosComponent implements OnInit {
   }
 
   console.log('servicios vivienda del edit ', this.sociodemograficos.serviciosVivienda);
-  const getServiciosCandidato = this.sociodemograficos.serviciosVivienda.split(',');
+  const getServiciosCandidato = this.sociodemograficos.serviciosVivienda ? this.sociodemograficos.serviciosVivienda.split(',') : [];
   console.log('string',getServiciosCandidato);
   this.serviciosVivienda = [...getServiciosCandidato]
   console.log('Servicios consultados',this.serviciosVivienda);
@@ -441,14 +441,14 @@ export class SociodemograficosComponent implements OnInit {
 
 
   console.log('personas depende edit ', this.sociodemograficos.personasDepende);
-  const getPersonasDepende = this.sociodemograficos.personasDepende.split(',');
+  const getPersonasDepende = this.sociodemograficos.personasDepende ? this.sociodemograficos.personasDepende.split(',') : [];
   console.log('string',getPersonasDepende);
   this.personasDepende = [...getPersonasDepende]
   console.log('Servicios consultados',this.personasDepende);
 
 
   console.log('servicios vivienda del edit ', this.sociodemograficos.tipoTransporte);
-  const getTipoTransporte = this.sociodemograficos.tipoTransporte.split(',');
+  const getTipoTransporte = this.sociodemograficos.tipoTransporte ? this.sociodemograficos.tipoTransporte.split(',') : [];
   console.log('string',getTipoTransporte);
   this.tipoTransporte = [...getTipoTransporte]
   console.log('Servicios consultados',this.tipoTransporte);

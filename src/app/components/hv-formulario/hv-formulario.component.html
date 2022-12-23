@@ -1,77 +1,76 @@
 <mat-card class="wizard-card">
   <mat-tab-group #tabGroup tabGroup>
-    <mat-tab >
+    <mat-tab>
       <ng-template mat-tab-label matStepContent>
         <mat-icon class="example-tab-icon">contact_page</mat-icon>
-       <label class="title-tabs-hv"> Datos Candidato</label>
+        <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
-      <mat-stepper [orientation]="(stepperOrientation | async)!" [linear]="isLinear" #stepper class="wizard-datos-candidato">
-        <mat-step state="description" >
-          <ng-template matStepLabel >Datos Básicos</ng-template>
-          <ng-template  matStepContent>
-          <app-datos-basicos-form (changeSelect)="changeDatosBasicos($event)"></app-datos-basicos-form>
-        </ng-template>
+      <mat-stepper
+        [orientation]="(stepperOrientation | async)!"
+        [linear]="isLinear"
+        #stepper
+        class="wizard-datos-candidato"
+      >
+        <mat-step state="description">
+          <ng-template matStepLabel>Datos Básicos</ng-template>
+          <ng-template matStepContent>
+            <app-datos-basicos-form
+              (changeSelect)="changeDatosBasicos($event)"
+            ></app-datos-basicos-form>
+          </ng-template>
         </mat-step>
 
         <!-- Paso 2 -->
-        <mat-step state="note_add"  label="Datos Adicionales">
-          <ng-template  matStepContent>
-        <app-datos-adicionales-form [tipoCandidato]="isDatosBasicos"></app-datos-adicionales-form>
-      </ng-template>
+        <mat-step state="note_add" label="Datos Adicionales">
+          <ng-template matStepContent>
+            <app-datos-adicionales-form
+              [tipoCandidato]="isDatosBasicos"
+            ></app-datos-adicionales-form>
+          </ng-template>
         </mat-step>
         <!-- Fin paso 2 -->
         <!-- Paso 3 -->
         <mat-step state="attach_file" label="Archivos">
-          <ng-template  matStepContent>
-          <!-- <app-carga-archivos-form></app-carga-archivos-form> -->
-          <app-carga-archivos-hv></app-carga-archivos-hv>
-        </ng-template>
+          <ng-template matStepContent>
+            <!-- <app-carga-archivos-form></app-carga-archivos-form> -->
+            <app-carga-archivos-hv></app-carga-archivos-hv>
+          </ng-template>
         </mat-step>
         <!-- Fin Paso 3 -->
         <!-- Paso 4 -->
 
         <mat-step state="school" label="Estudios">
-          <ng-template  matStepContent>
-          <app-estudios-form></app-estudios-form>
-        </ng-template>
+          <ng-template matStepContent>
+            <app-estudios-form></app-estudios-form>
+          </ng-template>
         </mat-step>
         <mat-step state="groups" label="Referencias">
-          <ng-template  matStepContent>
-          <app-referencias-form></app-referencias-form>
-        </ng-template>
+          <ng-template matStepContent>
+            <app-referencias-form></app-referencias-form>
+          </ng-template>
         </mat-step>
         <mat-step state="engineering" label="Cargos">
-          <ng-template  matStepContent>
-          <app-cargos-form></app-cargos-form>
-        </ng-template>
+          <ng-template matStepContent>
+            <app-cargos-form></app-cargos-form>
+          </ng-template>
         </mat-step>
         <mat-step state="family_restroom" label="Información Familiar">
-          <ng-template  matStepContent>
-          <app-informacion-familiar-form (activeTab)="activeTab($event)"></app-informacion-familiar-form>
-        </ng-template>
+          <ng-template matStepContent>
+            <app-informacion-familiar-form
+              (activeTab)="activeTab($event)"
+            ></app-informacion-familiar-form>
+          </ng-template>
         </mat-step>
-        <!-- <mat-step>
-        <ng-template matStepLabel>Hecho</ng-template>
-        Se han llenado todos lo campos del formulario correctamente
-        <div>
-          <button class="stepper-main-btn" mat-button matStepperPrevious>Atrás</button>
-          <button class="stepper-main-btn" mat-button (click)="stepper.reset()">Reiniciar</button>
-        </div>
-      </mat-step> -->
       </mat-stepper>
     </mat-tab>
 
-    <mat-tab [disabled]="isActive" >
-    <!-- <mat-tab (activeTab)="onActiveTab(isActive)" [disabled]="!isActive"> -->
-      <ng-template mat-tab-label >
+    <mat-tab [disabled]="isActive">
+      <ng-template mat-tab-label>
         <mat-icon class="example-tab-icon">groups</mat-icon>
         <label class="title-tabs-hv"> Datos Sociodemográficos</label>
-
       </ng-template>
-      <!-- <ng-template  matStepContent> -->
-      <!-- <app-sociodemograficos *ngIf="onActiveTab"></app-sociodemograficos> -->
-      <app-sociodemograficos ></app-sociodemograficos>
-    <!-- </ng-template> -->
+
+      <app-sociodemograficos></app-sociodemograficos>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

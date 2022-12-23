@@ -26,9 +26,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
   @ViewChild('addInfoFamiData', { static: true })
   fieldDatosFamilia!: NgForm;
   @Output() activeTab = new EventEmitter<boolean>();
-  // @Output() activeTab2 = new EventEmitter<string>();
-  // @Output() selectTab: EventEmitter<number> = new EventEmitter<number>();
-  public ejemploMessage = 'Hola padre';
+
   public todosDatosCandidato = {}
 
 
@@ -53,9 +51,9 @@ public inforFamilia: any[] = [];
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
-    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+
     correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
+
     nums: /^\d{7,15}$/, // 7 a 14 numeros.
     celular: /^\d{10,15}$/ // 7 a 14 numeros.
   }
@@ -100,9 +98,6 @@ public inforFamilia: any[] = [];
     fechaNace: new Date,
   };
 
-  // public datosCompletosCandidato: CandidatoHv = {
-
-  // }
 
 
   stepperOrientation: Observable<StepperOrientation>;
@@ -173,14 +168,14 @@ public inforFamilia: any[] = [];
       }
       this.parentescos = _.orderBy(parentesco, ['id'], ['asc']);
       const candidatoExistente = this._storaged.get('candidatoExistente');
-      console.log('Datos adicionales desde storage', candidatoExistente);
+
 
       if(candidatoExistente  && candidatoExistente.length > 0){
-        console.log('Candidato existente', candidatoExistente);
+
         this.candidatoId = candidatoExistente[0].id_rh_candidato
 
         const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
-        console.log('Info Familiar: ', getInfoFamiliar);
+
         const newArr = getInfoFamiliar.map((obj: {
           fecha_nacimiento: Date;
           id: number;
@@ -208,18 +203,12 @@ public inforFamilia: any[] = [];
           fechaNace: obj.fecha_nacimiento,
 
         }));
-        console.log('new Array', newArr);
+
         this.myReferenceArray = [...newArr]
-        console.log('Array Familiar', this.myReferenceArray);
+
         this.activeTab.emit(false);
       }
-      // else{
-      //        setTimeout(
-      //     () => {
-      //       this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-      //     }, 1000);
-      //     // this.disabledBtnCrear = false;
-      // }
+
     loading.close();
   }
 
@@ -246,22 +235,11 @@ public inforFamilia: any[] = [];
     });
   }
 
-  // private async getAnyInformationAlt(service: string): Promise<any> {
-  //   return new Promise((resolve, reject) => {
-  //      this.apiService.getInformacionMaestros(service).subscribe({
-  //       next: (v) => resolve(v),
-  //       error: (e) => {
-  //         console.info(e);
-  //         resolve(null);
-  //       }
-  //     });
-  //   });
-  // }
 
   addReference() {
     if(this.fieldDatosFamilia.valid){
     this.FAMILIAR_DATA.push(this.setRelatives);
-    console.log('Data reference',this.FAMILIAR_DATA);
+
     this.myReferenceArray.push(this.setRelatives);
     this.setRelatives = {
       id: 0,
@@ -368,38 +346,38 @@ public inforFamilia: any[] = [];
        ...this.cargos
     ]
     }
-    console.log('datos temporales', this.datosBasicos);
+
   }
 
   public  borrarItem(element: any){
     this.myReferenceArray.splice(element, 1);
     this.myReferenceArray = [...this.myReferenceArray];
-    console.log(this.myReferenceArray);
+
   }
 
 
   public guardarProgreso(){
-    console.log('Info Familiar Guardada', this.datosInfoFamilia);
+
     this._storaged.set('datosInfoFamilia', this.myReferenceArray);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.getLocalStorage();
     this.setupDatosCandidato();
-    console.log('Datos', this.todosDatosCandidato);
+
 
   }
 
   public getLocalStorage(){
-    console.log('Cargar Datos Info Familiar', this.myReferenceArray);
+
       this.datosBasicos = this._storaged.get('datosCandidatoStorage');
       this.idiomas = this._storaged.get('idiomasStorage');
       this.datosadicionales = this._storaged.get('datosAdicionalesStorage');
       this.categoriaLicencia = this._storaged.get('datosLicencia');
-      // this.archivos = this._storaged.get('datosInfoFamilia');
+
       this.estudios = this._storaged.get('datosEstudiosStorage');
       this.referencias = this._storaged.get('datosReferenciasStorage');
       this.cargos = this._storaged.get('otrosCargosStorage');
       this.inforFamilia = this._storaged.get('datosInfoFamilia');
-    // this._storaged.get('datosInfoFamilia');
+
   }
 
   private async updateInformation(service: string, document: any): Promise<any> {
@@ -414,16 +392,13 @@ public inforFamilia: any[] = [];
     });
   }
 
-//  selectTabIndex(event: any) {
-//   const index = event.target.value;
-//     this.selectTab.emit(index);
-//   }
+
   public async enviarFormulario(): Promise<void>{
 
-    // this.activeTab.emit(false);
-    console.log('Formulario Guardado', this.todosDatosCandidato);
+
+
     const idUsuarioHv =  await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
-    console.log(idUsuarioHv);
+
 
     if(idUsuarioHv === 0){
       this.messageService.error('Error', 'No se pudo almacenar la información del candidato');
@@ -433,10 +408,7 @@ public inforFamilia: any[] = [];
       this._storaged.set('idCandidatoEnviado', idUsuarioHv);
 
       this.activeTab.emit(false);
-      // this.tabActive = true;
-      // this.activeTab2.emit(this.ejemploMessage);
-      // this.selectTabIndex(1);
-      // this._storaged.clear();
+
     }
 
   }

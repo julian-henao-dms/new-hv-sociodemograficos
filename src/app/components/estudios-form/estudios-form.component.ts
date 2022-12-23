@@ -117,8 +117,7 @@ export class EstudiosFormComponent implements OnInit {
     id_nivel_estudio: null,
     id_tipo_curso: null,
     accion: 0,
-    //titulo: 0 // subitem? no esta en el sp
-  }
+    }
 
   public columnsReference: any[] = ["idInstitucion", "idEstudio", "id_estado_estudio", "id_tipo_estudio", "id_tipo_curso", "id_nivel_estudio", 'borrar' ];
   public STUDIES_DATA: Estudios[] = [];
@@ -241,13 +240,7 @@ export class EstudiosFormComponent implements OnInit {
     console.log('Array catg',this.myReferenceArray);
 
     }
-    // else{
-    // // setTimeout(
-    //   //   () => {
-    //   //     this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-    //   //   }, 1000);
-    //   //   // this.disabledBtnCrear = false;
-    // }
+
     loading.close();
 
 
@@ -288,7 +281,7 @@ if(this.fieldDatosEstudios.valid){
       accion: 0,
     };
     this.myReferenceArray = [...this.myReferenceArray];
-    // console.warn(this.myReferenceArray);}
+
   }else{
       this.messageService.info('Atención','Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
       this.fieldDatosEstudios.control.markAllAsTouched();
@@ -301,15 +294,14 @@ if(this.fieldDatosEstudios.valid){
 
 
   public guardarProgreso(){
-    // console.log('Datos Estudios Guardados', this.myReferenceArray);
+
     this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    // console.log('Cargar Datos Estudios');
-    // this.myReferenceArray = this._storaged.get('datosEstudiosStorage');
+
   }
 
   public  borrarItem(element: any){
@@ -321,12 +313,5 @@ if(this.fieldDatosEstudios.valid){
 
   public labelTable(id: number, list: any[]){
     return this._addItemTable.findLabel(id, list);
-    // console.log('id', id);
-    // if(id > 0){
-    //   const objectLabel = list.find((e) => e.value == id);
-    //   return objectLabel?.viewValue || '';
-    // }else{
-    //   return '--o--'
-    // }
   }
 }

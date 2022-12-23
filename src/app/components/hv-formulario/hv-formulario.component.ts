@@ -39,34 +39,21 @@ export class HvFormularioComponent implements OnInit {
     this.stepperOrientation = breakpointObserver
     .observe('(min-width: 800px)')
     .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
-
-
   }
 
 
   ngOnInit() {
-    // console.log('prueba tabs', this.tabGroup);
+
   }
 
   ngOnChanges(){
-    // console.log('prueba tabs', this.tabGroup);
+
   }
   activeTab(event: any):void{
-    console.log('evento que llega info Familiar', event);
     this.isActive = event
   }
-// onSelectTab(index: any) {
-//   this.tabGroup.selectedIndex = index;
-// }
-
-// public onActiveTab(tabActive: any){
-// console.log("Evento tab", tabActive);
-// console.log("Evento tab  data", tabActive);
-// this.isActive = tabActive;
-// }
 
   public changeDatosBasicos(evento:any){
-    console.log("Evento del hijo", evento);
     this.isDatosBasicos = evento.data;
 
   }

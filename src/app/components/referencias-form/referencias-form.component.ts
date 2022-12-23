@@ -92,9 +92,7 @@ export class ReferenciasFormComponent implements OnInit {
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
-    // correo: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
     correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
-    // correo: /^\w+([.-_+]?\w+)@\w+([.-]?\w+)(\.\w{2,10})+$/,
     nums: /^\d{7,15}$/, // 7 a 14 numeros.
     celular: /^\d{10,15}$/ // 7 a 14 numeros.
   }
@@ -159,14 +157,14 @@ export class ReferenciasFormComponent implements OnInit {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
 
     const candidatoExistente = this._storaged.get('candidatoExistente');
-    console.log('Datos adicionales desde storage', candidatoExistente);
+
     if(candidatoExistente  && candidatoExistente.length > 0){
-      console.log('Candidato existente', candidatoExistente);
+
     this.candidatoId = candidatoExistente[0].id_rh_candidato
 
 
     const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
-    console.log('Referencias: ', getInfoFamiliar);
+
     const newArr = getInfoFamiliar.map((obj: {
       id: number;
       cargo: string;
@@ -199,19 +197,11 @@ export class ReferenciasFormComponent implements OnInit {
       MotivoRetiro: obj.motivo_retiro,
       accion: 0,
     }));
-    console.log('new Array', newArr);
-    console.log('new Array', newArr.tipo);
-    this.myReferenceArray = [...newArr]
-    console.log('Array catg',this.myReferenceArray);
-    }
-    // else{
-    //   // setTimeout(
-    //   //   () => {
-    //   //     this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-    //   //   }, 1000);
-    //   //   // this.disabledBtnCrear = false;
 
-    // }
+    this.myReferenceArray = [...newArr]
+
+    }
+
   loading.close();
 
   }
@@ -231,7 +221,6 @@ export class ReferenciasFormComponent implements OnInit {
   addReference() {
     if(this.fieldDatosReferencias.valid){
     this.REFERENCE_DATA.push(this.setReferences);
-    console.log('Data reference',this.REFERENCE_DATA);
     this.myReferenceArray.push(this.setReferences);
     this.setReferences = {
       id: 0,
@@ -255,13 +244,13 @@ export class ReferenciasFormComponent implements OnInit {
     this.fieldDatosReferencias.control.markAllAsTouched();
 }
 
-    // console.warn(this.myReferenceArray);
+
   }
 
   public  borrarItem(element: any){
     this.myReferenceArray.splice(element, 1);
     this.myReferenceArray = [...this.myReferenceArray];
-    console.log(this.myReferenceArray);
+
   }
 
   public labelTable(id: number, list: any[]){
@@ -269,15 +258,14 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    // console.log('Referencias', this.datosReferencias);
+
     this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 
   }
   public getLocalStorage(){
-    // console.log('Cargar Datos Adicionales', this.datosReferencias);
-    // this._storaged.get('datosReferenciasStorage');
+
   }
 
 

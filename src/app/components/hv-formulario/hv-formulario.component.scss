@@ -1,19 +1,13 @@
 .mat-stepper-horizontal {
-    margin-top: 8px;
-
+  margin-top: 8px;
 }
 
-
-// .mat-form-field {
-//     margin-top: 16px;
-// }
-.wizard-card{
-    margin: 1.2em 3em;
+.wizard-card {
+  margin: 1.2em 3em;
 }
 label.title-tabs-hv {
   text-transform: uppercase;
 }
-
 
 .mat-step-label.mat-step-label {
   text-overflow: inherit;
@@ -21,7 +15,7 @@ label.title-tabs-hv {
 }
 
 @media screen and (max-width: 700px) {
-  .wizard-card{
+  .wizard-card {
     margin: 1.2em 0em;
-}
+  }
 }
