@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints  } from '@angular/cdk/layout';
 import { StepperOrientation, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper';
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormsModule } from '@angular/forms';
+import { MatStepper } from '@angular/material/stepper';
 import { MatTabGroup } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -22,6 +23,11 @@ export class HvFormularioComponent implements OnInit {
   @ViewChild('tabGroup', { static: false })
   tabGroup!: MatTabGroup;
   stepperOrientation: Observable<StepperOrientation>;
+
+  //nuevo código
+  @ViewChild('stepper')
+  stepper!: MatStepper;
+  selectedStep = 0;
 
   public isDatosBasicos:number = 1;
   public isVisible = -1;
@@ -56,6 +62,11 @@ export class HvFormularioComponent implements OnInit {
   public changeDatosBasicos(evento:any){
     this.isDatosBasicos = evento.data;
 
+  }
+
+  stepChanged(event: any) {
+    this.selectedStep = event.selectedIndex;
+    console.log('step',this.selectedStep);
   }
 
 

@@ -54,41 +54,18 @@ export class CargosFormComponent implements OnInit {
 
 
  const candidatoExistente = this._storaged.get('candidatoExistente');
-      console.log('Datos adicionales desde storage', candidatoExistente);
+
 
       if(candidatoExistente  && candidatoExistente.length > 0){
-        console.log('Candidato existente', candidatoExistente);
-      this.candidatoId = candidatoExistente[0].id_rh_candidato
+
+      this.candidatoId = candidatoExistente[0].id
 
       const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
-      console.log('Cargos: ', getCargos);
-      // const newArr = getCargos.map((obj: {
-      //   id: number;
-      //   id_rh_candidato: number;
-      //   id_rh_perfil: number;
-      //   cargo: string;
-
-      // }) => ({
-      //   obj.id
-
-      // }));
-      // console.log('new Array', newArr);
-      // this.idPerfilPrevio = [...newArr]
-      // // console.log('Array cargos',this.cargos);
-      // }
 
       const newArr = getCargos.map((item: { id_rh_perfil: any; }) => item.id_rh_perfil);
-      console.log('new Array', newArr);
       this.idPerfilPrevio = [...newArr]
       }
-    //   else{
-    //     setTimeout(
-    //       () => {
-    //         this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-    //       }, 1000);
-    //       // this.disabledBtnCrear = false;
 
-    // }
     loading.close();
   }
 
@@ -105,18 +82,14 @@ export class CargosFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    console.log('Como se guardan los perfiles', this.idPerfilPrevio);
+
     this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
       ...this.otrosCargos, idPerfil
     }));
-    // console.log('Cargos Guardados', this.otrosCargos);
+
     this._storaged.set('otrosCargosStorage', this.cargosArray);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
+  }
 
-  }
-  public getLocalStorage(){
-    // console.log('Cargar Cargos', this.otrosCargos);
-    // this._storaged.get('otrosCargosStorage');
-  }
 }

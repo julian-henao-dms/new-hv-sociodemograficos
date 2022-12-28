@@ -74,25 +74,25 @@
     <mat-grid-tile  *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline">
         <mat-label>Empresa</mat-label>
-        <input matInput placeholder="Empresa" #empresa="ngModel"  id="empresa" name="empresa" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.empresa" />
+        <input matInput placeholder="Empresa" #empresa="ngModel"  id="empresa" name="empresa" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.empresa" (ngModelChange)="setReferences.empresa = $event.toUpperCase()"/>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline" >
         <mat-label>Cargo</mat-label>
-        <input matInput placeholder="Cargo" #Cargo="ngModel"  id="Cargo" name="Cargo" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.Cargo" />
+        <input matInput placeholder="Cargo" #Cargo="ngModel"  id="Cargo" name="Cargo" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.Cargo" (ngModelChange)="setReferences.Cargo = $event.toUpperCase()"/>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline" >
         <mat-label>Tiempo laborado</mat-label>
-        <input matInput placeholder="Tiempo Laborado" #TiempoLaborado="ngModel"  id="TiempoLaborado" name="TiempoLaborado" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.TiempoLaborado" />
+        <input matInput placeholder="Tiempo Laborado" #TiempoLaborado="ngModel"  id="TiempoLaborado" name="TiempoLaborado" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.TiempoLaborado" (ngModelChange)="setReferences.TiempoLaborado = $event.toUpperCase()"/>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile  *ngIf="setReferences.tipo === 2">
       <mat-form-field appearance="outline">
         <mat-label>Motivo de Retiro</mat-label>
-        <input matInput placeholder="Motivo de Retiro" #MotivoRetiro="ngModel"  id="MotivoRetiro" name="MotivoRetiro" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.MotivoRetiro" />
+        <input matInput placeholder="Motivo de Retiro" #MotivoRetiro="ngModel"  id="MotivoRetiro" name="MotivoRetiro" [required]="setReferences.tipo === 2" [(ngModel)]="setReferences.MotivoRetiro" (ngModelChange)="setReferences.MotivoRetiro = $event.toUpperCase()"/>
       </mat-form-field>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="cols">
@@ -104,7 +104,7 @@
           #autosize="cdkTextareaAutosize"
           cdkAutosizeMinRows="1"
           cdkAutosizeMaxRows="5"
-          placeholder="Motivo de Retiro" #Observaciones="ngModel"  id="Observaciones" name="Observaciones"  [(ngModel)]="setReferences.Observaciones"
+          placeholder="Notas" #Observaciones="ngModel"  id="Observaciones" name="Observaciones"  [(ngModel)]="setReferences.Observaciones"
         ></textarea>
       </mat-form-field>
     </mat-grid-tile>

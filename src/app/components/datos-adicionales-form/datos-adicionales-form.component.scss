@@ -6,6 +6,11 @@ th.mat-header-cell {
   text-align: center;
 }
 
+::ng-deep div#id_Entidad-panel {
+  min-width: calc(100% + 450px);
+  max-width: fit-content;
+}
+
 @media screen and (max-width: 860px) {
   .scroller-table {
     width: 100%;

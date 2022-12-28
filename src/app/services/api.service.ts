@@ -18,22 +18,14 @@ export class ApiService {
 
    public  getInformacion(servicio: string): Observable<any> {
     const url = this.apiUrl + servicio;
-    console.log(url)
+
     return this.http.get(url);
   }
    public  getInformacionMaestros(servicio: string): Observable<any> {
     const url = this.apiUrlAlt + servicio;
-    console.log(url)
+
     return this.http.get(url);
   }
-
-
-  //  public async getInformacion(servicio: string, param: string): Promise<Observable<any>> {
-  //   const url = this.apiUrl + servicio + param;
-  //   console.log(url)
-  //   const Headers = new HttpHeaders().set('Authorization', this.token);
-  //   return this.http.get(url, { headers: Headers });
-  // }
 
   public saveInformacion(servicio: string, document: any): Observable<any> {
     const url = this.apiUrl + servicio;

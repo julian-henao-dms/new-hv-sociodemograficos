@@ -265,7 +265,6 @@ export class SociodemograficosComponent implements OnInit {
   }
 
   public onChange(event: any) {
-    console.log('OnChanges', event);
     if (event.value != -1) {
       this.buttonDisabled = false;
       this.sociodemograficos.consentimientoinformado = event.value;
@@ -277,22 +276,20 @@ export class SociodemograficosComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-
-    console.log('Inicia Sociodemograficos');
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
 
     const idEmp = this.idEmp;
     const numRegla = this.numRegla
 
     const paises = await this.getAnyInformation('/pais/' + idEmp);
-   if(paises === null){
-     this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
-     return;
-    }
+      if(paises === null){
+        this.messageService.error('Error', 'Error interno del servidor al cargar los paises');
+        return;
+      }
     this.paises = _.orderBy(paises, ['id'], ['asc']);
 
     const aniosAntigEmpresa = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdAntiEmp');
-    console.log('regla antg empresa',aniosAntigEmpresa)
+
     if(aniosAntigEmpresa === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en la empresa');
          return;
@@ -300,7 +297,7 @@ export class SociodemograficosComponent implements OnInit {
     this.aniosAntigEmpresa = _.orderBy(aniosAntigEmpresa, ['id'], ['asc']);
 
     const aniosAntigCargo = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdAnticargo');
-    console.log('regla antg cargo',aniosAntigCargo)
+
     if(aniosAntigCargo === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
@@ -309,7 +306,7 @@ export class SociodemograficosComponent implements OnInit {
 
 
     const promIngresos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdIngresos');
-    console.log('regla antg ingresos',promIngresos)
+
     if(promIngresos === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
@@ -318,7 +315,7 @@ export class SociodemograficosComponent implements OnInit {
 
 
     const ubicacionVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdZona');
-    console.log('regla ubicación',ubicacionVivienda)
+
     if(ubicacionVivienda === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar las zonas de ubicación');
          return;
@@ -326,7 +323,7 @@ export class SociodemograficosComponent implements OnInit {
     this.ubicaciones = _.orderBy(ubicacionVivienda, ['id'], ['asc']);
 
     const estratos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEstratos');
-    console.log('regla estratos',estratos)
+
     if(estratos === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los datos de estratificación social ');
          return;
@@ -334,7 +331,7 @@ export class SociodemograficosComponent implements OnInit {
     this.estratos = _.orderBy(estratos, ['id'], ['asc']);
 
     const personasDependen = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdPersDepe');
-    console.log('regla personas dependientes',personasDependen)
+
     if(personasDependen === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los');
          return;
@@ -342,7 +339,7 @@ export class SociodemograficosComponent implements OnInit {
     this.dependencias = _.orderBy(personasDependen, ['id'], ['asc']);
 //
     const tiposTransporte = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdTipoTrans');
-    console.log('regla tipo transporte',tiposTransporte)
+
     if(tiposTransporte === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los tipos de transporte');
          return;
@@ -350,24 +347,22 @@ export class SociodemograficosComponent implements OnInit {
     this.tiposTransporte = _.orderBy(tiposTransporte, ['id'], ['asc']);
 
     const IdServiciosVivi = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdServiciosVivi');
-    console.log('regla Personas vive',IdServiciosVivi)
+
     if(IdServiciosVivi === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de servicios públicos');
          return;
         }
     this.serviciosPublicos = _.orderBy(IdServiciosVivi, ['id'], ['asc']);
-    console.log('servicios publicos', this.serviciosPublicos);
+
 
 
     this.serviciosPublicos.forEach(element => {
-      // agregamos un nuevo
       element.check = false;
-      console.log('servicios publicos v2', this.serviciosPublicos);
     });
 
 
     const rangoEdadHijos = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdEdadHijo');
-    console.log('regla rango edad hijos',rangoEdadHijos)
+
     if(rangoEdadHijos === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los rangos de edad ');
          return;
@@ -379,7 +374,7 @@ export class SociodemograficosComponent implements OnInit {
 
 
     const caracteristicasVivienda = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'IdCaraVivi');
-    console.log('regla caracteristicas vivienda',caracteristicasVivienda)
+
     if(caracteristicasVivienda === null){
          this.messageService.error('Error', 'Error interno del servidor al cargar los años de antigüedad en el cargo');
          return;
@@ -391,11 +386,11 @@ export class SociodemograficosComponent implements OnInit {
     const idCandidatoEnviado = this.storaged.get('idCandidatoEnviado');
     if (idCandidatoEnviado != null ){
       this.sociodemograficos.idRhCandidato = idCandidatoEnviado;
-      console.log('id recibido',this.sociodemograficos.idRhCandidato);
+
     }
     const candidatoExistente = this.storaged.get('candidatoExistente');
     if(candidatoExistente  && candidatoExistente.length > 0){
-      console.log('Candidato existente', candidatoExistente);
+
       this.sociodemograficos.consentimientoinformado = candidatoExistente[0].consentimiento_informado;
       this.sociodemograficos.idAntiguedadCargo = candidatoExistente[0].id_antiguedad_cargo;
       this.sociodemograficos.idAntiguedadEmpresa = candidatoExistente[0].id_antiguedad_empresa;
@@ -421,37 +416,39 @@ export class SociodemograficosComponent implements OnInit {
       this.sociodemograficos.actividadFisica = candidatoExistente[0].actividad_fisica;
       this.sociodemograficos.fumador = candidatoExistente[0].fumador;
       this.sociodemograficos.usaLentes = candidatoExistente[0].usa_lentes;
-    } else{
-      setTimeout(
-        () => {
-          console.log('Me estoy ejecutando.............Sociodemografico....................................:::::::::::::::::::::::::::::::::::::::::::::::::::::');
-          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-        }, 1000);
-        // this.disabledBtnCrear = false;
+
+      this.buttonDisabled = false;
+    }
+  //   else{
+  //     setTimeout(
+  //       () => {
+  //          this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+  //       }, 1000);
+  //       // this.disabledBtnCrear = false;
 
 
-  }
+  // }
 
-  console.log('servicios vivienda del edit ', this.sociodemograficos.serviciosVivienda);
+
   const getServiciosCandidato = this.sociodemograficos.serviciosVivienda ? this.sociodemograficos.serviciosVivienda.split(',') : [];
-  console.log('string',getServiciosCandidato);
+
   this.serviciosVivienda = [...getServiciosCandidato]
-  console.log('Servicios consultados',this.serviciosVivienda);
 
 
 
-  console.log('personas depende edit ', this.sociodemograficos.personasDepende);
+
+
   const getPersonasDepende = this.sociodemograficos.personasDepende ? this.sociodemograficos.personasDepende.split(',') : [];
-  console.log('string',getPersonasDepende);
+
   this.personasDepende = [...getPersonasDepende]
-  console.log('Servicios consultados',this.personasDepende);
 
 
-  console.log('servicios vivienda del edit ', this.sociodemograficos.tipoTransporte);
+
+
   const getTipoTransporte = this.sociodemograficos.tipoTransporte ? this.sociodemograficos.tipoTransporte.split(',') : [];
-  console.log('string',getTipoTransporte);
+
   this.tipoTransporte = [...getTipoTransporte]
-  console.log('Servicios consultados',this.tipoTransporte);
+
 
 
 loading.close();
@@ -494,29 +491,29 @@ public transformToString(){
   // public async onSelectionChangeDepto(idDepto:number): Promise<void> {
   //   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
   //   const idEmp = this.idEmp;
-  //   console.log('Datos pais', idEmp, idDepto);
+
   //   const ciudades = await this.getAnyInformation('/pais/ciudades/' + idEmp + '/' + idDepto);
   //    if(ciudades.length === 0){
   //     this.messageService.error('Error', 'Error interno del servidor al cargar las ciudades');
   //     return;
   //   }
-  //   console.log('deptos', ciudades);
+  //
   //   this.ciudades = ciudades;
-  //   console.log('datos select deptos', this.ciudades);
+  //
   //   loading.close();
   // }
   // public async onSelectionChangeCiudad(idCiudad:number): Promise<void> {
   //   const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
   //   const idEmp = this.idEmp;
-  //   console.log('Datos pais', idEmp, idCiudad);
+  //
   //   const barrios = await this.getAnyInformation('/pais/barrios/' + idCiudad);
   //    if(barrios === null){
   //     this.messageService.error('Error', 'Error interno del servidor al cargar los barrios');
   //     return;
   //   }else{
-  //     console.log('deptos', barrios);
+  //
   //     this.barrios = barrios;
-  //     console.log('datos select deptos', this.barrios);
+  //
   //     loading.close();
   //   }
 
@@ -525,7 +522,7 @@ public transformToString(){
   public async enviarSociodemograficos(): Promise<void> {
     this.transformToString();
     this.storaged.set('Sociodemograficos', this.sociodemograficos);
-console.log('datos Sociodemograficos enviardos',this.sociodemograficos);
+
     if (this.sociodemograficos.consentimientoinformado == 0) {
       this.messageService.info(
         'Consentimiento no aceptado',
@@ -533,17 +530,18 @@ console.log('datos Sociodemograficos enviardos',this.sociodemograficos);
       );
     } else if (this.sociodemograficos.consentimientoinformado == 1 ) {
       if(!this.fieldSociodemograficos.valid){
-        console.log('No valido');
+
         this.messageService.error('Error','Debe llenar todos los campos requeridos... Por favor verifique los campos indicados.');
         this.fieldSociodemograficos.control.markAllAsTouched();
       }else{
-        console.log('Enviar', this.sociodemograficos);
+
         const idUsuarioHv =  await this.updateInformation('/hojadevida/sociodemograficos', this.sociodemograficos);
-        console.log('Respuesta al update', idUsuarioHv);
+
         this.messageService.success(
           'Perfecto',
           'Los datos sociodemográficos se almacenaron correctamente'
         );
+        this.storaged.clear();
       }
 
     } else {

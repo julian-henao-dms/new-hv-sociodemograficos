@@ -9,13 +9,15 @@
         [orientation]="(stepperOrientation | async)!"
         [linear]="isLinear"
         #stepper
+        (selectionChange)="stepChanged($event)"
         class="wizard-datos-candidato"
       >
         <mat-step state="description">
           <ng-template matStepLabel>Datos Básicos</ng-template>
           <ng-template matStepContent>
-            <app-datos-basicos-form
+            <app-datos-basicos-form (activeTab)="activeTab($event)"
               (changeSelect)="changeDatosBasicos($event)"
+              *ngIf="selectedStep === 0"
             ></app-datos-basicos-form>
           </ng-template>
         </mat-step>
@@ -25,6 +27,7 @@
           <ng-template matStepContent>
             <app-datos-adicionales-form
               [tipoCandidato]="isDatosBasicos"
+              *ngIf="selectedStep === 1"
             ></app-datos-adicionales-form>
           </ng-template>
         </mat-step>
@@ -33,7 +36,7 @@
         <mat-step state="attach_file" label="Archivos">
           <ng-template matStepContent>
             <!-- <app-carga-archivos-form></app-carga-archivos-form> -->
-            <app-carga-archivos-hv></app-carga-archivos-hv>
+            <app-carga-archivos-hv *ngIf="selectedStep === 2"></app-carga-archivos-hv>
           </ng-template>
         </mat-step>
         <!-- Fin Paso 3 -->
@@ -41,23 +44,23 @@
 
         <mat-step state="school" label="Estudios">
           <ng-template matStepContent>
-            <app-estudios-form></app-estudios-form>
+            <app-estudios-form *ngIf="selectedStep === 3"></app-estudios-form>
           </ng-template>
         </mat-step>
         <mat-step state="groups" label="Referencias">
           <ng-template matStepContent>
-            <app-referencias-form></app-referencias-form>
+            <app-referencias-form *ngIf="selectedStep === 4"></app-referencias-form>
           </ng-template>
         </mat-step>
         <mat-step state="engineering" label="Cargos">
           <ng-template matStepContent>
-            <app-cargos-form></app-cargos-form>
+            <app-cargos-form *ngIf="selectedStep === 5"></app-cargos-form>
           </ng-template>
         </mat-step>
         <mat-step state="family_restroom" label="Información Familiar">
           <ng-template matStepContent>
             <app-informacion-familiar-form
-              (activeTab)="activeTab($event)"
+ *ngIf="selectedStep === 6"
             ></app-informacion-familiar-form>
           </ng-template>
         </mat-step>
@@ -70,7 +73,7 @@
         <label class="title-tabs-hv"> Datos Sociodemográficos</label>
       </ng-template>
 
-      <app-sociodemograficos></app-sociodemograficos>
+      <app-sociodemograficos *ngIf="!isActive"></app-sociodemograficos>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

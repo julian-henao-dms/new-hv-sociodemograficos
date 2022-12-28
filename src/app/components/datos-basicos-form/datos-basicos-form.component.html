@@ -299,7 +299,7 @@
           pattern="[/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/]"
           type="email"
           placeholder="Correo"
-          name="mail" [(ngModel)]="datosCandidato.mail"
+          name="mail" [(ngModel)]="datosCandidato.mail" (ngModelChange)="datosCandidato.mail = $event.toUpperCase()"
         #mail="ngModel" required id="mail"
         [pattern]="expresiones.correo"
         />
@@ -402,7 +402,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar barrio</mat-label>
         <mat-select name="id_cot_cliente_barrio" [(ngModel)]="datosCandidato.id_cot_cliente_barrio"
-        #id_cot_cliente_barrio="ngModel" required id="id_cot_cliente_barrio">
+        #id_cot_cliente_barrio="ngModel"  id="id_cot_cliente_barrio">
           <mat-option
             *ngFor="let barrio of barrios"
             [value]="barrio.id"
@@ -410,9 +410,9 @@
             {{ barrio.descripcion }}
           </mat-option>
         </mat-select>
-        <mat-error class="message-error" [class.invalid]="id_cot_cliente_barrio.invalid" *ngIf="id_cot_cliente_barrio.errors?.['required']">
+        <!-- <mat-error class="message-error" [class.invalid]="id_cot_cliente_barrio.invalid" *ngIf="id_cot_cliente_barrio.errors?.['required']">
           *Este campo es requerido, debe seleccionar un barrio.
-        </mat-error>
+        </mat-error> -->
       </mat-form-field>
     </mat-grid-tile>
   </mat-grid-list>

@@ -92,7 +92,8 @@ export class ReferenciasFormComponent implements OnInit {
     usuario: /^[a-zA-Z0-9\_\-]{4,16}$/, // Letras, numeros, guion y guion_bajo
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
-    correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    // correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    correo: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
     nums: /^\d{7,15}$/, // 7 a 14 numeros.
     celular: /^\d{10,15}$/ // 7 a 14 numeros.
   }
@@ -160,7 +161,7 @@ export class ReferenciasFormComponent implements OnInit {
 
     if(candidatoExistente  && candidatoExistente.length > 0){
 
-    this.candidatoId = candidatoExistente[0].id_rh_candidato
+    this.candidatoId = candidatoExistente[0].id
 
 
     const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);

@@ -64,7 +64,6 @@ export class CargaArchivosHvComponent implements OnInit {
   }
 
   public guardarProgreso(){
-    // console.log('Archivos', this.archivos);
     // this._storaged.set('archivosStorage', this.archivos);
     this.disabledButtonNext = false;
 

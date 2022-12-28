@@ -25,9 +25,10 @@ interface Parentesco{
 export class InformacionFamiliarFormComponent implements OnInit {
   @ViewChild('addInfoFamiData', { static: true })
   fieldDatosFamilia!: NgForm;
-  @Output() activeTab = new EventEmitter<boolean>();
+  // @Output() activeTab = new EventEmitter<boolean>();
 
   public todosDatosCandidato = {}
+  public disabledButtonNext: boolean = true;
 
 
 public datosBasicos: any = {};
@@ -172,7 +173,7 @@ public inforFamilia: any[] = [];
 
       if(candidatoExistente  && candidatoExistente.length > 0){
 
-        this.candidatoId = candidatoExistente[0].id_rh_candidato
+        this.candidatoId = candidatoExistente[0].id
 
         const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
 
@@ -206,7 +207,7 @@ public inforFamilia: any[] = [];
 
         this.myReferenceArray = [...newArr]
 
-        this.activeTab.emit(false);
+        // this.activeTab.emit(false);
       }
 
     loading.close();
@@ -259,6 +260,8 @@ public inforFamilia: any[] = [];
     };
     this.myReferenceArray = [...this.myReferenceArray];
     console.warn(this.myReferenceArray);
+    this.datosInfoFamilia.fechaNace = new Date;
+
   }else{
     this.messageService.info('Atención','Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
     this.fieldDatosFamilia.control.markAllAsTouched();
@@ -295,7 +298,7 @@ public inforFamilia: any[] = [];
         id_salario: this.datosadicionales.id_salario,
         id_rh_fuente_reclutamiento: this.datosadicionales.id_rh_fuente_reclutamiento,
         id_trajo_hoja_vida: this.datosadicionales.id_trajo_hoja_vida,
-        estado: 0,
+        estado: 1,
         bloqueado: 0,
         motivo: '',
         licencia: this.datosadicionales.licencia,
@@ -359,9 +362,11 @@ public inforFamilia: any[] = [];
   public guardarProgreso(){
 
     this._storaged.set('datosInfoFamilia', this.myReferenceArray);
-    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
+    this.disabledButtonNext = false;
     this.getLocalStorage();
     this.setupDatosCandidato();
+    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
+
 
 
   }
@@ -407,7 +412,7 @@ public inforFamilia: any[] = [];
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
       this._storaged.set('idCandidatoEnviado', idUsuarioHv);
 
-      this.activeTab.emit(false);
+      // this.activeTab.emit(false);
 
     }
 

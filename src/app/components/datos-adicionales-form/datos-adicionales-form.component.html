@@ -107,7 +107,7 @@
     <mat-grid-tile >
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar entidad de expedición</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.id_Entidad"
+        <mat-select class="select_entidad" [(ngModel)]="datosAdicionales.id_Entidad"
         name="id_Entidad" #id_Entidad="ngModel" id="id_Entidad">
           <mat-option
             *ngFor="let entidad of entidades"

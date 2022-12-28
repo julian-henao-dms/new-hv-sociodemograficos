@@ -361,6 +361,10 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
         this.datosAdicionales.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
         this.datosAdicionales.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
         this.datosAdicionales.runt = candidatoExistente[0].runt;
+        this.datosAdicionales.idRhEps = candidatoExistente[0].id_rh_eps;
+        this.datosAdicionales.idRhFondoPension = candidatoExistente[0].id_rh_fondo_pension;
+        this.datosAdicionales.idRhFondoCaja = candidatoExistente[0].id_rh_fondo_caja;
+        this.datosAdicionales.idRhFondoCesantias = candidatoExistente[0].id_rh_fondo_cesantias;
         this.datosAdicionales.licencia = candidatoExistente[0].licencia;
         this.datosAdicionales.tipo_licencia = candidatoExistente[0].tipo_licencia;
         this.datosAdicionales.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;

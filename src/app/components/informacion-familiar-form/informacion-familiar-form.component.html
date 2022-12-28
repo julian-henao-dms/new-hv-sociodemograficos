@@ -119,7 +119,7 @@
     <button type="button" class="stepper-main-btn" mat-button (click)="guardarProgreso()">
       Guardar Progreso
     </button>
-    <button type="button" class="stepper-main-btn" mat-button (click)="enviarFormulario()">
+    <button type="button" class="stepper-main-btn" [disabled]="disabledButtonNext" mat-button (click)="enviarFormulario()">
       Enviar
     </button>
   </div>

@@ -187,7 +187,7 @@ export class EstudiosFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    this.getLocalStorage();
+    // this.getLocalStorage();
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
@@ -202,13 +202,13 @@ export class EstudiosFormComponent implements OnInit {
     this.tiposCurso = _.orderBy(tipoCurso, ['id'], ['asc']);
 
     const candidatoExistente = this._storaged.get('candidatoExistente');
-    console.log('Datos adicionales desde storage', candidatoExistente);
-    if(candidatoExistente  && candidatoExistente.length > 0){
-      console.log('Candidato existente', candidatoExistente);
-    this.candidatoId = candidatoExistente[0].id_rh_candidato
 
+    if(candidatoExistente  && candidatoExistente.length > 0){
+
+    this.candidatoId = candidatoExistente[0].id
+console.log(this.candidatoId);
     const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
-    console.log('Estudios: ', getEstudios);
+    console.log(getEstudios);
     const newArr = getEstudios.map((obj: {
       id: number;
       id_rh_candidato: number;
@@ -235,9 +235,8 @@ export class EstudiosFormComponent implements OnInit {
       id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
       accion: 0,
     }));
-    console.log('new Array', newArr);
+
     this.myReferenceArray = [...newArr]
-    console.log('Array catg',this.myReferenceArray);
 
     }
 
@@ -263,8 +262,7 @@ export class EstudiosFormComponent implements OnInit {
 
   addReference() {
 if(this.fieldDatosEstudios.valid){
-      this.STUDIES_DATA.push(this.setStudies);
-    console.log('Data reference',this.STUDIES_DATA);
+    this.STUDIES_DATA.push(this.setStudies);
     this.myReferenceArray.push(this.setStudies);
     this.setStudies = {
       id: 0,
@@ -282,6 +280,8 @@ if(this.fieldDatosEstudios.valid){
     };
     this.myReferenceArray = [...this.myReferenceArray];
 
+    this.datosEstudios.fecha_Desde = new Date;
+    this.datosEstudios.fecha_Hasta = new Date;
   }else{
       this.messageService.info('Atención','Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
       this.fieldDatosEstudios.control.markAllAsTouched();
