@@ -9,7 +9,7 @@ export interface Sociodemograficos {
   idingresos:number | null;
   idCaracteristicaVivienda:number | null;
   idZonaUbica:number | null;
-  idEstratoServicios:number | null;// list or array
+  idEstratoServicios:number | null;
   serviciosVivienda:string;// list or array
   servicios:number | null;
   personasVive:number | null;

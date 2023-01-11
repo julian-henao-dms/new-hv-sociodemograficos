@@ -74,13 +74,13 @@ interface DatosBasicosCandidato {
   id_tipo_candidato: number | null;
   id_rh_tipo_documento: number | null;//*
   nit: string;  //*
-  fecExpedicion: string;//*
+  fecExpedicion: Date;//*
   lugarExpedicion: string;//*
   idCotClientePais: number | null;//
   nombre: string;//*
   apellido: string;//*
   genero: number | null;//*
-  fecha_nacimiento: string;//*
+  fecha_nacimiento: Date;//*
   idRhEstadoCivil: number | null;//*
   telefono: string;//*
   mail: string;//*
@@ -138,13 +138,13 @@ public datosCandidato: DatosBasicosCandidato = {
   id_tipo_candidato: null,
   id_rh_tipo_documento: null,
   nit: '',
-  fecExpedicion: '',
+  fecExpedicion: new Date,
   lugarExpedicion: '',
   idCotClientePais: null,
   nombre: '',
   apellido: '',
   genero: null,
-  fecha_nacimiento: '',
+  fecha_nacimiento: new Date,
   idRhEstadoCivil: null,
   telefono: '',
   mail: '',
@@ -397,7 +397,7 @@ public idiomasCandidato: Idioma = {
           this.activeTab.emit(false);
         }
         this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
-
+console.log('Datos paises deptos y ciudad', this.todosLugares);
         this.candidatoId = candidatoExistente[0].id
         const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
         const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
