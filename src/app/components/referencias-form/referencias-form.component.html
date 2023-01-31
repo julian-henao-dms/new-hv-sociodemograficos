@@ -62,7 +62,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Correo</mat-label>
-        <input matInput placeholder="Correo" #mail="ngModel"  id="mail" name="mail" required [(ngModel)]="setReferences.mail"
+        <input matInput placeholder="Correo" #mail="ngModel"  id="mail" name="mail" required [(ngModel)]="setReferences.mail" (ngModelChange)="setReferences.mail = $event.toUpperCase()"
         [pattern]="expresiones.correo"
         />
         <mat-hint  class="message-error"

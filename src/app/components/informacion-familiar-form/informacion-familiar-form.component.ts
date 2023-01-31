@@ -410,6 +410,7 @@ public inforFamilia: any[] = [];
       this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
     }else{
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
+      // this._storaged.clear();
       this._storaged.set('idCandidatoEnviado', idUsuarioHv);
 
       // this.activeTab.emit(false);

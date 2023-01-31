@@ -371,7 +371,7 @@ public idiomasCandidato: Idioma = {
       const candidatoExistente = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.datosCandidato.nit);
       if(candidatoExistente  && candidatoExistente.length > 0){
         this.storaged.set('candidatoExistente', candidatoExistente);
-        this.datosCandidato.id = candidatoExistente[0].id_rh_candidato;
+        this.datosCandidato.id = candidatoExistente[0].id;
         this.datosCandidato.nit = candidatoExistente[0].nit;
         this.datosCandidato.id_rh_tipo_documento = candidatoExistente[0].id_rh_tipo_documento;
         this.datosCandidato.nombre = candidatoExistente[0].nombre;
@@ -384,8 +384,8 @@ public idiomasCandidato: Idioma = {
         this.datosCandidato.celular = candidatoExistente[0].celular;
         this.datosCandidato.mail = candidatoExistente[0].mail;
         this.datosCandidato.id_rh_perfil = candidatoExistente[0].id_rh_perfil;
-        this.datosCandidato.idCotClientePais = candidatoExistente[0].id_cot_cliente_pais;
-        this.datosCandidato.id_cot_cliente_pais = candidatoExistente[0].id_cot_cliente_pais2;
+        this.datosCandidato.idCotClientePais = candidatoExistente[0].id_cot_cliente_pais2;
+        this.datosCandidato.id_cot_cliente_pais = candidatoExistente[0].id_cot_cliente_pais;
         this.datosCandidato.id_rh_nivel_academico = candidatoExistente[0].id_rh_nivel_academico;
         this.datosCandidato.id_rh_experiencia = candidatoExistente[0].id_rh_experiencia;
         this.datosCandidato.id_tipo_candidato = candidatoExistente[0].id_tipo_candidato;

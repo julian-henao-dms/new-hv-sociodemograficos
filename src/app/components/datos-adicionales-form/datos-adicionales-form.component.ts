@@ -349,7 +349,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 
     if(candidatoExistente  && candidatoExistente.length > 0){
 
-        this.candidatoId = candidatoExistente[0].id_rh_candidato
+        this.candidatoId = candidatoExistente[0].id
         this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector;
         this.datosAdicionales.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
         this.datosAdicionales.id_salario = candidatoExistente[0].id_salario;
