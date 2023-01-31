@@ -383,17 +383,17 @@ export class SociodemograficosComponent implements OnInit {
 
 
 
-    // const idCandidatoEnviado = this.storaged.get('idCandidatoEnviado');
-    const idCandidatoEnviado = 5;
+    const idCandidatoEnviado = this.storaged.get('candidatoExistente');
+    // const idCandidatoEnviado = 5;
     if (idCandidatoEnviado != null && idCandidatoEnviado > 0 ){
-      this.sociodemograficos.idRhCandidato = idCandidatoEnviado;
+      this.sociodemograficos.idRhCandidato = idCandidatoEnviado.id;
 
     }
     const candidatoExistente = this.storaged.get('candidatoExistente');
     console.log('candidato exitente', candidatoExistente);
 
     if(candidatoExistente  && candidatoExistente.length > 0){
-
+      this.sociodemograficos.idRhCandidato = candidatoExistente[0].id;
       this.sociodemograficos.consentimientoinformado = candidatoExistente[0].consentimiento_informado ? candidatoExistente[0].consentimiento_informado: 0;
       console.log('1 consentimiento Informado', this.sociodemograficos.consentimientoinformado);
       this.sociodemograficos.idAntiguedadCargo = candidatoExistente[0].id_antiguedad_cargo ? candidatoExistente[0].id_antiguedad_cargo: 0;
@@ -426,6 +426,7 @@ export class SociodemograficosComponent implements OnInit {
       console.log('candidato A ?', this.sociodemograficos);
     }
     else{
+      this.sociodemograficos.idRhCandidato = candidatoExistente[0].id;
       this.sociodemograficos.consentimientoinformado ? this.sociodemograficos.consentimientoinformado: 0;
       console.log('consentimiento Informado', this.sociodemograficos.consentimientoinformado);
       this.sociodemograficos.idAntiguedadCargo ? this.sociodemograficos.idAntiguedadCargo: 0;

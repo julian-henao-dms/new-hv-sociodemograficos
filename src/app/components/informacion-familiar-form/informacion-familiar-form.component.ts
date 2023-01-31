@@ -11,6 +11,7 @@ import { MessagesService } from 'src/app/services/messages.service';
 import { CandidatoHv } from './interfaces/hv-candidato.interface';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
+import { ThisReceiver } from '@angular/compiler';
 
 interface Parentesco{
   id: number;
@@ -313,7 +314,7 @@ public inforFamilia: any[] = [];
         id_rh_experiencia_equipo: this.datosadicionales.id_rh_experiencia_equipo ? this.datosadicionales.id_rh_experiencia_equipo: 0,
         peso: this.datosadicionales.peso,
         altura: this.datosadicionales.altura,
-        salario: 0,
+        salario: this.datosadicionales.salario_especifico,
         accion: 0,
         id_Usuario_Asociado: 0,
         id_con_cco: 0,

@@ -402,20 +402,6 @@ console.log('Datos paises deptos y ciudad', this.todosLugares);
         const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
         const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
         this.idIdiPrevio = [...getIdio];
-        // if(candidatoExistente === 0 || candidatoExistente == null){
-        //   setTimeout(
-        //     () => {
-        //       this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-        //     }, 1000);
-
-        // } else{
-        // this.candidatoId = candidatoExistente[0].id
-        // const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
-        // const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
-        // this.idIdiPrevio = [...getIdio];
-        // }
-
-
 
       const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.idCotClientePais);
       const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.id_cot_cliente_pais);
@@ -441,10 +427,7 @@ console.log('Datos paises deptos y ciudad', this.todosLugares);
       this.datosCandidato.id_cot_cliente_pais = this.datosCandidato.id_cot_cliente_pais;
       this.onSelectionChangeCiudad(this.datosCandidato.id_cot_cliente_pais);
       this.datosCandidato.id_cot_cliente_barrio = candidatoExistente[0].id_cot_cliente_barrio;
-        // setTimeout(
-        //   () => {
-        //     this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
-        //   }, 1000);
+
       } else{
           setTimeout(
             () => {

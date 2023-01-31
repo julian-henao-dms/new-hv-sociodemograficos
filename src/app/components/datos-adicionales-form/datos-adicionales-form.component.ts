@@ -392,7 +392,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges) {
-    // changes.prop contains the old and the new value...
+
   }
 
   public newLicence(event: any){
