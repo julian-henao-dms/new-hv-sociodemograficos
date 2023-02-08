@@ -345,7 +345,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Dirección</mat-label>
-        <input class="hv-field" matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion"
+        <input class="hv-field" matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion" (ngModelChange)="datosCandidato.direccion = $event.toUpperCase()"
         #direccion="ngModel" required id="direccion" />
       </mat-form-field>
     </mat-grid-tile>

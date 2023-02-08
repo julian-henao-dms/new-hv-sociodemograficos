@@ -58,6 +58,9 @@ export class HvFormularioComponent implements OnInit {
   activeTab(event: any):void{
     this.isActive = event
   }
+  flexibleTabs(event: any):void{
+    this.isLinear = event
+  }
 
   public changeDatosBasicos(evento:any){
     this.isDatosBasicos = evento.data;

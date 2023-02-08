@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import * as _ from 'lodash';
 import { NgForm} from '@angular/forms';
+import { DatosAdicionalesCandidato, Licencia } from './interfaces/datos-adicionales';
 
 interface Pais{
   value: number;
@@ -58,39 +59,39 @@ interface CategoriaLicencia{
   id: number;
   descripcion: string;
 }
-interface Licencia{
-    id: number;
-    idCandidato: number;
-    idCategoria: number;
-    fechaVence: Date;
-    accion: number;
-}
-interface DatosAdicionalesCandidato{
-  id_rh_experiencia_sector: number | null;
-  id_rh_experiencia_equipo: number | null;
-  id_salario: number | null;
-  salario_especifico: number | null;
-  id_rh_fuente_reclutamiento: number | null;
-  tarjeta: string;
-  id_Entidad: number | null;
-  id_participacion_anterior: number;
-  id_trajo_hoja_vida: number;
-  id_disponibilidad_viaje: number;
-  runt: number;
-  idRhEps: number | null;
-  idRhFondoPension: number | null;
-  idRhFondoCaja: number | null;
-  idRhFondoCesantias: number | null;
-  licencia: string;
-  tipo_licencia: number | null;
-  fecha_vence_licencia: string;
-  id_rh_categoria: number | null;
-  id_rh_color_piel: number | null;
-  id_rh_grupo_sanguineo: number | null;
-  rh: number | null;
-  peso: number | null;
-  altura: number | null;
-}
+// interface Licencia{
+//     id: number;
+//     idCandidato: number;
+//     idCategoria: number;
+//     fechaVence: Date;
+//     accion: number;
+// }
+// interface DatosAdicionalesCandidato{
+//   id_rh_experiencia_sector: number | null;
+//   id_rh_experiencia_equipo: number | null;
+//   id_salario: number | null;
+//   salario_especifico: number | null;
+//   id_rh_fuente_reclutamiento: number | null;
+//   tarjeta: string;
+//   id_Entidad: number | null;
+//   id_participacion_anterior: number;
+//   id_trajo_hoja_vida: number;
+//   id_disponibilidad_viaje: number;
+//   runt: number;
+//   idRhEps: number | null;
+//   idRhFondoPension: number | null;
+//   idRhFondoCaja: number | null;
+//   idRhFondoCesantias: number | null;
+//   licencia: string;
+//   tipo_licencia: number | null;
+//   fecha_vence_licencia: string;
+//   id_rh_categoria: number | null;
+//   id_rh_color_piel: number | null;
+//   id_rh_grupo_sanguineo: number | null;
+//   rh: number | null;
+//   peso: number | null;
+//   altura: number | null;
+// }
 @Component({
   selector: 'app-datos-adicionales-form',
   templateUrl: './datos-adicionales-form.component.html',
@@ -162,6 +163,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   public candidatoId = 0;
   public licencia = '';
   public tarjeta = '';
+
 
   @Input() tipoCandidato: number = 0;
 
@@ -345,12 +347,26 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     this.coloresPiel = _.orderBy(colorPiel, ['id'], ['asc']);
 
 
-    const candidatoExistente = this._storaged.get('candidatoExistente');
 
-    if(candidatoExistente  && candidatoExistente.length > 0){
+    const licenciasCandidato = this._storaged.get('datosLicencia');
+    const datosAdicionales = this._storaged.get('datosAdicionalesStorage');
+    const candidatoExistente = this._storaged.get('candidatoExistente');
+    console.log("Datos basicos", datosAdicionales);
+
+    if(datosAdicionales && datosAdicionales != null){
+      this.datosAdicionales = datosAdicionales;
+
+      console.log("Datos Adicionales", this.datosAdicionales);
+
+      if(licenciasCandidato && licenciasCandidato.length > 0){
+        this.myReferenceArray = licenciasCandidato;
+
+        console.log("Datos Adicionales", this.datosAdicionales);
+      }
+    }else if(candidatoExistente  && candidatoExistente.length > 0){
 
         this.candidatoId = candidatoExistente[0].id
-        this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector;
+        this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector ? candidatoExistente[0].id_rh_experiencia_sector: 0;
         this.datosAdicionales.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
         this.datosAdicionales.id_salario = candidatoExistente[0].id_salario;
         this.datosAdicionales.salario_especifico = candidatoExistente[0].salario;//verificar
@@ -387,7 +403,8 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
         this.myReferenceArray = [...newArr]
 
     }
-
+    this._storaged.set('datosAdicionalesStorage',   this.datosAdicionales);
+    this._storaged.set('datosLicencia', this.myReferenceArray);
     loading.close();
   }
 
@@ -453,6 +470,10 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     return this._addItemTable.findLabel(id, list);
   }
 
+  public getLocalStorage(){
+    console.log('Cargar Datos Adicionales', this.datosAdicionales);
+    this.datosAdicionales = this._storaged.get('datosAdicionalesStorage');
+  }
   public guardarProgreso(){
 
     if(!this.fieldDatosAdicionales.valid){

@@ -25,7 +25,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar experiencia en operación de equipos </mat-label>
-        <mat-select [disabled]="tipoCandidato == 0 ? true : false " [(ngModel)]="datosAdicionales.id_rh_experiencia_equipo"
+        <mat-select disabled [disabled]="tipoCandidato == 1 ? false : true" [(ngModel)]="datosAdicionales.id_rh_experiencia_equipo"
         name="id_rh_experiencia_equipo" #id_rh_experiencia_equipo="ngModel" required id="id_rh_experiencia_equipo">
           <mat-option
           *ngFor="let anioExp of aniosExp"
@@ -338,7 +338,7 @@
   >
     <mat-grid-tile>
       <mat-form-field appearance="outline">
-        <mat-label>Seleccionar color de piel</mat-label>
+        <mat-label>Seleccionar identidad étnica</mat-label>
         <mat-select [(ngModel)]="datosAdicionales.id_rh_color_piel"
         name="id_rh_color_piel" #id_rh_color_piel="ngModel" id="id_rh_color_piel">
           <mat-option

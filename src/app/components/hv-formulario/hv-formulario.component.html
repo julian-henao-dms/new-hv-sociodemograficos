@@ -15,7 +15,7 @@
         <mat-step state="description">
           <ng-template matStepLabel>Datos Básicos</ng-template>
           <ng-template matStepContent>
-            <app-datos-basicos-form (activeTab)="activeTab($event)"
+            <app-datos-basicos-form (activeTab)="activeTab($event)" (flexibleTabs)="flexibleTabs($event)"
               (changeSelect)="changeDatosBasicos($event)"
               *ngIf="selectedStep === 0"
             ></app-datos-basicos-form>

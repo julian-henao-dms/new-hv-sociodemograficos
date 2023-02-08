@@ -29,7 +29,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE, } from '@angular/material/core';
+import { DateAdapter, MatNativeDateModule, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
@@ -46,20 +46,20 @@ import { ReferenciasFormComponent } from './components/referencias-form/referenc
 import { CargosFormComponent } from './components/cargos-form/cargos-form.component';
 import { InformacionFamiliarFormComponent } from './components/informacion-familiar-form/informacion-familiar-form.component';
 import { CargaArchivosHvComponent } from './components/carga-archivos-hv/carga-archivos-hv.component';
+import { MomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
 
-
-
-const MY_DATE_FORMAT = {
+export const MY_FORMATS = {
   parse: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will be parsed from Input
+      dateInput: 'DD/MM/YYYY',
   },
   display: {
-    dateInput: 'DD/MM/YYYY', // this is how your date will get displayed on the Input
-    monthYearLabel: 'MMMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
+      dateInput: 'DD/MM/YYYY',
+      monthYearLabel: 'MMMM YYYY',
+      dateA11yLabel: 'LL',
+      monthYearA11yLabel: 'MMMM YYYY',
   },
 };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +112,10 @@ const MY_DATE_FORMAT = {
     MatGridListModule,
     HttpClientModule,
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   {
 		provide: MAT_TAB_GROUP,
 		useValue: undefined,

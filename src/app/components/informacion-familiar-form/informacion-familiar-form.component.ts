@@ -40,7 +40,7 @@ public archivos: any[] = [];
 public estudios: any[] = [];
 public referencias: any[] = [];
 public cargos: any[] = [];
-public inforFamilia: any[] = [];
+public infoFamilia: any[] = [];
 
 
   public idEmp: number = 3;
@@ -169,10 +169,14 @@ public inforFamilia: any[] = [];
         return;
       }
       this.parentescos = _.orderBy(parentesco, ['id'], ['asc']);
+
+      const datosFamiliares = this._storaged.get('datosInfoFamilia');
       const candidatoExistente = this._storaged.get('candidatoExistente');
 
+      if(datosFamiliares && datosFamiliares.length > 0){
+        this.myReferenceArray = datosFamiliares;
 
-      if(candidatoExistente  && candidatoExistente.length > 0){
+      }else if(candidatoExistente  && candidatoExistente.length > 0){
 
         this.candidatoId = candidatoExistente[0].id
 
@@ -199,7 +203,7 @@ public inforFamilia: any[] = [];
           ocupacion: '',
           empresa: '',
           telResidencia: obj.tel_residencia,
-          otroFamiliar: '',
+          otroFamiliar: 0,
           accion: 0,
           nit: obj.nit,
           fechaNace: obj.fecha_nacimiento,
@@ -207,7 +211,7 @@ public inforFamilia: any[] = [];
         }));
 
         this.myReferenceArray = [...newArr]
-
+        this._storaged.set('datosInfoFamilia', this.myReferenceArray);
         // this.activeTab.emit(false);
       }
 
@@ -272,7 +276,7 @@ public inforFamilia: any[] = [];
   public setupDatosCandidato(){
     this.todosDatosCandidato = {
       candidato: {
-        id: 0,
+        id: this.datosBasicos.id ? this.datosBasicos.id : 0,
         emp: 3,
         nit: this.datosBasicos.nit,
         id_rh_tipo_documento: this.datosBasicos.id_rh_tipo_documento,
@@ -332,7 +336,7 @@ public inforFamilia: any[] = [];
         fuente: " "
     },
     referencias_familiares: [
-        ...this.inforFamilia
+        ...this.infoFamilia
     ],
     estudios: [
         ...this.estudios
@@ -382,7 +386,7 @@ public inforFamilia: any[] = [];
       this.estudios = this._storaged.get('datosEstudiosStorage');
       this.referencias = this._storaged.get('datosReferenciasStorage');
       this.cargos = this._storaged.get('otrosCargosStorage');
-      this.inforFamilia = this._storaged.get('datosInfoFamilia');
+      this.infoFamilia = this._storaged.get('datosInfoFamilia');
 
   }
 
@@ -411,8 +415,10 @@ public inforFamilia: any[] = [];
       this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
     }else{
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
-      // this._storaged.clear();
-      this._storaged.set('idCandidatoEnviado', idUsuarioHv);
+      console.log('enviados', this.todosDatosCandidato);
+      this._storaged.clear();
+      window.location.reload();
+      // this._storaged.set('idCandidatoEnviado', idUsuarioHv);
 
       // this.activeTab.emit(false);
 

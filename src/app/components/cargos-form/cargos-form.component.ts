@@ -52,19 +52,37 @@ export class CargosFormComponent implements OnInit {
     }
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
+    const cargosCandidato = this._storaged.get('otrosCargosStorage');
+    const candidatoExistente = this._storaged.get('candidatoExistente');
 
- const candidatoExistente = this._storaged.get('candidatoExistente');
-
-
-      if(candidatoExistente  && candidatoExistente.length > 0){
+    console.log("llego a cargos? " ,cargosCandidato);
+    if(cargosCandidato && cargosCandidato.length > 0){
+      console.log("ocurre cargos");
+      const cargosC = cargosCandidato.map((item: { idPerfil: any; }) => item.idPerfil);
+      this.idPerfilPrevio = [...cargosC];
+      console.log("Los cargos ",this.cargosArray);
+      this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+        ...this.otrosCargos, idPerfil
+      }));
+         this._storaged.set('otrosCargosStorage', this.cargosArray);
+    }else if(candidatoExistente  && candidatoExistente.length > 0){
 
       this.candidatoId = candidatoExistente[0].id
 
       const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
-
+      console.log("Cargos en  perfiles con id", getCargos);
       const newArr = getCargos.map((item: { id_rh_perfil: any; }) => item.id_rh_perfil);
-      this.idPerfilPrevio = [...newArr]
+      this.idPerfilPrevio = [...newArr];
+      console.log("Id Previo", this.idPerfilPrevio);
+      this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+        ...this.otrosCargos, idPerfil
+      }));
+
+      console.log("cargos despues de previo ", this.cargosArray);
+
+      this._storaged.set('otrosCargosStorage', this.cargosArray);
       }
+
 
     loading.close();
   }
@@ -91,5 +109,10 @@ export class CargosFormComponent implements OnInit {
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
   }
+
+  public getLocalStorage(){
+
+        // this.cargosArray = this._storaged.get('otrosCargosStorage');
+    }
 
 }

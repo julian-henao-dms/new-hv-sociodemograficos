@@ -24,19 +24,19 @@ export interface Referencia {
   nivel: string;
 }
 
-interface ReferenceList {
-  tipo_referencia: number;
-  nombre: string;
-  celular: string;
-  telefono: string;
-  correo: string;
-  empresa: string;
-  cargo: string;
-  tiempo_laborado: string;
-  motivo_retiro: string;
-  notas: string;
+// interface ReferenceList {
+//   tipo_referencia: number;
+//   nombre: string;
+//   celular: string;
+//   telefono: string;
+//   correo: string;
+//   empresa: string;
+//   cargo: string;
+//   tiempo_laborado: string;
+//   motivo_retiro: string;
+//   notas: string;
 
-}
+// }
 
 @Component({
   selector: 'app-referencias-form',
@@ -156,53 +156,57 @@ export class ReferenciasFormComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
-
+    // this.getLocalStorage();
+    const datosReferencias = this._storaged.get('datosReferenciasStorage');
     const candidatoExistente = this._storaged.get('candidatoExistente');
+    if(datosReferencias && datosReferencias.length > 0){
+      this.myReferenceArray = datosReferencias;
+      console.log("Datos referencias", this.myReferenceArray);
+    }else if(candidatoExistente  && candidatoExistente.length > 0){
 
-    if(candidatoExistente  && candidatoExistente.length > 0){
-
-    this.candidatoId = candidatoExistente[0].id
+      this.candidatoId = candidatoExistente[0].id
 
 
-    const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
+      const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
 
-    const newArr = getInfoFamiliar.map((obj: {
-      id: number;
-      cargo: string;
-      celular: string;
-      empresa: string;
-      id_rh_candidato: number;
-      mail: string;
-      motivo_retiro: string;
-      nombre: string;
-      observaciones: string;
-      observaciones_det: string;
-      telefono: string;
-      tiempo_laborado: string;
-      tipo: number;
-      tipo_ref: string;
-    }) => ({
+      const newArr = getInfoFamiliar.map((obj: {
+        id: number;
+        cargo: string;
+        celular: string;
+        empresa: string;
+        id_rh_candidato: number;
+        mail: string;
+        motivo_retiro: string;
+        nombre: string;
+        observaciones: string;
+        observaciones_det: string;
+        telefono: string;
+        tiempo_laborado: string;
+        tipo: number;
+        tipo_ref: string;
+      }) => ({
 
-      id: obj.id,
-      idCandidato: obj.id_rh_candidato,
-      nombre: obj.nombre,
-      celular: obj.celular,
-      telefono: obj.telefono,
-      mail: obj.mail,
-      tipo: obj.tipo,
-      idUsuario: 0,
-      empresa: obj.empresa,
-      Cargo: obj.cargo,
-      Observaciones: obj.observaciones,
-      TiempoLaborado: obj.tiempo_laborado,
-      MotivoRetiro: obj.motivo_retiro,
-      accion: 0,
-    }));
+        id: obj.id,
+        idCandidato: obj.id_rh_candidato,
+        nombre: obj.nombre,
+        celular: obj.celular,
+        telefono: obj.telefono,
+        mail: obj.mail,
+        tipo: obj.tipo,
+        idUsuario: 0,
+        empresa: obj.empresa,
+        Cargo: obj.cargo,
+        Observaciones: obj.observaciones,
+        TiempoLaborado: obj.tiempo_laborado,
+        MotivoRetiro: obj.motivo_retiro,
+        accion: 0,
+      }));
 
-    this.myReferenceArray = [...newArr]
-
-    }
-
+      this.myReferenceArray = [...newArr]
+      this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
+      }
+    // console.log('Cargar Datos Adicionales', this.datosReferencias);
+    // this.myReferenceArray = this._storaged.get('datosReferenciasStorage');
   loading.close();
 
   }
@@ -266,6 +270,14 @@ export class ReferenciasFormComponent implements OnInit {
 
   }
   public getLocalStorage(){
+
+    // const datosReferencias = this._storaged.get('datosReferenciasStorage');
+    // if(datosReferencias && datosReferencias.length > 0){
+    //   this.myReferenceArray = datosReferencias;
+    //   console.log("Datos referencias", this.myReferenceArray);
+    // }
+    // // console.log('Cargar Datos Adicionales', this.datosReferencias);
+    // // this.myReferenceArray = this._storaged.get('datosReferenciasStorage');
 
   }
 

@@ -54,14 +54,14 @@ interface Item{
   content: string;
   value: number;
 }
-interface EstudiosList {
-  institucion: number;
-  titulo: number;
-  estado: number;
-  tipo_estudio: number;
-  tipo_curso: number;
-  nivel: number;
-}
+// interface EstudiosList {
+//   institucion: number;
+//   titulo: number;
+//   estado: number;
+//   tipo_estudio: number;
+//   tipo_curso: number;
+//   nivel: number;
+// }
 
 @Component({
   selector: 'app-estudios-form',
@@ -187,7 +187,7 @@ export class EstudiosFormComponent implements OnInit {
   }
 
   async ngOnInit(): Promise<void> {
-    // this.getLocalStorage();
+
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
@@ -201,43 +201,48 @@ export class EstudiosFormComponent implements OnInit {
     const tipoCurso = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'tipo_curso');
     this.tiposCurso = _.orderBy(tipoCurso, ['id'], ['asc']);
 
+    // this.getLocalStorage();
+    const datosEstudios = this._storaged.get('datosEstudiosStorage');
     const candidatoExistente = this._storaged.get('candidatoExistente');
 
-    if(candidatoExistente  && candidatoExistente.length > 0){
+    if(datosEstudios && datosEstudios.length > 0){
+      this.myReferenceArray = datosEstudios;
+      console.log("Datos Estudios", this.datosEstudios);
+    }else if(candidatoExistente  && candidatoExistente.length > 0){
 
-    this.candidatoId = candidatoExistente[0].id
-console.log(this.candidatoId);
-    const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
-    console.log(getEstudios);
-    const newArr = getEstudios.map((obj: {
-      id: number;
-      id_rh_candidato: number;
-      id_rh_profesion: number | null;
-      id_rh_institucion: number | null;
-      fecha_desde: Date;
-      fecha_hasta: Date;
-      id_estado_estudio: number | null;
-      id_tipo_estudio: number | null;
-      id_nivel_estudio: number | null;
-      id_tipo_curso: number | null;
+        this.candidatoId = candidatoExistente[0].id
+        console.log(this.candidatoId);
+        const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
+        console.log(getEstudios);
+        const newArr = getEstudios.map((obj: {
+          id: number;
+          id_rh_candidato: number;
+          id_rh_profesion: number | null;
+          id_rh_institucion: number | null;
+          fecha_desde: Date;
+          fecha_hasta: Date;
+          id_estado_estudio: number | null;
+          id_tipo_estudio: number | null;
+          id_nivel_estudio: number | null;
+          id_tipo_curso: number | null;
 
-    }) => ({
-      id: obj.id,
-      idEstudio: obj.id_rh_profesion,
-      idCandidato: obj.id_rh_candidato,
-      idUsuario: 0,
-      idInstitucion: obj.id_rh_institucion,
-      fecha_Desde: obj.fecha_desde,
-      fecha_Hasta: obj.fecha_hasta,
-      id_estado_estudio: obj.id_estado_estudio,
-      id_tipo_estudio: obj.id_tipo_estudio,
-      id_nivel_estudio: obj.id_nivel_estudio ? obj.id_nivel_estudio: 0,
-      id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
-      accion: 0,
-    }));
+        }) => ({
+          id: obj.id,
+          idEstudio: obj.id_rh_profesion,
+          idCandidato: obj.id_rh_candidato,
+          idUsuario: 0,
+          idInstitucion: obj.id_rh_institucion,
+          fecha_Desde: obj.fecha_desde,
+          fecha_Hasta: obj.fecha_hasta,
+          id_estado_estudio: obj.id_estado_estudio,
+          id_tipo_estudio: obj.id_tipo_estudio,
+          id_nivel_estudio: obj.id_nivel_estudio ? obj.id_nivel_estudio: 0,
+          id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
+          accion: 0,
+        }));
 
-    this.myReferenceArray = [...newArr]
-
+        this.myReferenceArray = [...newArr]
+        this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     }
 
     loading.close();
@@ -301,6 +306,11 @@ if(this.fieldDatosEstudios.valid){
 
   }
   public getLocalStorage(){
+    // const datosEstudios = this._storaged.get('datosEstudiosStorage');
+    // if(datosEstudios && datosEstudios.length > 0){
+    //   this.myReferenceArray = datosEstudios;
+    //   console.log("Datos Estudios", this.datosEstudios);
+    // }
 
   }
 
