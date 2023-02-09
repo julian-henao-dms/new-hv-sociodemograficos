@@ -676,6 +676,15 @@ public validateChanged(event:any){
     this.changeSelect.emit({'data':event});
   }
 
+  ngOnDestroy() {
+        this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+        this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
+          ...this.idiomasCandidato, idIdi
+        }));
+        console.log("idiomas", this.idiomasArray);
+      this.storaged.set('idiomasStorage', this.idiomasArray);
+  }
+
 
 public validarFormulario(e:any){
 
@@ -701,6 +710,10 @@ public validarFormulario(e:any){
       this.disabledButtonNext = false;
     }
 
+  }
+
+  onInputBlur() {
+    console.log('Input field blurred');
   }
 }
 

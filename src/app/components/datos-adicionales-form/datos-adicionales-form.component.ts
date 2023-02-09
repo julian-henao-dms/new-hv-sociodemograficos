@@ -408,8 +408,14 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     loading.close();
   }
 
+
   public ngOnChanges(changes: SimpleChanges) {
 
+  }
+
+  ngOnDestroy() {
+    this._storaged.set('datosAdicionalesStorage',   this.datosAdicionales);
+    this._storaged.set('datosLicencia', this.myReferenceArray);
   }
 
   public newLicence(event: any){

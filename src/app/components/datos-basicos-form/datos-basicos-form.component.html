@@ -23,7 +23,7 @@
           ngControl="nit"
           #nit="ngModel" required id="nit"
           [pattern]="expresiones.numbersText"
-          (keyup.enter)="search()"
+          (keyup.enter)="search()" (blur)="search()"
         />
         <mat-icon class="icon-search" matSuffix  (click)="search()">search</mat-icon>
         <mat-error class="message-error" [class.invalid]="nit.invalid" *ngIf="nit.errors?.['required']">

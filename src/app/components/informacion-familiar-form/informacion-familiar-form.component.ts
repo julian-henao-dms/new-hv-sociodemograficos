@@ -218,6 +218,11 @@ public infoFamilia: any[] = [];
     loading.close();
   }
 
+
+  ngOnDestroy() {
+    this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+  }
+
   public async selectsValidate(selectContent:any, text: string, arrayData:any){
     if(selectContent === null){
       setTimeout(

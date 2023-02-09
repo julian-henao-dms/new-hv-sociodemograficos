@@ -211,6 +211,10 @@ export class ReferenciasFormComponent implements OnInit {
 
   }
 
+  ngOnDestroy() {
+    this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
+  }
+
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
        this.apiService.getInformacion(service).subscribe({

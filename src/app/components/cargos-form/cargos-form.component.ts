@@ -87,6 +87,14 @@ export class CargosFormComponent implements OnInit {
     loading.close();
   }
 
+  ngOnDestroy() {
+    this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+      ...this.otrosCargos, idPerfil
+    }));
+
+    this._storaged.set('otrosCargosStorage', this.cargosArray);
+  }
+
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
        this.apiService.getInformacion(service).subscribe({
