@@ -1,5 +1,5 @@
 export interface DatosBasicosCandidato {
-  [x: string]: any;
+  // [x: string]: any;
   id:number;
   emp: number;
   id_usuario: number;

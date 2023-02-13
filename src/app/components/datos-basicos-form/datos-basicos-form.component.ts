@@ -505,6 +505,9 @@ public idiomasCandidato: Idioma = {
         this.datosCandidato.id_rh_nivel_academico = candidatoExistente[0].id_rh_nivel_academico;
         this.datosCandidato.id_rh_experiencia = candidatoExistente[0].id_rh_experiencia;
         this.datosCandidato.id_tipo_candidato = candidatoExistente[0].id_tipo_candidato;
+        // if(this.datosCandidato.id_tipo_candidato == 1){
+        //   this.changeSelect.emit({'data':false});
+        // }
         this.datosCandidato.idRhEstadoCivil = candidatoExistente[0].id_rh_estado_civil;
         this.datosCandidato.fecExpedicion = candidatoExistente[0].fecha_exp_cedula;
         this.datosCandidato.lugarExpedicion = candidatoExistente[0].lugar_exp_cedula;
@@ -550,6 +553,7 @@ public idiomasCandidato: Idioma = {
 
       this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       this.storaged.set('idiomasStorage', this.idiomasArray);
+
       } else{
           setTimeout(
             () => {
