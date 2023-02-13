@@ -31,6 +31,10 @@ export interface DatosBasicosCandidato {
   fuente:string;
 }
 
+export interface TodosDatosCandidato{
+
+}
+
 // export interface Candidato {
 // id: number;
 // emp: number;
