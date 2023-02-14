@@ -32,8 +32,88 @@ export interface DatosBasicosCandidato {
 }
 
 export interface TodosDatosCandidato{
-
+  candidato: {
+    id:number;
+    emp: number;
+    id_usuario: number;
+    id_tipo_candidato: number | null;
+    id_rh_tipo_documento: number | null;//*
+    nit: string;  //*
+    fecExpedicion: Date;//*
+    lugarExpedicion: string;//*
+    idCotClientePais: number | null;//
+    nombre: string;//*
+    apellido: string;//*
+    genero: number | null;//*
+    fecha_nacimiento: Date;//*
+    idRhEstadoCivil: number | null;//*
+    estado: number;
+    telefono: string;//*
+    mail: string;//*
+    celular: string;//*
+    direccion: string;//*
+    id_cot_cliente_pais: number | null;//*
+    id_cot_cliente_barrio: number | null;//*
+    id_rh_experiencia: number | null;//*
+    id_rh_nivel_academico: number | null;//*
+    id_rh_perfil: number | null;// cargo?
+    depto:number | null;
+    deptoExp:number | null;
+    pais:number | null;
+    paisExp:number | null;
+    fuente:string;
+    id_rh_experiencia_sector: number | null;
+    id_rh_experiencia_equipo: number | null;
+    id_salario: number | null;
+    salario_especifico: number | null;
+    id_rh_fuente_reclutamiento: number | null;
+    tarjeta: string;
+    id_Entidad: number | null;
+    id_participacion_anterior: number;
+    id_trajo_hoja_vida: number;
+    id_disponibilidad_viaje: number;
+    runt: number;
+    idRhEps: number | null;
+    idRhFondoPension: number | null;
+    idRhFondoCaja: number | null;
+    idRhFondoCesantias: number | null;
+    licencia: string;
+    tipo_licencia: number | null;
+    fecha_vence_licencia: string;
+    id_rh_categoria: number | null;
+    id_rh_color_piel: number | null;
+    id_rh_grupo_sanguineo: number | null;
+    rh: number | null;
+    peso: number | null;
+    altura: number | null;
+},
+referencias_familiares: [
+    // ...this.infoFamilia
+],
+estudios: [
+    // ...this.estudios
+],
+idiomas: [
+    // ...this.idiomas
+],
+referencias: [
+  //  ...this.referencias
+],
+categorias: [
+  // ...this.categoriaLicencia
+],
+cargos: [
+  //  ...this.cargos
+]
 }
+
+export interface Perfiles {
+  id: number;
+  idPerfil: number;
+  idCandidato: number;
+  idUsuario: number;
+  accion: number;
+  }
 
 // export interface Candidato {
 // id: number;

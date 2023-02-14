@@ -4,7 +4,7 @@ import { NgForm} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
-import { DatosBasicosCandidato, Idioma } from "./interfaces/candidato.interface";
+import { DatosBasicosCandidato, Idioma, Perfiles } from "./interfaces/candidato.interface";
 import * as _ from 'lodash';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSelect } from '@angular/material/select';
@@ -64,6 +64,10 @@ interface Cargo{
   descripcion: string;
 }
 interface AniosExperiencia{
+  id: number;
+  descripcion: string;
+}
+interface Perfil{
   id: number;
   descripcion: string;
 }
@@ -164,6 +168,19 @@ public datosCandidato: DatosBasicosCandidato = {
   fuente: ''
 }
 
+public referenceArray: any[] = [];
+public studiesArray: any[] = [];
+public idPerfilPrevio: any[] = [];
+public perfiles: Perfil[] = [];
+public cargosArray: any[] = [];
+
+public otrosCargos: Perfiles = {
+    id: 0,
+    idPerfil: 0,
+    idCandidato: 0,
+    idUsuario: 0,
+    accion: 0,
+  }
 
 public paisExpedicion = 0;
 public depto = 0;
@@ -459,8 +476,12 @@ public idiomasCandidato: Idioma = {
         ...this.idiomasCandidato, idIdi
       }));
 
+
+
     this.storaged.set('datosCandidatoStorage', this.datosCandidato);
     this.storaged.set('idiomasStorage', this.idiomasArray);
+
+
     }
 
     // const getIdiomas = this.storaged.get('idiomasStorage');
@@ -551,6 +572,97 @@ public idiomasCandidato: Idioma = {
         ...this.idiomasCandidato, idIdi
       }));
 
+    // datos estudios
+    // this.candidatoId = candidatoExistente[0].id
+    console.log(this.candidatoId);
+    const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
+    console.log('estudios', getEstudios);
+    const newArrayEstudio = getEstudios.map((obj: {
+      id: number;
+      id_rh_candidato: number;
+      id_rh_profesion: number | null;
+      id_rh_institucion: number | null;
+      fecha_desde: Date;
+      fecha_hasta: Date;
+      id_estado_estudio: number | null;
+      id_tipo_estudio: number | null;
+      id_nivel_estudio: number | null;
+      id_tipo_curso: number | null;
+
+    }) => ({
+      id: obj.id,
+      idEstudio: obj.id_rh_profesion,
+      idCandidato: obj.id_rh_candidato,
+      idUsuario: 0,
+      idInstitucion: obj.id_rh_institucion,
+      fecha_Desde: obj.fecha_desde,
+      fecha_Hasta: obj.fecha_hasta,
+      id_estado_estudio: obj.id_estado_estudio,
+      id_tipo_estudio: obj.id_tipo_estudio,
+      id_nivel_estudio: obj.id_nivel_estudio ? obj.id_nivel_estudio: 0,
+      id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
+      accion: 0,
+    }));
+
+    this.studiesArray = [...newArrayEstudio]
+    this.storaged.set('datosEstudiosStorage', this.studiesArray);
+    console.log("Array estudios",this.studiesArray);
+    // fin datos estudios
+
+    // Referencias
+    const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
+
+      const newArrayReference = getInfoFamiliar.map((obj: {
+        id: number;
+        cargo: string;
+        celular: string;
+        empresa: string;
+        id_rh_candidato: number;
+        mail: string;
+        motivo_retiro: string;
+        nombre: string;
+        observaciones: string;
+        observaciones_det: string;
+        telefono: string;
+        tiempo_laborado: string;
+        tipo: number;
+        tipo_ref: string;
+      }) => ({
+
+        id: obj.id,
+        idCandidato: obj.id_rh_candidato,
+        nombre: obj.nombre,
+        celular: obj.celular,
+        telefono: obj.telefono,
+        mail: obj.mail,
+        tipo: obj.tipo,
+        idUsuario: 0,
+        empresa: obj.empresa,
+        Cargo: obj.cargo,
+        Observaciones: obj.observaciones,
+        TiempoLaborado: obj.tiempo_laborado,
+        MotivoRetiro: obj.motivo_retiro,
+        accion: 0,
+      }));
+
+      this.referenceArray = [...newArrayReference]
+      this.storaged.set('datosReferenciasStorage', this.referenceArray);
+    // Fin Referencias
+
+    // Cargos
+    const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
+      console.log("Cargos en  perfiles con id", getCargos);
+      const newArr = getCargos.map((item: { id_rh_perfil: any; }) => item.id_rh_perfil);
+      this.idPerfilPrevio = [...newArr];
+      console.log("Id Previo", this.idPerfilPrevio);
+      this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+        ...this.otrosCargos, idPerfil
+      }));
+
+      console.log("cargos despues de previo ", this.cargosArray);
+
+      this.storaged.set('otrosCargosStorage', this.cargosArray);
+    // Fin cargos
       this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       this.storaged.set('idiomasStorage', this.idiomasArray);
 
