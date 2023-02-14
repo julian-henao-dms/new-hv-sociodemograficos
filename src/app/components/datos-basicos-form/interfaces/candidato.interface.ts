@@ -87,22 +87,22 @@ export interface TodosDatosCandidato{
     peso: number | null;
     altura: number | null;
 },
-referencias_familiares: [
-    // ...this.infoFamilia
+referencias_familiares: any [
+  // ...this.infoFamilia
 ],
-estudios: [
+estudios: any [
     // ...this.estudios
 ],
-idiomas: [
+idiomas: any [
     // ...this.idiomas
 ],
-referencias: [
+referencias: any [
   //  ...this.referencias
 ],
-categorias: [
+categorias: any [
   // ...this.categoriaLicencia
 ],
-cargos: [
+cargos: any [
   //  ...this.cargos
 ]
 }

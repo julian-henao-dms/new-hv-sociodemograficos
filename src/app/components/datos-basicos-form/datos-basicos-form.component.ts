@@ -4,7 +4,7 @@ import { NgForm} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
-import { DatosBasicosCandidato, Idioma, Perfiles } from "./interfaces/candidato.interface";
+import { DatosBasicosCandidato, Idioma, Perfiles, TodosDatosCandidato } from "./interfaces/candidato.interface";
 import * as _ from 'lodash';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSelect } from '@angular/material/select';
@@ -136,6 +136,82 @@ public mostrarOpciones = true;
   public ciudadesExp: Ciudad[] = [];
   public barrios: Barrio[] = [];
 
+
+  public todosDatosCandidato: TodosDatosCandidato = {
+    candidato:{
+      id:0,
+      emp: 0,
+      id_usuario: 0,
+      id_tipo_candidato: null,
+      id_rh_tipo_documento: null,
+      nit: '',
+      estado: 1,
+      fecExpedicion: new Date,
+      lugarExpedicion: '',
+      idCotClientePais: null,
+      nombre: '',
+      apellido: '',
+      genero: null,
+      fecha_nacimiento: new Date,
+      idRhEstadoCivil: null,
+      telefono: '',
+      mail: '',
+      celular: '',
+      direccion: '',
+      id_cot_cliente_pais: null,
+      id_cot_cliente_barrio: null,
+      id_rh_experiencia: null,
+      id_rh_nivel_academico: null,
+      id_rh_perfil: null,
+      pais: null,
+      paisExp: null,
+      depto: null,
+      deptoExp: null,
+      fuente: '',
+      id_rh_experiencia_sector: null,
+      id_rh_experiencia_equipo: null,
+      id_salario: null,
+      salario_especifico: null,
+      id_rh_fuente_reclutamiento: null,
+      tarjeta: '',
+      id_Entidad: null,
+      id_participacion_anterior: 0,
+      id_trajo_hoja_vida: 0,
+      id_disponibilidad_viaje: 0,
+      runt: 0,
+      idRhEps: null,
+      idRhFondoPension: null,
+      idRhFondoCaja: null,
+      idRhFondoCesantias: null,
+      licencia: '',
+      tipo_licencia: null,
+      fecha_vence_licencia: '',
+      id_rh_categoria: null,
+      id_rh_color_piel: null,
+      id_rh_grupo_sanguineo: null,
+      rh: null,
+      peso: null,
+      altura: null,
+    },
+    referencias_familiares: [
+      // ...this.infoFamilia
+    ],
+    estudios: [
+        // ...this.estudios
+    ],
+    idiomas: [
+        // ...this.idiomas
+    ],
+    referencias: [
+      //  ...this.referencias
+    ],
+    categorias: [
+      // ...this.categoriaLicencia
+    ],
+    cargos: [
+      //  ...this.cargos
+    ]
+  }
 public datosCandidato: DatosBasicosCandidato = {
   id:0,
   emp: 0,
@@ -168,11 +244,14 @@ public datosCandidato: DatosBasicosCandidato = {
   fuente: ''
 }
 
-public referenceArray: any[] = [];
+
+public licenceArray: any[] = [];
 public studiesArray: any[] = [];
+public referenceArray: any[] = [];
 public idPerfilPrevio: any[] = [];
 public perfiles: Perfil[] = [];
 public cargosArray: any[] = [];
+public familyArray: any[] = [];
 
 public otrosCargos: Perfiles = {
     id: 0,
@@ -571,6 +650,51 @@ public idiomasCandidato: Idioma = {
       this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
         ...this.idiomasCandidato, idIdi
       }));
+      this.todosDatosCandidato.idiomas = [...this.idiomasArray];
+
+      // Datos adicionales
+      this.todosDatosCandidato.candidato.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector ? candidatoExistente[0].id_rh_experiencia_sector: 0;
+      this.todosDatosCandidato.candidato.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
+      this.todosDatosCandidato.candidato.id_salario = candidatoExistente[0].id_salario;
+      this.todosDatosCandidato.candidato.salario_especifico = candidatoExistente[0].salario;//verificar
+      this.todosDatosCandidato.candidato.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
+      this.todosDatosCandidato.candidato.tarjeta = candidatoExistente[0].tarjeta;
+      this.todosDatosCandidato.candidato.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
+      this.todosDatosCandidato.candidato.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
+      this.todosDatosCandidato.candidato.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
+      this.todosDatosCandidato.candidato.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
+      this.todosDatosCandidato.candidato.runt = candidatoExistente[0].runt;
+      this.todosDatosCandidato.candidato.idRhEps = candidatoExistente[0].id_rh_eps;
+      this.todosDatosCandidato.candidato.idRhFondoPension = candidatoExistente[0].id_rh_fondo_pension;
+      this.todosDatosCandidato.candidato.idRhFondoCaja = candidatoExistente[0].id_rh_fondo_caja;
+      this.todosDatosCandidato.candidato.idRhFondoCesantias = candidatoExistente[0].id_rh_fondo_cesantias;
+      this.todosDatosCandidato.candidato.licencia = candidatoExistente[0].licencia;
+      this.todosDatosCandidato.candidato.tipo_licencia = candidatoExistente[0].tipo_licencia;
+      this.todosDatosCandidato.candidato.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
+      this.todosDatosCandidato.candidato.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
+      this.todosDatosCandidato.candidato.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
+      this.todosDatosCandidato.candidato.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
+      this.todosDatosCandidato.candidato.rh = candidatoExistente[0].rh;
+      this.todosDatosCandidato.candidato.peso = candidatoExistente[0].peso;
+      this.todosDatosCandidato.candidato.altura = candidatoExistente[0].altura;
+      // Fin Datos adicionales
+
+
+      // Licencias
+      const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
+
+      const newArrayLicencias = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
+        id: obj.id,
+        idCandidato: obj.id_rh_candidato,
+        idCategoria: obj.id_rh_categoria,
+        fechaVence: obj.fecha_vencimiento,
+        accion: 0
+      }));
+
+      this.licenceArray = [...newArrayLicencias];
+      this.todosDatosCandidato.estudios = [...newArrayLicencias];
+      this.storaged.set('datosLicencia', this.licenceArray);
+      // Fin Licencias
 
     // datos estudios
     // this.candidatoId = candidatoExistente[0].id
@@ -604,15 +728,16 @@ public idiomasCandidato: Idioma = {
       accion: 0,
     }));
 
-    this.studiesArray = [...newArrayEstudio]
+    this.studiesArray = [...newArrayEstudio];
+    this.todosDatosCandidato.estudios = [...newArrayEstudio];
     this.storaged.set('datosEstudiosStorage', this.studiesArray);
     console.log("Array estudios",this.studiesArray);
     // fin datos estudios
 
     // Referencias
-    const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
+    const getReferencias = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
 
-      const newArrayReference = getInfoFamiliar.map((obj: {
+      const newArrayReference = getReferencias.map((obj: {
         id: number;
         cargo: string;
         celular: string;
@@ -645,7 +770,8 @@ public idiomasCandidato: Idioma = {
         accion: 0,
       }));
 
-      this.referenceArray = [...newArrayReference]
+      this.referenceArray = [...newArrayReference];
+      this.todosDatosCandidato.referencias = [...newArrayReference];
       this.storaged.set('datosReferenciasStorage', this.referenceArray);
     // Fin Referencias
 
@@ -659,13 +785,52 @@ public idiomasCandidato: Idioma = {
         ...this.otrosCargos, idPerfil
       }));
 
+
       console.log("cargos despues de previo ", this.cargosArray);
 
       this.storaged.set('otrosCargosStorage', this.cargosArray);
     // Fin cargos
+
+    // Info Familiar
+
+    const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
+
+        const newArrayFamiliar = getInfoFamiliar.map((obj: {
+          fecha_nacimiento: Date;
+          id: number;
+          id_rh_candidato: number;
+          id_rh_parentesco: number | null;
+          nit: string;
+          nombre: string;
+          parentesco: string;
+          tel_residencia: string;
+
+        }) => ({
+          id: obj.id,
+          id_candidato: obj.id_rh_candidato,
+          nombre: obj.nombre,
+          idParentesco: obj.id_rh_parentesco,
+          edad: 0,
+          ne: 0,
+          ec: 0,
+          ocupacion: '',
+          empresa: '',
+          telResidencia: obj.tel_residencia,
+          otroFamiliar: 0,
+          accion: 0,
+          nit: obj.nit,
+          fechaNace: obj.fecha_nacimiento,
+
+        }));
+
+        this.familyArray = [...newArrayFamiliar];
+        this.todosDatosCandidato.referencias_familiares = [...newArrayFamiliar]
+        this.storaged.set('datosInfoFamilia', this.familyArray);
+    // Fin Info Familiar
+      this.storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
       this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       this.storaged.set('idiomasStorage', this.idiomasArray);
-
+      console.log("Prueba 1 todos los datos ",this.todosDatosCandidato);
       } else{
           setTimeout(
             () => {
