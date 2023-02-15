@@ -4,6 +4,7 @@ import { SessionStorageService } from 'src/app/services/session-storage.service'
 import { MessagesService } from 'src/app/services/messages.service';
 import { Cargos } from './interfaces/cargos.interface';
 import * as _ from 'lodash';
+import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
 interface Cargo{
   id: number;
@@ -20,6 +21,82 @@ export class CargosFormComponent implements OnInit {
   public idPerfilPrevio: any[] = [];
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
+
+  public todosCandidatoStorage: TodosDatosCandidato = {
+    candidato:{
+      id:0,
+      emp: 0,
+      id_usuario: 0,
+      id_tipo_candidato: null,
+      id_rh_tipo_documento: null,
+      nit: '',
+      estado: 1,
+      fecExpedicion: new Date,
+      lugarExpedicion: '',
+      idCotClientePais: null,
+      nombre: '',
+      apellido: '',
+      genero: null,
+      fecha_nacimiento: new Date,
+      idRhEstadoCivil: null,
+      telefono: '',
+      mail: '',
+      celular: '',
+      direccion: '',
+      id_cot_cliente_pais: null,
+      id_cot_cliente_barrio: null,
+      id_rh_experiencia: null,
+      id_rh_nivel_academico: null,
+      id_rh_perfil: null,
+      pais: null,
+      paisExp: null,
+      depto: null,
+      deptoExp: null,
+      fuente: '',
+      id_rh_experiencia_sector: null,
+      id_rh_experiencia_equipo: null,
+      id_salario: null,
+      salario_especifico: null,
+      id_rh_fuente_reclutamiento: null,
+      tarjeta: '',
+      id_Entidad: null,
+      id_participacion_anterior: 0,
+      id_trajo_hoja_vida: 0,
+      id_disponibilidad_viaje: 0,
+      runt: 0,
+      idRhEps: null,
+      idRhFondoPension: null,
+      idRhFondoCaja: null,
+      idRhFondoCesantias: null,
+      licencia: '',
+      tipo_licencia: null,
+      fecha_vence_licencia: '',
+      id_rh_categoria: null,
+      id_rh_color_piel: null,
+      id_rh_grupo_sanguineo: null,
+      rh: null,
+      peso: null,
+      altura: null,
+    },
+    referencias_familiares: [
+      // ...this.infoFamilia
+    ],
+    estudios: [
+        // ...this.estudios
+    ],
+    idiomas: [
+        // ...this.idiomas
+    ],
+    referencias: [
+      //  ...this.referencias
+    ],
+    categorias: [
+      // ...this.categoriaLicencia
+    ],
+    cargos: [
+      //  ...this.cargos
+    ]
+  }
 
   public idEmp: number = 3;
   public numRegla: number = 159;
@@ -53,35 +130,51 @@ export class CargosFormComponent implements OnInit {
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
     const cargosCandidato = this._storaged.get('otrosCargosStorage');
+    this.todosCandidatoStorage = this._storaged.get('todosCandidatoStorage');
     const candidatoExistente = this._storaged.get('candidatoExistente');
 
-    console.log("llego a cargos? " ,cargosCandidato);
-    if(cargosCandidato && cargosCandidato.length > 0){
+
+    console.log("llego a cargos Todos? " ,this.todosCandidatoStorage);
+    if(this.todosCandidatoStorage.cargos && this.todosCandidatoStorage.cargos.length > 0){
       console.log("ocurre cargos");
-      const cargosC = cargosCandidato.map((item: { idPerfil: any; }) => item.idPerfil);
+      const cargosC = this.todosCandidatoStorage.cargos.map((item: { idPerfil: any; }) => item.idPerfil);
       this.idPerfilPrevio = [...cargosC];
       console.log("Los cargos ",this.cargosArray);
       this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
         ...this.otrosCargos, idPerfil
       }));
-         this._storaged.set('otrosCargosStorage', this.cargosArray);
-    }else if(candidatoExistente  && candidatoExistente.length > 0){
+      this.todosCandidatoStorage.cargos = [...this.cargosArray]
+        //  this._storaged.set('otrosCargosStorage', this.cargosArray);
+         console.log('otrosCargosStorage', this.cargosArray);
+         console.log('Storage Cargos', this.todosCandidatoStorage);
+         this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
+    }
+    // if(cargosCandidato && cargosCandidato.length > 0){
+    //   console.log("ocurre cargos");
+    //   const cargosC = cargosCandidato.map((item: { idPerfil: any; }) => item.idPerfil);
+    //   this.idPerfilPrevio = [...cargosC];
+    //   console.log("Los cargos ",this.cargosArray);
+    //   this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+    //     ...this.otrosCargos, idPerfil
+    //   }));
+    //      this._storaged.set('otrosCargosStorage', this.cargosArray);
+    // }else if(candidatoExistente  && candidatoExistente.length > 0){
 
-      this.candidatoId = candidatoExistente[0].id
+    //   this.candidatoId = candidatoExistente[0].id
 
-      const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
-      console.log("Cargos en  perfiles con id", getCargos);
-      const newArr = getCargos.map((item: { id_rh_perfil: any; }) => item.id_rh_perfil);
-      this.idPerfilPrevio = [...newArr];
-      console.log("Id Previo", this.idPerfilPrevio);
-      this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
-        ...this.otrosCargos, idPerfil
-      }));
+    //   const getCargos = await this.getAnyInformation('/hojadevida/candidatoPerfiles/' + this.candidatoId);
+    //   console.log("Cargos en  perfiles con id", getCargos);
+    //   const newArr = getCargos.map((item: { id_rh_perfil: any; }) => item.id_rh_perfil);
+    //   this.idPerfilPrevio = [...newArr];
+    //   console.log("Id Previo", this.idPerfilPrevio);
+    //   this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
+    //     ...this.otrosCargos, idPerfil
+    //   }));
 
-      console.log("cargos despues de previo ", this.cargosArray);
+    //   console.log("cargos despues de previo ", this.cargosArray);
 
-      this._storaged.set('otrosCargosStorage', this.cargosArray);
-      }
+    //   this._storaged.set('otrosCargosStorage', this.cargosArray);
+    //   }
 
 
     loading.close();
@@ -93,6 +186,10 @@ export class CargosFormComponent implements OnInit {
     }));
 
     this._storaged.set('otrosCargosStorage', this.cargosArray);
+    this.todosCandidatoStorage.cargos = [...this.cargosArray]
+    //  this._storaged.set('otrosCargosStorage', this.cargosArray);
+
+     this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
   }
 
   private async getAnyInformation(service: string): Promise<any> {
@@ -114,6 +211,12 @@ export class CargosFormComponent implements OnInit {
     }));
 
     this._storaged.set('otrosCargosStorage', this.cargosArray);
+
+    this.todosCandidatoStorage.cargos = [...this.cargosArray]
+        //  this._storaged.set('otrosCargosStorage', this.cargosArray);
+         console.log('otrosCargosStorage', this.cargosArray);
+         console.log('Storage Cargos', this.todosCandidatoStorage);
+         this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
   }

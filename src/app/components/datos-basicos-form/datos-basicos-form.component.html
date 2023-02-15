@@ -18,8 +18,8 @@
           matInput
           placeholder="Identidicación"
           name="nit"
-          [(ngModel)]="datosCandidato.nit"
-          (ngModelChange)="datosCandidato.nit = $event.toUpperCase()"
+          [(ngModel)]="todosDatosCandidato.candidato.nit"
+          (ngModelChange)="todosDatosCandidato.candidato.nit = $event.toUpperCase()"
           ngControl="nit"
           #nit="ngModel" required id="nit"
           [pattern]="expresiones.numbersText"
@@ -38,7 +38,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar tipo documento</mat-label>
-        <mat-select  [(ngModel)]="datosCandidato.id_rh_tipo_documento" class="hv_field"
+        <mat-select  [(ngModel)]="todosDatosCandidato.candidato.id_rh_tipo_documento" class="hv_field"
         name="id_rh_tipo_documento" #id_rh_tipo_documento="ngModel" required id="id_rh_tipo_documento"
         (selectionChange)="validateChanged($event)"
         >
@@ -58,7 +58,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Fecha de expedición</mat-label>
         <input matInput [matDatepicker]="expedicion"
-        [(ngModel)]="datosCandidato.fecExpedicion"
+        [(ngModel)]="todosDatosCandidato.candidato.fecExpedicion"
         name="fecExpedicion" #fecExpedicion="ngModel" required id="fecExpedicion"/>
         <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecExpedicion.invalid" *ngIf="fecExpedicion.errors?.['required']">
@@ -87,7 +87,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar tipo candidato</mat-label>
         <mat-select  name="id_tipo_candidato" (ngModelChange)="onChange($event)"
-        [(ngModel)]="datosCandidato.id_tipo_candidato"
+        [(ngModel)]="todosDatosCandidato.candidato.id_tipo_candidato"
         name="id_tipo_candidato" #id_tipo_candidato="ngModel" required id="id_tipo_candidato">
           <mat-option
             *ngFor="let tipoCandidato of tiposCandidato"
@@ -119,8 +119,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar país expedición</mat-label>
-        <mat-select [(ngModel)]="datosCandidato.paisExp"
-        name="paisExp" #paisExp="ngModel" (selectionChange)="onSelectionChangePaisExp(datosCandidato.paisExp)" required id="datosCandidato">
+        <mat-select [(ngModel)]="todosDatosCandidato.candidato.paisExp"
+        name="paisExp" #paisExp="ngModel" (selectionChange)="onSelectionChangePaisExp(todosDatosCandidato.candidato.paisExp)" required id="datosCandidato">
           <mat-option
             *ngFor="let paisExp of paisesExp"
             [value]="paisExp.id"
@@ -136,7 +136,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar departamento expedición</mat-label>
-        <mat-select [(ngModel)]="datosCandidato.deptoExp" (selectionChange)="onSelectionChangeDeptoExp(datosCandidato.deptoExp)"
+        <mat-select [(ngModel)]="todosDatosCandidato.candidato.deptoExp" (selectionChange)="onSelectionChangeDeptoExp(todosDatosCandidato.candidato.deptoExp)"
         name="deptoExp" #deptoExp="ngModel" required id="deptoExp">
           <mat-option
             *ngFor="let deptoExp of deptosExp"
@@ -153,7 +153,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar ciudad expedición</mat-label>
-        <mat-select [(ngModel)]="datosCandidato.idCotClientePais"
+        <mat-select [(ngModel)]="todosDatosCandidato.candidato.idCotClientePais"
         name="ciudadExp" #ciudadExp="ngModel" required id="ciudadExp">
           <mat-option
             *ngFor="let ciudadExp of ciudadesExp"
@@ -188,8 +188,8 @@
           matInput
           placeholder="Nombre"
           name="nombre"
-          [(ngModel)]="datosCandidato.nombre"
-          (ngModelChange)="datosCandidato.nombre = $event.toUpperCase()"
+          [(ngModel)]="todosDatosCandidato.candidato.nombre"
+          (ngModelChange)="todosDatosCandidato.candidato.nombre = $event.toUpperCase()"
           #nombre="ngModel" required id="nombre"
           [pattern]="expresiones.textSpacesAccent"
         />
@@ -206,8 +206,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Apellidos</mat-label>
         <input class="hv-field" matInput placeholder="Apellidos" name="apellido"
-        [(ngModel)]="datosCandidato.apellido"
-        (ngModelChange)="datosCandidato.apellido = $event.toUpperCase()"
+        [(ngModel)]="todosDatosCandidato.candidato.apellido"
+        (ngModelChange)="todosDatosCandidato.candidato.apellido = $event.toUpperCase()"
         #apellido="ngModel" required id="apellido"
         [pattern]="expresiones.textSpacesAccent"/>
         <mat-error class="message-error" [class.invalid]="apellido.invalid" *ngIf="apellido.errors?.['required']">
@@ -225,7 +225,7 @@
       <div class="container-hv-radios">
         <mat-label>Género:</mat-label>
         <mat-radio-group aria-label="Select an option"  name="genero"
-        [(ngModel)]="datosCandidato.genero"
+        [(ngModel)]="todosDatosCandidato.candidato.genero"
         #genero="ngModel" required id="genero" color="primary">
           <mat-radio-button [value]="0">Femenino</mat-radio-button>
           <mat-radio-button [value]="1">Masculino</mat-radio-button>
@@ -243,7 +243,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Fecha de nacimiento</mat-label>
-        <input matInput [matDatepicker]="nacimiento" name="fecha_nacimiento" [(ngModel)]="datosCandidato.fecha_nacimiento"
+        <input matInput [matDatepicker]="nacimiento" name="fecha_nacimiento" [(ngModel)]="todosDatosCandidato.candidato.fecha_nacimiento"
         #fecha_nacimiento="ngModel" required id="fecha_nacimiento"/>
         <mat-hint>DD/MM/AAAA</mat-hint>
         <mat-error class="message-error" [class.invalid]="fecha_nacimiento.invalid" *ngIf="fecha_nacimiento.errors?.['required']">
@@ -259,7 +259,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar estado civil</mat-label>
-        <mat-select name="idRhEstadoCivil" [(ngModel)]="datosCandidato.idRhEstadoCivil"
+        <mat-select name="idRhEstadoCivil" [(ngModel)]="todosDatosCandidato.candidato.idRhEstadoCivil"
         #idRhEstadoCivil="ngModel" required id="idRhEstadoCivil" class="hv-field">
           <mat-option
             *ngFor="let estadoCivil of estados"
@@ -277,7 +277,7 @@
       <mat-form-field appearance="outline">
         <mat-label>Teléfono</mat-label>
         <input class="hv-field" matInput
-        placeholder="Teléfono" name="telefono" [(ngModel)]="datosCandidato.telefono"
+        placeholder="Teléfono" name="telefono" [(ngModel)]="todosDatosCandidato.candidato.telefono"
         #telefono="ngModel"  id="telefono"
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.nums"
@@ -299,7 +299,7 @@
           pattern="[/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/]"
           type="email"
           placeholder="Correo"
-          name="mail" [(ngModel)]="datosCandidato.mail" (ngModelChange)="datosCandidato.mail = $event.toUpperCase()"
+          name="mail" [(ngModel)]="todosDatosCandidato.candidato.mail" (ngModelChange)="todosDatosCandidato.candidato.mail = $event.toUpperCase()"
         #mail="ngModel" required id="mail"
         [pattern]="expresiones.correo"
         />
@@ -316,7 +316,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Celular</mat-label>
-        <input class="hv-field" matInput placeholder="Celular" name="celular" [(ngModel)]="datosCandidato.celular"
+        <input class="hv-field" matInput placeholder="Celular" name="celular" [(ngModel)]="todosDatosCandidato.candidato.celular"
         #celular="ngModel" required id="celular"
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.nums"
@@ -345,7 +345,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Dirección</mat-label>
-        <input class="hv-field" matInput placeholder="Dirección" name="direccion" [(ngModel)]="datosCandidato.direccion" (ngModelChange)="datosCandidato.direccion = $event.toUpperCase()"
+        <input class="hv-field" matInput placeholder="Dirección" name="direccion" [(ngModel)]="todosDatosCandidato.candidato.direccion" (ngModelChange)="todosDatosCandidato.candidato.direccion = $event.toUpperCase()"
         #direccion="ngModel" required id="direccion" />
       </mat-form-field>
     </mat-grid-tile>
@@ -353,8 +353,8 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar país</mat-label>
-        <mat-select name="datosBasicos.pais" [(ngModel)]="datosCandidato.pais"
-        #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais" (selectionChange)="onSelectionChangePais(datosCandidato.pais)">
+        <mat-select name="datosBasicos.pais" [(ngModel)]="todosDatosCandidato.candidato.pais"
+        #id_cot_cliente_pais="ngModel" required id="id_cot_cliente_pais" (selectionChange)="onSelectionChangePais(todosDatosCandidato.candidato.pais)">
           <mat-option *ngFor="let pais of paises" [value]="pais.id">
             {{ pais.descripcion }}
           </mat-option>
@@ -367,7 +367,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar departamento</mat-label>
-        <mat-select name="depto" [(ngModel)]="datosCandidato.depto" (selectionChange)="onSelectionChangeDepto(datosCandidato.depto)"
+        <mat-select name="depto" [(ngModel)]="todosDatosCandidato.candidato.depto" (selectionChange)="onSelectionChangeDepto(todosDatosCandidato.candidato.depto)"
         #depto="ngModel" required id="depto">
           <mat-option
             *ngFor="let depto of deptos"
@@ -384,7 +384,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar ciudad</mat-label>
-        <mat-select name="ciudad" [(ngModel)]="datosCandidato.id_cot_cliente_pais" (selectionChange)="onSelectionChangeCiudad(datosCandidato.id_cot_cliente_pais)"
+        <mat-select name="ciudad" [(ngModel)]="todosDatosCandidato.candidato.id_cot_cliente_pais" (selectionChange)="onSelectionChangeCiudad(todosDatosCandidato.candidato.id_cot_cliente_pais)"
         #ciudad="ngModel" required id="ciudad">
           <mat-option
             *ngFor="let ciudad of ciudades"
@@ -401,7 +401,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar barrio</mat-label>
-        <mat-select name="id_cot_cliente_barrio" [(ngModel)]="datosCandidato.id_cot_cliente_barrio"
+        <mat-select name="id_cot_cliente_barrio" [(ngModel)]="todosDatosCandidato.candidato.id_cot_cliente_barrio"
         #id_cot_cliente_barrio="ngModel"  id="id_cot_cliente_barrio">
           <mat-option
             *ngFor="let barrio of barrios"
@@ -428,7 +428,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar experiencia específica</mat-label>
-        <mat-select #id_rh_experiencia="ngModel" name="id_rh_experiencia" [(ngModel)]="datosCandidato.id_rh_experiencia" required id="id_rh_experiencia">
+        <mat-select #id_rh_experiencia="ngModel" name="id_rh_experiencia" [(ngModel)]="todosDatosCandidato.candidato.id_rh_experiencia" required id="id_rh_experiencia">
           <mat-option
             *ngFor="let anioExp of aniosExp"
             [value]="anioExp.id"
@@ -445,7 +445,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar nivel académico</mat-label>
-        <mat-select name="id_rh_nivel_academico" [(ngModel)]="datosCandidato.id_rh_nivel_academico"
+        <mat-select name="id_rh_nivel_academico" [(ngModel)]="todosDatosCandidato.candidato.id_rh_nivel_academico"
         #id_rh_nivel_academico="ngModel" required id="id_rh_nivel_academico">
           <mat-option
             *ngFor="let nivelAcademia of nivelesAcademia"
@@ -462,7 +462,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar cargo al que aplica</mat-label>
-        <mat-select name="id_rh_perfil" [(ngModel)]="datosCandidato.id_rh_perfil"
+        <mat-select name="id_rh_perfil" [(ngModel)]="todosDatosCandidato.candidato.id_rh_perfil"
         #id_rh_perfil="ngModel" required id="id_rh_perfil">
           <mat-option
             *ngFor="let cargo of cargos"
