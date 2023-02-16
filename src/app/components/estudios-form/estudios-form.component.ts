@@ -203,47 +203,48 @@ export class EstudiosFormComponent implements OnInit {
 
     // this.getLocalStorage();
     const datosEstudios = this._storaged.get('datosEstudiosStorage');
-    const candidatoExistente = this._storaged.get('candidatoExistente');
+    // const candidatoExistente = this._storaged.get('candidatoExistente');
 
     if(datosEstudios && datosEstudios.length > 0){
       this.myReferenceArray = datosEstudios;
       console.log("Datos Estudios", this.datosEstudios);
-    }else if(candidatoExistente  && candidatoExistente.length > 0){
-
-        this.candidatoId = candidatoExistente[0].id
-        console.log(this.candidatoId);
-        const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
-        console.log(getEstudios);
-        const newArr = getEstudios.map((obj: {
-          id: number;
-          id_rh_candidato: number;
-          id_rh_profesion: number | null;
-          id_rh_institucion: number | null;
-          fecha_desde: Date;
-          fecha_hasta: Date;
-          id_estado_estudio: number | null;
-          id_tipo_estudio: number | null;
-          id_nivel_estudio: number | null;
-          id_tipo_curso: number | null;
-
-        }) => ({
-          id: obj.id,
-          idEstudio: obj.id_rh_profesion,
-          idCandidato: obj.id_rh_candidato,
-          idUsuario: 0,
-          idInstitucion: obj.id_rh_institucion,
-          fecha_Desde: obj.fecha_desde,
-          fecha_Hasta: obj.fecha_hasta,
-          id_estado_estudio: obj.id_estado_estudio,
-          id_tipo_estudio: obj.id_tipo_estudio,
-          id_nivel_estudio: obj.id_nivel_estudio ? obj.id_nivel_estudio: 0,
-          id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
-          accion: 0,
-        }));
-
-        this.myReferenceArray = [...newArr]
-        this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     }
+    // else if(candidatoExistente  && candidatoExistente.length > 0){
+
+    //     this.candidatoId = candidatoExistente[0].id
+    //     console.log(this.candidatoId);
+    //     const getEstudios = await this.getAnyInformation('/hojadevida/estudios/' + this.candidatoId);
+    //     console.log(getEstudios);
+    //     const newArr = getEstudios.map((obj: {
+    //       id: number;
+    //       id_rh_candidato: number;
+    //       id_rh_profesion: number | null;
+    //       id_rh_institucion: number | null;
+    //       fecha_desde: Date;
+    //       fecha_hasta: Date;
+    //       id_estado_estudio: number | null;
+    //       id_tipo_estudio: number | null;
+    //       id_nivel_estudio: number | null;
+    //       id_tipo_curso: number | null;
+
+    //     }) => ({
+    //       id: obj.id,
+    //       idEstudio: obj.id_rh_profesion,
+    //       idCandidato: obj.id_rh_candidato,
+    //       idUsuario: 0,
+    //       idInstitucion: obj.id_rh_institucion,
+    //       fecha_Desde: obj.fecha_desde,
+    //       fecha_Hasta: obj.fecha_hasta,
+    //       id_estado_estudio: obj.id_estado_estudio,
+    //       id_tipo_estudio: obj.id_tipo_estudio,
+    //       id_nivel_estudio: obj.id_nivel_estudio ? obj.id_nivel_estudio: 0,
+    //       id_tipo_curso: obj.id_tipo_curso ? obj.id_tipo_curso : 0,
+    //       accion: 0,
+    //     }));
+
+    //     this.myReferenceArray = [...newArr]
+    //     this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
+    // }
 
     loading.close();
 

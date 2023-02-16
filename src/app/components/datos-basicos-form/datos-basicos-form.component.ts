@@ -440,12 +440,15 @@ public idiomasCandidato: Idioma = {
     }
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
-    const datosBasicosStorage = this.storaged.get('datosCandidatoStorage');
-    const candidatoExistente = this.storaged.get('candidatoExistente');
-    this.todosDatosCandidato = this.storaged.get('todosDatosCandidato');
+    // const datosBasicosStorage = this.storaged.get('datosCandidatoStorage');
+    // const candidatoExistente = this.storaged.get('candidatoExistente');
+    const datosTodosCandidatoStorage = this.storaged.get('todosDatosCandidato');
+    if(datosTodosCandidatoStorage && datosTodosCandidatoStorage != null){
+      this.todosDatosCandidato =  this.storaged.get('todosDatosCandidato');
+    }
     // const idiomasCandidatoStorage = this.storaged.get('idiomasStorage');
     const getIdiomas = this.storaged.get('idiomasStorage');
-    console.log("exitente init antes del if ",candidatoExistente);
+    // console.log("exitente init antes del if ",candidatoExistente);
     console.log("Idiomas en cambio pestaña", getIdiomas);
     if(getIdiomas && getIdiomas.length > 0){
       console.log('idiomas storage', getIdiomas);
@@ -454,115 +457,117 @@ public idiomasCandidato: Idioma = {
       console.log('Idiomas mapeados desde storage', this.idIdiPrevio);
     }
 
-    console.log("Datos basicos", datosBasicosStorage);
+    // console.log("Datos basicos", datosBasicosStorage);
     if(this.todosDatosCandidato && this.todosDatosCandidato != null){
-      this.todosDatosCandidato = this.todosDatosCandidato;
-      console.log("Datos BAsicos", this.datosCandidato);
-      this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
-      console.log('Datos paises deptos y ciudad', this.todosLugares);
-      const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.idCotClientePais);
-      const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.id_cot_cliente_pais);
+      // this.todosDatosCandidato = this.todosDatosCandidato;
+      console.log("Datos BAsicos", this.todosDatosCandidato);
 
-      const deptoCiudad = ciudadDeptoUbiq.id_cot_cliente_pais
-      const deptoCiudadExp = ciudadDeptoExp.id_cot_cliente_pais
+      // this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
+      // console.log('Datos paises deptos y ciudad', this.todosLugares);
+      // const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.idCotClientePais);
+      // const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.id_cot_cliente_pais);
 
-      const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
-      const deptoPaisExp = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudadExp);
-      const paisCandidato = deptoPais.id_cot_cliente_pais;
-      const paisCandidatoExp = deptoPaisExp.id_cot_cliente_pais;
+      // const deptoCiudad = ciudadDeptoUbiq.id_cot_cliente_pais
+      // const deptoCiudadExp = ciudadDeptoExp.id_cot_cliente_pais
 
-      this.todosDatosCandidato.candidato.paisExp = paisCandidatoExp;
-      this.onSelectionChangePaisExp(paisCandidatoExp);
-      this.todosDatosCandidato.candidato.deptoExp = deptoCiudadExp;
-      this.onSelectionChangeDeptoExp(deptoCiudadExp)
-      this.todosDatosCandidato.candidato.idCotClientePais = this.todosDatosCandidato.candidato.idCotClientePais;
+      // const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
+      // const deptoPaisExp = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudadExp);
+      // const paisCandidato = deptoPais.id_cot_cliente_pais;
+      // const paisCandidatoExp = deptoPaisExp.id_cot_cliente_pais;
 
-      this.todosDatosCandidato.candidato.pais = paisCandidato;
-      this.onSelectionChangePais(paisCandidato);
-      this.todosDatosCandidato.candidato.depto = deptoCiudad;
-      this.onSelectionChangeDepto(deptoCiudad)
-      this.todosDatosCandidato.candidato.id_cot_cliente_pais = this.todosDatosCandidato.candidato.id_cot_cliente_pais;
-      this.onSelectionChangeCiudad(this.todosDatosCandidato.candidato.id_cot_cliente_pais);
-      this.todosDatosCandidato.candidato.id_cot_cliente_barrio = this.todosDatosCandidato.candidato.id_cot_cliente_barrio;
-    }else if(candidatoExistente  && candidatoExistente.length > 0){
-      console.log('Entra en candidato existente init');
-      // this.storaged.set('candidatoExistente', candidatoExistente);
-      this.datosCandidato.id = candidatoExistente[0].id;
-      this.datosCandidato.nit = candidatoExistente[0].nit;
-      this.datosCandidato.id_rh_tipo_documento = candidatoExistente[0].id_rh_tipo_documento;
-      this.datosCandidato.nombre = candidatoExistente[0].nombre;
-      this.datosCandidato.apellido = candidatoExistente[0].apellido;
-      this.datosCandidato.genero = candidatoExistente[0].genero;
-      this.datosCandidato.fecha_nacimiento = candidatoExistente[0].fecha_nacimiento;
-      // this.datosCandidato.id_cot_cliente_barrio = candidatoExistente[0].id_cot_cliente_barrio;
-      this.datosCandidato.direccion = candidatoExistente[0].direccion;
-      this.datosCandidato.telefono = candidatoExistente[0].telefono;
-      this.datosCandidato.celular = candidatoExistente[0].celular;
-      this.datosCandidato.mail = candidatoExistente[0].mail;
-      this.datosCandidato.id_rh_perfil = candidatoExistente[0].id_rh_perfil;
-      this.datosCandidato.idCotClientePais = candidatoExistente[0].id_cot_cliente_pais2;
-      this.datosCandidato.id_cot_cliente_pais = candidatoExistente[0].id_cot_cliente_pais;
-      this.datosCandidato.id_rh_nivel_academico = candidatoExistente[0].id_rh_nivel_academico;
-      this.datosCandidato.id_rh_experiencia = candidatoExistente[0].id_rh_experiencia;
-      this.datosCandidato.id_tipo_candidato = candidatoExistente[0].id_tipo_candidato;
-      this.datosCandidato.idRhEstadoCivil = candidatoExistente[0].id_rh_estado_civil;
-      this.datosCandidato.fecExpedicion = candidatoExistente[0].fecha_exp_cedula;
-      this.datosCandidato.lugarExpedicion = candidatoExistente[0].lugar_exp_cedula;
-      this.datosCandidato.estado = candidatoExistente[0].estado;
+      // this.todosDatosCandidato.candidato.paisExp = paisCandidatoExp;
+      // this.onSelectionChangePaisExp(paisCandidatoExp);
+      // this.todosDatosCandidato.candidato.deptoExp = deptoCiudadExp;
+      // this.onSelectionChangeDeptoExp(deptoCiudadExp)
+      // this.todosDatosCandidato.candidato.idCotClientePais = this.todosDatosCandidato.candidato.idCotClientePais;
 
-      // const estadoCandidato = candidatoExistente[0].estado;
-      if(this.datosCandidato.estado === 2){
-        this.activeTab.emit(false);
-      }
-      // if(estadoCandidato === 2){
-      //   this.activeTab.emit(false);
-      // }
-
-      this.candidatoId = candidatoExistente[0].id
-      const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
-      const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
-      this.idIdiPrevio = [...getIdio];
-      // this.storaged.set('idiomasStorage', this.idIdiPrevio);
-
-      this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
-      console.log('Datos paises deptos y ciudad', this.todosLugares);
-      const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.idCotClientePais);
-      const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.id_cot_cliente_pais);
-
-      const deptoCiudad = ciudadDeptoUbiq.id_cot_cliente_pais
-      const deptoCiudadExp = ciudadDeptoExp.id_cot_cliente_pais
-
-      const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
-      const deptoPaisExp = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudadExp);
-      const paisCandidato = deptoPais.id_cot_cliente_pais;
-      const paisCandidatoExp = deptoPaisExp.id_cot_cliente_pais;
-
-      this.datosCandidato.paisExp = paisCandidatoExp;
-      this.onSelectionChangePaisExp(paisCandidatoExp);
-      this.datosCandidato.deptoExp = deptoCiudadExp;
-      this.onSelectionChangeDeptoExp(deptoCiudadExp)
-      this.datosCandidato.idCotClientePais = this.datosCandidato.idCotClientePais;
-
-      this.datosCandidato.pais = paisCandidato;
-      this.onSelectionChangePais(paisCandidato);
-      this.datosCandidato.depto = deptoCiudad;
-      this.onSelectionChangeDepto(deptoCiudad)
-      this.datosCandidato.id_cot_cliente_pais = this.datosCandidato.id_cot_cliente_pais;
-      this.onSelectionChangeCiudad(this.datosCandidato.id_cot_cliente_pais);
-      this.datosCandidato.id_cot_cliente_barrio = candidatoExistente[0].id_cot_cliente_barrio;
-      // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-      console.log("Y aquí que?", this.datosCandidato);
-      this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
-        ...this.idiomasCandidato, idIdi
-      }));
-
-
-
-    this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-    this.storaged.set('idiomasStorage', this.idiomasArray);
-
-
+      // this.todosDatosCandidato.candidato.pais = paisCandidato;
+      // this.onSelectionChangePais(paisCandidato);
+      // this.todosDatosCandidato.candidato.depto = deptoCiudad;
+      // this.onSelectionChangeDepto(deptoCiudad)
+      // this.todosDatosCandidato.candidato.id_cot_cliente_pais = this.todosDatosCandidato.candidato.id_cot_cliente_pais;
+      // this.onSelectionChangeCiudad(this.todosDatosCandidato.candidato.id_cot_cliente_pais);
+      // this.todosDatosCandidato.candidato.id_cot_cliente_barrio = this.todosDatosCandidato.candidato.id_cot_cliente_barrio;
     }
+    // else if(candidatoExistente  && candidatoExistente.length > 0){
+    //   console.log('Entra en candidato existente init');
+    //   // this.storaged.set('candidatoExistente', candidatoExistente);
+    //   this.datosCandidato.id = candidatoExistente[0].id;
+    //   this.datosCandidato.nit = candidatoExistente[0].nit;
+    //   this.datosCandidato.id_rh_tipo_documento = candidatoExistente[0].id_rh_tipo_documento;
+    //   this.datosCandidato.nombre = candidatoExistente[0].nombre;
+    //   this.datosCandidato.apellido = candidatoExistente[0].apellido;
+    //   this.datosCandidato.genero = candidatoExistente[0].genero;
+    //   this.datosCandidato.fecha_nacimiento = candidatoExistente[0].fecha_nacimiento;
+    //   // this.datosCandidato.id_cot_cliente_barrio = candidatoExistente[0].id_cot_cliente_barrio;
+    //   this.datosCandidato.direccion = candidatoExistente[0].direccion;
+    //   this.datosCandidato.telefono = candidatoExistente[0].telefono;
+    //   this.datosCandidato.celular = candidatoExistente[0].celular;
+    //   this.datosCandidato.mail = candidatoExistente[0].mail;
+    //   this.datosCandidato.id_rh_perfil = candidatoExistente[0].id_rh_perfil;
+    //   this.datosCandidato.idCotClientePais = candidatoExistente[0].id_cot_cliente_pais2;
+    //   this.datosCandidato.id_cot_cliente_pais = candidatoExistente[0].id_cot_cliente_pais;
+    //   this.datosCandidato.id_rh_nivel_academico = candidatoExistente[0].id_rh_nivel_academico;
+    //   this.datosCandidato.id_rh_experiencia = candidatoExistente[0].id_rh_experiencia;
+    //   this.datosCandidato.id_tipo_candidato = candidatoExistente[0].id_tipo_candidato;
+    //   this.datosCandidato.idRhEstadoCivil = candidatoExistente[0].id_rh_estado_civil;
+    //   this.datosCandidato.fecExpedicion = candidatoExistente[0].fecha_exp_cedula;
+    //   this.datosCandidato.lugarExpedicion = candidatoExistente[0].lugar_exp_cedula;
+    //   this.datosCandidato.estado = candidatoExistente[0].estado;
+
+    //   // const estadoCandidato = candidatoExistente[0].estado;
+    //   if(this.datosCandidato.estado === 2){
+    //     this.activeTab.emit(false);
+    //   }
+    //   // if(estadoCandidato === 2){
+    //   //   this.activeTab.emit(false);
+    //   // }
+
+    //   this.candidatoId = candidatoExistente[0].id
+    //   const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
+    //   const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
+    //   this.idIdiPrevio = [...getIdio];
+    //   // this.storaged.set('idiomasStorage', this.idIdiPrevio);
+
+    //   this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
+    //   console.log('Datos paises deptos y ciudad', this.todosLugares);
+    //   const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.idCotClientePais);
+    //   const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.datosCandidato.id_cot_cliente_pais);
+
+    //   const deptoCiudad = ciudadDeptoUbiq.id_cot_cliente_pais
+    //   const deptoCiudadExp = ciudadDeptoExp.id_cot_cliente_pais
+
+    //   const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
+    //   const deptoPaisExp = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudadExp);
+    //   const paisCandidato = deptoPais.id_cot_cliente_pais;
+    //   const paisCandidatoExp = deptoPaisExp.id_cot_cliente_pais;
+
+    //   this.datosCandidato.paisExp = paisCandidatoExp;
+    //   this.onSelectionChangePaisExp(paisCandidatoExp);
+    //   this.datosCandidato.deptoExp = deptoCiudadExp;
+    //   this.onSelectionChangeDeptoExp(deptoCiudadExp)
+    //   this.datosCandidato.idCotClientePais = this.datosCandidato.idCotClientePais;
+
+    //   this.datosCandidato.pais = paisCandidato;
+    //   this.onSelectionChangePais(paisCandidato);
+    //   this.datosCandidato.depto = deptoCiudad;
+    //   this.onSelectionChangeDepto(deptoCiudad)
+    //   this.datosCandidato.id_cot_cliente_pais = this.datosCandidato.id_cot_cliente_pais;
+    //   this.onSelectionChangeCiudad(this.datosCandidato.id_cot_cliente_pais);
+    //   this.datosCandidato.id_cot_cliente_barrio = candidatoExistente[0].id_cot_cliente_barrio;
+    //   // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+    //   console.log("Y aquí que?", this.datosCandidato);
+    //   this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
+    //     ...this.idiomasCandidato, idIdi
+    //   }));
+
+
+
+    // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+    // this.storaged.set('idiomasStorage', this.idiomasArray);
+
+
+    // }
 
     // const getIdiomas = this.storaged.get('idiomasStorage');
 
@@ -584,9 +589,11 @@ public idiomasCandidato: Idioma = {
       this.messageService.info("Atencion", "Estamos cargando los datos del candidato");
       const idEmp = this.idEmp;
       const candidatoExistente = await this.getAnyInformation('/hojadevida/candidato/0?identificacion=' + this.todosDatosCandidato.candidato.nit);
+      // this.todosDatosCandidato = candidatoExistente;
+      console.log("Prueba de carga de candidato ",this.todosDatosCandidato);
       if(candidatoExistente  && candidatoExistente.length > 0){
         console.log('Entra en candidato existente search');
-        this.storaged.set('candidatoExistente', candidatoExistente);
+        // this.storaged.set('candidatoExistente', candidatoExistente);
         this.flexibleTabs.emit(false);
         this.todosDatosCandidato.candidato.id = candidatoExistente[0].id;
         this.todosDatosCandidato.candidato.nit = candidatoExistente[0].nit;
@@ -829,8 +836,8 @@ public idiomasCandidato: Idioma = {
         this.storaged.set('datosInfoFamilia', this.familyArray);
     // Fin Info Familiar
       this.storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
-      this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-      this.storaged.set('idiomasStorage', this.idiomasArray);
+      // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+      // this.storaged.set('idiomasStorage', this.idiomasArray);
       console.log("Prueba 1 todos los datos ",this.todosDatosCandidato);
       } else{
           setTimeout(

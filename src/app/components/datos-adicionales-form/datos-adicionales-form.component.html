@@ -8,7 +8,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar experiencia general</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.id_rh_experiencia_sector"
+        <mat-select [(ngModel)]="todosCandidatoStorage.candidato.id_rh_experiencia_sector"
         name="id_rh_experiencia_sector" #id_rh_experiencia_sector="ngModel" required id="id_rh_experiencia_sector">
           <mat-option
             *ngFor="let anioExp of aniosExp"
@@ -25,7 +25,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar experiencia en operación de equipos </mat-label>
-        <mat-select disabled [disabled]="tipoCandidato == 1 ? false : true" [(ngModel)]="datosAdicionales.id_rh_experiencia_equipo"
+        <mat-select disabled [disabled]="tipoCandidato == 1 ? false : true" [(ngModel)]="todosCandidatoStorage.candidato.id_rh_experiencia_equipo"
         name="id_rh_experiencia_equipo" #id_rh_experiencia_equipo="ngModel" required id="id_rh_experiencia_equipo">
           <mat-option
           *ngFor="let anioExp of aniosExp"
@@ -42,7 +42,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar aspiración salarial</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.id_salario"
+        <mat-select [(ngModel)]="todosCandidatoStorage.candidato.id_salario"
         name="id_salario" #id_salario="ngModel" required id="id_salario">
           <mat-option
             *ngFor="let salario of salarios"
@@ -64,7 +64,7 @@
           type="number"
           placeholder="$ 0.00"
           name=""
-          [(ngModel)]="datosAdicionales.salario_especifico"
+          [(ngModel)]="todosCandidatoStorage.candidato.salario_especifico"
         name="salario_especifico" #salario_especifico="ngModel" id="salario_especifico"
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.salario"
@@ -77,7 +77,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar fuente de reclutamiento</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.id_rh_fuente_reclutamiento"
+        <mat-select [(ngModel)]="todosCandidatoStorage.candidato.id_rh_fuente_reclutamiento"
         name="id_rh_fuente_reclutamiento" #id_rh_fuente_reclutamiento="ngModel" id="id_rh_fuente_reclutamiento">
           <mat-option
             *ngFor="let fuente of fuentesReclutamiento"
@@ -95,8 +95,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Nº tarjeta profesional</mat-label>
         <input matInput placeholder="Nº Tarjeta Profesional" #tarjeta="ngModel"
-        id="tarjeta" name="tarjeta"  [(ngModel)]="datosAdicionales.tarjeta"
-        (ngModelChange)="datosAdicionales.tarjeta = $event.toUpperCase()"
+        id="tarjeta" name="tarjeta"  [(ngModel)]="todosCandidatoStorage.candidato.tarjeta"
+        (ngModelChange)="todosCandidatoStorage.candidato.tarjeta = $event.toUpperCase()"
         [pattern]="expresiones.numbersText"/>
         <mat-hint  class="message-error"
         [class.invalid]="tarjeta.invalid" *ngIf="tarjeta.errors?.['pattern']">
@@ -107,7 +107,7 @@
     <mat-grid-tile >
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar entidad de expedición</mat-label>
-        <mat-select class="select_entidad" [(ngModel)]="datosAdicionales.id_Entidad"
+        <mat-select class="select_entidad" [(ngModel)]="todosCandidatoStorage.candidato.id_Entidad"
         name="id_Entidad" #id_Entidad="ngModel" id="id_Entidad">
           <mat-option
             *ngFor="let entidad of entidades"
@@ -123,14 +123,14 @@
 
     <section class="example-section">
       <mat-checkbox
-      (change)="datosAdicionales.id_participacion_anterior = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_participacion_anterior"
+      (change)="todosCandidatoStorage.candidato.id_participacion_anterior = $event.checked ? 1 : 0" [(ngModel)]="todosCandidatoStorage.candidato.id_participacion_anterior"
       name="id_participacion_anterior" #id_participacion_anterior="ngModel" id="id_participacion_anterior" class="example-margin"
         >Participacion anterior
       </mat-checkbox>
 
       <mat-checkbox
 
-      (change)="datosAdicionales.id_trajo_hoja_vida = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_trajo_hoja_vida"
+      (change)="todosCandidatoStorage.candidato.id_trajo_hoja_vida = $event.checked ? 1 : 0" [(ngModel)]="todosCandidatoStorage.candidato.id_trajo_hoja_vida"
       name="id_trajo_hoja_vida" #id_trajo_hoja_vida="ngModel" id="id_trajo_hoja_vida" class="example-margin"
       >Hoja de vida
     </mat-checkbox>
@@ -140,13 +140,13 @@
     <section class="example-section">
 
       <mat-checkbox
-      (change)="datosAdicionales.id_disponibilidad_viaje = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.id_disponibilidad_viaje"
+      (change)="todosCandidatoStorage.candidato.id_disponibilidad_viaje = $event.checked ? 1 : 0" [(ngModel)]="todosCandidatoStorage.candidato.id_disponibilidad_viaje"
       name="id_disponibilidad_viaje" #id_disponibilidad_viaje="ngModel" id="id_disponibilidad_viaje" class="example-margin"
         >Disponibilidad para viajar
       </mat-checkbox>
 
       <mat-checkbox
-      (change)="datosAdicionales.runt = $event.checked ? 1 : 0" [(ngModel)]="datosAdicionales.runt"
+      (change)="todosCandidatoStorage.candidato.runt = $event.checked ? 1 : 0" [(ngModel)]="todosCandidatoStorage.candidato.runt"
       name="runt" #runt="ngModel" id="runt" class="example-margin">Runt</mat-checkbox>
 
     </section>
@@ -168,7 +168,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar EPS</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.idRhEps"
+        <mat-select [(ngModel)]="todosCandidatoStorage.candidato.idRhEps"
         name="idRhEps" #idRhEps="ngModel" id="idRhEps" >
           <mat-option
             *ngFor="let eps of epss"
@@ -183,7 +183,7 @@
   <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Seleccionar fondo pensión</mat-label>
-      <mat-select  [(ngModel)]="datosAdicionales.idRhFondoPension"
+      <mat-select  [(ngModel)]="todosCandidatoStorage.candidato.idRhFondoPension"
         name="idRhFondoPension" #idRhFondoPension="ngModel" id="idRhFondoPension">
         <mat-option
           *ngFor="let fondoPension of fondosPension"
@@ -197,7 +197,7 @@
   <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Seleccionar caja compensación</mat-label>
-      <mat-select [(ngModel)]="datosAdicionales.idRhFondoCaja"
+      <mat-select [(ngModel)]="todosCandidatoStorage.candidato.idRhFondoCaja"
         name="idRhFondoCaja" #idRhFondoCaja="ngModel" id="idRhFondoCaja">
         <mat-option
           *ngFor="let cajaCompensacion of cajasCompensacion"
@@ -211,7 +211,7 @@
   <mat-grid-tile>
     <mat-form-field appearance="outline">
       <mat-label>Seleccionar cesantías</mat-label>
-      <mat-select [(ngModel)]="datosAdicionales.idRhFondoCesantias"
+      <mat-select [(ngModel)]="todosCandidatoStorage.candidato.idRhFondoCesantias"
         name="idRhFondoCesantias" #idRhFondoCesantias="ngModel" id="idRhFondoCesantias">
         <mat-option
           *ngFor="let cesantia of cesantias"
@@ -241,8 +241,8 @@
       <mat-form-field appearance="outline">
         <mat-label>Nº Licencia</mat-label>
         <input matInput placeholder="Nº de Licencia" #numLicencia="ngModel"
-        id="licencia" name="licencia"  [(ngModel)]="datosAdicionales.licencia"
-        (ngModelChange)="datosAdicionales.licencia = $event.toUpperCase()"
+        id="licencia" name="licencia"  [(ngModel)]="todosCandidatoStorage.candidato.licencia"
+        (ngModelChange)="todosCandidatoStorage.candidato.licencia = $event.toUpperCase()"
         (keydown)="newLicence($event)"
         [pattern]="expresiones.numbersText"/>
         <mat-hint  class="message-error"
@@ -255,7 +255,7 @@
       <fieldset>
       <div class="container-hv-radios">
         <mat-label>Tipo de licencia:</mat-label>
-        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="datosAdicionales.tipo_licencia"  (change)="chooseType($event)">
+        <mat-radio-group class="" name="tipo_licencia" [(ngModel)]="todosCandidatoStorage.candidato.tipo_licencia"  (change)="chooseType($event)">
           <mat-radio-button *ngFor="let tipoLicencia of tiposLicencia" [value]="tipoLicencia.id" color="primary">
             {{ tipoLicencia.descripcion }}
           </mat-radio-button>
@@ -339,7 +339,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar identidad étnica</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.id_rh_color_piel"
+        <mat-select [(ngModel)]="todosCandidatoStorage.candidato.id_rh_color_piel"
         name="id_rh_color_piel" #id_rh_color_piel="ngModel" id="id_rh_color_piel">
           <mat-option
             *ngFor="let colorPiel of coloresPiel"
@@ -353,7 +353,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar grupo sanguíneo</mat-label>
-        <mat-select [(ngModel)]="datosAdicionales.id_rh_grupo_sanguineo"
+        <mat-select [(ngModel)]="todosCandidatoStorage.candidato.id_rh_grupo_sanguineo"
         name="id_rh_grupo_sanguineo" required #id_rh_grupo_sanguineo="ngModel" id="id_rh_grupo_sanguineo">
           <mat-option
             *ngFor="let grupoSangre of gruposSanguineos"
@@ -370,7 +370,7 @@
     <mat-grid-tile class="left-grid-position">
       <fieldset>
         <div class="container-hv-radios">
-      <mat-radio-group aria-label="Select an option" [(ngModel)]="datosAdicionales.rh"
+      <mat-radio-group aria-label="Select an option" [(ngModel)]="todosCandidatoStorage.candidato.rh"
       name="rh" #rh="ngModel" id="rh" color="primary" required>
         <mat-radio-button [value]="0">Positivo +</mat-radio-button>
         <mat-radio-button [value]="1">Negativo -</mat-radio-button>
@@ -389,7 +389,7 @@
           type="number"
           placeholder="0"
           name=""
-          [(ngModel)]="datosAdicionales.peso"
+          [(ngModel)]="todosCandidatoStorage.candidato.peso"
         name="peso" #peso="ngModel" id="peso"
         />
       </mat-form-field>
@@ -402,7 +402,7 @@
           type="number"
           placeholder="0"
           name=""
-          [(ngModel)]="datosAdicionales.altura"
+          [(ngModel)]="todosCandidatoStorage.candidato.altura"
         name="altura" #altura="ngModel" id="altura"
         />
       </mat-form-field>

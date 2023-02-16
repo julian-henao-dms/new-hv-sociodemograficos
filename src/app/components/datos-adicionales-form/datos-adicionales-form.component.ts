@@ -10,6 +10,7 @@ import { MessagesService } from 'src/app/services/messages.service';
 import * as _ from 'lodash';
 import { NgForm} from '@angular/forms';
 import { DatosAdicionalesCandidato, Licencia } from './interfaces/datos-adicionales';
+import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
 interface Pais{
   value: number;
@@ -132,6 +133,82 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   }
 
  public disabledButtonNext: boolean = true;
+
+ public todosCandidatoStorage: TodosDatosCandidato = {
+  candidato:{
+    id:0,
+    emp: 0,
+    id_usuario: 0,
+    id_tipo_candidato: null,
+    id_rh_tipo_documento: null,
+    nit: '',
+    estado: 1,
+    fecExpedicion: new Date,
+    lugarExpedicion: '',
+    idCotClientePais: null,
+    nombre: '',
+    apellido: '',
+    genero: null,
+    fecha_nacimiento: new Date,
+    idRhEstadoCivil: null,
+    telefono: '',
+    mail: '',
+    celular: '',
+    direccion: '',
+    id_cot_cliente_pais: null,
+    id_cot_cliente_barrio: null,
+    id_rh_experiencia: null,
+    id_rh_nivel_academico: null,
+    id_rh_perfil: null,
+    pais: null,
+    paisExp: null,
+    depto: null,
+    deptoExp: null,
+    fuente: '',
+    id_rh_experiencia_sector: null,
+    id_rh_experiencia_equipo: null,
+    id_salario: null,
+    salario_especifico: null,
+    id_rh_fuente_reclutamiento: null,
+    tarjeta: '',
+    id_Entidad: null,
+    id_participacion_anterior: 0,
+    id_trajo_hoja_vida: 0,
+    id_disponibilidad_viaje: 0,
+    runt: 0,
+    idRhEps: null,
+    idRhFondoPension: null,
+    idRhFondoCaja: null,
+    idRhFondoCesantias: null,
+    licencia: '',
+    tipo_licencia: null,
+    fecha_vence_licencia: '',
+    id_rh_categoria: null,
+    id_rh_color_piel: null,
+    id_rh_grupo_sanguineo: null,
+    rh: null,
+    peso: null,
+    altura: null,
+  },
+  referencias_familiares: [
+    // ...this.infoFamilia
+  ],
+  estudios: [
+      // ...this.estudios
+  ],
+  idiomas: [
+      // ...this.idiomas
+  ],
+  referencias: [
+    //  ...this.referencias
+  ],
+  categorias: [
+    // ...this.categoriaLicencia
+  ],
+  cargos: [
+    //  ...this.cargos
+  ]
+}
 
  public datosAdicionales: DatosAdicionalesCandidato = {
   id_rh_experiencia_sector: null,
@@ -348,48 +425,51 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 
 
 
-    const licenciasCandidato = this._storaged.get('datosLicencia');
+    // const licenciasCandidato = this._storaged.get('datosLicencia');
     const datosAdicionales = this._storaged.get('datosAdicionalesStorage');
+    this.todosCandidatoStorage = this._storaged.get('todosDatosCandidato');
+    console.log('Todos los datos en adicionales', this.todosCandidatoStorage);
+    const licenciasCandidato = this.todosCandidatoStorage.categorias;
     const candidatoExistente = this._storaged.get('candidatoExistente');
-    console.log("Datos basicos", datosAdicionales);
+    // console.log("Datos licencias storage", licenciasCandidato);
 
-    if(datosAdicionales && datosAdicionales != null){
-      this.datosAdicionales = datosAdicionales;
+    if(this.todosCandidatoStorage && this.todosCandidatoStorage != null){
+      this.todosCandidatoStorage = this.todosCandidatoStorage;
 
-      console.log("Datos Adicionales", this.datosAdicionales);
+      console.log("Datos Adicionales", this.todosCandidatoStorage);
 
       if(licenciasCandidato && licenciasCandidato.length > 0){
         this.myReferenceArray = licenciasCandidato;
 
-        console.log("Datos Adicionales", this.datosAdicionales);
+        console.log("Datos Adicionales licencia 2", this.myReferenceArray);
       }
-    }else if(candidatoExistente  && candidatoExistente.length > 0){
+    }else if(this.todosCandidatoStorage  && this.todosCandidatoStorage != null){
 
-        this.candidatoId = candidatoExistente[0].id
-        this.datosAdicionales.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector ? candidatoExistente[0].id_rh_experiencia_sector: 0;
-        this.datosAdicionales.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
-        this.datosAdicionales.id_salario = candidatoExistente[0].id_salario;
-        this.datosAdicionales.salario_especifico = candidatoExistente[0].salario;//verificar
-        this.datosAdicionales.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
-        this.datosAdicionales.tarjeta = candidatoExistente[0].tarjeta;
-        this.datosAdicionales.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
-        this.datosAdicionales.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
-        this.datosAdicionales.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
-        this.datosAdicionales.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
-        this.datosAdicionales.runt = candidatoExistente[0].runt;
-        this.datosAdicionales.idRhEps = candidatoExistente[0].id_rh_eps;
-        this.datosAdicionales.idRhFondoPension = candidatoExistente[0].id_rh_fondo_pension;
-        this.datosAdicionales.idRhFondoCaja = candidatoExistente[0].id_rh_fondo_caja;
-        this.datosAdicionales.idRhFondoCesantias = candidatoExistente[0].id_rh_fondo_cesantias;
-        this.datosAdicionales.licencia = candidatoExistente[0].licencia;
-        this.datosAdicionales.tipo_licencia = candidatoExistente[0].tipo_licencia;
-        this.datosAdicionales.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
-        this.datosAdicionales.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
-        this.datosAdicionales.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
-        this.datosAdicionales.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
-        this.datosAdicionales.rh = candidatoExistente[0].rh;
-        this.datosAdicionales.peso = candidatoExistente[0].peso;
-        this.datosAdicionales.altura = candidatoExistente[0].altura;
+        // this.candidatoId = this.todosCandidatoStorage.candidato
+        // this.todosCandidatoStorage.candidato.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector ? candidatoExistente[0].id_rh_experiencia_sector: 0;
+        // this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
+        // this.todosCandidatoStorage.candidato.id_salario = candidatoExistente[0].id_salario;
+        // this.todosCandidatoStorage.candidato.salario_especifico = candidatoExistente[0].salario;//verificar
+        // this.todosCandidatoStorage.candidato.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
+        // this.todosCandidatoStorage.candidato.tarjeta = candidatoExistente[0].tarjeta;
+        // this.todosCandidatoStorage.candidato.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
+        // this.todosCandidatoStorage.candidato.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
+        // this.todosCandidatoStorage.candidato.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
+        // this.todosCandidatoStorage.candidato.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
+        // this.todosCandidatoStorage.candidato.runt = candidatoExistente[0].runt;
+        // this.todosCandidatoStorage.candidato.idRhEps = candidatoExistente[0].id_rh_eps;
+        // this.todosCandidatoStorage.candidato.idRhFondoPension = candidatoExistente[0].id_rh_fondo_pension;
+        // this.todosCandidatoStorage.candidato.idRhFondoCaja = candidatoExistente[0].id_rh_fondo_caja;
+        // this.todosCandidatoStorage.candidato.idRhFondoCesantias = candidatoExistente[0].id_rh_fondo_cesantias;
+        // this.todosCandidatoStorage.candidato.licencia = candidatoExistente[0].licencia;
+        // this.todosCandidatoStorage.candidato.tipo_licencia = candidatoExistente[0].tipo_licencia;
+        // this.todosCandidatoStorage.candidato.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
+        // this.todosCandidatoStorage.candidato.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
+        // this.todosCandidatoStorage.candidato.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
+        // this.todosCandidatoStorage.candidato.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
+        // this.todosCandidatoStorage.candidato.rh = candidatoExistente[0].rh;
+        // this.todosCandidatoStorage.candidato.peso = candidatoExistente[0].peso;
+        // this.todosCandidatoStorage.candidato.altura = candidatoExistente[0].altura;
         const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
 
         const newArr = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
@@ -489,6 +569,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     }else{
 
       this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+      this._storaged.set('todosDatosCandidato', this.todosCandidatoStorage);
       this._storaged.set('datosLicencia', this.myReferenceArray);
       this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
       this.disabledButtonNext = false;
