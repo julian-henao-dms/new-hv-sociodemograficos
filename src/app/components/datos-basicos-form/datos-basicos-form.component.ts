@@ -212,37 +212,37 @@ public mostrarOpciones = true;
       //  ...this.cargos
     ]
   }
-public datosCandidato: DatosBasicosCandidato = {
-  id:0,
-  emp: 0,
-  id_usuario: 0,
-  id_tipo_candidato: null,
-  id_rh_tipo_documento: null,
-  nit: '',
-  estado: 1,
-  fecExpedicion: new Date,
-  lugarExpedicion: '',
-  idCotClientePais: null,
-  nombre: '',
-  apellido: '',
-  genero: null,
-  fecha_nacimiento: new Date,
-  idRhEstadoCivil: null,
-  telefono: '',
-  mail: '',
-  celular: '',
-  direccion: '',
-  id_cot_cliente_pais: null,
-  id_cot_cliente_barrio: null,
-  id_rh_experiencia: null,
-  id_rh_nivel_academico: null,
-  id_rh_perfil: null,
-  pais: null,
-  paisExp: null,
-  depto: null,
-  deptoExp: null,
-  fuente: ''
-}
+// public datosCandidato: DatosBasicosCandidato = {
+//   id:0,
+//   emp: 0,
+//   id_usuario: 0,
+//   id_tipo_candidato: null,
+//   id_rh_tipo_documento: null,
+//   nit: '',
+//   estado: 1,
+//   fecExpedicion: new Date,
+//   lugarExpedicion: '',
+//   idCotClientePais: null,
+//   nombre: '',
+//   apellido: '',
+//   genero: null,
+//   fecha_nacimiento: new Date,
+//   idRhEstadoCivil: null,
+//   telefono: '',
+//   mail: '',
+//   celular: '',
+//   direccion: '',
+//   id_cot_cliente_pais: null,
+//   id_cot_cliente_barrio: null,
+//   id_rh_experiencia: null,
+//   id_rh_nivel_academico: null,
+//   id_rh_perfil: null,
+//   pais: null,
+//   paisExp: null,
+//   depto: null,
+//   deptoExp: null,
+//   fuente: ''
+// }
 
 
 public licenceArray: any[] = [];
@@ -442,9 +442,13 @@ public idiomasCandidato: Idioma = {
 
     // const datosBasicosStorage = this.storaged.get('datosCandidatoStorage');
     // const candidatoExistente = this.storaged.get('candidatoExistente');
-    const datosTodosCandidatoStorage = this.storaged.get('todosDatosCandidato');
+    const datosTodosCandidatoStorage = this.storaged.get('todosCandidatoStorage');
+    this.todosDatosCandidato =  this.storaged.get('todosCandidatoStorage');
+    console.log("Que hay aquí?", datosTodosCandidatoStorage);
+    console.log("Que hay aquí 2?",  this.todosDatosCandidato);
     if(datosTodosCandidatoStorage && datosTodosCandidatoStorage != null){
-      this.todosDatosCandidato =  this.storaged.get('todosDatosCandidato');
+      this.todosDatosCandidato =  this.storaged.get('todosCandidatoStorage');
+      console.log("Que hay aquí 3?",  this.todosDatosCandidato);
     }
     // const idiomasCandidatoStorage = this.storaged.get('idiomasStorage');
     const getIdiomas = this.storaged.get('idiomasStorage');
@@ -462,32 +466,33 @@ public idiomasCandidato: Idioma = {
       // this.todosDatosCandidato = this.todosDatosCandidato;
       console.log("Datos BAsicos", this.todosDatosCandidato);
 
-      // this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
-      // console.log('Datos paises deptos y ciudad', this.todosLugares);
-      // const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.idCotClientePais);
-      // const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.id_cot_cliente_pais);
+      this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
+      console.log('Datos paises deptos y ciudad', this.todosLugares);
+      const ciudadDeptoExp = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.idCotClientePais);
+      const ciudadDeptoUbiq = this.todosLugares.find((depto: { id: number | null; }) => depto.id === this.todosDatosCandidato.candidato.id_cot_cliente_pais);
 
-      // const deptoCiudad = ciudadDeptoUbiq.id_cot_cliente_pais
-      // const deptoCiudadExp = ciudadDeptoExp.id_cot_cliente_pais
+      const deptoCiudad = ciudadDeptoUbiq.id_cot_cliente_pais
+      const deptoCiudadExp = ciudadDeptoExp.id_cot_cliente_pais
 
-      // const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
-      // const deptoPaisExp = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudadExp);
-      // const paisCandidato = deptoPais.id_cot_cliente_pais;
-      // const paisCandidatoExp = deptoPaisExp.id_cot_cliente_pais;
+      const deptoPais = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudad);
+      const deptoPaisExp = this.todosLugares.find((pais: { id: number | null; }) => pais.id === deptoCiudadExp);
+      const paisCandidato = deptoPais.id_cot_cliente_pais;
+      const paisCandidatoExp = deptoPaisExp.id_cot_cliente_pais;
 
-      // this.todosDatosCandidato.candidato.paisExp = paisCandidatoExp;
-      // this.onSelectionChangePaisExp(paisCandidatoExp);
-      // this.todosDatosCandidato.candidato.deptoExp = deptoCiudadExp;
-      // this.onSelectionChangeDeptoExp(deptoCiudadExp)
-      // this.todosDatosCandidato.candidato.idCotClientePais = this.todosDatosCandidato.candidato.idCotClientePais;
+      this.todosDatosCandidato.candidato.paisExp = paisCandidatoExp;
+      this.onSelectionChangePaisExp(paisCandidatoExp);
+      this.todosDatosCandidato.candidato.deptoExp = deptoCiudadExp;
+      this.onSelectionChangeDeptoExp(deptoCiudadExp)
+      this.todosDatosCandidato.candidato.idCotClientePais = this.todosDatosCandidato.candidato.idCotClientePais;
 
-      // this.todosDatosCandidato.candidato.pais = paisCandidato;
-      // this.onSelectionChangePais(paisCandidato);
-      // this.todosDatosCandidato.candidato.depto = deptoCiudad;
-      // this.onSelectionChangeDepto(deptoCiudad)
-      // this.todosDatosCandidato.candidato.id_cot_cliente_pais = this.todosDatosCandidato.candidato.id_cot_cliente_pais;
-      // this.onSelectionChangeCiudad(this.todosDatosCandidato.candidato.id_cot_cliente_pais);
-      // this.todosDatosCandidato.candidato.id_cot_cliente_barrio = this.todosDatosCandidato.candidato.id_cot_cliente_barrio;
+      this.todosDatosCandidato.candidato.pais = paisCandidato;
+      this.onSelectionChangePais(paisCandidato);
+      this.todosDatosCandidato.candidato.depto = deptoCiudad;
+      this.onSelectionChangeDepto(deptoCiudad)
+      this.todosDatosCandidato.candidato.id_cot_cliente_pais = this.todosDatosCandidato.candidato.id_cot_cliente_pais;
+      this.onSelectionChangeCiudad(this.todosDatosCandidato.candidato.id_cot_cliente_pais);
+      this.todosDatosCandidato.candidato.id_cot_cliente_barrio = this.todosDatosCandidato.candidato.id_cot_cliente_barrio;
+
     }
     // else if(candidatoExistente  && candidatoExistente.length > 0){
     //   console.log('Entra en candidato existente init');
@@ -574,6 +579,7 @@ public idiomasCandidato: Idioma = {
   loading.close();
 
   // this.datosCandidato = this.storaged.get('datosCandidatoStorage');
+
   // this.idiomasArray = this.storaged.get('idiomasStorage');
   }
 
@@ -966,8 +972,8 @@ public validateChanged(event:any){
   }
 
   ngOnDestroy() {
-        this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-        this.storaged.set('todosDatosCandidato', this.todosDatosCandidato);
+        // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+       this.storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
         this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
           ...this.idiomasCandidato, idIdi
         }));
@@ -996,7 +1002,7 @@ public validarFormulario(e:any){
 
       this.todosDatosCandidato.idiomas = [...this.idiomasArray]
 
-      this.storaged.set('datosCandidatoStorage', this.datosCandidato);
+      // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       this.storaged.set('idiomasStorage', this.idiomasArray);
 
       this.storaged.set('todosDatosCandidato', this.todosDatosCandidato);
