@@ -11,6 +11,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
+import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
 
 interface Institucion{
@@ -103,7 +104,81 @@ export class EstudiosFormComponent implements OnInit {
     {id: 4, descripcion: 'Aplazado'}
   ];
 
-
+  public todosDatosCandidato: TodosDatosCandidato = {
+    candidato:{
+      id:0,
+      emp: this.idEmp,
+      id_usuario: 0,
+      id_tipo_candidato: null,
+      id_rh_tipo_documento: null,
+      nit: '',
+      estado: 1,
+      fecExpedicion: new Date,
+      lugarExpedicion: '',
+      idCotClientePais: null,
+      nombre: '',
+      apellido: '',
+      genero: null,
+      fecha_nacimiento: new Date,
+      idRhEstadoCivil: null,
+      telefono: '',
+      mail: '',
+      celular: '',
+      direccion: '',
+      id_cot_cliente_pais: null,
+      id_cot_cliente_barrio: null,
+      id_rh_experiencia: null,
+      id_rh_nivel_academico: null,
+      id_rh_perfil: null,
+      pais: null,
+      paisExp: null,
+      depto: null,
+      deptoExp: null,
+      fuente: '',
+      id_rh_experiencia_sector: null,
+      id_rh_experiencia_equipo: null,
+      id_salario: null,
+      salario: null,
+      id_rh_fuente_reclutamiento: null,
+      tarjeta: '',
+      id_Entidad: null,
+      id_participacion_anterior: 0,
+      id_trajo_hoja_vida: 0,
+      id_disponibilidad_viaje: 0,
+      runt: 0,
+      idRhEps: null,
+      idRhFondoPension: null,
+      idRhFondoCaja: null,
+      idRhFondoCesantias: null,
+      licencia: '',
+      tipo_licencia: null,
+      fecha_vence_licencia: '',
+      id_rh_categoria: null,
+      id_rh_color_piel: null,
+      id_rh_grupo_sanguineo: null,
+      rh: null,
+      peso: null,
+      altura: null,
+    },
+    referencias_familiares: [
+      // ...this.infoFamilia
+    ],
+    estudios: [
+        // ...this.estudios
+    ],
+    idiomas: [
+        // ...this.idiomas
+    ],
+    referencias: [
+      //  ...this.referencias
+    ],
+    categorias: [
+      // ...this.categoriaLicencia
+    ],
+    cargos: [
+      //  ...this.cargos
+    ]
+  }
   public datosEstudios: Estudios ={
     id: 0,
     idEstudio: null,
@@ -202,12 +277,13 @@ export class EstudiosFormComponent implements OnInit {
     this.tiposCurso = _.orderBy(tipoCurso, ['id'], ['asc']);
 
     // this.getLocalStorage();
-    const datosEstudios = this._storaged.get('datosEstudiosStorage');
+    this.todosDatosCandidato =  this._storaged.get('todosCandidatoStorage');
+    const datosEstudios = this.todosDatosCandidato.estudios;
     // const candidatoExistente = this._storaged.get('candidatoExistente');
 
-    if(datosEstudios && datosEstudios.length > 0){
-      this.myReferenceArray = datosEstudios;
-      console.log("Datos Estudios", this.datosEstudios);
+    if(this.todosDatosCandidato.estudios && this.todosDatosCandidato.estudios.length > 0){
+      this.myReferenceArray = [...this.todosDatosCandidato.estudios]
+      console.log("Datos Estudios 2", this.myReferenceArray);
     }
     // else if(candidatoExistente  && candidatoExistente.length > 0){
 
@@ -252,8 +328,12 @@ export class EstudiosFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
+    this.todosDatosCandidato.estudios = [...this.myReferenceArray]
+    console.log('Destroy', this.todosDatosCandidato.estudios);
+    this._storaged.set('todosCandidatoStorage',   this.todosDatosCandidato);
+    // this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
   }
+
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
        this.apiService.getInformacion(service).subscribe({
@@ -302,8 +382,8 @@ if(this.fieldDatosEstudios.valid){
 
 
   public guardarProgreso(){
-
-    this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
+    this._storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
+    // this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 

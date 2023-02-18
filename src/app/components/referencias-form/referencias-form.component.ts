@@ -11,6 +11,7 @@ import * as _ from 'lodash';
 import { MessagesService } from 'src/app/services/messages.service';
 import { ApiService } from 'src/app/services/api.service';
 import { NgForm } from '@angular/forms';
+import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
 export interface user {
   userName: string;
@@ -47,7 +48,84 @@ export class ReferenciasFormComponent implements OnInit {
   @ViewChild('addReferenceData', { static: true })
   fieldDatosReferencias!: NgForm;
   public disabledButtonNext: boolean = true;
+  public idEmp: number = 3;
   public candidatoId = 0;
+
+  public todosDatosCandidato: TodosDatosCandidato = {
+    candidato:{
+      id:0,
+      emp: this.idEmp,
+      id_usuario: 0,
+      id_tipo_candidato: null,
+      id_rh_tipo_documento: null,
+      nit: '',
+      estado: 1,
+      fecExpedicion: new Date,
+      lugarExpedicion: '',
+      idCotClientePais: null,
+      nombre: '',
+      apellido: '',
+      genero: null,
+      fecha_nacimiento: new Date,
+      idRhEstadoCivil: null,
+      telefono: '',
+      mail: '',
+      celular: '',
+      direccion: '',
+      id_cot_cliente_pais: null,
+      id_cot_cliente_barrio: null,
+      id_rh_experiencia: null,
+      id_rh_nivel_academico: null,
+      id_rh_perfil: null,
+      pais: null,
+      paisExp: null,
+      depto: null,
+      deptoExp: null,
+      fuente: '',
+      id_rh_experiencia_sector: null,
+      id_rh_experiencia_equipo: null,
+      id_salario: null,
+      salario: null,
+      id_rh_fuente_reclutamiento: null,
+      tarjeta: '',
+      id_Entidad: null,
+      id_participacion_anterior: 0,
+      id_trajo_hoja_vida: 0,
+      id_disponibilidad_viaje: 0,
+      runt: 0,
+      idRhEps: null,
+      idRhFondoPension: null,
+      idRhFondoCaja: null,
+      idRhFondoCesantias: null,
+      licencia: '',
+      tipo_licencia: null,
+      fecha_vence_licencia: '',
+      id_rh_categoria: null,
+      id_rh_color_piel: null,
+      id_rh_grupo_sanguineo: null,
+      rh: null,
+      peso: null,
+      altura: null,
+    },
+    referencias_familiares: [
+      // ...this.infoFamilia
+    ],
+    estudios: [
+        // ...this.estudios
+    ],
+    idiomas: [
+        // ...this.idiomas
+    ],
+    referencias: [
+      //  ...this.referencias
+    ],
+    categorias: [
+      // ...this.categoriaLicencia
+    ],
+    cargos: [
+      //  ...this.cargos
+    ]
+  }
 
   public datosReferencias: Referencias = {
     id: 0,
@@ -157,62 +235,67 @@ export class ReferenciasFormComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
     // this.getLocalStorage();
-    const datosReferencias = this._storaged.get('datosReferenciasStorage');
-    const candidatoExistente = this._storaged.get('candidatoExistente');
-    if(datosReferencias && datosReferencias.length > 0){
-      this.myReferenceArray = datosReferencias;
+    // const datosReferencias = this._storaged.get('datosReferenciasStorage');
+    // const candidatoExistente = this._storaged.get('candidatoExistente');
+    this.todosDatosCandidato =  this._storaged.get('todosCandidatoStorage');
+    if(this.todosDatosCandidato.referencias && this.todosDatosCandidato.referencias.length > 0){
+      this.myReferenceArray = [...this.todosDatosCandidato.referencias];
       console.log("Datos referencias", this.myReferenceArray);
-    }else if(candidatoExistente  && candidatoExistente.length > 0){
+    }
+    // else if(candidatoExistente  && candidatoExistente.length > 0){
 
-      this.candidatoId = candidatoExistente[0].id
+    //   this.candidatoId = candidatoExistente[0].id
 
 
-      const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
+    //   const getInfoFamiliar = await this.getAnyInformation('/hojadevida/referencias/' + this.candidatoId);
 
-      const newArr = getInfoFamiliar.map((obj: {
-        id: number;
-        cargo: string;
-        celular: string;
-        empresa: string;
-        id_rh_candidato: number;
-        mail: string;
-        motivo_retiro: string;
-        nombre: string;
-        observaciones: string;
-        observaciones_det: string;
-        telefono: string;
-        tiempo_laborado: string;
-        tipo: number;
-        tipo_ref: string;
-      }) => ({
+    //   const newArr = getInfoFamiliar.map((obj: {
+    //     id: number;
+    //     cargo: string;
+    //     celular: string;
+    //     empresa: string;
+    //     id_rh_candidato: number;
+    //     mail: string;
+    //     motivo_retiro: string;
+    //     nombre: string;
+    //     observaciones: string;
+    //     observaciones_det: string;
+    //     telefono: string;
+    //     tiempo_laborado: string;
+    //     tipo: number;
+    //     tipo_ref: string;
+    //   }) => ({
 
-        id: obj.id,
-        idCandidato: obj.id_rh_candidato,
-        nombre: obj.nombre,
-        celular: obj.celular,
-        telefono: obj.telefono,
-        mail: obj.mail,
-        tipo: obj.tipo,
-        idUsuario: 0,
-        empresa: obj.empresa,
-        Cargo: obj.cargo,
-        Observaciones: obj.observaciones,
-        TiempoLaborado: obj.tiempo_laborado,
-        MotivoRetiro: obj.motivo_retiro,
-        accion: 0,
-      }));
+    //     id: obj.id,
+    //     idCandidato: obj.id_rh_candidato,
+    //     nombre: obj.nombre,
+    //     celular: obj.celular,
+    //     telefono: obj.telefono,
+    //     mail: obj.mail,
+    //     tipo: obj.tipo,
+    //     idUsuario: 0,
+    //     empresa: obj.empresa,
+    //     Cargo: obj.cargo,
+    //     Observaciones: obj.observaciones,
+    //     TiempoLaborado: obj.tiempo_laborado,
+    //     MotivoRetiro: obj.motivo_retiro,
+    //     accion: 0,
+    //   }));
 
-      this.myReferenceArray = [...newArr]
-      this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
-      }
-    // console.log('Cargar Datos Adicionales', this.datosReferencias);
+    //   this.myReferenceArray = [...newArr]
+    //   this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
+    //   }
+    // // console.log('Cargar Datos Adicionales', this.datosReferencias);
     // this.myReferenceArray = this._storaged.get('datosReferenciasStorage');
   loading.close();
 
   }
 
   ngOnDestroy() {
-    this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
+    this.todosDatosCandidato.referencias = [...this.myReferenceArray]
+    console.log('Destroy', this.todosDatosCandidato.referencias);
+    this._storaged.set('todosCandidatoStorage',   this.todosDatosCandidato);
+    // this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
   }
 
   private async getAnyInformation(service: string): Promise<any> {
@@ -268,7 +351,7 @@ export class ReferenciasFormComponent implements OnInit {
 
   public guardarProgreso(){
 
-    this._storaged.set('datosReferenciasStorage', this.myReferenceArray);
+    this._storaged.set('todosCandidatoStorage',   this.todosDatosCandidato);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;
 

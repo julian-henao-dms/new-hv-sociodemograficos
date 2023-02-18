@@ -12,6 +12,7 @@ import { CandidatoHv } from './interfaces/hv-candidato.interface';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { ThisReceiver } from '@angular/compiler';
+import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
 interface Parentesco{
   id: number;
@@ -28,7 +29,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
   fieldDatosFamilia!: NgForm;
   // @Output() activeTab = new EventEmitter<boolean>();
 
-  public todosDatosCandidato = {}
+  // public todosDatosCandidato = {}
   public disabledButtonNext: boolean = true;
 
 
@@ -78,6 +79,81 @@ public infoFamilia: any[] = [];
     fechaNace: new Date,
    };
 
+   public todosDatosCandidato: TodosDatosCandidato = {
+    candidato:{
+      id:0,
+      emp: 3,
+      id_usuario: 0,
+      id_tipo_candidato: null,
+      id_rh_tipo_documento: null,
+      nit: '',
+      estado: 1,
+      fecExpedicion: new Date,
+      lugarExpedicion: '',
+      idCotClientePais: null,
+      nombre: '',
+      apellido: '',
+      genero: null,
+      fecha_nacimiento: new Date,
+      idRhEstadoCivil: null,
+      telefono: '',
+      mail: '',
+      celular: '',
+      direccion: '',
+      id_cot_cliente_pais: null,
+      id_cot_cliente_barrio: null,
+      id_rh_experiencia: null,
+      id_rh_nivel_academico: null,
+      id_rh_perfil: null,
+      pais: null,
+      paisExp: null,
+      depto: null,
+      deptoExp: null,
+      fuente: '',
+      id_rh_experiencia_sector: null,
+      id_rh_experiencia_equipo: null,
+      id_salario: null,
+      salario: null,
+      id_rh_fuente_reclutamiento: null,
+      tarjeta: '',
+      id_Entidad: null,
+      id_participacion_anterior: 0,
+      id_trajo_hoja_vida: 0,
+      id_disponibilidad_viaje: 0,
+      runt: 0,
+      idRhEps: null,
+      idRhFondoPension: null,
+      idRhFondoCaja: null,
+      idRhFondoCesantias: null,
+      licencia: '',
+      tipo_licencia: null,
+      fecha_vence_licencia: '',
+      id_rh_categoria: null,
+      id_rh_color_piel: null,
+      id_rh_grupo_sanguineo: null,
+      rh: null,
+      peso: null,
+      altura: null,
+    },
+    referencias_familiares: [
+      // ...this.infoFamilia
+    ],
+    estudios: [
+        // ...this.estudios
+    ],
+    idiomas: [
+        // ...this.idiomas
+    ],
+    referencias: [
+      //  ...this.referencias
+    ],
+    categorias: [
+      // ...this.categoriaLicencia
+    ],
+    cargos: [
+      //  ...this.cargos
+    ]
+  }
 
   public columnsReference: any[] = ["nit", "nombre", "fechaNace", "idParentesco", "telResidencia", 'borrar' ];
   public FAMILIAR_DATA: Familiar[] = [];
@@ -170,57 +246,63 @@ public infoFamilia: any[] = [];
       }
       this.parentescos = _.orderBy(parentesco, ['id'], ['asc']);
 
-      const datosFamiliares = this._storaged.get('datosInfoFamilia');
-      const candidatoExistente = this._storaged.get('candidatoExistente');
+      // const datosFamiliares = this._storaged.get('datosInfoFamilia');
+      // const candidatoExistente = this._storaged.get('candidatoExistente');
+      this.todosDatosCandidato =  this._storaged.get('todosCandidatoStorage');
 
-      if(datosFamiliares && datosFamiliares.length > 0){
-        this.myReferenceArray = datosFamiliares;
+      if(this.todosDatosCandidato.referencias_familiares && this.todosDatosCandidato.referencias_familiares.length > 0){
+        this.myReferenceArray = [...this.todosDatosCandidato.referencias_familiares];
+        console.log('Familiares', this.myReferenceArray);
 
-      }else if(candidatoExistente  && candidatoExistente.length > 0){
-
-        this.candidatoId = candidatoExistente[0].id
-
-        const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
-
-        const newArr = getInfoFamiliar.map((obj: {
-          fecha_nacimiento: Date;
-          id: number;
-          id_rh_candidato: number;
-          id_rh_parentesco: number | null;
-          nit: string;
-          nombre: string;
-          parentesco: string;
-          tel_residencia: string;
-
-        }) => ({
-          id: obj.id,
-          id_candidato: obj.id_rh_candidato,
-          nombre: obj.nombre,
-          idParentesco: obj.id_rh_parentesco,
-          edad: 0,
-          ne: 0,
-          ec: 0,
-          ocupacion: '',
-          empresa: '',
-          telResidencia: obj.tel_residencia,
-          otroFamiliar: 0,
-          accion: 0,
-          nit: obj.nit,
-          fechaNace: obj.fecha_nacimiento,
-
-        }));
-
-        this.myReferenceArray = [...newArr]
-        this._storaged.set('datosInfoFamilia', this.myReferenceArray);
-        // this.activeTab.emit(false);
       }
+      // else if(candidatoExistente  && candidatoExistente.length > 0){
+
+      //   this.candidatoId = candidatoExistente[0].id
+
+      //   const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
+
+      //   const newArr = getInfoFamiliar.map((obj: {
+      //     fecha_nacimiento: Date;
+      //     id: number;
+      //     id_rh_candidato: number;
+      //     id_rh_parentesco: number | null;
+      //     nit: string;
+      //     nombre: string;
+      //     parentesco: string;
+      //     tel_residencia: string;
+
+      //   }) => ({
+      //     id: obj.id,
+      //     id_candidato: obj.id_rh_candidato,
+      //     nombre: obj.nombre,
+      //     idParentesco: obj.id_rh_parentesco,
+      //     edad: 0,
+      //     ne: 0,
+      //     ec: 0,
+      //     ocupacion: '',
+      //     empresa: '',
+      //     telResidencia: obj.tel_residencia,
+      //     otroFamiliar: 0,
+      //     accion: 0,
+      //     nit: obj.nit,
+      //     fechaNace: obj.fecha_nacimiento,
+
+      //   }));
+
+      //   this.myReferenceArray = [...newArr]
+      //   this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+      //   // this.activeTab.emit(false);
+      // }
 
     loading.close();
   }
 
 
   ngOnDestroy() {
-    this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+    // this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+    this.todosDatosCandidato.referencias_familiares= [...this.myReferenceArray]
+    console.log('Destroy familiares', this.todosDatosCandidato);
+    this._storaged.set('todosCandidatoStorage',   this.todosDatosCandidato);
   }
 
   public async selectsValidate(selectContent:any, text: string, arrayData:any){
@@ -278,89 +360,89 @@ public infoFamilia: any[] = [];
 }
   }
 
-  public setupDatosCandidato(){
-    this.todosDatosCandidato = {
-      candidato: {
-        id: this.datosBasicos.id ? this.datosBasicos.id : 0,
-        emp: 3,
-        nit: this.datosBasicos.nit,
-        id_rh_tipo_documento: this.datosBasicos.id_rh_tipo_documento,
-        nombre: this.datosBasicos.nombre,
-        apellido: this.datosBasicos.apellido,
-        id_usuario: this.datosBasicos.id_usuario + 100,
-        genero: this.datosBasicos.genero,
-        fecha_nacimiento: this.datosBasicos.fecha_nacimiento,
-        id_cot_cliente_pais: this.datosBasicos.id_cot_cliente_pais,
-        direccion: this.datosBasicos.direccion,
-        telefono: this.datosBasicos.telefono,
-        celular: this.datosBasicos.celular,
-        mail: this.datosBasicos.mail,
-        id_rh_perfil: this.datosBasicos.id_rh_perfil,
-        id_cot_cliente: 0,
-        id_rh_requisicion_personal: 0,
-        id_rh_nivel_academico: this.datosBasicos.id_rh_nivel_academico,
-        id_rh_experiencia: this.datosBasicos.id_rh_experiencia,
-        observaciones: '',
-        id_tipo_candidato: this.datosBasicos.id_tipo_candidato,
-        id_rh_experiencia_sector: this.datosadicionales.id_rh_experiencia_sector,
-        id_disponibilidad_viaje: this.datosadicionales.id_disponibilidad_viaje,
-        id_participacion_anterior: this.datosadicionales.id_participacion_anterior,
-        id_salario: this.datosadicionales.id_salario,
-        id_rh_fuente_reclutamiento: this.datosadicionales.id_rh_fuente_reclutamiento,
-        id_trajo_hoja_vida: this.datosadicionales.id_trajo_hoja_vida,
-        estado: 1,
-        bloqueado: 0,
-        motivo: '',
-        licencia: this.datosadicionales.licencia,
-        tarjeta: this.datosadicionales.tarjeta,
-        tipo_licencia: this.datosadicionales.tipo_licencia,
-        fecha_vence_licencia: new Date,
-        runt: this.datosadicionales.runt,
-        id_rh_categoria: 0,
-        id_rh_color_piel: this.datosadicionales.id_rh_color_piel,
-        id_rh_grupo_sanguineo: this.datosadicionales.id_rh_grupo_sanguineo,
-        rh: this.datosadicionales.rh,
-        id_rh_experiencia_equipo: this.datosadicionales.id_rh_experiencia_equipo ? this.datosadicionales.id_rh_experiencia_equipo: 0,
-        peso: this.datosadicionales.peso,
-        altura: this.datosadicionales.altura,
-        salario: this.datosadicionales.salario_especifico,
-        accion: 0,
-        id_Usuario_Asociado: 0,
-        id_con_cco: 0,
-        id_Entidad: this.datosadicionales.id_Entidad,
-        fecExpedicion: this.datosBasicos.fecExpedicion,
-        lugarExpedicion: '',
-        idRhEstadoCivil: this.datosBasicos.idRhEstadoCivil,
-        idRhEps: this.datosadicionales.idRhEps,
-        idRhFondoPension: this.datosadicionales.idRhFondoPension,
-        idRhFondoCaja: this.datosadicionales.idRhFondoCaja,
-        idRhFondoCesantias: this.datosadicionales.idRhFondoCesantias,
-        id_cot_cliente_barrio: this.datosBasicos.id_cot_cliente_barrio,
-        sync: 2,
-        idCotClientePais: this.datosBasicos.idCotClientePais,
-        fuente: " "
-    },
-    referencias_familiares: [
-        ...this.infoFamilia
-    ],
-    estudios: [
-        ...this.estudios
-    ],
-    idiomas: [
-        ...this.idiomas
-    ],
-    referencias: [
-       ...this.referencias
-    ],
-    categorias: [
-      ...this.categoriaLicencia
-    ],
-    cargos: [
-       ...this.cargos
-    ]
-    }
+  // public setupDatosCandidato(){
+  //   this.todosDatosCandidato = {
+  //     candidato: {
+  //       id: this.datosBasicos.id ? this.datosBasicos.id : 0,
+  //       emp: 3,
+  //       nit: this.datosBasicos.nit,
+  //       id_rh_tipo_documento: this.datosBasicos.id_rh_tipo_documento,
+  //       nombre: this.datosBasicos.nombre,
+  //       apellido: this.datosBasicos.apellido,
+  //       id_usuario: this.datosBasicos.id_usuario + 100,
+  //       genero: this.datosBasicos.genero,
+  //       fecha_nacimiento: this.datosBasicos.fecha_nacimiento,
+  //       id_cot_cliente_pais: this.datosBasicos.id_cot_cliente_pais,
+  //       direccion: this.datosBasicos.direccion,
+  //       telefono: this.datosBasicos.telefono,
+  //       celular: this.datosBasicos.celular,
+  //       mail: this.datosBasicos.mail,
+  //       id_rh_perfil: this.datosBasicos.id_rh_perfil,
+  //       id_cot_cliente: 0,
+  //       id_rh_requisicion_personal: 0,
+  //       id_rh_nivel_academico: this.datosBasicos.id_rh_nivel_academico,
+  //       id_rh_experiencia: this.datosBasicos.id_rh_experiencia,
+  //       observaciones: '',
+  //       id_tipo_candidato: this.datosBasicos.id_tipo_candidato,
+  //       id_rh_experiencia_sector: this.datosadicionales.id_rh_experiencia_sector,
+  //       id_disponibilidad_viaje: this.datosadicionales.id_disponibilidad_viaje,
+  //       id_participacion_anterior: this.datosadicionales.id_participacion_anterior,
+  //       id_salario: this.datosadicionales.id_salario,
+  //       id_rh_fuente_reclutamiento: this.datosadicionales.id_rh_fuente_reclutamiento,
+  //       id_trajo_hoja_vida: this.datosadicionales.id_trajo_hoja_vida,
+  //       estado: 1,
+  //       bloqueado: 0,
+  //       motivo: '',
+  //       licencia: this.datosadicionales.licencia,
+  //       tarjeta: this.datosadicionales.tarjeta,
+  //       tipo_licencia: this.datosadicionales.tipo_licencia,
+  //       fecha_vence_licencia: new Date,
+  //       runt: this.datosadicionales.runt,
+  //       id_rh_categoria: 0,
+  //       id_rh_color_piel: this.datosadicionales.id_rh_color_piel,
+  //       id_rh_grupo_sanguineo: this.datosadicionales.id_rh_grupo_sanguineo,
+  //       rh: this.datosadicionales.rh,
+  //       id_rh_experiencia_equipo: this.datosadicionales.id_rh_experiencia_equipo ? this.datosadicionales.id_rh_experiencia_equipo: 0,
+  //       peso: this.datosadicionales.peso,
+  //       altura: this.datosadicionales.altura,
+  //       salario: this.datosadicionales.salario_especifico,
+  //       accion: 0,
+  //       id_Usuario_Asociado: 0,
+  //       id_con_cco: 0,
+  //       id_Entidad: this.datosadicionales.id_Entidad,
+  //       fecExpedicion: this.datosBasicos.fecExpedicion,
+  //       lugarExpedicion: '',
+  //       idRhEstadoCivil: this.datosBasicos.idRhEstadoCivil,
+  //       idRhEps: this.datosadicionales.idRhEps,
+  //       idRhFondoPension: this.datosadicionales.idRhFondoPension,
+  //       idRhFondoCaja: this.datosadicionales.idRhFondoCaja,
+  //       idRhFondoCesantias: this.datosadicionales.idRhFondoCesantias,
+  //       id_cot_cliente_barrio: this.datosBasicos.id_cot_cliente_barrio,
+  //       sync: 2,
+  //       idCotClientePais: this.datosBasicos.idCotClientePais,
+  //       fuente: " "
+  //   },
+  //   referencias_familiares: [
+  //       ...this.infoFamilia
+  //   ],
+  //   estudios: [
+  //       ...this.estudios
+  //   ],
+  //   idiomas: [
+  //       ...this.idiomas
+  //   ],
+  //   referencias: [
+  //      ...this.referencias
+  //   ],
+  //   categorias: [
+  //     ...this.categoriaLicencia
+  //   ],
+  //   cargos: [
+  //      ...this.cargos
+  //   ]
+  //   }
 
-  }
+  // }
 
   public  borrarItem(element: any){
     this.myReferenceArray.splice(element, 1);
@@ -371,10 +453,12 @@ public infoFamilia: any[] = [];
 
   public guardarProgreso(){
 
-    this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+    // this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+    this._storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
     this.disabledButtonNext = false;
-    this.getLocalStorage();
-    this.setupDatosCandidato();
+
+    // this.getLocalStorage();
+    // this.setupDatosCandidato();
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
 
 
@@ -382,16 +466,16 @@ public infoFamilia: any[] = [];
   }
 
   public getLocalStorage(){
+    // this.todosDatosCandidato =  this._storaged.get('todosCandidatoStorage');
+      // this.datosBasicos = this._storaged.get('datosCandidatoStorage');
+      // this.idiomas = this._storaged.get('idiomasStorage');
+      // this.datosadicionales = this._storaged.get('datosAdicionalesStorage');
+      // this.categoriaLicencia = this._storaged.get('datosLicencia');
 
-      this.datosBasicos = this._storaged.get('datosCandidatoStorage');
-      this.idiomas = this._storaged.get('idiomasStorage');
-      this.datosadicionales = this._storaged.get('datosAdicionalesStorage');
-      this.categoriaLicencia = this._storaged.get('datosLicencia');
-
-      this.estudios = this._storaged.get('datosEstudiosStorage');
-      this.referencias = this._storaged.get('datosReferenciasStorage');
-      this.cargos = this._storaged.get('otrosCargosStorage');
-      this.infoFamilia = this._storaged.get('datosInfoFamilia');
+      // this.estudios = this._storaged.get('datosEstudiosStorage');
+      // this.referencias = this._storaged.get('datosReferenciasStorage');
+      // this.cargos = this._storaged.get('otrosCargosStorage');
+      // this.infoFamilia = this._storaged.get('datosInfoFamilia');
 
   }
 
@@ -414,7 +498,7 @@ public infoFamilia: any[] = [];
 
     const idUsuarioHv =  await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
 
-
+     console.log('Response server',idUsuarioHv);
     if(idUsuarioHv === 0){
       this.messageService.error('Error', 'No se pudo almacenar la información del candidato');
       this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
@@ -422,7 +506,7 @@ public infoFamilia: any[] = [];
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
       console.log('enviados', this.todosDatosCandidato);
       this._storaged.clear();
-      window.location.reload();
+      // window.location.reload();
       // this._storaged.set('idCandidatoEnviado', idUsuarioHv);
 
       // this.activeTab.emit(false);

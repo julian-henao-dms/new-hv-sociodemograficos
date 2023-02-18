@@ -64,12 +64,12 @@
           type="number"
           placeholder="$ 0.00"
           name=""
-          [(ngModel)]="todosCandidatoStorage.candidato.salario_especifico"
-        name="salario_especifico" #salario_especifico="ngModel" id="salario_especifico"
+          [(ngModel)]="todosCandidatoStorage.candidato.salario"
+        name="salario" #salario="ngModel" id="salario"
         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"
         [pattern]="expresiones.salario"
         />
-        <mat-error class="message-error" [class.invalid]="salario_especifico.invalid" *ngIf="salario_especifico.errors?.['required']">
+        <mat-error class="message-error" [class.invalid]="salario.invalid" *ngIf="salario.errors?.['required']">
           *El salario específico es requerido
         </mat-error>
       </mat-form-field>

@@ -137,7 +137,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
  public todosCandidatoStorage: TodosDatosCandidato = {
   candidato:{
     id:0,
-    emp: 0,
+    emp: this.idEmp,
     id_usuario: 0,
     id_tipo_candidato: null,
     id_rh_tipo_documento: null,
@@ -168,7 +168,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     id_rh_experiencia_sector: null,
     id_rh_experiencia_equipo: null,
     id_salario: null,
-    salario_especifico: null,
+    salario: null,
     id_rh_fuente_reclutamiento: null,
     tarjeta: '',
     id_Entidad: null,
@@ -210,32 +210,32 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   ]
 }
 
- public datosAdicionales: DatosAdicionalesCandidato = {
-  id_rh_experiencia_sector: null,
-  id_rh_experiencia_equipo: null,
-  id_salario: null,
-  salario_especifico: null,
-  id_rh_fuente_reclutamiento: null,
-  tarjeta: '',
-  id_Entidad: null,
-  id_participacion_anterior: 0,
-  id_trajo_hoja_vida: 0,
-  id_disponibilidad_viaje: 0,
-  runt: 0,
-  idRhEps: null,
-  idRhFondoPension: null,
-  idRhFondoCaja: null,
-  idRhFondoCesantias: null,
-  licencia: '',
-  tipo_licencia: null,
-  fecha_vence_licencia: '',
-  id_rh_categoria: null,
-  id_rh_color_piel: null,
-  id_rh_grupo_sanguineo: null,
-  rh: null,
-  peso: null,
-  altura: null,
- }
+//  public datosAdicionales: DatosAdicionalesCandidato = {
+//   id_rh_experiencia_sector: null,
+//   id_rh_experiencia_equipo: null,
+//   id_salario: null,
+//   salario_especifico: null,
+//   id_rh_fuente_reclutamiento: null,
+//   tarjeta: '',
+//   id_Entidad: null,
+//   id_participacion_anterior: 0,
+//   id_trajo_hoja_vida: 0,
+//   id_disponibilidad_viaje: 0,
+//   runt: 0,
+//   idRhEps: null,
+//   idRhFondoPension: null,
+//   idRhFondoCaja: null,
+//   idRhFondoCesantias: null,
+//   licencia: '',
+//   tipo_licencia: null,
+//   fecha_vence_licencia: '',
+//   id_rh_categoria: null,
+//   id_rh_color_piel: null,
+//   id_rh_grupo_sanguineo: null,
+//   rh: null,
+//   peso: null,
+//   altura: null,
+//  }
   public tipo_licencia = 0;
   public candidatoId = 0;
   public licencia = '';
@@ -426,65 +426,81 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 
 
     // const licenciasCandidato = this._storaged.get('datosLicencia');
-    const datosAdicionales = this._storaged.get('datosAdicionalesStorage');
-    this.todosCandidatoStorage = this._storaged.get('todosDatosCandidato');
+    // const datosAdicionales = this._storaged.get('datosAdicionalesStorage');
+    this.todosCandidatoStorage = this._storaged.get('todosCandidatoStorage');
     console.log('Todos los datos en adicionales', this.todosCandidatoStorage);
-    const licenciasCandidato = this.todosCandidatoStorage.categorias;
-    const candidatoExistente = this._storaged.get('candidatoExistente');
-    // console.log("Datos licencias storage", licenciasCandidato);
+    const getCategoriasLic = this.todosCandidatoStorage.categorias;
+    // const candidatoExistente = this._storaged.get('candidatoExistente');
+    console.log("Datos licencias storage", getCategoriasLic);
 
-    if(this.todosCandidatoStorage && this.todosCandidatoStorage != null){
-      this.todosCandidatoStorage = this.todosCandidatoStorage;
+    if(getCategoriasLic && getCategoriasLic.length > 0){
+      // const newArr = getCategoriasLic.map((obj: {id: number; idCandidato: number;  idCategoria: number;  fechaVence: Date;}) => ({
+      //   id: obj.id,
+      //   idCandidato: obj.idCandidato,
+      //   idCategoria: obj.idCategoria,
+      //   fechaVence: obj.fechaVence,
+      //   accion: 0
+      // }));
 
-      console.log("Datos Adicionales", this.todosCandidatoStorage);
-
-      if(licenciasCandidato && licenciasCandidato.length > 0){
-        this.myReferenceArray = licenciasCandidato;
-
-        console.log("Datos Adicionales licencia 2", this.myReferenceArray);
-      }
-    }else if(this.todosCandidatoStorage  && this.todosCandidatoStorage != null){
-
-        // this.candidatoId = this.todosCandidatoStorage.candidato
-        // this.todosCandidatoStorage.candidato.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector ? candidatoExistente[0].id_rh_experiencia_sector: 0;
-        // this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
-        // this.todosCandidatoStorage.candidato.id_salario = candidatoExistente[0].id_salario;
-        // this.todosCandidatoStorage.candidato.salario_especifico = candidatoExistente[0].salario;//verificar
-        // this.todosCandidatoStorage.candidato.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
-        // this.todosCandidatoStorage.candidato.tarjeta = candidatoExistente[0].tarjeta;
-        // this.todosCandidatoStorage.candidato.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
-        // this.todosCandidatoStorage.candidato.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
-        // this.todosCandidatoStorage.candidato.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
-        // this.todosCandidatoStorage.candidato.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
-        // this.todosCandidatoStorage.candidato.runt = candidatoExistente[0].runt;
-        // this.todosCandidatoStorage.candidato.idRhEps = candidatoExistente[0].id_rh_eps;
-        // this.todosCandidatoStorage.candidato.idRhFondoPension = candidatoExistente[0].id_rh_fondo_pension;
-        // this.todosCandidatoStorage.candidato.idRhFondoCaja = candidatoExistente[0].id_rh_fondo_caja;
-        // this.todosCandidatoStorage.candidato.idRhFondoCesantias = candidatoExistente[0].id_rh_fondo_cesantias;
-        // this.todosCandidatoStorage.candidato.licencia = candidatoExistente[0].licencia;
-        // this.todosCandidatoStorage.candidato.tipo_licencia = candidatoExistente[0].tipo_licencia;
-        // this.todosCandidatoStorage.candidato.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
-        // this.todosCandidatoStorage.candidato.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
-        // this.todosCandidatoStorage.candidato.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
-        // this.todosCandidatoStorage.candidato.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
-        // this.todosCandidatoStorage.candidato.rh = candidatoExistente[0].rh;
-        // this.todosCandidatoStorage.candidato.peso = candidatoExistente[0].peso;
-        // this.todosCandidatoStorage.candidato.altura = candidatoExistente[0].altura;
-        const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
-
-        const newArr = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
-          id: obj.id,
-          idCandidato: obj.id_rh_candidato,
-          idCategoria: obj.id_rh_categoria,
-          fechaVence: obj.fecha_vencimiento,
-          accion: 0
-        }));
-
-        this.myReferenceArray = [...newArr]
+      // this.myReferenceArray = [...newArr]
+      this.myReferenceArray = [...getCategoriasLic]
+      console.log('categories',this.myReferenceArray);
 
     }
-    this._storaged.set('datosAdicionalesStorage',   this.datosAdicionales);
-    this._storaged.set('datosLicencia', this.myReferenceArray);
+
+    // if(this.todosCandidatoStorage && this.todosCandidatoStorage != null){
+    //   // this.todosCandidatoStorage = this.todosCandidatoStorage;
+
+    //   // console.log("Datos Adicionales", this.todosCandidatoStorage);
+
+    //   // if(licenciasCandidato && licenciasCandidato.length > 0){
+    //   //   this.myReferenceArray = licenciasCandidato;
+
+    //   //   console.log("Datos Adicionales licencia 2", this.myReferenceArray);
+    //   // }
+    //    }
+    //    else if(this.todosCandidatoStorage  && this.todosCandidatoStorage != null){
+
+    //     // this.candidatoId = this.todosCandidatoStorage.candidato
+    //     // this.todosCandidatoStorage.candidato.id_rh_experiencia_sector = candidatoExistente[0].id_rh_experiencia_sector ? candidatoExistente[0].id_rh_experiencia_sector: 0;
+    //     // this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo = candidatoExistente[0].id_rh_experiencia_equipo;
+    //     // this.todosCandidatoStorage.candidato.id_salario = candidatoExistente[0].id_salario;
+    //     // this.todosCandidatoStorage.candidato.salario_especifico = candidatoExistente[0].salario;//verificar
+    //     // this.todosCandidatoStorage.candidato.id_rh_fuente_reclutamiento = candidatoExistente[0].id_rh_fuente_reclutamiento;
+    //     // this.todosCandidatoStorage.candidato.tarjeta = candidatoExistente[0].tarjeta;
+    //     // this.todosCandidatoStorage.candidato.id_Entidad = candidatoExistente[0].id_rh_entidad;//verificar
+    //     // this.todosCandidatoStorage.candidato.id_participacion_anterior = candidatoExistente[0].id_participacion_anterior;
+    //     // this.todosCandidatoStorage.candidato.id_trajo_hoja_vida = candidatoExistente[0].id_trajo_hoja_vida;
+    //     // this.todosCandidatoStorage.candidato.id_disponibilidad_viaje = candidatoExistente[0].id_disponibilidad_viaje;
+    //     // this.todosCandidatoStorage.candidato.runt = candidatoExistente[0].runt;
+    //     // this.todosCandidatoStorage.candidato.idRhEps = candidatoExistente[0].id_rh_eps;
+    //     // this.todosCandidatoStorage.candidato.idRhFondoPension = candidatoExistente[0].id_rh_fondo_pension;
+    //     // this.todosCandidatoStorage.candidato.idRhFondoCaja = candidatoExistente[0].id_rh_fondo_caja;
+    //     // this.todosCandidatoStorage.candidato.idRhFondoCesantias = candidatoExistente[0].id_rh_fondo_cesantias;
+    //     // this.todosCandidatoStorage.candidato.licencia = candidatoExistente[0].licencia;
+    //     // this.todosCandidatoStorage.candidato.tipo_licencia = candidatoExistente[0].tipo_licencia;
+    //     // this.todosCandidatoStorage.candidato.fecha_vence_licencia = candidatoExistente[0].fecha_vence_licencia;
+    //     // this.todosCandidatoStorage.candidato.id_rh_categoria = candidatoExistente[0].id_rh_categoria;
+    //     // this.todosCandidatoStorage.candidato.id_rh_color_piel = candidatoExistente[0].id_rh_color_piel;
+    //     // this.todosCandidatoStorage.candidato.id_rh_grupo_sanguineo = candidatoExistente[0].id_rh_grupo_sanguineo;
+    //     // this.todosCandidatoStorage.candidato.rh = candidatoExistente[0].rh;
+    //     // this.todosCandidatoStorage.candidato.peso = candidatoExistente[0].peso;
+    //     // this.todosCandidatoStorage.candidato.altura = candidatoExistente[0].altura;
+    //     const getCategoriasLic = await this.getAnyInformation('/hojadevida/categorias/' + this.candidatoId);
+
+    //     const newArr = getCategoriasLic.map((obj: {id: number; id_rh_candidato: number;  id_rh_categoria: number; categoria: string, fecha_vencimiento: Date;}) => ({
+    //       id: obj.id,
+    //       idCandidato: obj.id_rh_candidato,
+    //       idCategoria: obj.id_rh_categoria,
+    //       fechaVence: obj.fecha_vencimiento,
+    //       accion: 0
+    //     }));
+
+    //     this.myReferenceArray = [...newArr]
+
+    // }
+    // this._storaged.set('datosAdicionalesStorage',   this.datosAdicionales);
+    // this._storaged.set('datosLicencia', this.myReferenceArray);
     loading.close();
   }
 
@@ -494,8 +510,9 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   }
 
   ngOnDestroy() {
-    this._storaged.set('datosAdicionalesStorage',   this.datosAdicionales);
-    this._storaged.set('datosLicencia', this.myReferenceArray);
+    this.todosCandidatoStorage.categorias = [...this.myReferenceArray]
+    this._storaged.set('todosCandidatoStorage',   this.todosCandidatoStorage);
+    // this._storaged.set('datosLicencia', this.myReferenceArray);
   }
 
   public newLicence(event: any){
@@ -556,10 +573,10 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     return this._addItemTable.findLabel(id, list);
   }
 
-  public getLocalStorage(){
-    console.log('Cargar Datos Adicionales', this.datosAdicionales);
-    this.datosAdicionales = this._storaged.get('datosAdicionalesStorage');
-  }
+  // public getLocalStorage(){
+  //   // console.log('Cargar Datos Adicionales', this.datosAdicionales);
+  //   // this.datosAdicionales = this._storaged.get('datosAdicionalesStorage');
+  // }
   public guardarProgreso(){
 
     if(!this.fieldDatosAdicionales.valid){
@@ -568,9 +585,10 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
       this.fieldDatosAdicionales.control.markAllAsTouched();
     }else{
 
-      this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
-      this._storaged.set('todosDatosCandidato', this.todosCandidatoStorage);
-      this._storaged.set('datosLicencia', this.myReferenceArray);
+      // this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
+      this.todosCandidatoStorage.categorias = [...this.myReferenceArray]
+      this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
+      // this._storaged.set('datosLicencia', this.myReferenceArray);
       this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
       this.disabledButtonNext = false;
     }

@@ -18,6 +18,7 @@ interface Cargo{
 })
 export class CargosFormComponent implements OnInit {
 
+  public idEmp: number = 3;
   public idPerfilPrevio: any[] = [];
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
@@ -25,7 +26,7 @@ export class CargosFormComponent implements OnInit {
   public todosCandidatoStorage: TodosDatosCandidato = {
     candidato:{
       id:0,
-      emp: 0,
+      emp: this.idEmp,
       id_usuario: 0,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
@@ -56,7 +57,7 @@ export class CargosFormComponent implements OnInit {
       id_rh_experiencia_sector: null,
       id_rh_experiencia_equipo: null,
       id_salario: null,
-      salario_especifico: null,
+      salario: null,
       id_rh_fuente_reclutamiento: null,
       tarjeta: '',
       id_Entidad: null,
@@ -98,7 +99,7 @@ export class CargosFormComponent implements OnInit {
     ]
   }
 
-  public idEmp: number = 3;
+  // public idEmp: number = 3;
   public numRegla: number = 159;
   public cargosArray: any[] = [];
   public cargos: Cargo[] = [];
@@ -129,23 +130,23 @@ export class CargosFormComponent implements OnInit {
     }
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
-    const cargosCandidato = this._storaged.get('otrosCargosStorage');
+    // const cargosCandidato = this._storaged.get('otrosCargosStorage');
     this.todosCandidatoStorage = this._storaged.get('todosCandidatoStorage');
-    const candidatoExistente = this._storaged.get('candidatoExistente');
+    // const candidatoExistente = this._storaged.get('candidatoExistente');
 
 
     console.log("llego a cargos Todos? " ,this.todosCandidatoStorage);
     if(this.todosCandidatoStorage.cargos && this.todosCandidatoStorage.cargos.length > 0){
-      console.log("ocurre cargos");
+
       const cargosC = this.todosCandidatoStorage.cargos.map((item: { idPerfil: any; }) => item.idPerfil);
       this.idPerfilPrevio = [...cargosC];
-      console.log("Los cargos ",this.cargosArray);
+      // console.log("Los cargos ",this.cargosArray);
       this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
         ...this.otrosCargos, idPerfil
       }));
       this.todosCandidatoStorage.cargos = [...this.cargosArray]
         //  this._storaged.set('otrosCargosStorage', this.cargosArray);
-         console.log('otrosCargosStorage', this.cargosArray);
+        //  console.log('otrosCargosStorage', this.cargosArray);
          console.log('Storage Cargos', this.todosCandidatoStorage);
          this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
     }
@@ -185,7 +186,7 @@ export class CargosFormComponent implements OnInit {
       ...this.otrosCargos, idPerfil
     }));
 
-    this._storaged.set('otrosCargosStorage', this.cargosArray);
+    // this._storaged.set('otrosCargosStorage', this.cargosArray);
     this.todosCandidatoStorage.cargos = [...this.cargosArray]
     //  this._storaged.set('otrosCargosStorage', this.cargosArray);
 
@@ -210,10 +211,10 @@ export class CargosFormComponent implements OnInit {
       ...this.otrosCargos, idPerfil
     }));
 
-    this._storaged.set('otrosCargosStorage', this.cargosArray);
+    // this._storaged.set('otrosCargosStorage', this.cargosArray);
 
     this.todosCandidatoStorage.cargos = [...this.cargosArray]
-        //  this._storaged.set('otrosCargosStorage', this.cargosArray);
+         this._storaged.set('otrosCargosStorage', this.cargosArray);
          console.log('otrosCargosStorage', this.cargosArray);
          console.log('Storage Cargos', this.todosCandidatoStorage);
          this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);

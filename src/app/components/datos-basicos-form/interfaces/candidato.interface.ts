@@ -65,7 +65,7 @@ export interface TodosDatosCandidato{
     id_rh_experiencia_sector: number | null;
     id_rh_experiencia_equipo: number | null;
     id_salario: number | null;
-    salario_especifico: number | null;
+    salario: number | null;
     id_rh_fuente_reclutamiento: number | null;
     tarjeta: string;
     id_Entidad: number | null;
