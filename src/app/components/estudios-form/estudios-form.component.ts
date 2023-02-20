@@ -397,8 +397,8 @@ if(this.fieldDatosEstudios.valid){
 
   }
 
-  public  borrarItem(element: any){
-    this.myReferenceArray.splice(element, 1);
+  public  borrarItem(index: number){
+    this.myReferenceArray.splice(index, 1);
     this.myReferenceArray = [...this.myReferenceArray];
     console.log(this.myReferenceArray);
   }

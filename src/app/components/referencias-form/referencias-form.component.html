@@ -141,8 +141,8 @@
         </ng-container>
         <ng-container matColumnDef="borrar">
             <th mat-header-cell *matHeaderCellDef>Borrar</th>
-            <td mat-cell *matCellDef="let element">
-                <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="borrarItem(element)">delete</mat-icon>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="borrarItem(i)">delete</mat-icon>
             </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsReference"></tr>

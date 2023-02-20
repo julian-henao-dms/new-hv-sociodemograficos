@@ -444,8 +444,8 @@ public infoFamilia: any[] = [];
 
   // }
 
-  public  borrarItem(element: any){
-    this.myReferenceArray.splice(element, 1);
+  public  borrarItem(index: number){
+    this.myReferenceArray.splice(index, 1);
     this.myReferenceArray = [...this.myReferenceArray];
 
   }
@@ -494,7 +494,7 @@ public infoFamilia: any[] = [];
 
   public async enviarFormulario(): Promise<void>{
 
-
+console.log('Objeto antes de enviar', this.todosDatosCandidato);
 
     const idUsuarioHv =  await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
 
