@@ -526,9 +526,10 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     }
   }
   addReference() {
+    console.log('antes de añadir',this.myReferenceArray);
     this.LICENCE_DATA.push(this.setLicences);
-
-    this.myReferenceArray.push(this.setLicences);
+    this.myReferenceArray.push({ ...this.setLicences, hidden: false });
+    // this.myReferenceArray.push(this.setLicences);
     this.setLicences = {
       id: 0,
       idCandidato: 0,
@@ -566,6 +567,11 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   public  borrarItem(index: number){
     this.myReferenceArray.splice(index, 1);
     this.myReferenceArray = [...this.myReferenceArray];
+
+  }
+  public  hideItem(index: number){
+    this.myReferenceArray[index].accion = 1;
+    this.myReferenceArray[index].hidden = true;
 
   }
 

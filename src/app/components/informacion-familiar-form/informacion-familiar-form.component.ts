@@ -450,6 +450,11 @@ public infoFamilia: any[] = [];
 
   }
 
+  public  hideItem(index: number){
+    this.myReferenceArray[index].accion = 1;
+    this.myReferenceArray[index].hidden = true;
+
+  }
 
   public guardarProgreso(){
 

@@ -311,14 +311,20 @@
             <td mat-cell *matCellDef="let element">{{labelTable(element.idCategoria, categoriasLicencia) }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="borrar">
+        <!-- <ng-container matColumnDef="borrar">
             <th mat-header-cell *matHeaderCellDef>Borrar</th>
             <td mat-cell *matCellDef="let element; let i = index">
                 <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="borrarItem(i)">delete</mat-icon>
             </td>
+        </ng-container> -->
+        <ng-container matColumnDef="borrar">
+            <th mat-header-cell *matHeaderCellDef>Borrar</th>
+            <td mat-cell *matCellDef="let element; let i = index">
+                <mat-icon matTooltip="Borrar elemento" class="ico-table" (click)="hideItem(i)">delete</mat-icon>
+            </td>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="columnsReference"></tr>
-        <tr class="row-peritaje" mat-row *matRowDef="let row; columns: columnsReference;">
+        <tr class="row-peritaje" mat-row *matRowDef="let row; columns: columnsReference;" [hidden]="row.hidden">
         </tr>
     </table>
 

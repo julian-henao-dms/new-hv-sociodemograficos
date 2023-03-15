@@ -344,6 +344,11 @@ export class ReferenciasFormComponent implements OnInit {
     this.myReferenceArray = [...this.myReferenceArray];
 
   }
+  public  hideItem(index: number){
+    this.myReferenceArray[index].accion = 1;
+    this.myReferenceArray[index].hidden = true;
+
+  }
 
   public labelTable(id: number, list: any[]){
     return this._addItemTable.findLabel(id, list);
