@@ -127,7 +127,7 @@ public infoFamilia: any[] = [];
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: '',
+      fecha_vence_licencia: new Date,
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -457,7 +457,8 @@ public infoFamilia: any[] = [];
   }
 
   public guardarProgreso(){
-
+    this.todosDatosCandidato.referencias_familiares= [...this.myReferenceArray]
+    this.todosDatosCandidato.candidato.fecha_vence_licencia = new Date;
     // this._storaged.set('datosInfoFamilia', this.myReferenceArray);
     this._storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
     this.disabledButtonNext = false;
@@ -466,7 +467,7 @@ public infoFamilia: any[] = [];
     // this.setupDatosCandidato();
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
 
-
+console.log('datos completo al guardar', this.todosDatosCandidato);
 
   }
 

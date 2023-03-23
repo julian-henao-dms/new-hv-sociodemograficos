@@ -99,7 +99,7 @@ export class ReferenciasFormComponent implements OnInit {
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: '',
+      fecha_vence_licencia: new Date,
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -355,7 +355,7 @@ export class ReferenciasFormComponent implements OnInit {
   }
 
   public guardarProgreso(){
-
+    this.todosDatosCandidato.referencias = [...this.myReferenceArray]
     this._storaged.set('todosCandidatoStorage',   this.todosDatosCandidato);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
     this.disabledButtonNext = false;

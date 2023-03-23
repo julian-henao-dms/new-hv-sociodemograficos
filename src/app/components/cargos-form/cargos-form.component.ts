@@ -71,7 +71,7 @@ export class CargosFormComponent implements OnInit {
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: '',
+      fecha_vence_licencia: new Date,
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -214,7 +214,7 @@ export class CargosFormComponent implements OnInit {
     // this._storaged.set('otrosCargosStorage', this.cargosArray);
 
     this.todosCandidatoStorage.cargos = [...this.cargosArray]
-         this._storaged.set('otrosCargosStorage', this.cargosArray);
+        //  this._storaged.set('otrosCargosStorage', this.cargosArray);
          console.log('otrosCargosStorage', this.cargosArray);
          console.log('Storage Cargos', this.todosCandidatoStorage);
          this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);

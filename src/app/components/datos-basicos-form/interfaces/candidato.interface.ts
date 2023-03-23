@@ -79,7 +79,7 @@ export interface TodosDatosCandidato{
     idRhFondoCesantias: number | null;
     licencia: string;
     tipo_licencia: number | null;
-    fecha_vence_licencia: string;
+    fecha_vence_licencia: Date;
     id_rh_categoria: number | null;
     id_rh_color_piel: number | null;
     id_rh_grupo_sanguineo: number | null;
@@ -184,6 +184,13 @@ export interface Idioma{
  idCandidato: number;
  idUsuario: number;
  accion: number;
+}
+export interface IdiomaCandidato{
+ id: number;
+ idIdi: number;
+ id_rh_candidato: number;
+ id_rh_idioma: number;
+ descripcion: string;
 }
 
 // export interface LicCategoria{

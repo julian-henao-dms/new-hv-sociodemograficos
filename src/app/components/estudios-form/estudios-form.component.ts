@@ -152,7 +152,7 @@ export class EstudiosFormComponent implements OnInit {
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: '',
+      fecha_vence_licencia: new Date,
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -382,6 +382,7 @@ if(this.fieldDatosEstudios.valid){
 
 
   public guardarProgreso(){
+    this.todosDatosCandidato.estudios = [...this.myReferenceArray]
     this._storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
     // this._storaged.set('datosEstudiosStorage', this.myReferenceArray);
     this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');

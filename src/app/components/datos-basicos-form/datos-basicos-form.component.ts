@@ -4,7 +4,7 @@ import { NgForm} from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { MessagesService } from 'src/app/services/messages.service';
-import { DatosBasicosCandidato, Idioma, Perfiles, TodosDatosCandidato } from "./interfaces/candidato.interface";
+import { DatosBasicosCandidato, Idioma, IdiomaCandidato, Perfiles, TodosDatosCandidato } from "./interfaces/candidato.interface";
 import * as _ from 'lodash';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
@@ -135,13 +135,14 @@ public mostrarOpciones = true;
   public ciudades: Ciudad[] = [];
   public ciudadesExp: Ciudad[] = [];
   public barrios: Barrio[] = [];
+  public idiomasPrevios: Idioma[] = [];
 
 
   public todosDatosCandidato: TodosDatosCandidato = {
     candidato:{
       id:0,
       emp: 3,
-      id_usuario: 0,
+      id_usuario: 1,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
       nit: '',
@@ -185,7 +186,7 @@ public mostrarOpciones = true;
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: '',
+      fecha_vence_licencia: new Date,
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -254,6 +255,14 @@ public idPerfilPrevio: any[] = [];
 public perfiles: Perfil[] = [];
 public cargosArray: any[] = [];
 public familyArray: any[] = [];
+
+public idiomasCandidatoExistente: IdiomaCandidato = {
+  id: 0,
+  idIdi:0,
+  id_rh_candidato: 0,
+  id_rh_idioma: 0,
+  descripcion: '',
+  };
 
 public otrosCargos: Perfiles = {
     id: 0,
@@ -377,7 +386,7 @@ public idiomasCandidato: Idioma = {
   }
 
   async ngOnInit(): Promise<void> {
-console.log('1a');
+  console.log('1a');
 
    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
    console.log('2a');
@@ -443,7 +452,7 @@ console.log('1a');
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
     console.log('3a');
-
+    console.log("idiomas previos consultado BD", this.idiomasPrevios);
     // const datosBasicosStorage = this.storaged.get('datosCandidatoStorage');
     // const candidatoExistente = this.storaged.get('candidatoExistente');
     const datosTodosCandidatoStorage = this.storaged.get('todosCandidatoStorage');
@@ -467,10 +476,20 @@ console.log('1a');
       // console.log("exitente init antes del if ",candidatoExistente);
       // console.log("Idiomas en cambio pestaña", getIdiomas);
       if(getIdiomas && getIdiomas.length > 0){
+        const getIdioB: Idioma[] = getIdiomas.map((idioma: IdiomaCandidato) => {
+          return {
+            "id": idioma.id,
+            "idIdi": idioma.id_rh_idioma,
+            "idCandidato": idioma.id_rh_candidato,
+            "idUsuario": 0,
+            "accion": 0
+          };
+        });
         console.log('idiomas storage', getIdiomas);
         const getIdio = getIdiomas.map((element: { idIdi: number; }) => element.idIdi);
         this.idIdiPrevio = [...getIdio];
         console.log('Idiomas mapeados desde storage', this.idIdiPrevio);
+        console.log('Idiomas mapeados desde storage', getIdioB);
       }
       // this.todosDatosCandidato = this.todosDatosCandidato;
       console.log('Entro awqui condici{on iti');
@@ -508,20 +527,21 @@ console.log('1a');
 
 
       if(this.todosDatosCandidato.idiomas && this.todosDatosCandidato.idiomas.length > 0){
+
         const getIdio = this.todosDatosCandidato.idiomas.map((element: { idIdi: number; }) => element.idIdi)
         console.log('como llegan los idiomas', getIdio);
         this.idIdiPrevio = [...getIdio];
 
-       const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
+      //  const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
 
         this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
           ...this.idiomasCandidato, idIdi
         }));
 
-        console.log('Idiomas total en init',idiomasTotal);
+        // console.log('Idiomas total en init',idiomasTotal);
 
-      this.todosDatosCandidato.idiomas = idiomasTotal;
-      // this.todosDatosCandidato.idiomas = [...this.idiomasArray]
+      // this.todosDatosCandidato.idiomas = idiomasTotal;
+      this.todosDatosCandidato.idiomas = [...this.idiomasArray]
 
       }
       // const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.todosDatosCandidato.candidato.id);
@@ -535,7 +555,7 @@ console.log('1a');
 
       console.log('idiomas en init ', this.todosDatosCandidato.idiomas);
 
-
+      this.todosDatosCandidato.candidato.id_usuario = 1;
     }else{
       this.todosDatosCandidato = this.todosDatosCandidato
     }
@@ -708,17 +728,38 @@ console.log('1a');
 
 // idiomas
       const getIdiomas = await this.getAnyInformation('/hojadevida/idiomas/' + this.candidatoId);
+      const getIdioB: Idioma[] = getIdiomas.map((idioma: IdiomaCandidato) => {
+        return {
+          "id": idioma.id,
+          "idIdi": idioma.id_rh_idioma,
+          "idCandidato": idioma.id_rh_candidato,
+          "idUsuario": 0,
+          "accion": 0
+        };
+      });
+
       const getIdio = getIdiomas.map((element: { id_rh_idioma: number; }) => element.id_rh_idioma)
       this.idIdiPrevio = [...getIdio];
-      console.log("id previo en search",this.idIdiPrevio);
 
-      const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
+
+      console.log("id previo en search",this.idIdiPrevio);
+      console.log("id B previo en search", getIdioB);
+      this.idiomasPrevios = [...getIdioB];
+      console.log("idiomas previos consultado BD", this.idiomasPrevios);
+      this.storaged.set('idiomasOriginales',this.idiomasPrevios);
+
+
+
+      // const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
       this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
-        ...this.idiomasCandidato, idIdi
+        ...this.idiomasPrevios, idIdi
       }));
-console.log('Idiomas total en search',idiomasTotal);
-      this.todosDatosCandidato.idiomas = idiomasTotal;
-      // this.todosDatosCandidato.idiomas = [...this.idiomasArray];
+      // this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
+      //   ...this.idiomasCandidato, idIdi
+      // }));
+console.log('Idiomas total en search',this.idiomasArray);
+      // this.todosDatosCandidato.idiomas = idiomasTotal;
+      this.todosDatosCandidato.idiomas = [...this.idiomasArray];
 
 //Fin idiomas
 
@@ -897,6 +938,9 @@ console.log('Idiomas total en search',idiomasTotal);
         this.todosDatosCandidato.referencias_familiares = [...newArrayFamiliar]
         // this.storaged.set('datosInfoFamilia', this.familyArray);
     // Fin Info Familiar
+    console.log('Idiomas en ngModel', this.idIdiPrevio)
+    console.log('idiomas como llego desde BD al consultar', getIdioB);
+
       this.storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
       // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       // this.storaged.set('idiomasStorage', this.idiomasArray);
@@ -912,6 +956,8 @@ console.log('Idiomas total en search',idiomasTotal);
   } else{
     setTimeout(
           () => {
+            this.todosDatosCandidato;
+            console.log('objeto si no hay candidato', this.todosDatosCandidato);
             this.messageService.info("Atención...", "Debe digitar un número de documento para realizar la consulta");
           }, 1000);
   }
@@ -1030,50 +1076,83 @@ public validateChanged(event:any){
 
   ngOnDestroy() {
         // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
-        const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
+        // const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
+        const originals = this.storaged.get('idiomasOriginales');
 
+       const newIdiomas = this.compararArreglos(originals, this.idIdiPrevio);
+
+        console.log('prueba de función en New Idiomas', newIdiomas);
         this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
           ...this.idiomasCandidato, idIdi
         }));
         console.log("idiomas", this.idiomasArray);
-        this.todosDatosCandidato.idiomas = idiomasTotal
-        // this.todosDatosCandidato.idiomas = [...this.idiomasArray]
+        // this.todosDatosCandidato.idiomas = idiomasTotal
+        this.todosDatosCandidato.idiomas = [...this.idiomasArray]
       // this.storaged.set('idiomasStorage', this.idiomasArray);
 
       this.storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
   }
 
 
-public compararArrays(lenguas: any[], idIdiPrevio: number[]): any[] {
-  this.newIdiomas = [];
-  for (let i = 0; i < this.lenguas.length; i++) {
-    if (this.idIdiPrevio.indexOf(this.lenguas[i].id) !== -1) {
-      this.newIdiomas.push({
+// public compararArrays(lenguas: any[], idIdiPrevio: number[]): any[] {
+//   this.newIdiomas = [];
+//   for (let i = 0; i < this.lenguas.length; i++) {
+//     if (this.idIdiPrevio.indexOf(this.lenguas[i].id) !== -1) {
+//       this.newIdiomas.push({
+//         id: 0,
+//         idIdi: this.lenguas[i].id,
+//         idCandidato: 0,
+//         idUsuario: 0,
+//         accion: 0
+//       });
+//     } else {
+//       this.newIdiomas.push({
+//         id: 0,
+//         idIdi: this.lenguas[i].id,
+//         idCandidato: 0,
+//         idUsuario: 0,
+//         accion: 1
+//       });
+//     }
+//   }
+
+// console.log('Nuevo idiomas', this.newIdiomas);
+//   this.lenguas
+//   console.log('idioma previo ',this.idIdiPrevio);
+
+//   return this.newIdiomas;
+// }
+
+public compararArreglos(originals: Idioma[], idioPrevio: number[]): Idioma[] {
+  const filterLanguajes: Idioma[] = [];
+
+  // Copiar objetos del array a al array c y marcar como eliminados si no están en el array b
+  for (const itemA of originals) {
+    const newItem: Idioma = { ...itemA };
+    if (!idioPrevio.includes(itemA.idIdi)) {
+      newItem.accion = 1;
+    }
+    filterLanguajes.push(newItem);
+  }
+
+  // Agregar nuevos objetos a partir del array b
+  for (const itemB of idioPrevio) {
+    const foundItem = originals.find(item => item.idIdi === itemB);
+
+    if (!foundItem) {
+      const newItem: Idioma = {
         id: 0,
-        idIdi: this.lenguas[i].id,
+        idIdi: itemB,
         idCandidato: 0,
         idUsuario: 0,
-        accion: 0
-      });
-    } else {
-      this.newIdiomas.push({
-        id: 0,
-        idIdi: this.lenguas[i].id,
-        idCandidato: 0,
-        idUsuario: 0,
-        accion: 1
-      });
+        accion: 0,
+      };
+      filterLanguajes.push(newItem);
     }
   }
 
-console.log('Nuevo idiomas', this.newIdiomas);
-  this.lenguas
-  console.log('idioma previo ',this.idIdiPrevio);
-
-  return this.newIdiomas;
+  return filterLanguajes;
 }
-
-
 
   public guardarProgreso(){
 
@@ -1083,14 +1162,14 @@ console.log('Nuevo idiomas', this.newIdiomas);
       this.fieldDatosBasicos.control.markAllAsTouched();
     }else{
 
-const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
+// const idiomasTotal = this.compararArrays(this.lenguas, this.idIdiPrevio);
 
-      this.todosDatosCandidato.idiomas = idiomasTotal;
+      // this.todosDatosCandidato.idiomas = idiomasTotal;
       this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
         ...this.idiomasCandidato, idIdi
       }));
 
-      // this.todosDatosCandidato.idiomas = [...this.idiomasArray]
+      this.todosDatosCandidato.idiomas = [...this.idiomasArray]
 
       // this.storaged.set('datosCandidatoStorage', this.datosCandidato);
       // this.storaged.set('idiomasStorage', this.idiomasArray);

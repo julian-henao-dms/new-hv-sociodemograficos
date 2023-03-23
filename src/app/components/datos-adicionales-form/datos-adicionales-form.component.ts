@@ -182,7 +182,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     idRhFondoCesantias: null,
     licencia: '',
     tipo_licencia: null,
-    fecha_vence_licencia: '',
+    fecha_vence_licencia: new Date,
     id_rh_categoria: null,
     id_rh_color_piel: null,
     id_rh_grupo_sanguineo: null,
@@ -228,7 +228,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 //   idRhFondoCesantias: null,
 //   licencia: '',
 //   tipo_licencia: null,
-//   fecha_vence_licencia: '',
+//   fecha_vence_licencia: new Date,
 //   id_rh_categoria: null,
 //   id_rh_color_piel: null,
 //   id_rh_grupo_sanguineo: null,
@@ -428,6 +428,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     // const licenciasCandidato = this._storaged.get('datosLicencia');
     // const datosAdicionales = this._storaged.get('datosAdicionalesStorage');
     this.todosCandidatoStorage = this._storaged.get('todosCandidatoStorage');
+    this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo = this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo ? this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo : this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo = 0
     console.log('Todos los datos en adicionales', this.todosCandidatoStorage);
     const getCategoriasLic = this.todosCandidatoStorage.categorias;
     // const candidatoExistente = this._storaged.get('candidatoExistente');
