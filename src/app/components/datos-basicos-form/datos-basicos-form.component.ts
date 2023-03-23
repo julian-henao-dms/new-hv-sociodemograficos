@@ -472,24 +472,26 @@ public idiomasCandidato: Idioma = {
     if(this.todosDatosCandidato.candidato.nit != ''){
       console.log('5ba');
       // this.todosDatosCandidato =  this.storaged.get('todosCandidatoStorage');
-      const getIdiomas = this.todosDatosCandidato.idiomas;
+      const getIdiomas = this.todosDatosCandidato.idiomas.filter(idioma => idioma.accion == 0);
+      console.log('Idiomas filtrados en on', getIdiomas);
+
       // console.log("exitente init antes del if ",candidatoExistente);
       // console.log("Idiomas en cambio pestaña", getIdiomas);
       if(getIdiomas && getIdiomas.length > 0){
-        const getIdioB: Idioma[] = getIdiomas.map((idioma: IdiomaCandidato) => {
-          return {
-            "id": idioma.id,
-            "idIdi": idioma.id_rh_idioma,
-            "idCandidato": idioma.id_rh_candidato,
-            "idUsuario": 0,
-            "accion": 0
-          };
-        });
+        // const getIdioB: Idioma[] = getIdiomas.map((idioma: IdiomaCandidato) => {
+        //   return {
+        //     "id": idioma.id,
+        //     "idIdi": idioma.id_rh_idioma,
+        //     "idCandidato": idioma.id_rh_candidato,
+        //     "idUsuario": 0,
+        //     "accion": 0
+        //   };
+        // });
         console.log('idiomas storage', getIdiomas);
         const getIdio = getIdiomas.map((element: { idIdi: number; }) => element.idIdi);
         this.idIdiPrevio = [...getIdio];
         console.log('Idiomas mapeados desde storage', this.idIdiPrevio);
-        console.log('Idiomas mapeados desde storage', getIdioB);
+        // console.log('Idiomas mapeados desde storage', getIdioB);
       }
       // this.todosDatosCandidato = this.todosDatosCandidato;
       console.log('Entro awqui condici{on iti');
@@ -1081,13 +1083,14 @@ public validateChanged(event:any){
 
        const newIdiomas = this.compararArreglos(originals, this.idIdiPrevio);
 
-        console.log('prueba de función en New Idiomas', newIdiomas);
-        this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
-          ...this.idiomasCandidato, idIdi
-        }));
-        console.log("idiomas", this.idiomasArray);
+        // console.log('prueba de función en New Idiomas', newIdiomas);
+        // this.idiomasArray = this.idIdiPrevio.map(idIdi => ({
+        //   ...this.idiomasCandidato, idIdi
+        // }));
+        // console.log("idiomas", this.idiomasArray);
+
         // this.todosDatosCandidato.idiomas = idiomasTotal
-        this.todosDatosCandidato.idiomas = [...this.idiomasArray]
+        this.todosDatosCandidato.idiomas = [...newIdiomas]
       // this.storaged.set('idiomasStorage', this.idiomasArray);
 
       this.storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
