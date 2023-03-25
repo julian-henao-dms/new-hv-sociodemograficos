@@ -512,7 +512,7 @@ console.log('Objeto antes de enviar', this.todosDatosCandidato);
       this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
       console.log('enviados', this.todosDatosCandidato);
       this._storaged.clear();
-      // window.location.reload();
+      window.location.reload();
       // this._storaged.set('idCandidatoEnviado', idUsuarioHv);
 
       // this.activeTab.emit(false);

@@ -114,7 +114,27 @@ export interface Perfiles {
   idUsuario: number;
   accion: number;
   }
-
+  export interface Idioma{
+    id: number;
+    idIdi: number;
+    idCandidato: number;
+    idUsuario: number;
+    accion: number;
+   }
+   export interface IdiomaCandidato{
+    id: number;
+    idIdi: number;
+    id_rh_candidato: number;
+    id_rh_idioma: number;
+    descripcion: string;
+   }
+   export interface PerfilCandidato{
+    id: number;
+    idCargo: number;
+    id_rh_candidato: number;
+    id_rh_perfil: number;
+    cargo: string;
+   }
 // export interface Candidato {
 // id: number;
 // emp: number;
@@ -178,20 +198,7 @@ export interface Perfiles {
 // //sync 2
 // }
 
-export interface Idioma{
- id: number;
- idIdi: number;
- idCandidato: number;
- idUsuario: number;
- accion: number;
-}
-export interface IdiomaCandidato{
- id: number;
- idIdi: number;
- id_rh_candidato: number;
- id_rh_idioma: number;
- descripcion: string;
-}
+
 
 // export interface LicCategoria{
 // id_candidato: number;
