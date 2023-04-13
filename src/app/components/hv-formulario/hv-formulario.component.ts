@@ -3,7 +3,7 @@ import { StepperOrientation, STEPPER_GLOBAL_OPTIONS } from '@angular/cdk/stepper
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators, FormsModule } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
-import { MatTabGroup } from '@angular/material/tabs';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
@@ -23,6 +23,8 @@ export class HvFormularioComponent implements OnInit {
   @ViewChild('tabGroup', { static: false })
   tabGroup!: MatTabGroup;
   stepperOrientation: Observable<StepperOrientation>;
+
+  public activeTabIndex = 0;
 
   //nuevo código
   @ViewChild('stepper')
@@ -54,6 +56,9 @@ export class HvFormularioComponent implements OnInit {
 
   ngOnChanges(){
 
+  }
+  onTabChange(event: MatTabChangeEvent) {
+    this.activeTabIndex = event.index;
   }
   activeTab(event: any):void{
     this.isActive = event

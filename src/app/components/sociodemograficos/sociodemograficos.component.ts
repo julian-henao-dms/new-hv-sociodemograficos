@@ -280,6 +280,12 @@ export class SociodemograficosComponent implements OnInit {
 
     const idEmp = this.idEmp;
     const numRegla = this.numRegla
+    // const idCandidatoEnviado = this.storaged.get('todosCandidatoStorage');
+    // console.log('datos de candidato previo', idCandidatoEnviado);
+    //     if (idCandidatoEnviado && idCandidatoEnviado.length > 0 ){
+    //       this.sociodemograficos.idRhCandidato = idCandidatoEnviado.candidato[0].id;
+    // console.log('id candidato sociodemograficos', this.sociodemograficos.idRhCandidato);
+    //     }
 
     const paises = await this.getAnyInformation('/pais/' + idEmp);
       if(paises === null){
@@ -383,80 +389,85 @@ export class SociodemograficosComponent implements OnInit {
 
 
 
-    const idCandidatoEnviado = this.storaged.get('candidatoExistente');
     // const idCandidatoEnviado = 5;
-    if (idCandidatoEnviado != null && idCandidatoEnviado > 0 ){
-      this.sociodemograficos.idRhCandidato = idCandidatoEnviado.id;
-
-    }
-    const candidatoExistente = this.storaged.get('candidatoExistente');
+//     if (idCandidatoEnviado != null && idCandidatoEnviado > 0 ){
+//       this.sociodemograficos.idRhCandidato = idCandidatoEnviado.id;
+// console.log('id candidato sociodemograficos', this.sociodemograficos.idRhCandidato);
+//     }
+    const candidatoExistente = this.storaged.get('todosCandidatoStorage');
+    const existenteSociodemograficos = this.storaged.get('sociodemograficos');
     console.log('candidato exitente', candidatoExistente);
+    console.log('sociodemograficos exitente', existenteSociodemograficos);
+        if(existenteSociodemograficos  && existenteSociodemograficos != null){
+          this.sociodemograficos = existenteSociodemograficos;
+          this.buttonDisabled = false;
+        }
+    // this.sociodemograficos.idRhCandidato = candidatoExistente.candidato.id;
+    // if(candidatoExistente  && candidatoExistente.length > 0){
+    //   this.sociodemograficos.idRhCandidato = candidatoExistente[0].candidato.id;
+    //   this.sociodemograficos.consentimientoinformado = candidatoExistente[0].consentimiento_informado ? candidatoExistente[0].consentimiento_informado: 0;
+    //   console.log('1 consentimiento Informado', this.sociodemograficos.consentimientoinformado);
+    //   this.sociodemograficos.idAntiguedadCargo = candidatoExistente[0].id_antiguedad_cargo ? candidatoExistente[0].id_antiguedad_cargo: 0;
+    //   this.sociodemograficos.idAntiguedadEmpresa = candidatoExistente[0].id_antiguedad_empresa ? candidatoExistente[0].id_antiguedad_empresa: 0;
+    //   this.sociodemograficos.idTipoAfiliacion = candidatoExistente[0].id_tipo_afiliacion != null ? candidatoExistente[0].id_tipo_afiliacion : 0;
+    //   this.sociodemograficos.numeroHijos = candidatoExistente[0].numero_hijos ? candidatoExistente[0].numero_hijos : 0;
+    //   this.sociodemograficos.idEdadHijos = candidatoExistente[0].id_edad_hijos ? candidatoExistente[0].id_edad_hijos : 0;
+    //   this.sociodemograficos.idingresos = candidatoExistente[0].id_ingresos ? candidatoExistente[0].id_ingresos: 0;
+    //   this.sociodemograficos.idCaracteristicaVivienda = candidatoExistente[0].id_caracteristica_vivienda ? candidatoExistente[0].id_caracteristica_vivienda: 0;
+    //   this.sociodemograficos.idZonaUbica = candidatoExistente[0].id_zona_ubica ? candidatoExistente[0].id_zona_ubica: 0;
+    //   this.sociodemograficos.idEstratoServicios = candidatoExistente[0].id_estrato_servicios ? candidatoExistente[0].id_estrato_servicios: 0;
+    //   this.sociodemograficos.serviciosVivienda = candidatoExistente[0].servicios_vivienda;
+    //   this.sociodemograficos.servicios = candidatoExistente[0].servicios ? candidatoExistente[0].servicios : 0;
+    //   this.sociodemograficos.personasVive = candidatoExistente[0].personas_vive ? candidatoExistente[0].personas_vive : 0;
+    //   this.sociodemograficos.tamanoVivienda = candidatoExistente[0].tamano_vivienda ? candidatoExistente[0].tamano_vivienda : 0;
+    //   this.sociodemograficos.condicionVivienda = candidatoExistente[0].condicion_vivienda ? candidatoExistente[0].condicion_vivienda : 0;
+    //   this.sociodemograficos.personasDepende = candidatoExistente[0].personas_depende;
+    //   this.sociodemograficos.personaDiscapacidad = candidatoExistente[0].persona_discapacidad ? candidatoExistente[0].persona_discapacidad : 0;
+    //   this.sociodemograficos.serviciosSalud = candidatoExistente[0].servicios_salud ? candidatoExistente[0].servicios_salud : 0;
+    //   this.sociodemograficos.tipoTransporte = candidatoExistente[0].tipo_transporte;
+    //   this.sociodemograficos.rutaSegura = candidatoExistente[0].ruta_segura ? candidatoExistente[0].ruta_segura : 0;
+    //   this.sociodemograficos.tiempoDescanso = candidatoExistente[0].tiempo_descanso ? candidatoExistente[0].tiempo_descanso : 0 ;
+    //   this.sociodemograficos.otrasActividades = candidatoExistente[0].otras_actividades;
+    //   this.sociodemograficos.actividadFisica = candidatoExistente[0].actividad_fisica ? candidatoExistente[0].actividad_fisica : 0;
+    //   this.sociodemograficos.fumador = candidatoExistente[0].fumador ? candidatoExistente[0].fumador : 0;
+    //   this.sociodemograficos.usaLentes = candidatoExistente[0].usa_lentes ? candidatoExistente[0].usa_lentes : 0;
+    //   console.log('1 usaLentes', this.sociodemograficos.usaLentes);
 
-    if(candidatoExistente  && candidatoExistente.length > 0){
-      this.sociodemograficos.idRhCandidato = candidatoExistente[0].id;
-      this.sociodemograficos.consentimientoinformado = candidatoExistente[0].consentimiento_informado ? candidatoExistente[0].consentimiento_informado: 0;
-      console.log('1 consentimiento Informado', this.sociodemograficos.consentimientoinformado);
-      this.sociodemograficos.idAntiguedadCargo = candidatoExistente[0].id_antiguedad_cargo ? candidatoExistente[0].id_antiguedad_cargo: 0;
-      this.sociodemograficos.idAntiguedadEmpresa = candidatoExistente[0].id_antiguedad_empresa ? candidatoExistente[0].id_antiguedad_empresa: 0;
-      this.sociodemograficos.idTipoAfiliacion = candidatoExistente[0].id_tipo_afiliacion != null ? candidatoExistente[0].id_tipo_afiliacion : 0;
-      this.sociodemograficos.numeroHijos = candidatoExistente[0].numero_hijos ? candidatoExistente[0].numero_hijos : 0;
-      this.sociodemograficos.idEdadHijos = candidatoExistente[0].id_edad_hijos ? candidatoExistente[0].id_edad_hijos : 0;
-      this.sociodemograficos.idingresos = candidatoExistente[0].id_ingresos ? candidatoExistente[0].id_ingresos: 0;
-      this.sociodemograficos.idCaracteristicaVivienda = candidatoExistente[0].id_caracteristica_vivienda ? candidatoExistente[0].id_caracteristica_vivienda: 0;
-      this.sociodemograficos.idZonaUbica = candidatoExistente[0].id_zona_ubica ? candidatoExistente[0].id_zona_ubica: 0;
-      this.sociodemograficos.idEstratoServicios = candidatoExistente[0].id_estrato_servicios ? candidatoExistente[0].id_estrato_servicios: 0;
-      this.sociodemograficos.serviciosVivienda = candidatoExistente[0].servicios_vivienda;
-      this.sociodemograficos.servicios = candidatoExistente[0].servicios ? candidatoExistente[0].servicios : 0;
-      this.sociodemograficos.personasVive = candidatoExistente[0].personas_vive ? candidatoExistente[0].personas_vive : 0;
-      this.sociodemograficos.tamanoVivienda = candidatoExistente[0].tamano_vivienda ? candidatoExistente[0].tamano_vivienda : 0;
-      this.sociodemograficos.condicionVivienda = candidatoExistente[0].condicion_vivienda ? candidatoExistente[0].condicion_vivienda : 0;
-      this.sociodemograficos.personasDepende = candidatoExistente[0].personas_depende;
-      this.sociodemograficos.personaDiscapacidad = candidatoExistente[0].persona_discapacidad ? candidatoExistente[0].persona_discapacidad : 0;
-      this.sociodemograficos.serviciosSalud = candidatoExistente[0].servicios_salud ? candidatoExistente[0].servicios_salud : 0;
-      this.sociodemograficos.tipoTransporte = candidatoExistente[0].tipo_transporte;
-      this.sociodemograficos.rutaSegura = candidatoExistente[0].ruta_segura ? candidatoExistente[0].ruta_segura : 0;
-      this.sociodemograficos.tiempoDescanso = candidatoExistente[0].tiempo_descanso ? candidatoExistente[0].tiempo_descanso : 0 ;
-      this.sociodemograficos.otrasActividades = candidatoExistente[0].otras_actividades;
-      this.sociodemograficos.actividadFisica = candidatoExistente[0].actividad_fisica ? candidatoExistente[0].actividad_fisica : 0;
-      this.sociodemograficos.fumador = candidatoExistente[0].fumador ? candidatoExistente[0].fumador : 0;
-      this.sociodemograficos.usaLentes = candidatoExistente[0].usa_lentes ? candidatoExistente[0].usa_lentes : 0;
-      console.log('1 usaLentes', this.sociodemograficos.usaLentes);
-
-      this.buttonDisabled = false;
-      console.log('candidato A ?', this.sociodemograficos);
-    }
-    else{
-      this.sociodemograficos.idRhCandidato = candidatoExistente[0].id;
-      this.sociodemograficos.consentimientoinformado ? this.sociodemograficos.consentimientoinformado: 0;
-      console.log('consentimiento Informado', this.sociodemograficos.consentimientoinformado);
-      this.sociodemograficos.idAntiguedadCargo ? this.sociodemograficos.idAntiguedadCargo: 0;
-      this.sociodemograficos.idAntiguedadEmpresa ? this.sociodemograficos.idAntiguedadEmpresa: 0;
-      this.sociodemograficos.idTipoAfiliacion ? this.sociodemograficos.idTipoAfiliacion : 0;
-      this.sociodemograficos.numeroHijos ? this.sociodemograficos.numeroHijos : 0;
-      this.sociodemograficos.idEdadHijos ? this.sociodemograficos.idEdadHijos : 0;
-      this.sociodemograficos.idingresos ? this.sociodemograficos.idingresos: 0;
-      this.sociodemograficos.idCaracteristicaVivienda ? this.sociodemograficos.idCaracteristicaVivienda: 0;
-      this.sociodemograficos.idZonaUbica ? this.sociodemograficos.idZonaUbica: 0;
-      this.sociodemograficos.idEstratoServicios ? this.sociodemograficos.idEstratoServicios: 0;
-      this.sociodemograficos.serviciosVivienda;
-      this.sociodemograficos.servicios ? this.sociodemograficos.servicios : 0;
-      this.sociodemograficos.personasVive ? this.sociodemograficos.personasVive : 0;
-      this.sociodemograficos.tamanoVivienda ? this.sociodemograficos.tamanoVivienda : 0;
-      this.sociodemograficos.condicionVivienda ? this.sociodemograficos.condicionVivienda : 0;
-      this.sociodemograficos.personasDepende;
-      this.sociodemograficos.personaDiscapacidad ? this.sociodemograficos.personaDiscapacidad : 0;
-      this.sociodemograficos.serviciosSalud ? this.sociodemograficos.serviciosSalud : 0;
-      this.sociodemograficos.tipoTransporte;
-      this.sociodemograficos.rutaSegura ? this.sociodemograficos.rutaSegura : 0;
-      this.sociodemograficos.tiempoDescanso ? this.sociodemograficos.tiempoDescanso : 0 ;
-      this.sociodemograficos.otrasActividades;
-      this.sociodemograficos.actividadFisica ? this.sociodemograficos.actividadFisica : 0;
-      this.sociodemograficos.fumador ? this.sociodemograficos.fumador : 0;
-      console.log('2A usaLentes ', this.sociodemograficos.usaLentes);
-      this.sociodemograficos.usaLentes ? this.sociodemograficos.usaLentes : 0;
-      console.log('2 usaLentes ', this.sociodemograficos.usaLentes);
-      console.log('candidato B ?', this.sociodemograficos);
-  }
+    //   this.buttonDisabled = false;
+    //   console.log('candidato A ?', this.sociodemograficos);
+    // }
+  //   else{
+  //     this.sociodemograficos.idRhCandidato = candidatoExistente[0].id;
+  //     this.sociodemograficos.consentimientoinformado ? this.sociodemograficos.consentimientoinformado: 0;
+  //     console.log('consentimiento Informado', this.sociodemograficos.consentimientoinformado);
+  //     this.sociodemograficos.idAntiguedadCargo ? this.sociodemograficos.idAntiguedadCargo: 0;
+  //     this.sociodemograficos.idAntiguedadEmpresa ? this.sociodemograficos.idAntiguedadEmpresa: 0;
+  //     this.sociodemograficos.idTipoAfiliacion ? this.sociodemograficos.idTipoAfiliacion : 0;
+  //     this.sociodemograficos.numeroHijos ? this.sociodemograficos.numeroHijos : 0;
+  //     this.sociodemograficos.idEdadHijos ? this.sociodemograficos.idEdadHijos : 0;
+  //     this.sociodemograficos.idingresos ? this.sociodemograficos.idingresos: 0;
+  //     this.sociodemograficos.idCaracteristicaVivienda ? this.sociodemograficos.idCaracteristicaVivienda: 0;
+  //     this.sociodemograficos.idZonaUbica ? this.sociodemograficos.idZonaUbica: 0;
+  //     this.sociodemograficos.idEstratoServicios ? this.sociodemograficos.idEstratoServicios: 0;
+  //     this.sociodemograficos.serviciosVivienda;
+  //     this.sociodemograficos.servicios ? this.sociodemograficos.servicios : 0;
+  //     this.sociodemograficos.personasVive ? this.sociodemograficos.personasVive : 0;
+  //     this.sociodemograficos.tamanoVivienda ? this.sociodemograficos.tamanoVivienda : 0;
+  //     this.sociodemograficos.condicionVivienda ? this.sociodemograficos.condicionVivienda : 0;
+  //     this.sociodemograficos.personasDepende;
+  //     this.sociodemograficos.personaDiscapacidad ? this.sociodemograficos.personaDiscapacidad : 0;
+  //     this.sociodemograficos.serviciosSalud ? this.sociodemograficos.serviciosSalud : 0;
+  //     this.sociodemograficos.tipoTransporte;
+  //     this.sociodemograficos.rutaSegura ? this.sociodemograficos.rutaSegura : 0;
+  //     this.sociodemograficos.tiempoDescanso ? this.sociodemograficos.tiempoDescanso : 0 ;
+  //     this.sociodemograficos.otrasActividades;
+  //     this.sociodemograficos.actividadFisica ? this.sociodemograficos.actividadFisica : 0;
+  //     this.sociodemograficos.fumador ? this.sociodemograficos.fumador : 0;
+  //     console.log('2A usaLentes ', this.sociodemograficos.usaLentes);
+  //     this.sociodemograficos.usaLentes ? this.sociodemograficos.usaLentes : 0;
+  //     console.log('2 usaLentes ', this.sociodemograficos.usaLentes);
+  //     console.log('candidato B ?', this.sociodemograficos);
+  // }
 
 
   const getServiciosCandidato = this.sociodemograficos.serviciosVivienda ? this.sociodemograficos.serviciosVivienda.split(',') : [];
@@ -484,9 +495,16 @@ loading.close();
 console.log('candidato Final ?', this.sociodemograficos);
 }
 
+ngOnDestroy() {
+
+  console.log('Destroy sociodemograficos');
+
+}
+
 public selected(event:any){
 
 }
+
 
 public transformToString(){
   this.sociodemograficos.serviciosVivienda = this.serviciosVivienda.join();
@@ -564,6 +582,8 @@ public transformToString(){
         this.fieldSociodemograficos.control.markAllAsTouched();
       }else{
         console.log('Socidemograficos Final 1 ?', this.sociodemograficos);
+
+
         const idUsuarioHv =  await this.updateInformation('/hojadevida/sociodemograficos', this.sociodemograficos);
         console.log('Socidemograficos Final 2 ?', this.sociodemograficos);
         console.log('true?', idUsuarioHv);
@@ -571,9 +591,10 @@ public transformToString(){
           'Perfecto',
           'Los datos sociodemográficos se almacenaron correctamente'
         );
-
+        this.storaged.clear();
+        window.location.reload();
       }
-      // this.storaged.clear();
+
 
     } else {
       this.messageService.error('Error', 'No se pudo almacenar la información');

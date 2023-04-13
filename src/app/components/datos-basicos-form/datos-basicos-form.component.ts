@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 import { MatStepper } from '@angular/material/stepper';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import {MatOption} from '@angular/material/core';
+import { Sociodemograficos } from '../sociodemograficos/interfaces/sociodemograficos.interface';
 
 
 interface TipoCandidato{
@@ -82,6 +83,8 @@ export class DatosBasicosFormComponent implements OnInit {
   @Output() changeSelect = new EventEmitter<any>();
   @ViewChild('datosBasicosForm', { static: true })
   fieldDatosBasicos!: NgForm;
+
+  @ViewChild('idIdi') selectIdioma: MatSelect | undefined;
 
   @ViewChild('stepper') stepper!: MatStepper;
   @Output() activeTab = new EventEmitter<boolean>();
@@ -185,6 +188,42 @@ public mostrarOpciones = true;
       //  ...this.cargos
     ]
   }
+  public sociodemograficos: Sociodemograficos = {
+    idRhCandidato: null,
+    consentimientoinformado: null,
+    idAntiguedadCargo: null,
+    idAntiguedadEmpresa: null,
+    idTipoAfiliacion: null,
+    numeroHijos: null,
+    idEdadHijos: null,
+    idingresos: null,
+    idCaracteristicaVivienda: null,
+    idZonaUbica: null,
+    idEstratoServicios: null,
+    serviciosVivienda: '',
+    servicios: null, // cuenta con servicios
+    personasVive: null,
+    tamanoVivienda: null,
+    condicionVivienda: null,
+    personasDepende: '',
+    personaDiscapacidad: null,
+    serviciosSalud: null,
+    tipoTransporte: '',
+    rutaSegura: null,
+    tiempoDescanso: null,
+    otrasActividades: '',
+    actividadFisica: null,
+    fumador: null,
+    usaLentes: null,
+    // empresa:'',
+    // sede:'',
+    // area:'',e
+    // fechaIngreso: new Date,
+    // arl: 0,
+    // paisNacimiento: 0,
+    // deptoNacimiento: 0,
+    // ciudadNacimiento: 0,
+  };
 
   public newIdiomas:any[] = [];
 
@@ -502,7 +541,7 @@ public idiomasCandidato: Idioma = {
       console.log("1 Prueba de carga de candidato ",this.todosDatosCandidato);
       console.log("2 Prueba de carga de candidato ",candidatoExistente);
       if(candidatoExistente  && candidatoExistente.length > 0){
-        console.log('Entra en candidato existente search');
+        console.log('Entra en candidato existente search', candidatoExistente);
         // this.storaged.set('candidatoExistente', candidatoExistente);
         this.flexibleTabs.emit(false);
         this.todosDatosCandidato.candidato.id = candidatoExistente[0].id;
@@ -533,7 +572,42 @@ public idiomasCandidato: Idioma = {
         const estadoCandidato = candidatoExistente[0].estado;
         if(estadoCandidato === 2){
           this.activeTab.emit(false);
+        }else{
+          this.activeTab.emit(true);
         }
+
+        this.sociodemograficos.idRhCandidato = candidatoExistente[0].id;
+        this.sociodemograficos.consentimientoinformado = candidatoExistente[0].consentimiento_informado ? candidatoExistente[0].consentimiento_informado: 0;
+        console.log('1 consentimiento Informado', this.sociodemograficos.consentimientoinformado);
+        this.sociodemograficos.idAntiguedadCargo = candidatoExistente[0].id_antiguedad_cargo ? candidatoExistente[0].id_antiguedad_cargo: 0;
+        this.sociodemograficos.idAntiguedadEmpresa = candidatoExistente[0].id_antiguedad_empresa ? candidatoExistente[0].id_antiguedad_empresa: 0;
+        this.sociodemograficos.idTipoAfiliacion = candidatoExistente[0].id_tipo_afiliacion != null ? candidatoExistente[0].id_tipo_afiliacion : 0;
+        this.sociodemograficos.numeroHijos = candidatoExistente[0].numero_hijos ? candidatoExistente[0].numero_hijos : 0;
+        this.sociodemograficos.idEdadHijos = candidatoExistente[0].id_edad_hijos ? candidatoExistente[0].id_edad_hijos : 0;
+        this.sociodemograficos.idingresos = candidatoExistente[0].id_ingresos ? candidatoExistente[0].id_ingresos: 0;
+        this.sociodemograficos.idCaracteristicaVivienda = candidatoExistente[0].id_caracteristica_vivienda ? candidatoExistente[0].id_caracteristica_vivienda: 0;
+        this.sociodemograficos.idZonaUbica = candidatoExistente[0].id_zona_ubica ? candidatoExistente[0].id_zona_ubica: 0;
+        this.sociodemograficos.idEstratoServicios = candidatoExistente[0].id_estrato_servicios ? candidatoExistente[0].id_estrato_servicios: 0;
+        this.sociodemograficos.serviciosVivienda = candidatoExistente[0].servicios_vivienda;
+        this.sociodemograficos.servicios = candidatoExistente[0].servicios ? candidatoExistente[0].servicios : 0;
+        this.sociodemograficos.personasVive = candidatoExistente[0].personas_vive ? candidatoExistente[0].personas_vive : 0;
+        this.sociodemograficos.tamanoVivienda = candidatoExistente[0].tamano_vivienda ? candidatoExistente[0].tamano_vivienda : 0;
+        this.sociodemograficos.condicionVivienda = candidatoExistente[0].condicion_vivienda ? candidatoExistente[0].condicion_vivienda : 0;
+        this.sociodemograficos.personasDepende = candidatoExistente[0].personas_depende;
+        this.sociodemograficos.personaDiscapacidad = candidatoExistente[0].persona_discapacidad ? candidatoExistente[0].persona_discapacidad : 0;
+        this.sociodemograficos.serviciosSalud = candidatoExistente[0].servicios_salud ? candidatoExistente[0].servicios_salud : 0;
+        this.sociodemograficos.tipoTransporte = candidatoExistente[0].tipo_transporte;
+        this.sociodemograficos.rutaSegura = candidatoExistente[0].ruta_segura ? candidatoExistente[0].ruta_segura : 0;
+        this.sociodemograficos.tiempoDescanso = candidatoExistente[0].tiempo_descanso ? candidatoExistente[0].tiempo_descanso : 0 ;
+        this.sociodemograficos.otrasActividades = candidatoExistente[0].otras_actividades;
+        this.sociodemograficos.actividadFisica = candidatoExistente[0].actividad_fisica ? candidatoExistente[0].actividad_fisica : 0;
+        this.sociodemograficos.fumador = candidatoExistente[0].fumador ? candidatoExistente[0].fumador : 0;
+        this.sociodemograficos.usaLentes = candidatoExistente[0].usa_lentes ? candidatoExistente[0].usa_lentes : 0;
+        console.log('1 usaLentes', this.sociodemograficos.usaLentes);
+
+        this.storaged.set('sociodemograficos', this.sociodemograficos);
+
+        console.log('candidato A ?', this.sociodemograficos);
         this.todosLugares =  await this.getAnyInformation('/pais/all/' + this.idEmp);
 
         this.candidatoId = candidatoExistente[0].id
@@ -810,6 +884,10 @@ console.log('Idiomas total en search',this.idiomasArray);
           setTimeout(
             () => {
               this.messageService.info("Atención...", "El documento ingresado no tiene ningún formulario previamente diligenciado");
+              this.storaged.clear();
+              this.limpiarCampos();
+              this.idIdiPrevio = [];
+              this.activeTab.emit(true);
             }, 1000);
     }
 
@@ -837,6 +915,39 @@ public validateChanged(event:any){
 
 }
 
+public limpiarCampos(){
+  this.todosDatosCandidato.candidato.id = 0;
+  this.todosDatosCandidato.candidato.emp = 3;
+  // this.todosDatosCandidato.candidato.nit = candidatoExistente[0].nit;
+  this.todosDatosCandidato.candidato.id_rh_tipo_documento = null;
+  this.todosDatosCandidato.candidato.nombre = '';
+  this.todosDatosCandidato.candidato.apellido = '';
+  this.todosDatosCandidato.candidato.genero = null;
+  this.todosDatosCandidato.candidato.fecha_nacimiento = new Date;
+  this.todosDatosCandidato.candidato.id_cot_cliente_barrio = null;
+  this.todosDatosCandidato.candidato.direccion = '';
+  this.todosDatosCandidato.candidato.telefono = '';
+  this.todosDatosCandidato.candidato.celular = '';
+  this.todosDatosCandidato.candidato.mail = '';
+  this.todosDatosCandidato.candidato.id_rh_perfil = null;
+  this.todosDatosCandidato.candidato.idCotClientePais = null;
+  this.todosDatosCandidato.candidato.id_cot_cliente_pais = null;
+  this.todosDatosCandidato.candidato.paisExp = null;
+  this.todosDatosCandidato.candidato.deptoExp = null;
+  this.todosDatosCandidato.candidato.pais = null;
+  this.todosDatosCandidato.candidato.depto = null;
+  this.todosDatosCandidato.candidato.id_rh_nivel_academico = null;
+  this.todosDatosCandidato.candidato.id_rh_experiencia = null;
+  this.todosDatosCandidato.candidato.id_tipo_candidato = null;
+  // if(this.todosDatosCandidato.candidato.id_tipo_candidato == 1){
+  //   this.changeSelect.emit({'data':false});
+  // }
+  this.todosDatosCandidato.candidato.idRhEstadoCivil = null;
+  this.todosDatosCandidato.candidato.fecExpedicion = new Date;
+  this.todosDatosCandidato.candidato.lugarExpedicion = '';
+  // const estadoCandidato = candidatoExistente[0].estado;
+
+}
 
   public async onSelectionChangePais(idPais:number | null): Promise<void> {
     const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');

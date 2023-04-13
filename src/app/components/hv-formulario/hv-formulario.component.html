@@ -1,11 +1,11 @@
 <mat-card class="wizard-card">
-  <mat-tab-group #tabGroup tabGroup>
+  <mat-tab-group #tabGroup tabGroup (selectedTabChange)="onTabChange($event)">
     <mat-tab>
       <ng-template mat-tab-label matStepContent>
         <mat-icon class="example-tab-icon">contact_page</mat-icon>
         <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
-      <mat-stepper
+      <mat-stepper *ngIf="activeTabIndex === 0"
         [orientation]="(stepperOrientation | async)!"
         [linear]="isLinear"
         #stepper
@@ -73,7 +73,7 @@
         <label class="title-tabs-hv"> Datos Sociodemográficos</label>
       </ng-template>
 
-      <app-sociodemograficos *ngIf="!isActive"></app-sociodemograficos>
+      <app-sociodemograficos *ngIf="!isActive && activeTabIndex === 1" ></app-sociodemograficos>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

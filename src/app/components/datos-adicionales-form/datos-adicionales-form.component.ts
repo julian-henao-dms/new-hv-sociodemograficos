@@ -474,6 +474,9 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
 
       // this._storaged.set('datosAdicionalesStorage', this.datosAdicionales);
       this.todosCandidatoStorage.categorias = [...this.myReferenceArray]
+      this.todosCandidatoStorage.candidato.id_Entidad == null ? this.todosCandidatoStorage.candidato.id_Entidad = 0 : this.todosCandidatoStorage.candidato.id_Entidad;
+
+
       this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
       // this._storaged.set('datosLicencia', this.myReferenceArray);
       this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');

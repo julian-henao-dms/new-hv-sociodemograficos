@@ -329,7 +329,7 @@
                 matInput
                 type="number"
                 placeholder="Número de Hijos"
-                #numeroHijos="ngModel" required id="numeroHijos" name="numeroHijos"  [(ngModel)]="sociodemograficos.numeroHijos"
+                #numeroHijos="ngModel"  id="numeroHijos" name="numeroHijos"  [(ngModel)]="sociodemograficos.numeroHijos"
               />
               <mat-error class="message-error" [class.invalid]="personasVive.invalid" *ngIf="personasVive.errors?.['required']">
                 *El número de hijos es requerido. Por favor digite un valor
@@ -339,7 +339,7 @@
           <mat-grid-tile>
             <mat-form-field appearance="outline">
               <mat-label>Rango edad hijos</mat-label>
-              <mat-select #idEdadHijos="ngModel" required id="idEdadHijos" name="idEdadHijos"  [(ngModel)]="sociodemograficos.idEdadHijos">
+              <mat-select #idEdadHijos="ngModel"  id="idEdadHijos" name="idEdadHijos"  [(ngModel)]="sociodemograficos.idEdadHijos">
                 <mat-option
                   *ngFor="let rangoEdad of rangosEdad"
                   [value]="rangoEdad.id"
@@ -347,9 +347,9 @@
                   {{ rangoEdad.descripcion }}
                 </mat-option>
               </mat-select>
-              <mat-error class="message-error" [class.invalid]="idEdadHijos.invalid" *ngIf="idEdadHijos.errors?.['required']">
+              <!-- <mat-error class="message-error" [class.invalid]="idEdadHijos.invalid" *ngIf="idEdadHijos.errors?.['required']">
                 *El rango de edad de los hijos es requerido. Debe seleccionar una opción
-              </mat-error>
+              </mat-error> -->
               </mat-form-field>
           </mat-grid-tile>
 
