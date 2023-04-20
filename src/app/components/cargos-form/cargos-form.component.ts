@@ -6,7 +6,7 @@ import { Cargos } from './interfaces/cargos.interface';
 import * as _ from 'lodash';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
-interface Cargo{
+interface Cargo {
   id: number;
   descripcion: string;
 }
@@ -14,31 +14,30 @@ interface Cargo{
 @Component({
   selector: 'app-cargos-form',
   templateUrl: './cargos-form.component.html',
-  styleUrls: ['./cargos-form.component.scss']
+  styleUrls: ['./cargos-form.component.scss'],
 })
 export class CargosFormComponent implements OnInit {
-
   public idEmp: number = 3;
   public idPerfilPrevio: any[] = [];
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
 
   public todosCandidatoStorage: TodosDatosCandidato = {
-    candidato:{
-      id:0,
+    candidato: {
+      id: 0,
       emp: this.idEmp,
       id_usuario: 0,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
       nit: '',
       estado: 1,
-      fecExpedicion: new Date,
+      fecExpedicion: new Date(),
       lugarExpedicion: '',
       idCotClientePais: null,
       nombre: '',
       apellido: '',
       genero: null,
-      fecha_nacimiento: new Date,
+      fecha_nacimiento: new Date(),
       idRhEstadoCivil: null,
       telefono: '',
       mail: '',
@@ -71,7 +70,7 @@ export class CargosFormComponent implements OnInit {
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: new Date,
+      fecha_vence_licencia: new Date(),
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -83,10 +82,10 @@ export class CargosFormComponent implements OnInit {
       // ...this.infoFamilia
     ],
     estudios: [
-        // ...this.estudios
+      // ...this.estudios
     ],
     idiomas: [
-        // ...this.idiomas
+      // ...this.idiomas
     ],
     referencias: [
       //  ...this.referencias
@@ -96,10 +95,9 @@ export class CargosFormComponent implements OnInit {
     ],
     cargos: [
       //  ...this.cargos
-    ]
-  }
+    ],
+  };
 
-  // public idEmp: number = 3;
   public numRegla: number = 159;
   public cargosArray: any[] = [];
   public cargos: Cargo[] = [];
@@ -110,98 +108,100 @@ export class CargosFormComponent implements OnInit {
     idCandidato: 0,
     idUsuario: 0,
     accion: 0,
-  }
+  };
 
   constructor(
     private _storaged: SessionStorageService,
     private apiService: ApiService,
-    private messageService: MessagesService,
-    ) { }
+    private messageService: MessagesService
+  ) {}
 
   async ngOnInit(): Promise<void> {
-    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo(
+      'Estamos cargando la información... Por favor espere.'
+    );
     const idEmp = this.idEmp;
-    const numRegla = this.numRegla
+    const numRegla = this.numRegla;
 
-    const cargoAplica = await this.getAnyInformation('/hojadevida/perfiles/' + idEmp);
-    if(cargoAplica === null){
-      this.messageService.error('Error', 'Error interno del servidor al cargar los perfiles');
+    const cargoAplica = await this.getAnyInformation(
+      '/hojadevida/perfiles/' + idEmp
+    );
+    if (cargoAplica === null) {
+      this.messageService.error(
+        'Error',
+        'Error interno del servidor al cargar los perfiles'
+      );
       return;
     }
     this.cargos = _.orderBy(cargoAplica, ['id'], ['asc']);
 
-    const datosTodosCandidatoStorage = this._storaged.get('todosCandidatoStorage');
+    const datosTodosCandidatoStorage = this._storaged.get(
+      'todosCandidatoStorage'
+    );
 
-    console.log('carga storage en cargos', datosTodosCandidatoStorage);
-    if(datosTodosCandidatoStorage && datosTodosCandidatoStorage != null){
+    if (datosTodosCandidatoStorage && datosTodosCandidatoStorage != null) {
       this.todosCandidatoStorage = datosTodosCandidatoStorage;
-      console.log("llego a cargos Todos? " ,this.todosCandidatoStorage);
     }
 
-    if(this.todosCandidatoStorage.candidato.nit != ''){
-      const getICargos = this.todosCandidatoStorage.cargos.filter(cargo => cargo.accion == 0);
-      console.log('Cargos filtrados en on', getICargos);
+    if (this.todosCandidatoStorage.candidato.nit != '') {
+      const getICargos = this.todosCandidatoStorage.cargos.filter(
+        (cargo) => cargo.accion == 0
+      );
 
-      if(getICargos && getICargos.length > 0){
-
-        console.log('Cargos storage', getICargos);
-
-        const getPerfil = getICargos.map((element: { idPerfil: number; }) => element.idPerfil);
+      if (getICargos && getICargos.length > 0) {
+        const getPerfil = getICargos.map(
+          (element: { idPerfil: number }) => element.idPerfil
+        );
         this.idPerfilPrevio = [...getPerfil];
-        console.log('Cargos mapeados desde storage', this.idPerfilPrevio);
-
       }
 
-      if(this.todosCandidatoStorage.cargos && this.todosCandidatoStorage.cargos.length > 0){
+      if (
+        this.todosCandidatoStorage.cargos &&
+        this.todosCandidatoStorage.cargos.length > 0
+      ) {
+        const cargosC = this.todosCandidatoStorage.cargos.map(
+          (item: { idPerfil: any }) => item.idPerfil
+        );
 
-        const cargosC = this.todosCandidatoStorage.cargos.map((item: { idPerfil: any; }) => item.idPerfil);
-        console.log('cargos c',cargosC);
         this.idPerfilPrevio = [...cargosC];
-        console.log("Los cargos ",this.idPerfilPrevio);
 
-        this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
-          ...this.otrosCargos, idPerfil
+        this.cargosArray = this.idPerfilPrevio.map((idPerfil) => ({
+          ...this.otrosCargos,
+          idPerfil,
         }));
-        this.todosCandidatoStorage.cargos = [...this.cargosArray]
-
-
+        this.todosCandidatoStorage.cargos = [...this.cargosArray];
       }
-
-    }else{
+    } else {
       this.todosCandidatoStorage = this.todosCandidatoStorage;
     }
-
-
-
-
 
     loading.close();
   }
 
   ngOnDestroy() {
-
     const originals = this._storaged.get('cargosOriginales');
-    if(originals && originals.length > 0){
-    const newCargos = this.compararArreglos(originals, this.idPerfilPrevio);
-    this.todosCandidatoStorage.cargos = [...newCargos]
-    }else{
-      this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
-        ...this.otrosCargos, idPerfil
+    if (originals && originals.length > 0) {
+      const newCargos = this.compararArreglos(originals, this.idPerfilPrevio);
+      this.todosCandidatoStorage.cargos = [...newCargos];
+    } else {
+      this.cargosArray = this.idPerfilPrevio.map((idPerfil) => ({
+        ...this.otrosCargos,
+        idPerfil,
       }));
-      this.todosCandidatoStorage.cargos = [...this.cargosArray]
+      this.todosCandidatoStorage.cargos = [...this.cargosArray];
     }
 
-     this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
+    this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
   }
 
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
-       this.apiService.getInformacion(service).subscribe({
+      this.apiService.getInformacion(service).subscribe({
         next: (v) => resolve(v),
         error: (e) => {
           console.info(e);
           resolve(null);
-        }
+        },
       });
     });
   }
@@ -220,7 +220,7 @@ export class CargosFormComponent implements OnInit {
 
     // Agregar nuevos objetos a partir del array b
     for (const itemB of itemPrevio) {
-      const foundItem = originals.find(item => item.idIdi === itemB);
+      const foundItem = originals.find((item) => item.idIdi === itemB);
 
       if (!foundItem) {
         const newItem: Cargos = {
@@ -237,34 +237,23 @@ export class CargosFormComponent implements OnInit {
     return filterProfiles;
   }
 
-  public guardarProgreso(){
-
-    // this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
-    //   ...this.otrosCargos, idPerfil
-    // }));
-
-    // // this._storaged.set('otrosCargosStorage', this.cargosArray);
-
-    // this.todosCandidatoStorage.cargos = [...this.cargosArray]
-        //  this._storaged.set('otrosCargosStorage', this.cargosArray);
+  public guardarProgreso() {
     const originals = this._storaged.get('cargosOriginales');
-    if(originals && originals.length > 0){
-    const newCargos = this.compararArreglos(originals, this.idPerfilPrevio);
-    this.todosCandidatoStorage.cargos = [...newCargos];
-    }else{
-      this.cargosArray = this.idPerfilPrevio.map(idPerfil => ({
-        ...this.otrosCargos, idPerfil
+    if (originals && originals.length > 0) {
+      const newCargos = this.compararArreglos(originals, this.idPerfilPrevio);
+      this.todosCandidatoStorage.cargos = [...newCargos];
+    } else {
+      this.cargosArray = this.idPerfilPrevio.map((idPerfil) => ({
+        ...this.otrosCargos,
+        idPerfil,
       }));
-      this.todosCandidatoStorage.cargos = [...this.cargosArray]
+      this.todosCandidatoStorage.cargos = [...this.cargosArray];
     }
     this._storaged.set('todosCandidatoStorage', this.todosCandidatoStorage);
-    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
+    this.messageService.success(
+      'Progreso Guardado',
+      'Su progreso se guardó de manera correcta'
+    );
     this.disabledButtonNext = false;
   }
-
-  // public getLocalStorage(){
-
-  //       // this.cargosArray = this._storaged.get('otrosCargosStorage');
-  //   }
-
 }

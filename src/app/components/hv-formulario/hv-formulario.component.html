@@ -5,7 +5,8 @@
         <mat-icon class="example-tab-icon">contact_page</mat-icon>
         <label class="title-tabs-hv"> Datos Candidato</label>
       </ng-template>
-      <mat-stepper *ngIf="activeTabIndex === 0"
+      <mat-stepper
+        *ngIf="activeTabIndex === 0"
         [orientation]="(stepperOrientation | async)!"
         [linear]="isLinear"
         #stepper
@@ -15,7 +16,9 @@
         <mat-step state="description">
           <ng-template matStepLabel>Datos Básicos</ng-template>
           <ng-template matStepContent>
-            <app-datos-basicos-form (activeTab)="activeTab($event)" (flexibleTabs)="flexibleTabs($event)"
+            <app-datos-basicos-form
+              (activeTab)="activeTab($event)"
+              (flexibleTabs)="flexibleTabs($event)"
               (changeSelect)="changeDatosBasicos($event)"
               *ngIf="selectedStep === 0"
             ></app-datos-basicos-form>
@@ -36,7 +39,9 @@
         <mat-step state="attach_file" label="Archivos">
           <ng-template matStepContent>
             <!-- <app-carga-archivos-form></app-carga-archivos-form> -->
-            <app-carga-archivos-hv *ngIf="selectedStep === 2"></app-carga-archivos-hv>
+            <app-carga-archivos-hv
+              *ngIf="selectedStep === 2"
+            ></app-carga-archivos-hv>
           </ng-template>
         </mat-step>
         <!-- Fin Paso 3 -->
@@ -49,7 +54,9 @@
         </mat-step>
         <mat-step state="groups" label="Referencias">
           <ng-template matStepContent>
-            <app-referencias-form *ngIf="selectedStep === 4"></app-referencias-form>
+            <app-referencias-form
+              *ngIf="selectedStep === 4"
+            ></app-referencias-form>
           </ng-template>
         </mat-step>
         <mat-step state="engineering" label="Cargos">
@@ -60,7 +67,7 @@
         <mat-step state="family_restroom" label="Información Familiar">
           <ng-template matStepContent>
             <app-informacion-familiar-form
- *ngIf="selectedStep === 6"
+              *ngIf="selectedStep === 6"
             ></app-informacion-familiar-form>
           </ng-template>
         </mat-step>
@@ -73,7 +80,9 @@
         <label class="title-tabs-hv"> Datos Sociodemográficos</label>
       </ng-template>
 
-      <app-sociodemograficos *ngIf="!isActive && activeTabIndex === 1" ></app-sociodemograficos>
+      <app-sociodemograficos
+        *ngIf="!isActive && activeTabIndex === 1"
+      ></app-sociodemograficos>
     </mat-tab>
   </mat-tab-group>
 </mat-card>

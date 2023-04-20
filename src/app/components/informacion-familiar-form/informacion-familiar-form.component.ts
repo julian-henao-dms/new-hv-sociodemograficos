@@ -1,8 +1,14 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { StepperOrientation } from '@angular/cdk/stepper';
 import { Observable } from 'rxjs';
-import {map} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Familiar } from './interfaces/familiar.interface';
 import { SessionStorageService } from 'src/app/services/session-storage.service';
 import { AddLabelToTableService } from 'src/app/services/add-label-to-table.service';
@@ -14,7 +20,7 @@ import { NgForm } from '@angular/forms';
 import { ThisReceiver } from '@angular/compiler';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
 
-interface Parentesco{
+interface Parentesco {
   id: number;
   descripcion: string;
 }
@@ -22,27 +28,21 @@ interface Parentesco{
 @Component({
   selector: 'app-informacion-familiar-form',
   templateUrl: './informacion-familiar-form.component.html',
-  styleUrls: ['./informacion-familiar-form.component.scss']
+  styleUrls: ['./informacion-familiar-form.component.scss'],
 })
 export class InformacionFamiliarFormComponent implements OnInit {
   @ViewChild('addInfoFamiData', { static: true })
   fieldDatosFamilia!: NgForm;
-  // @Output() activeTab = new EventEmitter<boolean>();
-
-  // public todosDatosCandidato = {}
   public disabledButtonNext: boolean = true;
-
-
-public datosBasicos: any = {};
-public idiomas: any[] = [];
-public datosadicionales: any = {};
-public categoriaLicencia: any[] = [];
-public archivos: any[] = [];
-public estudios: any[] = [];
-public referencias: any[] = [];
-public cargos: any[] = [];
-public infoFamilia: any[] = [];
-
+  public datosBasicos: any = {};
+  public idiomas: any[] = [];
+  public datosadicionales: any = {};
+  public categoriaLicencia: any[] = [];
+  public archivos: any[] = [];
+  public estudios: any[] = [];
+  public referencias: any[] = [];
+  public cargos: any[] = [];
+  public infoFamilia: any[] = [];
 
   public idEmp: number = 3;
   public numRegla: number = 159;
@@ -55,14 +55,14 @@ public infoFamilia: any[] = [];
     textSpacesAccent: /^[a-zA-ZÀ-ÿ\s]{1,40}$/, // Letras y espacios, pueden llevar acentos.
     password: /^.{4,12}$/, // 4 a 12 digitos.
 
-    correo: /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
+    correo:
+      /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
 
     nums: /^\d{7,15}$/, // 7 a 14 numeros.
-    celular: /^\d{10,15}$/ // 7 a 14 numeros.
-  }
+    celular: /^\d{10,15}$/, // 7 a 14 numeros.
+  };
 
-
-  public datosInfoFamilia: Familiar ={
+  public datosInfoFamilia: Familiar = {
     id: 0,
     id_candidato: 0,
     nombre: '',
@@ -76,25 +76,25 @@ public infoFamilia: any[] = [];
     otroFamiliar: 0,
     accion: 0,
     nit: '',
-    fechaNace: new Date,
-   };
+    fechaNace: new Date(),
+  };
 
-   public todosDatosCandidato: TodosDatosCandidato = {
-    candidato:{
-      id:0,
+  public todosDatosCandidato: TodosDatosCandidato = {
+    candidato: {
+      id: 0,
       emp: 3,
       id_usuario: 0,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
       nit: '',
       estado: 1,
-      fecExpedicion: new Date,
+      fecExpedicion: new Date(),
       lugarExpedicion: '',
       idCotClientePais: null,
       nombre: '',
       apellido: '',
       genero: null,
-      fecha_nacimiento: new Date,
+      fecha_nacimiento: new Date(),
       idRhEstadoCivil: null,
       telefono: '',
       mail: '',
@@ -127,7 +127,7 @@ public infoFamilia: any[] = [];
       idRhFondoCesantias: null,
       licencia: '',
       tipo_licencia: null,
-      fecha_vence_licencia: new Date,
+      fecha_vence_licencia: new Date(),
       id_rh_categoria: null,
       id_rh_color_piel: null,
       id_rh_grupo_sanguineo: null,
@@ -139,10 +139,10 @@ public infoFamilia: any[] = [];
       // ...this.infoFamilia
     ],
     estudios: [
-        // ...this.estudios
+      // ...this.estudios
     ],
     idiomas: [
-        // ...this.idiomas
+      // ...this.idiomas
     ],
     referencias: [
       //  ...this.referencias
@@ -152,10 +152,17 @@ public infoFamilia: any[] = [];
     ],
     cargos: [
       //  ...this.cargos
-    ]
-  }
+    ],
+  };
 
-  public columnsReference: any[] = ["nit", "nombre", "fechaNace", "idParentesco", "telResidencia", 'borrar' ];
+  public columnsReference: any[] = [
+    'nit',
+    'nombre',
+    'fechaNace',
+    'idParentesco',
+    'telResidencia',
+    'borrar',
+  ];
   public FAMILIAR_DATA: Familiar[] = [];
 
   public myReferenceArray: any[] = [];
@@ -173,20 +180,18 @@ public infoFamilia: any[] = [];
     otroFamiliar: 0,
     accion: 0,
     nit: '',
-    fechaNace: new Date,
+    fechaNace: new Date(),
   };
 
-
-
   stepperOrientation: Observable<StepperOrientation>;
-  cols : number | undefined;
+  cols: number | undefined;
 
   gridByBreakpoint = {
     xl: 4,
     lg: 3,
     md: 2,
     sm: 1,
-    xs: 1
+    xs: 1,
   };
   public tabActive: boolean = false;
   constructor(
@@ -195,334 +200,215 @@ public infoFamilia: any[] = [];
     private _addItemTable: AddLabelToTableService,
     private readonly apiService: ApiService,
     private readonly messageService: MessagesService
-    ) {
+  ) {
     this.stepperOrientation = breakpointObserver
-    .observe('(min-width: 800px)')
-    .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+      .observe('(min-width: 800px)')
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
 
-    this.breakpointObserver.observe([
-      Breakpoints.XSmall,
-      Breakpoints.Small,
-      Breakpoints.Medium,
-      Breakpoints.Large,
-      Breakpoints.XLarge,
-    ]).subscribe(result => {
-      if (result.matches) {
-        if (result.breakpoints[Breakpoints.XSmall]) {
-          this.cols = this.gridByBreakpoint.xs;
+    this.breakpointObserver
+      .observe([
+        Breakpoints.XSmall,
+        Breakpoints.Small,
+        Breakpoints.Medium,
+        Breakpoints.Large,
+        Breakpoints.XLarge,
+      ])
+      .subscribe((result) => {
+        if (result.matches) {
+          if (result.breakpoints[Breakpoints.XSmall]) {
+            this.cols = this.gridByBreakpoint.xs;
+          }
+          if (result.breakpoints[Breakpoints.Small]) {
+            this.cols = this.gridByBreakpoint.sm;
+          }
+          if (result.breakpoints[Breakpoints.Medium]) {
+            this.cols = this.gridByBreakpoint.md;
+          }
+          if (result.breakpoints[Breakpoints.Large]) {
+            this.cols = this.gridByBreakpoint.lg;
+          }
+          if (result.breakpoints[Breakpoints.XLarge]) {
+            this.cols = this.gridByBreakpoint.xl;
+          }
         }
-        if (result.breakpoints[Breakpoints.Small]) {
-          this.cols = this.gridByBreakpoint.sm;
-        }
-        if (result.breakpoints[Breakpoints.Medium]) {
-          this.cols = this.gridByBreakpoint.md;
-        }
-        if (result.breakpoints[Breakpoints.Large]) {
-          this.cols = this.gridByBreakpoint.lg;
-        }
-        if (result.breakpoints[Breakpoints.XLarge]) {
-          this.cols = this.gridByBreakpoint.xl;
-        }
-      }
-
-    });
+      });
   }
-  ngOnChanges(){
-
-  }
+  ngOnChanges() {}
   async ngOnInit(): Promise<void> {
-
-    const loading = await this.messageService.waitInfo('Estamos cargando la información... Por favor espere.');
+    const loading = await this.messageService.waitInfo(
+      'Estamos cargando la información... Por favor espere.'
+    );
 
     this.getLocalStorage();
 
     const idEmp = this.idEmp;
     const numRegla = this.numRegla;
 
-    const parentesco = await this.getAnyInformation('/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'parentesco');
-    if(parentesco === null){
-        this.messageService.error('Error', 'Error interno del servidor al cargar las opciones de parentezco');
-        return;
-      }
-      this.parentescos = _.orderBy(parentesco, ['id'], ['asc']);
+    const parentesco = await this.getAnyInformation(
+      '/hojadevida/subcriterios/' + idEmp + '/' + numRegla + '/' + 'parentesco'
+    );
+    if (parentesco === null) {
+      this.messageService.error(
+        'Error',
+        'Error interno del servidor al cargar las opciones de parentezco'
+      );
+      return;
+    }
+    this.parentescos = _.orderBy(parentesco, ['id'], ['asc']);
 
-      // const datosFamiliares = this._storaged.get('datosInfoFamilia');
-      // const candidatoExistente = this._storaged.get('candidatoExistente');
-      this.todosDatosCandidato =  this._storaged.get('todosCandidatoStorage');
+    this.todosDatosCandidato = this._storaged.get('todosCandidatoStorage');
 
-      if(this.todosDatosCandidato.referencias_familiares && this.todosDatosCandidato.referencias_familiares.length > 0){
-        this.myReferenceArray = [...this.todosDatosCandidato.referencias_familiares];
-        console.log('Familiares', this.myReferenceArray);
-
-      }
-      // else if(candidatoExistente  && candidatoExistente.length > 0){
-
-      //   this.candidatoId = candidatoExistente[0].id
-
-      //   const getInfoFamiliar = await this.getAnyInformation('/hojadevida/familiares/' + this.candidatoId);
-
-      //   const newArr = getInfoFamiliar.map((obj: {
-      //     fecha_nacimiento: Date;
-      //     id: number;
-      //     id_rh_candidato: number;
-      //     id_rh_parentesco: number | null;
-      //     nit: string;
-      //     nombre: string;
-      //     parentesco: string;
-      //     tel_residencia: string;
-
-      //   }) => ({
-      //     id: obj.id,
-      //     id_candidato: obj.id_rh_candidato,
-      //     nombre: obj.nombre,
-      //     idParentesco: obj.id_rh_parentesco,
-      //     edad: 0,
-      //     ne: 0,
-      //     ec: 0,
-      //     ocupacion: '',
-      //     empresa: '',
-      //     telResidencia: obj.tel_residencia,
-      //     otroFamiliar: 0,
-      //     accion: 0,
-      //     nit: obj.nit,
-      //     fechaNace: obj.fecha_nacimiento,
-
-      //   }));
-
-      //   this.myReferenceArray = [...newArr]
-      //   this._storaged.set('datosInfoFamilia', this.myReferenceArray);
-      //   // this.activeTab.emit(false);
-      // }
+    if (
+      this.todosDatosCandidato.referencias_familiares &&
+      this.todosDatosCandidato.referencias_familiares.length > 0
+    ) {
+      this.myReferenceArray = [
+        ...this.todosDatosCandidato.referencias_familiares,
+      ];
+    }
 
     loading.close();
   }
 
-
   ngOnDestroy() {
-    // this._storaged.set('datosInfoFamilia', this.myReferenceArray);
-    this.todosDatosCandidato.referencias_familiares= [...this.myReferenceArray]
-    console.log('Destroy familiares', this.todosDatosCandidato);
-    this._storaged.set('todosCandidatoStorage',   this.todosDatosCandidato);
+    this.todosDatosCandidato.referencias_familiares = [
+      ...this.myReferenceArray,
+    ];
+
+    this._storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
   }
 
-  public async selectsValidate(selectContent:any, text: string, arrayData:any){
-    if(selectContent === null){
-      setTimeout(
-        () => {
-          this.messageService.error('Error', 'Error interno del servidor al cargar ' + text);
-        }, 1000);
-     }else{
+  public async selectsValidate(
+    selectContent: any,
+    text: string,
+    arrayData: any
+  ) {
+    if (selectContent === null) {
+      setTimeout(() => {
+        this.messageService.error(
+          'Error',
+          'Error interno del servidor al cargar ' + text
+        );
+      }, 1000);
+    } else {
       arrayData = selectContent;
-     }
+    }
   }
 
   private async getAnyInformation(service: string): Promise<any> {
     return new Promise((resolve, reject) => {
-       this.apiService.getInformacion(service).subscribe({
+      this.apiService.getInformacion(service).subscribe({
         next: (v) => resolve(v),
         error: (e) => {
           console.info(e);
           resolve(null);
-        }
+        },
       });
     });
   }
 
-
   addReference() {
-    if(this.fieldDatosFamilia.valid){
-    this.FAMILIAR_DATA.push(this.setRelatives);
+    if (this.fieldDatosFamilia.valid) {
+      this.FAMILIAR_DATA.push(this.setRelatives);
 
-    this.myReferenceArray.push(this.setRelatives);
-    this.setRelatives = {
-      id: 0,
-      id_candidato: 0,
-      nombre: '',
-      idParentesco: null,
-      edad: 0,
-      ne: 0,
-      ec: 0,
-      ocupacion: '',
-      empresa: '',
-      telResidencia: '',
-      otroFamiliar: 0,
-      accion: 0,
-      nit: '',
-      fechaNace: new Date,
-    };
-    this.myReferenceArray = [...this.myReferenceArray];
-    console.warn(this.myReferenceArray);
-    this.datosInfoFamilia.fechaNace = new Date;
-
-  }else{
-    this.messageService.info('Atención','Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.');
-    this.fieldDatosFamilia.control.markAllAsTouched();
-}
+      this.myReferenceArray.push(this.setRelatives);
+      this.setRelatives = {
+        id: 0,
+        id_candidato: 0,
+        nombre: '',
+        idParentesco: null,
+        edad: 0,
+        ne: 0,
+        ec: 0,
+        ocupacion: '',
+        empresa: '',
+        telResidencia: '',
+        otroFamiliar: 0,
+        accion: 0,
+        nit: '',
+        fechaNace: new Date(),
+      };
+      this.myReferenceArray = [...this.myReferenceArray];
+      console.warn(this.myReferenceArray);
+      this.datosInfoFamilia.fechaNace = new Date();
+    } else {
+      this.messageService.info(
+        'Atención',
+        'Para agregar información sobre sus estudios debe llenar todos los campos ... Por favor verifique que no haya campos vacios o sin seleccionar.'
+      );
+      this.fieldDatosFamilia.control.markAllAsTouched();
+    }
   }
 
-  // public setupDatosCandidato(){
-  //   this.todosDatosCandidato = {
-  //     candidato: {
-  //       id: this.datosBasicos.id ? this.datosBasicos.id : 0,
-  //       emp: 3,
-  //       nit: this.datosBasicos.nit,
-  //       id_rh_tipo_documento: this.datosBasicos.id_rh_tipo_documento,
-  //       nombre: this.datosBasicos.nombre,
-  //       apellido: this.datosBasicos.apellido,
-  //       id_usuario: this.datosBasicos.id_usuario + 100,
-  //       genero: this.datosBasicos.genero,
-  //       fecha_nacimiento: this.datosBasicos.fecha_nacimiento,
-  //       id_cot_cliente_pais: this.datosBasicos.id_cot_cliente_pais,
-  //       direccion: this.datosBasicos.direccion,
-  //       telefono: this.datosBasicos.telefono,
-  //       celular: this.datosBasicos.celular,
-  //       mail: this.datosBasicos.mail,
-  //       id_rh_perfil: this.datosBasicos.id_rh_perfil,
-  //       id_cot_cliente: 0,
-  //       id_rh_requisicion_personal: 0,
-  //       id_rh_nivel_academico: this.datosBasicos.id_rh_nivel_academico,
-  //       id_rh_experiencia: this.datosBasicos.id_rh_experiencia,
-  //       observaciones: '',
-  //       id_tipo_candidato: this.datosBasicos.id_tipo_candidato,
-  //       id_rh_experiencia_sector: this.datosadicionales.id_rh_experiencia_sector,
-  //       id_disponibilidad_viaje: this.datosadicionales.id_disponibilidad_viaje,
-  //       id_participacion_anterior: this.datosadicionales.id_participacion_anterior,
-  //       id_salario: this.datosadicionales.id_salario,
-  //       id_rh_fuente_reclutamiento: this.datosadicionales.id_rh_fuente_reclutamiento,
-  //       id_trajo_hoja_vida: this.datosadicionales.id_trajo_hoja_vida,
-  //       estado: 1,
-  //       bloqueado: 0,
-  //       motivo: '',
-  //       licencia: this.datosadicionales.licencia,
-  //       tarjeta: this.datosadicionales.tarjeta,
-  //       tipo_licencia: this.datosadicionales.tipo_licencia,
-  //       fecha_vence_licencia: new Date,
-  //       runt: this.datosadicionales.runt,
-  //       id_rh_categoria: 0,
-  //       id_rh_color_piel: this.datosadicionales.id_rh_color_piel,
-  //       id_rh_grupo_sanguineo: this.datosadicionales.id_rh_grupo_sanguineo,
-  //       rh: this.datosadicionales.rh,
-  //       id_rh_experiencia_equipo: this.datosadicionales.id_rh_experiencia_equipo ? this.datosadicionales.id_rh_experiencia_equipo: 0,
-  //       peso: this.datosadicionales.peso,
-  //       altura: this.datosadicionales.altura,
-  //       salario: this.datosadicionales.salario_especifico,
-  //       accion: 0,
-  //       id_Usuario_Asociado: 0,
-  //       id_con_cco: 0,
-  //       id_Entidad: this.datosadicionales.id_Entidad,
-  //       fecExpedicion: this.datosBasicos.fecExpedicion,
-  //       lugarExpedicion: '',
-  //       idRhEstadoCivil: this.datosBasicos.idRhEstadoCivil,
-  //       idRhEps: this.datosadicionales.idRhEps,
-  //       idRhFondoPension: this.datosadicionales.idRhFondoPension,
-  //       idRhFondoCaja: this.datosadicionales.idRhFondoCaja,
-  //       idRhFondoCesantias: this.datosadicionales.idRhFondoCesantias,
-  //       id_cot_cliente_barrio: this.datosBasicos.id_cot_cliente_barrio,
-  //       sync: 2,
-  //       idCotClientePais: this.datosBasicos.idCotClientePais,
-  //       fuente: " "
-  //   },
-  //   referencias_familiares: [
-  //       ...this.infoFamilia
-  //   ],
-  //   estudios: [
-  //       ...this.estudios
-  //   ],
-  //   idiomas: [
-  //       ...this.idiomas
-  //   ],
-  //   referencias: [
-  //      ...this.referencias
-  //   ],
-  //   categorias: [
-  //     ...this.categoriaLicencia
-  //   ],
-  //   cargos: [
-  //      ...this.cargos
-  //   ]
-  //   }
-
-  // }
-
-  public  borrarItem(index: number){
+  public borrarItem(index: number) {
     this.myReferenceArray.splice(index, 1);
     this.myReferenceArray = [...this.myReferenceArray];
-
   }
 
-  public  hideItem(index: number){
+  public hideItem(index: number) {
     this.myReferenceArray[index].accion = 1;
     this.myReferenceArray[index].hidden = true;
-
   }
 
-  public guardarProgreso(){
-    this.todosDatosCandidato.referencias_familiares= [...this.myReferenceArray]
-    this.todosDatosCandidato.candidato.fecha_vence_licencia = new Date;
-    // this._storaged.set('datosInfoFamilia', this.myReferenceArray);
+  public guardarProgreso() {
+    this.todosDatosCandidato.referencias_familiares = [
+      ...this.myReferenceArray,
+    ];
+    this.todosDatosCandidato.candidato.fecha_vence_licencia = new Date();
     this._storaged.set('todosCandidatoStorage', this.todosDatosCandidato);
     this.disabledButtonNext = false;
 
-    // this.getLocalStorage();
-    // this.setupDatosCandidato();
-    this.messageService.success('Progreso Guardado', 'Su progreso se guardó de manera correcta');
-
-console.log('datos completo al guardar', this.todosDatosCandidato);
-
+    this.messageService.success(
+      'Progreso Guardado',
+      'Su progreso se guardó de manera correcta'
+    );
   }
 
-  public getLocalStorage(){
-    // this.todosDatosCandidato =  this._storaged.get('todosCandidatoStorage');
-      // this.datosBasicos = this._storaged.get('datosCandidatoStorage');
-      // this.idiomas = this._storaged.get('idiomasStorage');
-      // this.datosadicionales = this._storaged.get('datosAdicionalesStorage');
-      // this.categoriaLicencia = this._storaged.get('datosLicencia');
+  public getLocalStorage() {}
 
-      // this.estudios = this._storaged.get('datosEstudiosStorage');
-      // this.referencias = this._storaged.get('datosReferenciasStorage');
-      // this.cargos = this._storaged.get('otrosCargosStorage');
-      // this.infoFamilia = this._storaged.get('datosInfoFamilia');
-
-  }
-
-  private async updateInformation(service: string, document: any): Promise<any> {
+  private async updateInformation(
+    service: string,
+    document: any
+  ): Promise<any> {
     return new Promise((resolve, reject) => {
-       this.apiService.updateInformacion(service, document).subscribe({
+      this.apiService.updateInformacion(service, document).subscribe({
         next: (v) => resolve(v),
         error: (e) => {
           console.info(e);
           resolve(0);
-        }
+        },
       });
     });
   }
 
+  public async enviarFormulario(): Promise<void> {
+    const idUsuarioHv = await this.updateInformation(
+      '/hojadevida/candidato',
+      this.todosDatosCandidato
+    );
 
-  public async enviarFormulario(): Promise<void>{
+    if (idUsuarioHv === 0) {
+      this.messageService.error(
+        'Error',
+        'No se pudo almacenar la información del candidato'
+      );
+      this.messageService.info(
+        'Atención',
+        'Revise que todos los campos requeridos o contacte con un administrador '
+      );
+    } else {
+      this.messageService.success(
+        'Candidato Guardado',
+        'Los datos del candidato se han enviado correctamente'
+      );
 
-console.log('Objeto antes de enviar', this.todosDatosCandidato);
-
-    const idUsuarioHv =  await this.updateInformation('/hojadevida/candidato', this.todosDatosCandidato);
-
-     console.log('Response server',idUsuarioHv);
-    if(idUsuarioHv === 0){
-      this.messageService.error('Error', 'No se pudo almacenar la información del candidato');
-      this.messageService.info('Atención', 'Revise que todos los campos requeridos o contacte con un administrador ');
-    }else{
-      this.messageService.success('Candidato Guardado', 'Los datos del candidato se han enviado correctamente');
-      console.log('enviados', this.todosDatosCandidato);
       this._storaged.clear();
       window.location.reload();
-      // this._storaged.set('idCandidatoEnviado', idUsuarioHv);
-
       // this.activeTab.emit(false);
-
     }
-
   }
 
-  public labelTable(id: number, list: any[]){
+  public labelTable(id: number, list: any[]) {
     return this._addItemTable.findLabel(id, list);
   }
-
 }
