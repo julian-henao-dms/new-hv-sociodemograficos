@@ -232,6 +232,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     sm: 1,
     xs: 1,
   };
+  public tipo_candidato_stg: number | null = 0
 
   constructor(
     private breakpointObserver: BreakpointObserver,
@@ -465,6 +466,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
       ? this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo
       : (this.todosCandidatoStorage.candidato.id_rh_experiencia_equipo = 0);
 
+    this.tipo_candidato_stg = this.todosCandidatoStorage.candidato.id_tipo_candidato;
     const getCategoriasLic = this.todosCandidatoStorage.categorias;
 
     if (getCategoriasLic && getCategoriasLic.length > 0) {

@@ -25,7 +25,7 @@
     <mat-grid-tile>
       <mat-form-field appearance="outline">
         <mat-label>Seleccionar experiencia en operación de equipos </mat-label>
-        <mat-select disabled [disabled]="tipoCandidato == 1 ? false : true" [(ngModel)]="todosCandidatoStorage.candidato.id_rh_experiencia_equipo"
+        <mat-select disabled [disabled]="(tipoCandidato == 0 || tipo_candidato_stg == 0) ? true : false" [(ngModel)]="todosCandidatoStorage.candidato.id_rh_experiencia_equipo"
         name="id_rh_experiencia_equipo" #id_rh_experiencia_equipo="ngModel" required id="id_rh_experiencia_equipo">
           <mat-option
           *ngFor="let anioExp of aniosExp"

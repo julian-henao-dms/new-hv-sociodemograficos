@@ -33,7 +33,7 @@ export interface DatosBasicosCandidato {
 
 export interface TodosDatosCandidato{
   candidato: {
-    id:number;
+     id:number;
     emp: number;
     id_usuario: number;
     id_tipo_candidato: number | null;
