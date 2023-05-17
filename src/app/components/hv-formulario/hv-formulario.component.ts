@@ -54,6 +54,9 @@ export class HvFormularioComponent implements OnInit {
   ngOnChanges() {}
   onTabChange(event: MatTabChangeEvent) {
     this.activeTabIndex = event.index;
+    if (event.index === 0) {  // Si la pestaña "Datos Candidato" está seleccionada
+      this.selectedStep = 0;
+    }
   }
   activeTab(event: any): void {
     this.isActive = event;

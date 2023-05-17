@@ -1272,6 +1272,7 @@ export class DatosBasicosFormComponent implements OnInit {
     }
   }
 
+
   public compararArreglos(originals: any[], itemPrevio: number[]): Idioma[] {
     const filterLanguajes: Idioma[] = [];
 
