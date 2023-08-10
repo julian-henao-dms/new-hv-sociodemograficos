@@ -24,6 +24,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Sociodemograficos } from '../sociodemograficos/interfaces/sociodemograficos.interface';
+import { AuthService } from 'src/app/services/auth.service';
 
 interface TipoCandidato {
   id: number;
@@ -319,7 +320,8 @@ export class DatosBasicosFormComponent implements OnInit {
     private storaged: SessionStorageService,
     private breakpointObserver: BreakpointObserver,
     private readonly apiService: ApiService,
-    private readonly messageService: MessagesService
+    private readonly messageService: MessagesService,
+    private authService: AuthService
   ) {
     //
 
@@ -369,9 +371,13 @@ export class DatosBasicosFormComponent implements OnInit {
       });
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() {
+
+  }
 
   async ngOnInit(): Promise<void> {
+    try {
+      await this.loginApi();
     const loading = await this.messageService.waitInfo(
       'Estamos cargando la información... Por favor espere.'
     );
@@ -573,12 +579,18 @@ export class DatosBasicosFormComponent implements OnInit {
     }
 
     loading.close();
-  }
+  } catch (error) {
+    console.error('Error al autenticar:', error);
+}
+}
 
   public ngOnChanges() {}
 
   public async search(): Promise<void> {
     this.storaged.clear();
+    try {
+      await this.loginApi();
+
     if (this.todosDatosCandidato.candidato.nit !== '') {
       this.messageService.info(
         'Atencion',
@@ -1058,6 +1070,9 @@ export class DatosBasicosFormComponent implements OnInit {
         );
       }, 1000);
     }
+      } catch (error) {
+        console.error('Error al autenticar:', error);
+    }
   }
 
   public async selectsValidate(
@@ -1303,4 +1318,20 @@ export class DatosBasicosFormComponent implements OnInit {
 
     return filterLanguajes;
   }
+
+  loginApi(): Promise<void> {
+    return new Promise((resolve, reject) => {
+        this.authService.login('dms', 'DMS2023@dv@nc3').subscribe(
+            data => {
+                this.storaged.set('token', data.token);
+                resolve();
+            },
+            error => {
+                console.error('Error:', error);
+                reject(error);
+            }
+        );
+    });
+}
+
 }
