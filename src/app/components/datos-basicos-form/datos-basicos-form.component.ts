@@ -25,6 +25,7 @@ import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { MatOption } from '@angular/material/core';
 import { Sociodemograficos } from '../sociodemograficos/interfaces/sociodemograficos.interface';
 import { AuthService } from 'src/app/services/auth.service';
+import { EnvService } from 'src/app/services/env.service';
 
 interface TipoCandidato {
   id: number;
@@ -107,8 +108,8 @@ export class DatosBasicosFormComponent implements OnInit {
   public typeCandidato: number = 0;
   public candidatoId = 0;
 
-  public idEmp: number = 3;
-  public numRegla: number = 159;
+  public idEmp: number = this.envService.company;
+  public numRegla: number = this.envService.regla;
   public paises: Pais[] = [];
   public deptos: Depto[] = [];
   public paisesExp: PaisExp[] = [];
@@ -128,7 +129,7 @@ export class DatosBasicosFormComponent implements OnInit {
   public todosDatosCandidato: TodosDatosCandidato = {
     candidato: {
       id: 0,
-      emp: 3,
+      emp: this.idEmp,
       id_usuario: 1,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
@@ -321,7 +322,8 @@ export class DatosBasicosFormComponent implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private readonly apiService: ApiService,
     private readonly messageService: MessagesService,
-    private authService: AuthService
+    private authService: AuthService,
+    private readonly envService: EnvService
   ) {
     //
 
@@ -382,7 +384,8 @@ export class DatosBasicosFormComponent implements OnInit {
       'Estamos cargando la información... Por favor espere.'
     );
 
-    const idEmp = this.idEmp;
+    const idEmp = this.envService.company;
+    console.log("Hola empresa", idEmp);
     const numRegla = this.numRegla;
 
     const paises = await this.getAnyInformation('/pais/' + idEmp);

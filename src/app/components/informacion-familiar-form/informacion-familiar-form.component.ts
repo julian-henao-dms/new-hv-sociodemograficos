@@ -19,6 +19,7 @@ import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { ThisReceiver } from '@angular/compiler';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
+import { EnvService } from 'src/app/services/env.service';
 
 interface Parentesco {
   id: number;
@@ -45,7 +46,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
   public infoFamilia: any[] = [];
 
   public idEmp: number = 3;
-  public numRegla: number = 159;
+  public numRegla: number = this.envService.regla;
   public candidatoId = 0;
   parentescos: Parentesco[] = [];
 
@@ -199,6 +200,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
     private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
     private readonly apiService: ApiService,
+    private readonly envService: EnvService,
     private readonly messageService: MessagesService
   ) {
     this.stepperOrientation = breakpointObserver
@@ -241,7 +243,7 @@ export class InformacionFamiliarFormComponent implements OnInit {
 
     this.getLocalStorage();
 
-    const idEmp = this.idEmp;
+    const idEmp = this.envService.company;
     const numRegla = this.numRegla;
 
     const parentesco = await this.getAnyInformation(

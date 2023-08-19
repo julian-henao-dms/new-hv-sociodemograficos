@@ -21,6 +21,7 @@ import {
   Licencia,
 } from './interfaces/datos-adicionales';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
+import { EnvService } from 'src/app/services/env.service';
 
 interface Pais {
   value: number;
@@ -80,8 +81,8 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
   @ViewChild('datosAdicionalesForm', { static: true })
   fieldDatosAdicionales!: NgForm;
 
-  public idEmp: number = 3;
-  public numRegla: number = 159;
+  public idEmp: number = this.envService.company;
+  public numRegla: number = this.envService.regla;
 
   public aniosExp: AniosExperiencia[] = [];
   public salarios: AspiracionSalarial[] = [];
@@ -239,6 +240,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
     private readonly messageService: MessagesService,
+    private readonly envService: EnvService,
     private apiService: ApiService
   ) {
     this.stepperOrientation = breakpointObserver
@@ -519,17 +521,7 @@ export class DatosAdicionalesFormComponent implements OnInit, OnChanges {
     });
   }
 
-  private async getAnyInformationAlt(service: string): Promise<any> {
-    return new Promise((resolve, reject) => {
-      this.apiService.getInformacionMaestros(service).subscribe({
-        next: (v) => resolve(v),
-        error: (e) => {
-          console.info(e);
-          resolve(null);
-        },
-      });
-    });
-  }
+
 
   public borrarItem(index: number) {
     this.myReferenceArray.splice(index, 1);

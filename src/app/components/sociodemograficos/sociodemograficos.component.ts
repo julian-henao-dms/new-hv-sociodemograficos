@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/services/api.service';
 import { MessagesService } from 'src/app/services/messages.service';
 import { Sociodemograficos } from './interfaces/sociodemograficos.interface';
 import * as _ from 'lodash';
+import { EnvService } from 'src/app/services/env.service';
 
 interface AnioAntiguedad {
   id: number;
@@ -74,8 +75,8 @@ export class SociodemograficosComponent implements OnInit {
   @ViewChild('sociodemograficosForm', { static: true })
   fieldSociodemograficos!: NgForm;
 
-  public idEmp: number = 3;
-  public numRegla: number = 159;
+  public idEmp: number = this.envService.company;
+  public numRegla: number = this.envService.regla;
 
   public isDisable: boolean = true;
   public buttonDisabled: boolean = true;
@@ -198,6 +199,7 @@ export class SociodemograficosComponent implements OnInit {
     private storaged: SessionStorageService,
     private breakpointObserver: BreakpointObserver,
     private readonly apiService: ApiService,
+    private readonly envService: EnvService,
     private readonly messageService: MessagesService
   ) {
     this.breakpointObserver

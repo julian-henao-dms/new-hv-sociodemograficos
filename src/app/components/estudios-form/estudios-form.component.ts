@@ -12,6 +12,7 @@ import { MessagesService } from 'src/app/services/messages.service';
 import * as _ from 'lodash';
 import { NgForm } from '@angular/forms';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
+import { EnvService } from 'src/app/services/env.service';
 
 interface Institucion {
   id: number;
@@ -64,8 +65,8 @@ interface Item {
 export class EstudiosFormComponent implements OnInit {
   @ViewChild('addEstudiosData', { static: true })
   fieldDatosEstudios!: NgForm;
-  public idEmp: number = 3;
-  public numRegla: number = 159;
+  public idEmp: number = this.envService.company;
+  public numRegla: number = this.envService.regla;
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
 
@@ -99,7 +100,7 @@ export class EstudiosFormComponent implements OnInit {
   public todosDatosCandidato: TodosDatosCandidato = {
     candidato: {
       id: 0,
-      emp: this.idEmp,
+      emp: this.envService.company,
       id_usuario: 0,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
@@ -226,7 +227,8 @@ export class EstudiosFormComponent implements OnInit {
     private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
     private apiService: ApiService,
-    private messageService: MessagesService
+    private messageService: MessagesService,
+    private readonly envService: EnvService
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -265,7 +267,7 @@ export class EstudiosFormComponent implements OnInit {
     const loading = await this.messageService.waitInfo(
       'Estamos cargando la información... Por favor espere.'
     );
-    const idEmp = this.idEmp;
+    const idEmp = this.envService.company;
     const numRegla = this.numRegla;
 
     const institucion = await this.getAnyInformation(

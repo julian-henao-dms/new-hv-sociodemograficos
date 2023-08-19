@@ -47,6 +47,7 @@ import { CargosFormComponent } from './components/cargos-form/cargos-form.compon
 import { InformacionFamiliarFormComponent } from './components/informacion-familiar-form/informacion-familiar-form.component';
 import { CargaArchivosHvComponent } from './components/carga-archivos-hv/carga-archivos-hv.component';
 import { MomentDateModule, MomentDateAdapter } from '@angular/material-moment-adapter';
+import { EnvServiceProvider } from './providers/env.service.provider';
 
 export const MY_FORMATS = {
   parse: {
@@ -113,6 +114,7 @@ export const MY_FORMATS = {
     HttpClientModule,
   ],
   providers: [
+    EnvServiceProvider,
     { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },

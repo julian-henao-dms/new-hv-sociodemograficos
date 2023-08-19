@@ -3,21 +3,23 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { SessionStorageService } from './session-storage.service';
+import { EnvService } from './env.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  private apiUrl: string;
-  private apiUrlAlt: string;
+  private readonly apiUrl: string = "";
+
   private readonly token = '';
 
   constructor(
     private http: HttpClient,
     private _storaged: SessionStorageService,
+    private readonly envService: EnvService
     ) {
-    this.apiUrl = environment.apiUrl;
-    this.apiUrlAlt = environment.apiUrlAlt;
+    this.apiUrl = this.envService.apiUrl;
+
    }
 
    public authenticate(username: string, password: string): Observable<any> {
@@ -45,15 +47,7 @@ export class ApiService {
       return this.http.get(url, { headers: headers });
 
   }
-   public  getInformacionMaestros(servicio: string): Observable<any> {
-    const url = this.apiUrlAlt + servicio;
-    const token = this._storaged.get('token');
-    const headers = new HttpHeaders()
-    .set('Content-Type', 'application/json')
-    .set('Authorization', 'Bearer ' + token);
 
-      return this.http.get(url, { headers: headers });
-  }
 
   public saveInformacion(servicio: string, document: any): Observable<any> {
     const url = this.apiUrl + servicio;

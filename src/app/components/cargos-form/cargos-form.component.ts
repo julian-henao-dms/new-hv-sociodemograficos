@@ -5,6 +5,7 @@ import { MessagesService } from 'src/app/services/messages.service';
 import { Cargos } from './interfaces/cargos.interface';
 import * as _ from 'lodash';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
+import { EnvService } from 'src/app/services/env.service';
 
 interface Cargo {
   id: number;
@@ -17,7 +18,7 @@ interface Cargo {
   styleUrls: ['./cargos-form.component.scss'],
 })
 export class CargosFormComponent implements OnInit {
-  public idEmp: number = 3;
+  public idEmp: number = this.envService.company;
   public idPerfilPrevio: any[] = [];
   public disabledButtonNext: boolean = true;
   public candidatoId = 0;
@@ -98,7 +99,7 @@ export class CargosFormComponent implements OnInit {
     ],
   };
 
-  public numRegla: number = 159;
+  public numRegla: number = this.envService.regla;
   public cargosArray: any[] = [];
   public cargos: Cargo[] = [];
 
@@ -113,6 +114,7 @@ export class CargosFormComponent implements OnInit {
   constructor(
     private _storaged: SessionStorageService,
     private apiService: ApiService,
+    private readonly envService: EnvService,
     private messageService: MessagesService
   ) {}
 

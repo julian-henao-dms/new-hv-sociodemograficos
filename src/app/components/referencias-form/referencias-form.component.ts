@@ -12,6 +12,7 @@ import { MessagesService } from 'src/app/services/messages.service';
 import { ApiService } from 'src/app/services/api.service';
 import { NgForm } from '@angular/forms';
 import { TodosDatosCandidato } from '../datos-basicos-form/interfaces/candidato.interface';
+import { EnvService } from 'src/app/services/env.service';
 
 export interface user {
   userName: string;
@@ -34,13 +35,13 @@ export class ReferenciasFormComponent implements OnInit {
   @ViewChild('addReferenceData', { static: true })
   fieldDatosReferencias!: NgForm;
   public disabledButtonNext: boolean = true;
-  public idEmp: number = 3;
+  public idEmp: number = this.envService.company;
   public candidatoId = 0;
 
   public todosDatosCandidato: TodosDatosCandidato = {
     candidato: {
       id: 0,
-      emp: this.idEmp,
+      emp: this.envService.company,
       id_usuario: 0,
       id_tipo_candidato: null,
       id_rh_tipo_documento: null,
@@ -190,6 +191,7 @@ export class ReferenciasFormComponent implements OnInit {
     private _storaged: SessionStorageService,
     private _addItemTable: AddLabelToTableService,
     private messageService: MessagesService,
+    private readonly envService: EnvService,
     private apiService: ApiService
   ) {
 
